@@ -56,11 +56,11 @@ namespace ag.WPF.ColorPicker
         private Rectangle _spectrumDisplay;
         private LinearGradientBrush _pickerBrush;
 
-        private static readonly DependencyProperty _selectedColorProperty=DependencyProperty.Register("SelectedColor",typeof(Color), typeof(ColorSlider), new PropertyMetadata(Colors.Transparent));
+        public static readonly DependencyProperty SelectedColorProperty=DependencyProperty.Register(nameof(SelectedColor),typeof(Color), typeof(ColorSlider), new PropertyMetadata(Colors.Transparent));
         public Color SelectedColor
         {
-            get { return (Color)GetValue(_selectedColorProperty); }
-            set { SetValue(_selectedColorProperty, value); }
+            get { return (Color)GetValue(SelectedColorProperty); }
+            set { SetValue(SelectedColorProperty, value); }
         }
 
         static ColorSlider()
@@ -71,10 +71,17 @@ namespace ag.WPF.ColorPicker
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            _spectrumDisplay = (Rectangle)GetTemplateChild("PART_SpectrumDisplay");
+            _spectrumDisplay = (Rectangle)GetTemplateChild(PART_SpectrumDisplay);
             CreateSpectrum();
+
+            var color = SelectedColor;
+            var hsv = Utils.ConvertRgbToHsv(color.R, color.G, color.B);
+
             SetBinding(ValueProperty,new Binding("SelectedColor") { Converter = new ValueToColorConverter(),Mode= BindingMode.TwoWay });
-            OnValueChanged(double.NaN, Value);
+            var newValue=360.0 - hsv.H;
+            //OnValueChanged(double.NaN, Value);
+            OnValueChanged(double.NaN, newValue);
+            //SelectedColor = Utils.ConvertHsvToRgb(360.0 - newValue, 1.0, 1.0);
         }
 
         protected override void OnValueChanged(double oldValue, double newValue)

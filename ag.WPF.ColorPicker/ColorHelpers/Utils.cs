@@ -126,9 +126,221 @@ namespace ag.WPF.ColorPicker.ColorHelpers
             var colorList = new List<Color>();
             int num = 60;
             for (int index = 0; index < 360; index += num)
-                colorList.Add(ConvertHsvToRgb((double)index, 1.0, 1.0));
+                colorList.Add(ConvertHsvToRgb(index, 1.0, 1.0));
             colorList.Add(ConvertHsvToRgb(0.0, 1.0, 1.0));
             return colorList;
+        }
+
+        public static Color ToRgbColor(this HsbColor hsb)
+        {
+            double r = 0;
+            double g = 0;
+            double b = 0;
+            if (hsb.Saturation == 0)
+            {
+                r = g = b = hsb.Brightness;
+            }
+            else
+            {
+                // the color wheel consists of 6 sectors. Figure out whith sector
+                // you're in.
+                double sectorPos = hsb.Hue / 60.0;
+                int sectorNumber = (int)Math.Floor(sectorPos);
+                // get the fractional part of the sector
+                double fractionalSector = sectorPos - sectorNumber;
+                // calculate values for the three axes of the color.
+                double p = hsb.Brightness * (1.0 - hsb.Saturation);
+                double q = hsb.Brightness * (1.0 - (hsb.Saturation * fractionalSector));
+                double t = hsb.Brightness * (1.0 - (hsb.Saturation * (1 - fractionalSector)));
+                // assign the fractional colors to r, g, and b based on Ehe sector
+                // the angle is in.
+                switch (sectorNumber)
+                {
+                    case 0:
+                        r = hsb.Brightness;
+                        g = t;
+                        b = p;
+                        break;
+                    case 1:
+                        r = q; ;
+                        g = hsb.Brightness;
+                        b = p;
+                        break;
+                    case 2:
+                        r = p;
+                        g = hsb.Brightness;
+                        b = t;
+                        break;
+                    case 3:
+                        r = p;
+                        g = q;
+                        b = hsb.Brightness;
+                        break;
+                    case 4:
+                        r = t;
+                        g = p;
+                        b = hsb.Brightness;
+                        break;
+                    case 5:
+                        r = hsb.Brightness;
+                        g = p;
+                        b = q;
+                        break;
+                }
+            }
+            return Color.FromArgb(byte.MaxValue,
+            Convert.ToByte(Double.Parse(String.Format("{0:0.00}", r * 255.0))),
+            Convert.ToByte(Double.Parse(String.Format("{0:0.00}", g * 255.0))),
+            Convert.ToByte(Double.Parse(String.Format("{0:0.00}", b * 255.0)))
+            );
+        }
+
+        public static Color ToRgbColor(this HslColor hsl)
+        {
+            if (hsl.Saturation == 0)
+            {
+                // achromatic color’ (gray scale}
+                return Color.FromArgb(byte.MaxValue,
+                    (byte)Math.Round(hsl.Luminance * 255.0, MidpointRounding.AwayFromZero),
+                (byte)Math.Round(hsl.Luminance * 255.0,
+                MidpointRounding.AwayFromZero),
+                (byte)Math.Round(hsl.Luminance * 255.0,
+                MidpointRounding.AwayFromZero)
+                );
+            }
+            else
+            {
+                {
+                    double q = (hsl.Luminance < 0.5) ? (hsl.Luminance * (1.0 +
+                    hsl.Saturation)) : (hsl.Luminance + hsl.Saturation - (hsl.Luminance * hsl.Saturation));
+                    double p = (2.0 * hsl.Luminance) - q;
+                    double Hk = hsl.Hue / 360.0;
+                    double[] T = new double[3];
+                    T[0] = Hk + (1.0 / 3.0); // Tr
+                    T[1] = Hk; // Th .
+                    T[2] = Hk - (1.0 / 3.0); // Tg
+                    for (int i = 0; i < 3; i++)
+                    {
+                        if (T[i] < 0) T[i] += 1.0;
+                        if (T[i] > 1) T[i] -= 1.0;
+                        if ((T[i] * 6) < 1)
+                        {
+                            T[i] = p + ((q - p) * 6.0 * T[i]);
+                        }
+                        else if ((T[i] * 2.0) < 1) //(1.0/6.0)<=T[i] && T[i] 40.5
+                        {
+                            T[i] = q;
+                        }
+                        else if ((T[i] * 3.0) < 2) // 0.5<=T[i] && T[i]<(2.0/3.0)
+                        {
+                            T[i] = p + (q - p) * ((2.0 / 3.0) - T[i]) * 6.0;
+                        }
+                        else T[i] = p;
+                    }
+                    //return new RGB (
+                    // Convert .ToInt32 (Double. Parse (String. Format ("{0:0.0d}", :
+                    // T[O}] * 255.0))),
+                    // Convert .ToInt32 (Double. Parse (String. Format ("{0:0.00}",
+                    // T{1] * 255.0))),
+                    // Convert .ToInt32 (Double. Parse (String. Format ("{0:0.0d}",
+                    // T[2] * 255.0)))
+                    // i
+                    return Color.FromArgb(byte.MaxValue,
+                    (byte)Math.Round(T[0] * 255.0, MidpointRounding.AwayFromZero),
+                    (byte)Math.Round(T[1] * 255.0, MidpointRounding.AwayFromZero),
+                    (byte)Math.Round(T[2] * 255.0, MidpointRounding.AwayFromZero)
+                    );
+                }
+            }
+        }
+
+        public static HslColor ToHslColor(this Color color)
+        {
+            double h = 0, s = 0, l = 0;
+
+            // normalize red, green, blue values
+            double r = (double)color.R / 255.0;
+            double g = (double)color.G / 255.0;
+            double b = (double)color.B / 255.0;
+
+            double max = Math.Max(r, Math.Max(g, b));
+            double min = Math.Min(r, Math.Min(g, b));
+
+            // hue
+            if (max == min)
+            {
+                h = 0; // undefined
+            }
+            else if (max == r && g >= b)
+            {
+                h = 60.0 * (g - b) / (max - min);
+            }
+            else if (max == r && g < b)
+            {
+                h = 60.0 * (g - b) / (max - min) + 360.0;
+            }
+            else if (max == g)
+            {
+                h = 60.0 * (b - r) / (max - min) + 120.0;
+            }
+            else if (max == b)
+            {
+                h = 60.0 * (r - g) / (max - min) + 240.0;
+            }
+
+            // luminance
+            l = (max + min) / 2.0;
+
+            // saturation
+            if (l == 0 || max == min)
+            {
+                s = 0;
+            }
+            else if (0 < l && l <= 0.5)
+            {
+                s = (max - min) / (max + min);
+            }
+            else if (l > 0.5)
+            {
+                s = (max - min) / (2 - (max + min)); //(max-min > 0)?
+            }
+
+            //return new HSL (
+            // Double. Parse (String. Format("{0:0.00}", h)),
+            // Double. Parse (String. Format ("{0:0.00}", s)),
+            // Double. Parse (String.Format("{0:0.00}", l))
+            // ); |
+            return new HslColor(h, s, l);
+        }
+
+        public static HsbColor ToHsbColor(this Color color)
+        {
+            // normalize red, green and blue values
+            double r = color.R / 255.0;
+            double g = color.G / 255.0;
+            double b = color.B / 255.0;
+            // conversion start
+            double max = Math.Max(r, Math.Max(g, b));
+            double min = Math.Min(r, Math.Min(g, b));
+            double h = 0.0;
+            if (max == r && g >= b)
+            {
+                h = 60 * (g - b) / (max - min);
+            }
+            else if (max == r && g < b)
+            {
+                h = 60 * (g - b) / (max - min) + 360;
+            }
+            else if (max == g)
+            {
+                h = 60 * (b - r) / (max - min) + 120;
+            }
+            else if (max == b)
+            {
+                h = 60 * (r - g) / (max - min) + 240;
+            }
+            double s = (max == 0) ? 0.0 : (1.0 - (min / max));
+            return new HsbColor(h, s, (double)max);
         }
     }
 }

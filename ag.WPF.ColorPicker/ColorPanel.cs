@@ -277,21 +277,35 @@ namespace ag.WPF.ColorPicker
             _colorShadeSelector = GetTemplateChild(PART_ColorShadeSelector) as Canvas;
             if (_colorShadeSelector != null)
                 _colorShadeSelector.RenderTransform = _colorShadeSelectorTransform;
+
             if (_spectrumSlider != null)
+            {
                 _spectrumSlider.ValueChanged -= _spectrumSlider_ValueChanged;
+            }
             _spectrumSlider = GetTemplateChild(PART_SpectrumSlider) as ColorSlider;
             if (_spectrumSlider != null)
+            {
                 _spectrumSlider.ValueChanged += _spectrumSlider_ValueChanged;
+            }
+
             if (_hexadecimalTextBox != null)
                 _hexadecimalTextBox.LostFocus -= _hexadecimalTextBox_LostFocus;
             _hexadecimalTextBox = GetTemplateChild(PART_HexadecimalTextBox) as TextBox;
             if (_hexadecimalTextBox != null)
                 _hexadecimalTextBox.LostFocus += _hexadecimalTextBox_LostFocus;
+
+            InitialColor = SelectedColor;
+
             UpdateRGBValues(SelectedColor);
             UpdateColorStrings(SelectedColor);
             UpdateColorShadeSelectorPosition(SelectedColor);
             SetHexadecimalTextBoxTextProperty(GetFormatedColorString(SelectedColor));
-            InitialColor = SelectedColor;
+
+            //var hsb=SelectedColor.ToHsbColor();
+            //var hsl=SelectedColor.ToHslColor();
+
+            //var clr1=hsb.ToRgbColor();
+            //var clr2=hsl.ToRgbColor();
         }
 
         private void _copyRGBButton_Click(object sender, RoutedEventArgs e)

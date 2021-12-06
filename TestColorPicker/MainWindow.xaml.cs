@@ -24,5 +24,10 @@ namespace TestColorPicker
         {
             InitializeComponent();
         }
+
+        private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            _panel.SelectedColor = Colors.Yellow;
+        }
     }
 }
