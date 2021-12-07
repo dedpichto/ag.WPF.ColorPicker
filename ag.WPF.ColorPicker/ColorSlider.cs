@@ -73,15 +73,6 @@ namespace ag.WPF.ColorPicker
             base.OnApplyTemplate();
             _spectrumDisplay = (Rectangle)GetTemplateChild(PART_SpectrumDisplay);
             CreateSpectrum();
-
-            var color = SelectedColor;
-            var hsv = Utils.ConvertRgbToHsv(color.R, color.G, color.B);
-
-            SetBinding(ValueProperty,new Binding("SelectedColor") { Converter = new ValueToColorConverter(),Mode= BindingMode.TwoWay });
-            var newValue=360.0 - hsv.H;
-            //OnValueChanged(double.NaN, Value);
-            OnValueChanged(double.NaN, newValue);
-            //SelectedColor = Utils.ConvertHsvToRgb(360.0 - newValue, 1.0, 1.0);
         }
 
         protected override void OnValueChanged(double oldValue, double newValue)

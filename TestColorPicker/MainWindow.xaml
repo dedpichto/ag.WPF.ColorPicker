@@ -12,7 +12,7 @@
             <ColumnDefinition />
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <clp:ColorPanel Margin="4" x:Name="_panel" SelectedColor="Yellow"/>
+        <clp:ColorPanel Margin="4" x:Name="_panel"/>
         <!--<clp:ColorSlider x:Name="_slider" VerticalAlignment="Stretch" Margin="12"/>
         <Rectangle Grid.Column="1" Width="96" Height="96">
             <Rectangle.Fill>
