@@ -50,7 +50,7 @@
                 <ControlTemplate TargetType="{x:Type picker:ColorSlider}">
                     <Grid>
                         <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Margin="0,8,0,0">
-                            <Border x:Name="PART_TrackBackground" Width="15">
+                            <Border x:Name="PART_TrackBackground" Width="24">
                                 <Rectangle x:Name="PART_SpectrumDisplay" Stretch="Fill" VerticalAlignment="Stretch"/>
                             </Border>
                         </Border>
@@ -100,20 +100,20 @@
                                             <Setter Property="Focusable" Value="False"/>
                                             <Setter Property="OverridesDefaultStyle" Value="True"/>
                                             <Setter Property="Height" Value="12"/>
-                                            <Setter Property="Width" Value="15"/>
+                                            <Setter Property="Width" Value="24"/>
                                             <Setter Property="Foreground" Value="Gray"/>
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type Thumb}">
                                                         <Canvas Background="Transparent" SnapsToDevicePixels="True">
-                                                            <Path x:Name="LeftArrow" Data="F1M276.761,316L262.619,307.835 262.619,324.165 276.761,316z" Fill="Black" Height="8" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Stroke="Black" StrokeLineJoin="Round" Width="6">
+                                                            <Path x:Name="LeftArrow" Canvas.Left="0" Data="F1M276.761,316L262.619,307.835 262.619,324.165 276.761,316z" Fill="{x:Static SystemColors.WindowTextBrush}" Height="8" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Stroke="{x:Static SystemColors.WindowTextBrush}" StrokeLineJoin="Round" Width="8">
                                                                 <Path.RenderTransform>
                                                                     <TransformGroup>
                                                                         <TranslateTransform Y="6"/>
                                                                     </TransformGroup>
                                                                 </Path.RenderTransform>
                                                             </Path>
-                                                            <Path x:Name="RightArrow" Data="F1M276.761,316L262.619,307.835 262.619,324.165 276.761,316z" Fill="Black" Height="8" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Stroke="Black" StrokeLineJoin="Round" Width="6">
+                                                            <Path x:Name="RightArrow" Canvas.Left="7" Data="F1M276.761,316L262.619,307.835 262.619,324.165 276.761,316z" Fill="{x:Static SystemColors.WindowTextBrush}" Height="8" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Stroke="{x:Static SystemColors.WindowTextBrush}" StrokeLineJoin="Round" Width="8">
                                                                 <Path.RenderTransform>
                                                                     <TransformGroup>
                                                                         <RotateTransform Angle="-180"/>
@@ -181,62 +181,117 @@
                                 </Canvas>
                             </Canvas>
                         </Border>
-                        <picker:ColorSlider x:Name="PART_SpectrumSlider" VerticalAlignment="Stretch" Grid.Column="1" Margin="8,-8,0,0" />
-                        <Grid Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0" Grid.Column="0" Margin="0,4,4,4" Text="Selected color" />
-                            <Border Grid.Column="0" Grid.Row="1" Height="48" HorizontalAlignment="Stretch" Margin="0,4,4,4" Background="{StaticResource TransparentBackgroundBrush}">
-                                <Rectangle>
-                                    <Rectangle.Fill>
-                                        <SolidColorBrush Color="{Binding Path=SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                            </Border>
-                            <TextBlock Grid.Row="0" Grid.Column="1" Margin="4,4,0,4" Text="Initial color" />
-                            <Border Grid.Column="1" Grid.Row="1" Height="48" HorizontalAlignment="Stretch" Margin="4,4,0,4" Background="{StaticResource TransparentBackgroundBrush}">
-                                <Rectangle x:Name="PART_InitialColorRectangle">
-                                    <Rectangle.Fill>
-                                        <SolidColorBrush Color="{Binding Path=InitialColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                            </Border>
-                        </Grid>
-                        <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.RowDefinitions>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                                <RowDefinition/>
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" Margin="0,4,4,4" Text="R"/>
-                            <TextBlock Grid.Column="0" Grid.Row="1" Margin="0,4,4,4" Text="G"/>
-                            <TextBlock Grid.Column="0" Grid.Row="2" Margin="0,4,4,4" Text="B"/>
-                            <TextBlock Grid.Column="0" Grid.Row="3" Margin="0,4,4,4" Text="A" Visibility="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter} }"/>
+                        <picker:ColorSlider x:Name="PART_SpectrumSlider" VerticalAlignment="Stretch" Grid.Column="1" Grid.RowSpan="5" Margin="8,-8,0,0" />
+                        <GroupBox Grid.Column="0" Grid.Row="1" Header="Color modes">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <GroupBox Grid.Column="0" Grid.Row="0" Margin="4" Header="RGB">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0" Margin="0,4,4,4" Text="R"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="1" Margin="0,4,4,4" Text="G"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="2" Margin="0,4,4,4" Text="B"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="3" Margin="0,4,4,4" Text="A" Visibility="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter} }"/>
 
-                            <Slider Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                            <Slider Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                            <Slider Grid.Column="1" Grid.Row="2" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                            <Slider Grid.Column="1" Grid.Row="3" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}" Visibility="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter} }"/>
-                            
-                            <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                            <TextBlock Grid.Column="2" Grid.Row="1" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                            <TextBlock Grid.Column="2" Grid.Row="2" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                            <TextBlock Grid.Column="2" Grid.Row="3" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}" Visibility="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter} }"/>
-                        </Grid>
-                        <CheckBox Grid.Column="0" Grid.Row="3" Margin="0,4,0,4" Content="Use alpha channel" IsChecked="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                        <Grid Grid.Column="0" Grid.Row="4" Grid.ColumnSpan="2">
+                                        <Slider Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                        <Slider Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                        <Slider Grid.Column="1" Grid.Row="2" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                        <Slider Grid.Column="1" Grid.Row="3" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}" Visibility="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter} }"/>
+
+                                        <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="1" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="2" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="3" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}" Visibility="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter} }"/>
+                                    </Grid>
+                                </GroupBox>
+                                <Grid Grid.Column="1" Grid.Row="0">
+                                    <Border Margin="0,0,24,24" Width="48" Height="48" Background="{StaticResource TransparentBackgroundBrush}">
+                                        <Rectangle x:Name="PART_InitialColorRectangle">
+                                            <Rectangle.Fill>
+                                                <SolidColorBrush Color="{Binding Path=InitialColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                    </Border>
+                                    <Border Margin="24,24,0,0" Width="48" Height="48" Background="{StaticResource TransparentBackgroundBrush}" BorderThickness="2" BorderBrush="{x:Static SystemColors.WindowBrush}">
+                                        <Rectangle>
+                                            <Rectangle.Fill>
+                                                <SolidColorBrush Color="{Binding Path=SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                    </Border>
+                                </Grid>
+                                <GroupBox Grid.Column="0" Grid.Row="1" Margin="4" Header="HSB">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0" Margin="0,4,4,4" Text="H"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="1" Margin="0,4,4,4" Text="S"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="2" Margin="0,4,4,4" Text="B"/>
+
+                                        <Slider Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center"/>
+                                        <Slider Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center"/>
+                                        <Slider Grid.Column="1" Grid.Row="2" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center"/>
+
+                                        <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right"/>
+                                    </Grid>
+                                </GroupBox>
+                                <GroupBox Grid.Column="1" Grid.Row="1" Margin="4" Header="HSB">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Grid.Column="0" Grid.Row="0" Margin="0,4,4,4" Text="H"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="1" Margin="0,4,4,4" Text="S"/>
+                                        <TextBlock Grid.Column="0" Grid.Row="2" Margin="0,4,4,4" Text="L"/>
+
+                                        <Slider Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center"/>
+                                        <Slider Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center"/>
+                                        <Slider Grid.Column="1" Grid.Row="2" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center"/>
+
+                                        <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right"/>
+                                    </Grid>
+                                </GroupBox>
+                            </Grid>
+                        </GroupBox>
+
+                        <CheckBox Visibility="Collapsed" Grid.Column="0" Grid.Row="2" Margin="0,4,0,4" Content="Use alpha channel" IsChecked="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                        <Grid Visibility="Collapsed" Grid.Column="0" Grid.Row="3">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="auto"/>
