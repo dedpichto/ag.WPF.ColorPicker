@@ -7,6 +7,7 @@
     <picker:NullableColorToBrushConverter x:Key="NullableColorToBrushConverter"/>
     <picker:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter"/>
     <picker:HueValueConverter x:Key="HueValueConverter"/>
+    <picker:SliderThumbVisibilityConverter x:Key="SliderThumbVisibilityConverter"/>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
     <Geometry x:Key="CopyGeometry">
@@ -105,11 +106,38 @@
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type Thumb}">
-                                                        <Border Background="Transparent" Height="12" SnapsToDevicePixels="True" BorderThickness="0" Margin="-1,0,0,0">
+                                                        <Grid Background="Transparent" Height="12" SnapsToDevicePixels="True" Margin="-1,0,0,0">
                                                             <Viewbox Stretch="Fill">
-                                                                <Path Fill="{x:Static SystemColors.WindowTextBrush}" Data="M0,0 L10,6 L0,12 Z M24,0 L13.5,6 L24,12 Z" Margin="0,3,0,-3"/>
+                                                                <Viewbox.Visibility>
+                                                                    <MultiBinding Converter="{StaticResource SliderThumbVisibilityConverter}" ConverterParameter="middle">
+                                                                        <Binding Path="Maximum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
+                                                                        <Binding Path="Minimum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
+                                                                        <Binding Path="Value" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
+                                                                    </MultiBinding>
+                                                                </Viewbox.Visibility>
+                                                                <Path Fill="{x:Static SystemColors.WindowTextBrush}" Data="M0,0 L10,6 L0,12 Z M24,0 L13.5,6 L24,12 Z"/>
                                                             </Viewbox>
-                                                        </Border>
+                                                            <Viewbox Stretch="Fill">
+                                                                <Viewbox.Visibility>
+                                                                    <MultiBinding Converter="{StaticResource SliderThumbVisibilityConverter}" ConverterParameter="up">
+                                                                        <Binding Path="Maximum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
+                                                                        <Binding Path="Minimum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
+                                                                        <Binding Path="Value" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
+                                                                    </MultiBinding>
+                                                                </Viewbox.Visibility>
+                                                                <Path Fill="{x:Static SystemColors.WindowTextBrush}" Data="M0,6 L10,6 L0,12 Z M24,6 L13.5,6 L24,12 Z" Margin="0,2,0,-2"/>
+                                                            </Viewbox>
+                                                            <Viewbox Stretch="Fill">
+                                                                <Viewbox.Visibility>
+                                                                    <MultiBinding Converter="{StaticResource SliderThumbVisibilityConverter}" ConverterParameter="down">
+                                                                        <Binding Path="Maximum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
+                                                                        <Binding Path="Minimum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
+                                                                        <Binding Path="Value" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
+                                                                    </MultiBinding>
+                                                                </Viewbox.Visibility>
+                                                                <Path Fill="{x:Static SystemColors.WindowTextBrush}" Data="M0,6 L10,12 L0,12 Z M24,6 L13.5,12 L24,12 Z"/>
+                                                            </Viewbox>
+                                                        </Grid>
                                                         <!--<Canvas Background="Transparent" SnapsToDevicePixels="True">
                                                             <Path x:Name="LeftArrow" Canvas.Left="0" Data="F1M276.761,316L262.619,307.835 262.619,324.165 276.761,316z" Fill="{x:Static SystemColors.WindowTextBrush}" Height="8" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Stroke="{x:Static SystemColors.WindowTextBrush}" StrokeLineJoin="Round" Width="8">
                                                                 <Path.RenderTransform>

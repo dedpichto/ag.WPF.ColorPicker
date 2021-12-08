@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -35,6 +36,33 @@ namespace ag.WPF.ColorPicker
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class SliderThumbVisibilityConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (values.Length < 3
+                || !(values[0] is double maxValue)
+                || !(values[1] is double minValue)
+                || !(values[2] is double currentValue)
+                || !(parameter is string position)) return Visibility.Collapsed;
+
+            switch (position)
+            {
+                case "up":
+                    return currentValue == maxValue ? Visibility.Visible : (object)Visibility.Collapsed;
+                case "down":
+                    return currentValue == minValue ? Visibility.Visible : (object)Visibility.Collapsed;
+                default:
+                    return currentValue < maxValue && currentValue > minValue ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
