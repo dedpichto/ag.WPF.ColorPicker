@@ -24,89 +24,90 @@ namespace ag.WPF.ColorPicker.ColorHelpers
 
         private static Dictionary<string, Color> GetKnownColors() => ((IEnumerable<PropertyInfo>)typeof(Colors).GetProperties(BindingFlags.Static | BindingFlags.Public)).ToDictionary(p => p.Name, p => (Color)p.GetValue(null, null));
 
-        public static HsvColor ConvertRgbToHsv(int r, int g, int b)
-        {
-            double num1 = 0.0;
-            double num2 = Math.Min(Math.Min(r, g), b);
-            double num3 = Math.Max(Math.Max(r, g), b);
-            double num4 = num3 - num2;
-            double num5 = num3 != 0.0 ? num4 / num3 : 0.0;
-            double num6;
-            if (num5 == 0.0)
-            {
-                num6 = 0.0;
-            }
-            else
-            {
-                if (r == num3)
-                    num1 = (g - b) / num4;
-                else if (g == num3)
-                    num1 = 2.0 + (b - r) / num4;
-                else if (b == num3)
-                    num1 = 4.0 + (r - g) / num4;
-                num6 = num1 * 60.0;
-                if (num6 < 0.0)
-                    num6 += 360.0;
-            }
-            return new HsvColor()
-            {
-                H = num6,
-                S = num5,
-                V = num3 / byte.MaxValue
-            };
-        }
+        //public static HsvColor ConvertRgbToHsv(int r, int g, int b)
+        //{
+        //    double num1 = 0.0;
+        //    double num2 = Math.Min(Math.Min(r, g), b);
+        //    double num3 = Math.Max(Math.Max(r, g), b);
+        //    double num4 = num3 - num2;
+        //    double num5 = num3 != 0.0 ? num4 / num3 : 0.0;
+        //    double num6;
+        //    if (num5 == 0.0)
+        //    {
+        //        num6 = 0.0;
+        //    }
+        //    else
+        //    {
+        //        if (r == num3)
+        //            num1 = (g - b) / num4;
+        //        else if (g == num3)
+        //            num1 = 2.0 + (b - r) / num4;
+        //        else if (b == num3)
+        //            num1 = 4.0 + (r - g) / num4;
+        //        num6 = num1 * 60.0;
+        //        if (num6 < 0.0)
+        //            num6 += 360.0;
+        //    }
+        //    return new HsvColor()
+        //    {
+        //        H = num6,
+        //        S = num5,
+        //        V = num3 / byte.MaxValue
+        //    };
+        //}
 
-        public static Color ConvertHsvToRgb(double h, double s, double v)
+        public static Color ToRgbColor(this HsbColor hsb)
         {
             double num1;
             double num2;
             double num3;
-            if (s == 0.0)
+            if (hsb.Saturation == 0.0)
             {
-                num1 = v;
-                num2 = v;
-                num3 = v;
+                num1 = hsb.Brightness;
+                num2 = hsb.Brightness;
+                num3 = hsb.Brightness;
             }
             else
             {
+                var h = hsb.Hue;
                 if (h == 360.0)
                     h = 0.0;
                 else
                     h /= 60.0;
                 int num4 = (int)Math.Truncate(h);
                 double num5 = h - num4;
-                double num6 = v * (1.0 - s);
-                double num7 = v * (1.0 - s * num5);
-                double num8 = v * (1.0 - s * (1.0 - num5));
+                double num6 = hsb.Brightness * (1.0 - hsb.Saturation);
+                double num7 = hsb.Brightness * (1.0 - hsb.Saturation * num5);
+                double num8 = hsb.Brightness * (1.0 - hsb.Saturation * (1.0 - num5));
                 switch (num4)
                 {
                     case 0:
-                        num1 = v;
+                        num1 = hsb.Brightness;
                         num2 = num8;
                         num3 = num6;
                         break;
                     case 1:
                         num1 = num7;
-                        num2 = v;
+                        num2 = hsb.Brightness;
                         num3 = num6;
                         break;
                     case 2:
                         num1 = num6;
-                        num2 = v;
+                        num2 = hsb.Brightness;
                         num3 = num8;
                         break;
                     case 3:
                         num1 = num6;
                         num2 = num7;
-                        num3 = v;
+                        num3 = hsb.Brightness;
                         break;
                     case 4:
                         num1 = num8;
                         num2 = num6;
-                        num3 = v;
+                        num3 = hsb.Brightness;
                         break;
                     default:
-                        num1 = v;
+                        num1 = hsb.Brightness;
                         num2 = num6;
                         num3 = num7;
                         break;
@@ -115,85 +116,90 @@ namespace ag.WPF.ColorPicker.ColorHelpers
             return Color.FromArgb(byte.MaxValue, (byte)Math.Round(num1 * byte.MaxValue), (byte)Math.Round(num2 * byte.MaxValue), (byte)Math.Round(num3 * byte.MaxValue));
         }
 
-        public static double ConvertRgbToDouble(Color color)
+        public static double ConvertHsbToDouble(Color color)
         {
-            HsvColor hsv = ConvertRgbToHsv(color.R, color.G, color.B);
-            return 360.0 - hsv.H;
+            var hsv = color.ToHsbColor();
+            return 360.0 - hsv.Hue;
         }
 
         public static List<Color> GenerateHsvPalette()
         {
             var colorList = new List<Color>();
             int num = 60;
+            HsbColor hsb;
             for (int index = 0; index < 360; index += num)
-                colorList.Add(ConvertHsvToRgb(index, 1.0, 1.0));
-            colorList.Add(ConvertHsvToRgb(0.0, 1.0, 1.0));
+            {
+                hsb = new HsbColor(index, 1.0, 1.0);
+                colorList.Add(hsb.ToRgbColor());
+            }
+            hsb = new HsbColor(0.0, 1.0, 1.0);
+            colorList.Add(hsb.ToRgbColor());
             return colorList;
         }
 
-        public static Color ToRgbColor(this HsbColor hsb)
-        {
-            double r = 0;
-            double g = 0;
-            double b = 0;
-            if (hsb.Saturation == 0)
-            {
-                r = g = b = hsb.Brightness;
-            }
-            else
-            {
-                // the color wheel consists of 6 sectors. Figure out whith sector
-                // you're in.
-                double sectorPos = hsb.Hue / 60.0;
-                int sectorNumber = (int)Math.Floor(sectorPos);
-                // get the fractional part of the sector
-                double fractionalSector = sectorPos - sectorNumber;
-                // calculate values for the three axes of the color.
-                double p = hsb.Brightness * (1.0 - hsb.Saturation);
-                double q = hsb.Brightness * (1.0 - (hsb.Saturation * fractionalSector));
-                double t = hsb.Brightness * (1.0 - (hsb.Saturation * (1 - fractionalSector)));
-                // assign the fractional colors to r, g, and b based on Ehe sector
-                // the angle is in.
-                switch (sectorNumber)
-                {
-                    case 0:
-                        r = hsb.Brightness;
-                        g = t;
-                        b = p;
-                        break;
-                    case 1:
-                        r = q; ;
-                        g = hsb.Brightness;
-                        b = p;
-                        break;
-                    case 2:
-                        r = p;
-                        g = hsb.Brightness;
-                        b = t;
-                        break;
-                    case 3:
-                        r = p;
-                        g = q;
-                        b = hsb.Brightness;
-                        break;
-                    case 4:
-                        r = t;
-                        g = p;
-                        b = hsb.Brightness;
-                        break;
-                    case 5:
-                        r = hsb.Brightness;
-                        g = p;
-                        b = q;
-                        break;
-                }
-            }
-            return Color.FromArgb(byte.MaxValue,
-            Convert.ToByte(Double.Parse(String.Format("{0:0.00}", r * 255.0))),
-            Convert.ToByte(Double.Parse(String.Format("{0:0.00}", g * 255.0))),
-            Convert.ToByte(Double.Parse(String.Format("{0:0.00}", b * 255.0)))
-            );
-        }
+        //public static Color ToRgbColor(this HsbColor hsb)
+        //{
+        //    double r = 0;
+        //    double g = 0;
+        //    double b = 0;
+        //    if (hsb.Saturation == 0)
+        //    {
+        //        r = g = b = hsb.Brightness;
+        //    }
+        //    else
+        //    {
+        //        // the color wheel consists of 6 sectors. Figure out whith sector
+        //        // you're in.
+        //        double sectorPos = hsb.Hue / 60.0;
+        //        int sectorNumber = (int)Math.Floor(sectorPos);
+        //        // get the fractional part of the sector
+        //        double fractionalSector = sectorPos - sectorNumber;
+        //        // calculate values for the three axes of the color.
+        //        double p = hsb.Brightness * (1.0 - hsb.Saturation);
+        //        double q = hsb.Brightness * (1.0 - (hsb.Saturation * fractionalSector));
+        //        double t = hsb.Brightness * (1.0 - (hsb.Saturation * (1 - fractionalSector)));
+        //        // assign the fractional colors to r, g, and b based on Ehe sector
+        //        // the angle is in.
+        //        switch (sectorNumber)
+        //        {
+        //            case 0:
+        //                r = hsb.Brightness;
+        //                g = t;
+        //                b = p;
+        //                break;
+        //            case 1:
+        //                r = q; ;
+        //                g = hsb.Brightness;
+        //                b = p;
+        //                break;
+        //            case 2:
+        //                r = p;
+        //                g = hsb.Brightness;
+        //                b = t;
+        //                break;
+        //            case 3:
+        //                r = p;
+        //                g = q;
+        //                b = hsb.Brightness;
+        //                break;
+        //            case 4:
+        //                r = t;
+        //                g = p;
+        //                b = hsb.Brightness;
+        //                break;
+        //            case 5:
+        //                r = hsb.Brightness;
+        //                g = p;
+        //                b = q;
+        //                break;
+        //        }
+        //    }
+        //    return Color.FromArgb(byte.MaxValue,
+        //    Convert.ToByte(Double.Parse(String.Format("{0:0.00}", r * 255.0))),
+        //    Convert.ToByte(Double.Parse(String.Format("{0:0.00}", g * 255.0))),
+        //    Convert.ToByte(Double.Parse(String.Format("{0:0.00}", b * 255.0)))
+        //    );
+        //}
 
         public static Color ToRgbColor(this HslColor hsl)
         {
@@ -325,7 +331,7 @@ namespace ag.WPF.ColorPicker.ColorHelpers
             double h = 0.0;
             if (max == r && g >= b)
             {
-                h = 60 * (g - b) / (max - min);
+                h =max==min?0: 60 * (g - b) / (max - min);
             }
             else if (max == r && g < b)
             {

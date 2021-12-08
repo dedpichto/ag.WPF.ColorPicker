@@ -436,14 +436,14 @@ namespace ag.WPF.ColorPicker
             if (_spectrumSlider == null || _colorShadingCanvas == null)
                 return;
             _currentColorPosition = new Point?();
-            var hsv = Utils.ConvertRgbToHsv(color.R, color.G, color.B);
+            var hsb = color.ToHsbColor();
             if (_updateSpectrumSliderValue)
             {
-                _spectrumSlider.Value = 360.0 - hsv.H;
+                _spectrumSlider.Value = 360.0 - hsb.Hue;
                 _spectrumSlider.SetAlphaChannel(color.A);
             }
 
-            var point = new Point(hsv.S, 1.0 - hsv.V);
+            var point = new Point(hsb.Saturation, 1.0 - hsb.Brightness);
             _currentColorPosition = new Point?(point);
             _colorShadeSelectorTransform.X = point.X * _colorShadingCanvas.Width - 5.0;
             _colorShadeSelectorTransform.Y = point.Y * _colorShadingCanvas.Height - 5.0;
@@ -453,12 +453,12 @@ namespace ag.WPF.ColorPicker
         {
             if (_spectrumSlider == null)
                 return;
-            var hsvColor = new HsvColor(360.0 - _spectrumSlider.Value, 1.0, 1.0)
+            var hsb = new HsbColor(360.0 - _spectrumSlider.Value, 1.0, 1.0)
             {
-                S = p.X,
-                V = 1.0 - p.Y
+                Saturation = p.X,
+                Brightness = 1.0 - p.Y
             };
-            var rgb = Utils.ConvertHsvToRgb(hsvColor.H, hsvColor.S, hsvColor.V);
+            var rgb = hsb.ToRgbColor();
             rgb.A = A;
             _updateSpectrumSliderValue = false;
             SelectedColor = Color.FromArgb(rgb.A, rgb.R, rgb.G, rgb.B);

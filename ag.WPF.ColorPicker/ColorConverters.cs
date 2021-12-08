@@ -15,13 +15,14 @@ namespace ag.WPF.ColorPicker
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(value is double newValue)) return Colors.Red;
-            return Utils.ConvertHsvToRgb(360.0 - newValue, 1.0, 1.0);
+            var hsb = new HsbColor(360.0 - newValue, 1.0, 1.0);
+            return hsb.ToRgbColor();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(value is Color color)) return 0.0;
-            return Utils.ConvertRgbToDouble(color);
+            return Utils.ConvertHsbToDouble(color);
         }
     }
 
