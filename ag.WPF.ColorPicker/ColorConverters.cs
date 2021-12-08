@@ -25,6 +25,20 @@ namespace ag.WPF.ColorPicker
         }
     }
 
+    public class HueValueConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (!(value is double hue)) return null;
+            return Math.Round(hue, MidpointRounding.AwayFromZero);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class NullableColorToBrushConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

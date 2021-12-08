@@ -6,6 +6,7 @@
     <picker:ValueToColorConverter x:Key="ValueToColorConverter"/>
     <picker:NullableColorToBrushConverter x:Key="NullableColorToBrushConverter"/>
     <picker:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter"/>
+    <picker:HueValueConverter x:Key="HueValueConverter"/>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
     <Geometry x:Key="CopyGeometry">
@@ -266,7 +267,7 @@
                                         <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right"/>
                                     </Grid>
                                 </GroupBox>
-                                <GroupBox Grid.Column="1" Grid.Row="1" Margin="4" Header="HSB">
+                                <GroupBox Grid.Column="1" Grid.Row="1" Margin="4" Header="HSL">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto"/>
@@ -282,13 +283,13 @@
                                         <TextBlock Grid.Column="0" Grid.Row="1" Margin="0,4,4,4" Text="S"/>
                                         <TextBlock Grid.Column="0" Grid.Row="2" Margin="0,4,4,4" Text="L"/>
 
-                                        <Slider Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center"/>
-                                        <Slider Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center"/>
-                                        <Slider Grid.Column="1" Grid.Row="2" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center"/>
+                                        <Slider Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="360" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding HueHsl, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                        <Slider Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="1" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.01" VerticalAlignment="Center" Value="{Binding SaturationHsl, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                        <Slider Grid.Column="1" Grid.Row="2" Margin="4" Minimum="0" Maximum="1" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding LuminanceHsl, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
 
-                                        <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right"/>
-                                        <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right"/>
-                                        <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding HueHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource HueValueConverter}}"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="1" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding SaturationHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, StringFormat=#0.00%}"/>
+                                        <TextBlock Grid.Column="2" Grid.Row="2" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding LuminanceHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, StringFormat=#0.00%}"/>
                                     </Grid>
                                 </GroupBox>
                             </Grid>

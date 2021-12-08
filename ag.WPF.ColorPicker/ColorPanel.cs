@@ -46,6 +46,7 @@ namespace ag.WPF.ColorPicker
         private Point? _currentColorPosition;
         private bool _surpressPropertyChanged;
         private bool _updateSpectrumSliderValue = true;
+        private bool _updateHsl = true;
 
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPanel), new FrameworkPropertyMetadata(Colors.Red, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedColorChanged));
         public static readonly DependencyProperty InitialColorProperty = DependencyProperty.Register(nameof(InitialColor), typeof(Color), typeof(ColorPanel), new FrameworkPropertyMetadata(Colors.Red, OnInitialColorChanged));
@@ -53,6 +54,11 @@ namespace ag.WPF.ColorPicker
         public static readonly DependencyProperty RProperty = DependencyProperty.Register(nameof(R), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnByteChanged));
         public static readonly DependencyProperty GProperty = DependencyProperty.Register(nameof(G), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnByteChanged));
         public static readonly DependencyProperty BProperty = DependencyProperty.Register(nameof(B), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnByteChanged));
+
+        public static readonly DependencyProperty HueHslProperty = DependencyProperty.Register(nameof(HueHsl), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnHslChanged));
+        public static readonly DependencyProperty SaturationHslProperty = DependencyProperty.Register(nameof(SaturationHsl), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnHslChanged));
+        public static readonly DependencyProperty LuminanceHslProperty = DependencyProperty.Register(nameof(LuminanceHsl), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnHslChanged));
+
         public static readonly DependencyProperty HexStringProperty = DependencyProperty.Register(nameof(HexString), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata(""));
         public static readonly DependencyProperty RGBStringProperty = DependencyProperty.Register(nameof(RGBString), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata(""));
 
@@ -66,14 +72,14 @@ namespace ag.WPF.ColorPicker
 
         public string HexString
         {
-            get { return (string)GetValue(HexStringProperty);} 
-            private set { SetValue(HexStringProperty, value);}
+            get { return (string)GetValue(HexStringProperty); }
+            private set { SetValue(HexStringProperty, value); }
         }
 
         public string RGBString
         {
-            get { return (string)GetValue(RGBStringProperty);}
-            private set { SetValue(RGBStringProperty, value);}
+            get { return (string)GetValue(RGBStringProperty); }
+            private set { SetValue(RGBStringProperty, value); }
         }
 
         public string HexadecimalString
@@ -86,6 +92,24 @@ namespace ag.WPF.ColorPicker
         {
             get { return (bool)GetValue(UseAlphaChannelProperty); }
             set { SetValue(UseAlphaChannelProperty, value); }
+        }
+
+        public double HueHsl
+        {
+            get { return (double)GetValue(HueHslProperty); }
+            set { SetValue(HueHslProperty, value); }
+        }
+
+        public double SaturationHsl
+        {
+            get { return (double)GetValue(SaturationHslProperty); }
+            set { SetValue(SaturationHslProperty, value); }
+        }
+
+        public double LuminanceHsl
+        {
+            get { return (double)GetValue(LuminanceHslProperty); }
+            set { SetValue(LuminanceHslProperty, value); }
         }
 
         public Color SelectedColor
@@ -122,6 +146,21 @@ namespace ag.WPF.ColorPicker
         {
             get { return (byte)GetValue(BProperty); }
             set { SetValue(BProperty, value); }
+        }
+
+        private static void OnHslChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is ColorPanel colorPanel)) return;
+            colorPanel.OnHslChanged((double)e.OldValue, (double)e.NewValue);
+        }
+
+        protected virtual void OnHslChanged(double oldValue, double newValue)
+        {
+            _updateHsl = false;
+            var hsl = new HslColor(HueHsl, SaturationHsl, LuminanceHsl);
+            var color = hsl.ToRgbColor();
+            SelectedColor = Color.FromArgb(A, color.R, color.G, color.B);
+            _updateHsl = true;
         }
 
         private static void OnUseAlphaChannelPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -203,6 +242,12 @@ namespace ag.WPF.ColorPicker
         {
             SetHexadecimalStringProperty(GetFormatedColorString(newValue), false);
             UpdateRGBValues(newValue);
+
+            if (_updateHsl)
+            {
+                UpdateHSLValues(newValue);
+            }
+
             UpdateColorStrings(newValue);
             UpdateColorShadeSelectorPosition(newValue);
             RoutedPropertyChangedEventArgs<Color> changedEventArgs = new RoutedPropertyChangedEventArgs<Color>(oldValue, newValue)
@@ -254,7 +299,7 @@ namespace ag.WPF.ColorPicker
             {
                 _initialColorRectangle.MouseLeftButtonDown -= _initialColorRectangle_MouseLeftButtonDown;
             }
-            _initialColorRectangle =GetTemplateChild(PART_InitialColorRectangle) as Rectangle;
+            _initialColorRectangle = GetTemplateChild(PART_InitialColorRectangle) as Rectangle;
             if (_initialColorRectangle != null)
             {
                 _initialColorRectangle.MouseLeftButtonDown += _initialColorRectangle_MouseLeftButtonDown;
@@ -264,7 +309,7 @@ namespace ag.WPF.ColorPicker
             {
                 _copyHexButton.Click -= _copyHexButton_Click;
             }
-            _copyHexButton =GetTemplateChild(PART_CopyHexButton) as Button;
+            _copyHexButton = GetTemplateChild(PART_CopyHexButton) as Button;
             if (_copyHexButton != null)
             {
                 _copyHexButton.Click += _copyHexButton_Click;
@@ -274,8 +319,8 @@ namespace ag.WPF.ColorPicker
             {
                 _copyRGBButton.Click -= _copyRGBButton_Click;
             }
-            _copyRGBButton =GetTemplateChild(PART_CopyRGBButton) as Button;
-            if( _copyRGBButton != null)
+            _copyRGBButton = GetTemplateChild(PART_CopyRGBButton) as Button;
+            if (_copyRGBButton != null)
             {
                 _copyRGBButton.Click += _copyRGBButton_Click;
             }
@@ -300,18 +345,19 @@ namespace ag.WPF.ColorPicker
             if (_hexadecimalTextBox != null)
                 _hexadecimalTextBox.LostFocus += _hexadecimalTextBox_LostFocus;
 
-            InitialColor = SelectedColor;
+            if (SelectedColor != InitialColor)
+            {
+                SelectedColor = InitialColor;
+            }
+            else
+            {
+                UpdateRGBValues(SelectedColor);
+                UpdateHSLValues(SelectedColor);
+                UpdateColorStrings(SelectedColor);
+                UpdateColorShadeSelectorPosition(SelectedColor);
+            }
 
-            UpdateRGBValues(SelectedColor);
-            UpdateColorStrings(SelectedColor);
-            UpdateColorShadeSelectorPosition(SelectedColor);
             SetHexadecimalTextBoxTextProperty(GetFormatedColorString(SelectedColor));
-
-            //var hsb=SelectedColor.ToHsbColor();
-            //var hsl=SelectedColor.ToHslColor();
-
-            //var clr1=hsb.ToRgbColor();
-            //var clr2=hsl.ToRgbColor();
         }
 
         private void _copyRGBButton_Click(object sender, RoutedEventArgs e)
@@ -428,6 +474,14 @@ namespace ag.WPF.ColorPicker
             G = color.G;
             B = color.B;
             _surpressPropertyChanged = false;
+        }
+
+        private void UpdateHSLValues(Color color)
+        {
+            var hsl = color.ToHslColor();
+            HueHsl = hsl.Hue;
+            SaturationHsl = hsl.Saturation;
+            LuminanceHsl = hsl.Luminance;
         }
 
         private void UpdateColorStrings(Color color)
