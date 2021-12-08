@@ -101,11 +101,15 @@
                                             <Setter Property="OverridesDefaultStyle" Value="True"/>
                                             <Setter Property="Height" Value="12"/>
                                             <Setter Property="Width" Value="24"/>
-                                            <Setter Property="Foreground" Value="Gray"/>
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type Thumb}">
-                                                        <Canvas Background="Transparent" SnapsToDevicePixels="True">
+                                                        <Border Background="Transparent" Height="12" SnapsToDevicePixels="True" BorderThickness="0" Margin="-1,0,0,0">
+                                                            <Viewbox Stretch="Fill">
+                                                                <Path Fill="{x:Static SystemColors.WindowTextBrush}" Data="M0,0 L10,6 L0,12 Z M24,0 L13.5,6 L24,12 Z" Margin="0,3,0,-3"/>
+                                                            </Viewbox>
+                                                        </Border>
+                                                        <!--<Canvas Background="Transparent" SnapsToDevicePixels="True">
                                                             <Path x:Name="LeftArrow" Canvas.Left="0" Data="F1M276.761,316L262.619,307.835 262.619,324.165 276.761,316z" Fill="{x:Static SystemColors.WindowTextBrush}" Height="8" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Stroke="{x:Static SystemColors.WindowTextBrush}" StrokeLineJoin="Round" Width="8">
                                                                 <Path.RenderTransform>
                                                                     <TransformGroup>
@@ -121,7 +125,7 @@
                                                                     </TransformGroup>
                                                                 </Path.RenderTransform>
                                                             </Path>
-                                                        </Canvas>
+                                                        </Canvas>-->
                                                     </ControlTemplate>
                                                 </Setter.Value>
                                             </Setter>
