@@ -182,14 +182,20 @@ namespace ag.WPF.ColorPicker
             SetHexadecimalTextBoxTextProperty(newValue);
         }
 
-        private static void OnInitialColorChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void OnInitialColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-
+            if (!(d is ColorPanel colorPanel)) return;
+            colorPanel.OnInitialColorChanged((Color)e.OldValue, (Color)e.NewValue);
         }
 
-        private static void OnSelectedColorChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        protected virtual void OnInitialColorChanged(Color oldValue, Color newValue)
         {
-            if (!(o is ColorPanel colorPanel)) return;
+            SelectedColor = newValue;
+        }
+
+        private static void OnSelectedColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is ColorPanel colorPanel)) return;
             colorPanel.OnSelectedColorChanged((Color)e.OldValue, (Color)e.NewValue);
         }
 
@@ -206,9 +212,9 @@ namespace ag.WPF.ColorPicker
             RaiseEvent(changedEventArgs);
         }
 
-        private static void OnByteChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        private static void OnByteChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(o is ColorPanel colorPanel)) return;
+            if (!(d is ColorPanel colorPanel)) return;
             colorPanel.OnByteChanged((byte)e.OldValue, (byte)e.NewValue);
         }
 
@@ -386,7 +392,11 @@ namespace ag.WPF.ColorPicker
             _currentColorPosition = new Point?();
             var hsv = Utils.ConvertRgbToHsv(color.R, color.G, color.B);
             if (_updateSpectrumSliderValue)
+            {
                 _spectrumSlider.Value = 360.0 - hsv.H;
+                _spectrumSlider.SetAlphaChannel(color.A);
+            }
+
             var point = new Point(hsv.S, 1.0 - hsv.V);
             _currentColorPosition = new Point?(point);
             _colorShadeSelectorTransform.X = point.X * _colorShadingCanvas.Width - 5.0;

@@ -27,7 +27,7 @@ namespace TestColorPicker
 
         private void Window_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            _panel.SelectedColor = Colors.Yellow;
+            _panel.InitialColor = Colors.Yellow;
         }
     }
 }

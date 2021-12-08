@@ -55,8 +55,9 @@ namespace ag.WPF.ColorPicker
 
         private Rectangle _spectrumDisplay;
         private LinearGradientBrush _pickerBrush;
+        private byte _alpha = byte.MaxValue;
 
-        public static readonly DependencyProperty SelectedColorProperty=DependencyProperty.Register(nameof(SelectedColor),typeof(Color), typeof(ColorSlider), new PropertyMetadata(Colors.Transparent));
+        public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorSlider), new PropertyMetadata(Colors.Transparent));
         public Color SelectedColor
         {
             get { return (Color)GetValue(SelectedColorProperty); }
@@ -78,7 +79,14 @@ namespace ag.WPF.ColorPicker
         protected override void OnValueChanged(double oldValue, double newValue)
         {
             base.OnValueChanged(oldValue, newValue);
-            SelectedColor = Utils.ConvertHsvToRgb(360.0 - newValue, 1.0, 1.0);
+            var color = Utils.ConvertHsvToRgb(360.0 - newValue, 1.0, 1.0);
+            SelectedColor = Color.FromArgb(_alpha, color.R, color.G, color.B);
+        }
+
+        internal void SetAlphaChannel(byte alpha)
+        {
+            _alpha = alpha;
+            SelectedColor = Color.FromArgb(alpha, SelectedColor.R, SelectedColor.G, SelectedColor.B);
         }
 
         private void CreateSpectrum()
