@@ -215,17 +215,25 @@
                             </Canvas>
                         </Border>
                         <picker:ColorSlider x:Name="PART_SpectrumSlider" VerticalAlignment="Stretch" Grid.Column="1" Grid.RowSpan="5" Margin="8,0,0,0" />
-                        <GroupBox Grid.Column="0" Grid.Row="1" Header="Color modes">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <GroupBox Grid.Column="0" Grid.Row="0" Margin="4" Header="RGB">
+                        <Grid Grid.Column="0" Grid.Row="1">
+                            <Border Margin="0,0,24,24" Width="48" Height="48" Background="{StaticResource TransparentBackgroundBrush}">
+                                <Rectangle x:Name="PART_InitialColorRectangle">
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="{Binding Path=InitialColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Border>
+                            <Border Margin="24,24,0,0" Width="48" Height="48" Background="{StaticResource TransparentBackgroundBrush}" BorderThickness="2" BorderBrush="{x:Static SystemColors.WindowBrush}">
+                                <Rectangle>
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="{Binding Path=SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                            </Border>
+                        </Grid>
+                        <GroupBox Grid.Column="0" Grid.Row="2" Header="Color modes">
+                            <TabControl>
+                                <TabItem Header="RGB">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto"/>
@@ -289,24 +297,8 @@
                                         <TextBlock Grid.Column="2" Grid.Row="2" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                         <TextBlock Grid.Column="2" Grid.Row="3" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}" Visibility="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter} }"/>
                                     </Grid>
-                                </GroupBox>
-                                <Grid Grid.Column="1" Grid.Row="0">
-                                    <Border Margin="0,0,24,24" Width="48" Height="48" Background="{StaticResource TransparentBackgroundBrush}">
-                                        <Rectangle x:Name="PART_InitialColorRectangle">
-                                            <Rectangle.Fill>
-                                                <SolidColorBrush Color="{Binding Path=InitialColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                    </Border>
-                                    <Border Margin="24,24,0,0" Width="48" Height="48" Background="{StaticResource TransparentBackgroundBrush}" BorderThickness="2" BorderBrush="{x:Static SystemColors.WindowBrush}">
-                                        <Rectangle>
-                                            <Rectangle.Fill>
-                                                <SolidColorBrush Color="{Binding Path=SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                    </Border>
-                                </Grid>
-                                <GroupBox Grid.Column="0" Grid.Row="1" Margin="4" Header="HSB">
+                                </TabItem>
+                                <TabItem Header="HSB">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto"/>
@@ -343,13 +335,12 @@
                                                 </LinearGradientBrush>
                                             </Slider.Background>
                                         </Slider>
-
                                         <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource HueValueConverter}}"/>
                                         <TextBlock Grid.Column="2" Grid.Row="1" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding SaturationHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, StringFormat=#0.00%}"/>
                                         <TextBlock Grid.Column="2" Grid.Row="2" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding BrightnessHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, StringFormat=#0.00%}"/>
                                     </Grid>
-                                </GroupBox>
-                                <GroupBox Grid.Column="1" Grid.Row="1" Margin="4" Header="HSL">
+                                </TabItem>
+                                <TabItem Header="HSL">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto"/>
@@ -387,17 +378,17 @@
                                                 </LinearGradientBrush>
                                             </Slider.Background>
                                         </Slider>
-
+                                        
                                         <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding HueHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource HueValueConverter}}"/>
                                         <TextBlock Grid.Column="2" Grid.Row="1" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding SaturationHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, StringFormat=#0.00%}"/>
                                         <TextBlock Grid.Column="2" Grid.Row="2" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding LuminanceHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, StringFormat=#0.00%}"/>
                                     </Grid>
-                                </GroupBox>
-                            </Grid>
+                                </TabItem>
+                            </TabControl>
                         </GroupBox>
 
-                        <CheckBox Visibility="Collapsed" Grid.Column="0" Grid.Row="2" Margin="0,4,0,4" Content="Use alpha channel" IsChecked="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                        <Grid Visibility="Collapsed" Grid.Column="0" Grid.Row="3">
+                        <CheckBox Visibility="Collapsed" Grid.Column="0" Grid.Row="3" Margin="0,4,0,4" Content="Use alpha channel" IsChecked="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                        <Grid Visibility="Collapsed" Grid.Column="0" Grid.Row="4">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="auto"/>
