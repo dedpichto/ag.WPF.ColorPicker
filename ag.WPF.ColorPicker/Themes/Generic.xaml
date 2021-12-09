@@ -32,7 +32,7 @@
             </DrawingGroup>
         </DrawingBrush.Drawing>
     </DrawingBrush>
-    
+
     <Style TargetType="{x:Type picker:ColorSlider}">
         <Setter Property="BorderBrush" Value="DarkGray"/>
         <Setter Property="BorderThickness" Value="1"/>
@@ -183,7 +183,6 @@
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
                             <RowDefinition Height="auto"/>
-                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                         <Border x:Name="borderCanvas" BorderBrush="DarkGray" BorderThickness="1" ClipToBounds="True" Background="{StaticResource TransparentBackgroundBrush}">
                             <Canvas x:Name="PART_ColorShadingCanvas" Height="{Binding ActualHeight, ElementName=borderCanvas}" Width="{Binding ActualWidth, ElementName=borderCanvas}">
@@ -215,22 +214,48 @@
                             </Canvas>
                         </Border>
                         <picker:ColorSlider x:Name="PART_SpectrumSlider" VerticalAlignment="Stretch" Grid.Column="1" Grid.RowSpan="5" Margin="8,0,0,0" />
+
                         <Grid Grid.Column="0" Grid.Row="1">
-                            <Border Margin="0,0,24,24" Width="48" Height="48" Background="{StaticResource TransparentBackgroundBrush}">
-                                <Rectangle x:Name="PART_InitialColorRectangle">
-                                    <Rectangle.Fill>
-                                        <SolidColorBrush Color="{Binding Path=InitialColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                            </Border>
-                            <Border Margin="24,24,0,0" Width="48" Height="48" Background="{StaticResource TransparentBackgroundBrush}" BorderThickness="2" BorderBrush="{x:Static SystemColors.WindowBrush}">
-                                <Rectangle>
-                                    <Rectangle.Fill>
-                                        <SolidColorBrush Color="{Binding Path=SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                            </Border>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition Width="auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Canvas Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Height="48" Width="48" Margin="4" VerticalAlignment="Center">
+                                <Border Width="24" Height="24" Background="{StaticResource TransparentBackgroundBrush}" BorderThickness="2">
+                                    <Rectangle x:Name="PART_InitialColorRectangle">
+                                        <Rectangle.Fill>
+                                            <SolidColorBrush Color="{Binding Path=InitialColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                </Border>
+                                <Border Canvas.Left="12" Canvas.Top="12" Width="24" Height="24" Background="{StaticResource TransparentBackgroundBrush}" BorderThickness="2" BorderBrush="{x:Static SystemColors.WindowBrush}">
+                                    <Rectangle>
+                                        <Rectangle.Fill>
+                                            <SolidColorBrush Color="{Binding Path=SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                </Border>
+                            </Canvas>
+                            <TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Text="{Binding HexString, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"/>
+                            <Button x:Name="PART_CopyHexButton" Grid.Column="2" Grid.Row="0" Margin="4">
+                                <Button.Content>
+                                    <Path Stroke="{Binding ElementName=PART_CopyRGBButton, Path=Foreground}" StrokeThickness="1" Data="{StaticResource CopyGeometry}"/>
+                                </Button.Content>
+                            </Button>
+                            <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="{Binding RGBString, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"/>
+                            <Button x:Name="PART_CopyRGBButton" Grid.Column="2" Grid.Row="1" Margin="4">
+                                <Button.Content>
+                                    <Path Stroke="{Binding ElementName=PART_CopyRGBButton, Path=Foreground}" StrokeThickness="1" Data="{StaticResource CopyGeometry}"/>
+                                </Button.Content>
+                            </Button>
                         </Grid>
+                        
                         <GroupBox Grid.Column="0" Grid.Row="2" Header="Color modes">
                             <TabControl>
                                 <TabItem Header="RGB">
@@ -244,12 +269,10 @@
                                             <RowDefinition/>
                                             <RowDefinition/>
                                             <RowDefinition/>
-                                            <RowDefinition/>
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Column="0" Grid.Row="0" Margin="0,4,4,4" Text="R"/>
                                         <TextBlock Grid.Column="0" Grid.Row="1" Margin="0,4,4,4" Text="G"/>
                                         <TextBlock Grid.Column="0" Grid.Row="2" Margin="0,4,4,4" Text="B"/>
-                                        <TextBlock Grid.Column="0" Grid.Row="3" Margin="0,4,4,4" Text="A" Visibility="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter} }"/>
 
                                         <Slider Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                             <Slider.Background>
@@ -281,21 +304,10 @@
                                                 </LinearGradientBrush>
                                             </Slider.Background>
                                         </Slider>
-                                        <Slider Grid.Column="1" Grid.Row="3" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}" Visibility="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter} }">
-                                            <Slider.Background>
-                                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                    <LinearGradientBrush.GradientStops>
-                                                        <GradientStop Offset="0" Color="Transparent"/>
-                                                        <GradientStop Offset="1" Color="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OpaqueColorConverter}}"/>
-                                                    </LinearGradientBrush.GradientStops>
-                                                </LinearGradientBrush>
-                                            </Slider.Background>
-                                        </Slider>
 
                                         <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                         <TextBlock Grid.Column="2" Grid.Row="1" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                         <TextBlock Grid.Column="2" Grid.Row="2" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                        <TextBlock Grid.Column="2" Grid.Row="3" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}" Visibility="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter} }"/>
                                     </Grid>
                                 </TabItem>
                                 <TabItem Header="HSB">
@@ -378,7 +390,7 @@
                                                 </LinearGradientBrush>
                                             </Slider.Background>
                                         </Slider>
-                                        
+
                                         <TextBlock Grid.Column="2" Grid.Row="0" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding HueHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource HueValueConverter}}"/>
                                         <TextBlock Grid.Column="2" Grid.Row="1" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding SaturationHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, StringFormat=#0.00%}"/>
                                         <TextBlock Grid.Column="2" Grid.Row="2" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding LuminanceHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, StringFormat=#0.00%}"/>
@@ -387,27 +399,29 @@
                             </TabControl>
                         </GroupBox>
 
-                        <CheckBox Visibility="Collapsed" Grid.Column="0" Grid.Row="3" Margin="0,4,0,4" Content="Use alpha channel" IsChecked="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                        <Grid Visibility="Collapsed" Grid.Column="0" Grid.Row="4">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Margin="0,4,4,4" Text="{Binding HexString, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"/>
-                            <Button x:Name="PART_CopyHexButton" Grid.Column="1" Grid.Row="0" Margin="4">
-                                <Button.Content>
-                                    <Path Stroke="{Binding ElementName=PART_CopyRGBButton, Path=Foreground}" StrokeThickness="1" Data="{StaticResource CopyGeometry}"/>
-                                </Button.Content>
-                            </Button>
-                            <TextBlock Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Margin="4" Text="{Binding RGBString, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"/>
-                            <Button x:Name="PART_CopyRGBButton" Grid.Column="3" Grid.Row="0" Margin="4,4,0,4">
-                                <Button.Content>
-                                    <Path Stroke="{Binding ElementName=PART_CopyRGBButton, Path=Foreground}" StrokeThickness="1" Data="{StaticResource CopyGeometry}"/>
-                                </Button.Content>
-                            </Button>
-                        </Grid>
+                        <StackPanel Grid.Column="0" Grid.Row="3">
+                            <CheckBox x:Name="_useAlpha" Margin="0,4,0,4" Content="Use alpha channel" IsChecked="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Margin="0,4,4,4" Text="A" IsEnabled="{Binding IsChecked, ElementName=_useAlpha}"/>
+                                <Slider Grid.Column="1" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsEnabled="{Binding IsChecked, ElementName=_useAlpha}">
+                                    <Slider.Background>
+                                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStop Offset="0" Color="Transparent"/>
+                                                <GradientStop Offset="1" Color="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OpaqueColorConverter}}"/>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+                                    </Slider.Background>
+                                </Slider>
+                                <TextBlock Grid.Column="2" Margin="4,4,0,4" TextAlignment="Right" Text="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsEnabled="{Binding IsChecked, ElementName=_useAlpha}"/>
+                            </Grid>
+                        </StackPanel>
+
                         <TextBox x:Name="PART_HexadecimalTextBox" Visibility="Collapsed" Grid.Column="0" Grid.Row="3" Foreground="{TemplateBinding Foreground}" Margin="2,0" VerticalAlignment="Center">
                             <TextBox.Style>
                                 <Style TargetType="{x:Type TextBox}">
@@ -473,7 +487,7 @@
                             </TextBox.Style>
                         </TextBox>
 
-                        
+
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
@@ -481,9 +495,11 @@
                         </Trigger>
                         <!--<Trigger Property="SelectedColor" Value="{x:Null}">
                             <Setter Property="Visibility" TargetName="PART_ColorShadeSelector" Value="Collapsed"/>
-                            --><!--<Setter Property="Background" TargetName="SelectedColorBorder" Value="Transparent"/>-->
-                            <!--<Setter Property="IsEnabled" TargetName="RGBBorder" Value="False"/>-->
-                            <!--<Setter Property="TextElement.Foreground" TargetName="RGBBorder" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>--><!--
+                            -->
+                        <!--<Setter Property="Background" TargetName="SelectedColorBorder" Value="Transparent"/>-->
+                        <!--<Setter Property="IsEnabled" TargetName="RGBBorder" Value="False"/>-->
+                        <!--<Setter Property="TextElement.Foreground" TargetName="RGBBorder" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>-->
+                        <!--
                         </Trigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
