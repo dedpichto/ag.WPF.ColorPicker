@@ -68,13 +68,12 @@ namespace ag.WPF.ColorPicker
         }
     }
 
-    public class NullableColorToBrushConverter : IValueConverter
+    public class OpaqueColorConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var color = value as Color?;
-            if (color == null || !color.HasValue) return Brushes.Black;
-            return new SolidColorBrush(Color.FromArgb(color.Value.A, color.Value.R, color.Value.G, color.Value.B));
+            if (!(value is Color color)) return null;
+            return Color.FromRgb(color.R, color.G, color.B);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
