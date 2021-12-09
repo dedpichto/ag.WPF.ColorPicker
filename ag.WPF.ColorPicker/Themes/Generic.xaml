@@ -51,7 +51,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type picker:ColorSlider}">
                     <Grid>
-                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Margin="0,8,0,0">
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                             <Border x:Name="PART_TrackBackground" Width="24">
                                 <Rectangle x:Name="PART_SpectrumDisplay" Stretch="Fill" VerticalAlignment="Stretch"/>
                             </Border>
@@ -125,7 +125,7 @@
                                                                         <Binding Path="Value" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
                                                                     </MultiBinding>
                                                                 </Viewbox.Visibility>
-                                                                <Path Fill="{x:Static SystemColors.WindowTextBrush}" Data="M0,6 L10,6 L0,12 Z M24,6 L13.5,6 L24,12 Z" Margin="0,2,0,-2"/>
+                                                                <Path Fill="{x:Static SystemColors.WindowTextBrush}" Data="M0,6 L10,0 L0,0 Z M24,6 L13.5,0 L24,0 Z"/>
                                                             </Viewbox>
                                                             <Viewbox Stretch="Fill">
                                                                 <Viewbox.Visibility>
@@ -135,7 +135,7 @@
                                                                         <Binding Path="Value" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
                                                                     </MultiBinding>
                                                                 </Viewbox.Visibility>
-                                                                <Path Fill="{x:Static SystemColors.WindowTextBrush}" Data="M0,6 L10,12 L0,12 Z M24,6 L13.5,12 L24,12 Z"/>
+                                                                <Path Fill="{x:Static SystemColors.WindowTextBrush}" Data="M0,0 L10,12 L0,12 Z M24,0 L13.5,12 L24,12 Z"/>
                                                             </Viewbox>
                                                         </Grid>
                                                         <!--<Canvas Background="Transparent" SnapsToDevicePixels="True">
@@ -214,7 +214,7 @@
                                 </Canvas>
                             </Canvas>
                         </Border>
-                        <picker:ColorSlider x:Name="PART_SpectrumSlider" VerticalAlignment="Stretch" Grid.Column="1" Grid.RowSpan="5" Margin="8,-8,0,0" />
+                        <picker:ColorSlider x:Name="PART_SpectrumSlider" VerticalAlignment="Stretch" Grid.Column="1" Grid.RowSpan="5" Margin="8,0,0,0" />
                         <GroupBox Grid.Column="0" Grid.Row="1" Header="Color modes">
                             <Grid>
                                 <Grid.ColumnDefinitions>
