@@ -47,6 +47,7 @@ namespace ag.WPF.ColorPicker
         private bool _surpressPropertyChanged;
         private bool _updateSpectrumSliderValue = true;
         private bool _updateHsl = true;
+        private bool _updateHsb = true;
 
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPanel), new FrameworkPropertyMetadata(Colors.Red, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedColorChanged));
         public static readonly DependencyProperty InitialColorProperty = DependencyProperty.Register(nameof(InitialColor), typeof(Color), typeof(ColorPanel), new FrameworkPropertyMetadata(Colors.Red, OnInitialColorChanged));
@@ -58,6 +59,9 @@ namespace ag.WPF.ColorPicker
         public static readonly DependencyProperty HueHslProperty = DependencyProperty.Register(nameof(HueHsl), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnHslChanged));
         public static readonly DependencyProperty SaturationHslProperty = DependencyProperty.Register(nameof(SaturationHsl), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnHslChanged));
         public static readonly DependencyProperty LuminanceHslProperty = DependencyProperty.Register(nameof(LuminanceHsl), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnHslChanged));
+        public static readonly DependencyProperty HueHsbProperty = DependencyProperty.Register(nameof(HueHsb), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnHsbChanged));
+        public static readonly DependencyProperty SaturationHsbProperty = DependencyProperty.Register(nameof(SaturationHsb), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnHsbChanged));
+        public static readonly DependencyProperty BrightnessHsbProperty = DependencyProperty.Register(nameof(BrightnessHsb), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnHsbChanged));
 
         public static readonly DependencyProperty HexStringProperty = DependencyProperty.Register(nameof(HexString), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata(""));
         public static readonly DependencyProperty RGBStringProperty = DependencyProperty.Register(nameof(RGBString), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata(""));
@@ -111,6 +115,24 @@ namespace ag.WPF.ColorPicker
             get { return (double)GetValue(LuminanceHslProperty); }
             set { SetValue(LuminanceHslProperty, value); }
         }
+        
+        public double HueHsb
+        {
+            get { return (double)GetValue(HueHsbProperty); }
+            set { SetValue(HueHsbProperty, value); }
+        }
+
+        public double SaturationHsb
+        {
+            get { return (double)GetValue(SaturationHsbProperty); }
+            set { SetValue(SaturationHsbProperty, value); }
+        }
+
+        public double BrightnessHsb
+        {
+            get { return (double)GetValue(BrightnessHsbProperty); }
+            set { SetValue(BrightnessHsbProperty, value); }
+        }
 
         public Color SelectedColor
         {
@@ -161,6 +183,21 @@ namespace ag.WPF.ColorPicker
             var color = hsl.ToRgbColor();
             SelectedColor = Color.FromArgb(A, color.R, color.G, color.B);
             _updateHsl = true;
+        }
+
+        private static void OnHsbChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is ColorPanel colorPanel)) return;
+            colorPanel.OnHsbChanged((double)e.OldValue, (double)e.NewValue);
+        }
+
+        protected virtual void OnHsbChanged(double oldValue, double newValue)
+        {
+            _updateHsb = false;
+            var hsb = new HsbColor(HueHsb, SaturationHsb, BrightnessHsb);
+            var color = hsb.ToRgbColor();
+            SelectedColor = Color.FromArgb(A, color.R, color.G, color.B);
+            _updateHsb = true;
         }
 
         private static void OnUseAlphaChannelPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -246,6 +283,11 @@ namespace ag.WPF.ColorPicker
             if (_updateHsl)
             {
                 UpdateHSLValues(newValue);
+            }
+
+            if (_updateHsb)
+            {
+                UpdateHSBValues(newValue);
             }
 
             UpdateColorStrings(newValue);
@@ -353,6 +395,7 @@ namespace ag.WPF.ColorPicker
             {
                 UpdateRGBValues(SelectedColor);
                 UpdateHSLValues(SelectedColor);
+                UpdateHSBValues(SelectedColor);
                 UpdateColorStrings(SelectedColor);
                 UpdateColorShadeSelectorPosition(SelectedColor);
             }
@@ -482,6 +525,14 @@ namespace ag.WPF.ColorPicker
             HueHsl = hsl.Hue;
             SaturationHsl = hsl.Saturation;
             LuminanceHsl = hsl.Luminance;
+        }        
+        
+        private void UpdateHSBValues(Color color)
+        {
+            var hsb = color.ToHsbColor();
+            HueHsb = hsb.Hue;
+            SaturationHsb = hsb.Saturation;
+            BrightnessHsb = hsb.Brightness;
         }
 
         private void UpdateColorStrings(Color color)
