@@ -409,7 +409,7 @@
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Margin="0,4,4,4" Text="A" IsEnabled="{Binding IsChecked, ElementName=_useAlpha}"/>
-                                <Slider Grid.Column="1" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsEnabled="{Binding IsChecked, ElementName=_useAlpha}">
+                                <Slider x:Name="_alphaSlider" Grid.Column="1" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsEnabled="{Binding IsChecked, ElementName=_useAlpha}">
                                     <Slider.Background>
                                         <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                             <LinearGradientBrush.GradientStops>
@@ -487,12 +487,22 @@
                                 </Style>
                             </TextBox.Style>
                         </TextBox>
-
-
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" SourceName="_alphaSlider" Value="false">
+                            <Setter TargetName="_alphaSlider" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStop Offset="0" Color="Transparent"/>
+                                            <GradientStop Offset="1" Color="#8F8F8F"/>
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
                         <!--<Trigger Property="SelectedColor" Value="{x:Null}">
                             <Setter Property="Visibility" TargetName="PART_ColorShadeSelector" Value="Collapsed"/>
