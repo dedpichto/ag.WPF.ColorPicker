@@ -82,6 +82,23 @@ namespace ag.WPF.ColorPicker
         }
     }
 
+    public class PureColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (!(value is Color color)) return null;
+            var hsl = color.ToHslColor();
+            hsl.Saturation =  1.0;
+            hsl.Luminance = 0.5;
+            return hsl.ToRgbColor();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class ColorToSolidColorBrushConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
