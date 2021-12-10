@@ -45,44 +45,52 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Elements
-        private TextBox _Text;
-        private RepeatButton _UpButton;
-        private RepeatButton _DownButton;
+        private TextBox _textBox;
+        private RepeatButton _upButton;
+        private RepeatButton _downButton;
         #endregion
 
         #region Dependency properties
         /// <summary>
         /// The identifier of the <see cref="Value"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty ValueProperty;
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(decimal), typeof(UpDown),
+                new FrameworkPropertyMetadata(0m, OnValueChanged, ConstraintValue));
         /// <summary>
         /// The identifier of the <see cref="MaxValue"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty MaxValueProperty;
+        public static readonly DependencyProperty MaxValueProperty = DependencyProperty.Register(nameof(MaxValue), typeof(decimal), typeof(UpDown),
+                new FrameworkPropertyMetadata(100m, OnMaxValueChanged, CoerceMaximum));
         /// <summary>
         /// The identifier of the <see cref="MinValue"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty MinValueProperty;
+        public static readonly DependencyProperty MinValueProperty = DependencyProperty.Register(nameof(MinValue), typeof(decimal), typeof(UpDown),
+                new FrameworkPropertyMetadata(0m, OnMinValueChanged));
         /// <summary>
         /// The identifier of the <see cref="Step"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty StepProperty;
+        public static readonly DependencyProperty StepProperty = DependencyProperty.Register(nameof(Step), typeof(decimal), typeof(UpDown),
+                new FrameworkPropertyMetadata(1m, OnStepChanged, CoerceStep));
         /// <summary>
         /// The identifier of the <see cref="NegativeForeground"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty NegativeForegroundProperty;
+        public static readonly DependencyProperty NegativeForegroundProperty = DependencyProperty.Register(nameof(NegativeForeground), typeof(SolidColorBrush), typeof(UpDown),
+                new FrameworkPropertyMetadata(Brushes.Red, OnNegativeForegroundChanged));
         /// <summary>
         /// The identifier of the <see cref="DecimalPlaces"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty DecimalPlacesProperty;
+        public static readonly DependencyProperty DecimalPlacesProperty = DependencyProperty.Register(nameof(DecimalPlaces), typeof(uint), typeof(UpDown),
+                new FrameworkPropertyMetadata((uint)0, OnDecimalPlacesChanged));
         /// <summary>
         /// The identifier of the <see cref="IsReadOnly"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty IsReadOnlyProperty;
+        public static readonly DependencyProperty IsReadOnlyProperty = DependencyProperty.Register(nameof(IsReadOnly), typeof(bool), typeof(UpDown),
+                new FrameworkPropertyMetadata(true, OnIsReadOnlyChanged));
         /// <summary>
         /// The identifier of the <see cref="UseGroupSeparator"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty UseGroupSeparatorProperty;
+        public static readonly DependencyProperty UseGroupSeparatorProperty = DependencyProperty.Register(nameof(UseGroupSeparator), typeof(bool), typeof(UpDown),
+                new FrameworkPropertyMetadata(true, OnUseGroupSeparatorChanged));
         #endregion
 
         private CurrentPosition _Position;
@@ -90,22 +98,6 @@ namespace ag.WPF.ColorPicker
         static UpDown()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(UpDown), new FrameworkPropertyMetadata(typeof(UpDown)));
-            ValueProperty = DependencyProperty.Register("Value", typeof(decimal), typeof(UpDown),
-                new FrameworkPropertyMetadata(0m, OnValueChanged, ConstraintValue));
-            MaxValueProperty = DependencyProperty.Register("MaxValue", typeof(decimal), typeof(UpDown),
-                new FrameworkPropertyMetadata(100m, OnMaxValueChanged, CoerceMaximum));
-            MinValueProperty = DependencyProperty.Register("MinValue", typeof(decimal), typeof(UpDown),
-                new FrameworkPropertyMetadata(0m, OnMinValueChanged));
-            StepProperty = DependencyProperty.Register("Step", typeof(decimal), typeof(UpDown),
-                new FrameworkPropertyMetadata(1m, OnStepChanged, CoerceStep));
-            NegativeForegroundProperty = DependencyProperty.Register("NegativeForeground", typeof(SolidColorBrush), typeof(UpDown),
-                new FrameworkPropertyMetadata(Brushes.Red, OnNegativeForegroundChanged));
-            DecimalPlacesProperty = DependencyProperty.Register("DecimalPlaces", typeof(uint), typeof(UpDown),
-                new FrameworkPropertyMetadata((uint)0, OnDecimalPlacesChanged));
-            IsReadOnlyProperty = DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(UpDown),
-                new FrameworkPropertyMetadata(true, OnIsReadOnlyChanged));
-            UseGroupSeparatorProperty = DependencyProperty.Register("UseGroupSeparator", typeof(bool), typeof(UpDown),
-                new FrameworkPropertyMetadata(true, OnUseGroupSeparatorChanged));
         }
 
         #region Public properties
@@ -425,9 +417,8 @@ namespace ag.WPF.ColorPicker
 
         private static object CoerceMaximum(DependencyObject d, object value)
         {
-            var upd = d as UpDown;
             var max = Convert.ToDecimal(value);
-            if (upd == null) return value;
+            if (!(d is UpDown upd)) return value;
             return max < upd.MinValue ? upd.MinValue : value;
         }
         /// <summary>
@@ -477,95 +468,95 @@ namespace ag.WPF.ColorPicker
             //    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             //};
 
-            if (_Text != null)
+            if (_textBox != null)
             {
-                _Text.GotFocus -= _Text_GotFocus;
-                _Text.PreviewKeyDown -= _Text_PreviewKeyDown;
-                _Text.PreviewMouseRightButtonUp -= _Text_PreviewMouseRightButtonUp;
-                _Text.TextChanged -= _Text_TextChanged;
+                _textBox.GotFocus -= _texBox_GotFocus;
+                _textBox.PreviewKeyDown -= _textBox_PreviewKeyDown;
+                _textBox.PreviewMouseRightButtonUp -= _textBox_PreviewMouseRightButtonUp;
+                _textBox.TextChanged -= _textBox_TextChanged;
                 //BindingOperations.ClearAllBindings(_Text);
             }
-            _Text = GetTemplateChild(ElementText) as TextBox;
-            if (_Text != null)
+            _textBox = GetTemplateChild(ElementText) as TextBox;
+            if (_textBox != null)
             {
-                _Text.GotFocus += _Text_GotFocus;
-                _Text.PreviewKeyDown += _Text_PreviewKeyDown;
-                _Text.PreviewMouseRightButtonUp += _Text_PreviewMouseRightButtonUp;
-                _Text.TextChanged += _Text_TextChanged;
+                _textBox.GotFocus += _texBox_GotFocus;
+                _textBox.PreviewKeyDown += _textBox_PreviewKeyDown;
+                _textBox.PreviewMouseRightButtonUp += _textBox_PreviewMouseRightButtonUp;
+                _textBox.TextChanged += _textBox_TextChanged;
                 //_Text.SetBinding(TextBox.TextProperty, bd);
             }
 
-            if (_DownButton != null)
+            if (_downButton != null)
             {
-                _DownButton.Click -= _DownButton_Click;
+                _downButton.Click -= _downButton_Click;
             }
-            _DownButton = GetTemplateChild(ElementButtonDown) as RepeatButton;
-            if (_DownButton != null)
+            _downButton = GetTemplateChild(ElementButtonDown) as RepeatButton;
+            if (_downButton != null)
             {
-                _DownButton.Click += _DownButton_Click;
+                _downButton.Click += _downButton_Click;
             }
 
-            if (_UpButton != null)
+            if (_upButton != null)
             {
-                _UpButton.Click -= _UpButton_Click;
+                _upButton.Click -= _upButton_Click;
             }
-            _UpButton = GetTemplateChild(ElementButtonUp) as RepeatButton;
-            if (_UpButton != null)
+            _upButton = GetTemplateChild(ElementButtonUp) as RepeatButton;
+            if (_upButton != null)
             {
-                _UpButton.Click += _UpButton_Click;
+                _upButton.Click += _upButton_Click;
             }
         }
         #endregion
 
         #region Private event handlers
-        private void _Text_TextChanged(object sender, TextChangedEventArgs e)
+        private void _textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (!IsReadOnly)
             {
-                BindingOperations.GetMultiBindingExpression(_Text, TextBox.TextProperty).UpdateSource();
+                BindingOperations.GetMultiBindingExpression(_textBox, TextBox.TextProperty).UpdateSource();
             }
             switch (_Position.Key)
             {
                 case CurrentKey.Number:
-                    if (DecimalPlaces == 0 || _Text.Text.Length == 0) return;
-                    var position = _Position.Offset == -1 ? 1 : _Text.Text.Length - _Position.Offset;
+                    if (DecimalPlaces == 0 || _textBox.Text.Length == 0) return;
+                    var position = _Position.Offset == -1 ? 1 : _textBox.Text.Length - _Position.Offset;
                     // ReSharper disable once RedundantCheckBeforeAssignment
-                    if (_Text.CaretIndex != position)
-                        _Text.CaretIndex = position;
+                    if (_textBox.CaretIndex != position)
+                        _textBox.CaretIndex = position;
                     break;
             }
         }
 
-        private void _Text_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        private void _textBox_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
         }
 
-        private void _UpButton_Click(object sender, RoutedEventArgs e)
+        private void _upButton_Click(object sender, RoutedEventArgs e)
         {
             addStep(true);
-            if (!_Text.IsFocused)
-                _Text.Focus();
+            if (!_textBox.IsFocused)
+                _textBox.Focus();
             else
-                _Text.SelectAll();
+                _textBox.SelectAll();
         }
 
-        private void _DownButton_Click(object sender, RoutedEventArgs e)
+        private void _downButton_Click(object sender, RoutedEventArgs e)
         {
             addStep(false);
-            if (!_Text.IsFocused)
-                _Text.Focus();
+            if (!_textBox.IsFocused)
+                _textBox.Focus();
             else
-                _Text.SelectAll();
+                _textBox.SelectAll();
         }
 
-        private void _Text_GotFocus(object sender, RoutedEventArgs e)
+        private void _texBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            _Text.SelectAll();
+            _textBox.SelectAll();
             e.Handled = true;
         }
 
-        private void _Text_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void _textBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
             {
@@ -579,12 +570,12 @@ namespace ag.WPF.ColorPicker
                 {
                     case Key.Up:
                         addStep(true);
-                        _Text.SelectAll();
+                        _textBox.SelectAll();
                         e.Handled = true;
                         break;
                     case Key.Down:
                         addStep(false);
-                        _Text.SelectAll();
+                        _textBox.SelectAll();
                         e.Handled = true;
                         break;
                     case Key.Delete:
@@ -593,25 +584,25 @@ namespace ag.WPF.ColorPicker
                             e.Handled = true;
                             break;
                         }
-                        if ((_Text.SelectionLength == _Text.Text.Length) || (_Text.CaretIndex == 0 && _Text.Text.Length == 1))
+                        if ((_textBox.SelectionLength == _textBox.Text.Length) || (_textBox.CaretIndex == 0 && _textBox.Text.Length == 1))
                         {
                             Value = MinValue;
                             e.Handled = true;
                             break;
                         }
-                        if (_Text.CaretIndex < _Text.Text.Length)
+                        if (_textBox.CaretIndex < _textBox.Text.Length)
                         {
                             if (DecimalPlaces > 0 &&
-                                _Text.CaretIndex ==
-                                _Text.Text.IndexOf(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator,
+                                _textBox.CaretIndex ==
+                                _textBox.Text.IndexOf(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator,
                                     StringComparison.Ordinal))
                             {
-                                _Text.CaretIndex++;
+                                _textBox.CaretIndex++;
                                 continue;
                             }
-                            if (_Text.Text[_Text.CaretIndex] == CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator[0])
+                            if (_textBox.Text[_textBox.CaretIndex] == CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator[0])
                             {
-                                _Text.CaretIndex++;
+                                _textBox.CaretIndex++;
                                 continue;
                             }
                         }
@@ -622,25 +613,25 @@ namespace ag.WPF.ColorPicker
                             e.Handled = true;
                             break;
                         }
-                        if ((_Text.SelectionLength == _Text.Text.Length) || (_Text.CaretIndex == 1 && _Text.Text.Length == 1))
+                        if ((_textBox.SelectionLength == _textBox.Text.Length) || (_textBox.CaretIndex == 1 && _textBox.Text.Length == 1))
                         {
                             Value = MinValue;
                             e.Handled = true;
                             break;
                         }
-                        if (_Text.CaretIndex != 0)
+                        if (_textBox.CaretIndex != 0)
                         {
                             if (DecimalPlaces > 0 &&
-                                _Text.CaretIndex ==
-                                _Text.Text.IndexOf(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator,
+                                _textBox.CaretIndex ==
+                                _textBox.Text.IndexOf(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator,
                                     StringComparison.Ordinal) + 1)
                             {
-                                _Text.CaretIndex--;
+                                _textBox.CaretIndex--;
                                 continue;
                             }
-                            if (_Text.Text[_Text.CaretIndex - 1] == CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator[0])
+                            if (_textBox.Text[_textBox.CaretIndex - 1] == CultureInfo.CurrentCulture.NumberFormat.NumberGroupSeparator[0])
                             {
-                                _Text.CaretIndex--;
+                                _textBox.CaretIndex--;
                                 continue;
                             }
                         }
@@ -665,7 +656,7 @@ namespace ag.WPF.ColorPicker
                     case Key.NumPad8:
                     case Key.D9:
                     case Key.NumPad9:
-                        if (IsReadOnly || (Value == MaxValue && _Text.SelectionLength != _Text.Text.Length))
+                        if (IsReadOnly || (Value == MaxValue && _textBox.SelectionLength != _textBox.Text.Length))
                         {
                             e.Handled = true;
                             break;
@@ -687,28 +678,28 @@ namespace ag.WPF.ColorPicker
                         //}
                         if (DecimalPlaces > 0)
                         {
-                            var sepPos = _Text.Text.IndexOf(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator, StringComparison.Ordinal);
+                            var sepPos = _textBox.Text.IndexOf(CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator, StringComparison.Ordinal);
 
-                            if ((_Text.SelectionStart + _Text.SelectionLength) <= sepPos)
+                            if ((_textBox.SelectionStart + _textBox.SelectionLength) <= sepPos)
                             {
-                                _Position.Offset = _Text.SelectionLength == _Text.Text.Length
+                                _Position.Offset = _textBox.SelectionLength == _textBox.Text.Length
                                     ? -1
-                                    : _Text.Text.Length - (_Text.SelectionLength + _Text.SelectionStart);
+                                    : _textBox.Text.Length - (_textBox.SelectionLength + _textBox.SelectionStart);
                             }
-                            else if (_Text.SelectionStart < sepPos && (_Text.SelectionStart + _Text.SelectionLength) > sepPos)
+                            else if (_textBox.SelectionStart < sepPos && (_textBox.SelectionStart + _textBox.SelectionLength) > sepPos)
                             {
-                                _Position.Offset = _Text.SelectionLength == _Text.Text.Length
+                                _Position.Offset = _textBox.SelectionLength == _textBox.Text.Length
                                     ? -1
-                                    : _Text.Text.Length - (_Text.SelectionLength + _Text.SelectionStart) - 1;
-                                _Text.Text = _Text.Text.Remove(_Text.SelectionStart, _Text.SelectionLength).Insert(_Text.SelectionStart, charFromNumberKey(e.Key)).Insert(_Text.SelectionStart + 1, CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+                                    : _textBox.Text.Length - (_textBox.SelectionLength + _textBox.SelectionStart) - 1;
+                                _textBox.Text = _textBox.Text.Remove(_textBox.SelectionStart, _textBox.SelectionLength).Insert(_textBox.SelectionStart, charFromNumberKey(e.Key)).Insert(_textBox.SelectionStart + 1, CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
                                 e.Handled = true;
                             }
-                            else if (_Text.SelectionStart > sepPos && _Text.SelectionStart < _Text.Text.Length)
+                            else if (_textBox.SelectionStart > sepPos && _textBox.SelectionStart < _textBox.Text.Length)
                             {
-                                if (_Text.SelectionLength == 0)
+                                if (_textBox.SelectionLength == 0)
                                 {
-                                    _Position.Offset = _Text.Text.Length - _Text.SelectionStart - 1;
-                                    _Text.Text = _Text.Text.Remove(_Text.SelectionStart, 1).Insert(_Text.SelectionStart, charFromNumberKey(e.Key));
+                                    _Position.Offset = _textBox.Text.Length - _textBox.SelectionStart - 1;
+                                    _textBox.Text = _textBox.Text.Remove(_textBox.SelectionStart, 1).Insert(_textBox.SelectionStart, charFromNumberKey(e.Key));
                                     e.Handled = true;
                                 }
                             }
@@ -728,8 +719,8 @@ namespace ag.WPF.ColorPicker
                             e.Handled = true;
                             break;
                         }
-                        if ((_Text.Text.Any(c => c == '-')) || (_Text.CaretIndex > 0) ||
-                            (_Text.SelectionLength == _Text.Text.Length) || (MinValue >= 0))
+                        if ((_textBox.Text.Any(c => c == '-')) || (_textBox.CaretIndex > 0) ||
+                            (_textBox.SelectionLength == _textBox.Text.Length) || (MinValue >= 0))
                         {
                             e.Handled = true;
                         }
@@ -742,19 +733,19 @@ namespace ag.WPF.ColorPicker
                             break;
                         }
                         if (CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator == "." && DecimalPlaces > 0 &&
-                            _Text.CaretIndex == _Text.Text.IndexOf('.') &&
-                            _Text.SelectionLength != _Text.Text.Length)
+                            _textBox.CaretIndex == _textBox.Text.IndexOf('.') &&
+                            _textBox.SelectionLength != _textBox.Text.Length)
                         {
-                            _Text.Select(_Text.CaretIndex + 1, 0);
+                            _textBox.Select(_textBox.CaretIndex + 1, 0);
                         }
                         e.Handled = true;
                         break;
                     case Key.OemComma:
                         if (CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator == "," && DecimalPlaces > 0 &&
-                            _Text.CaretIndex == _Text.Text.IndexOf(',') &&
-                            _Text.SelectionLength != _Text.Text.Length)
+                            _textBox.CaretIndex == _textBox.Text.IndexOf(',') &&
+                            _textBox.SelectionLength != _textBox.Text.Length)
                         {
-                            _Text.Select(_Text.CaretIndex + 1, 0);
+                            _textBox.Select(_textBox.CaretIndex + 1, 0);
                         }
                         e.Handled = true;
                         break;

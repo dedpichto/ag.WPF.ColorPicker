@@ -75,7 +75,7 @@ namespace ag.WPF.ColorPicker
                 ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation
             };
             List<Color> hsvSpectrum = Utils.GenerateHsvPalette();
-            double num = 1.0 / (double)(hsvSpectrum.Count - 1);
+            var num = 1.0 / (hsvSpectrum.Count - 1);
             int index;
             for (index = 0; index < hsvSpectrum.Count; ++index)
             {

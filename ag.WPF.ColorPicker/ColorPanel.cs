@@ -347,25 +347,25 @@ namespace ag.WPF.ColorPicker
                 _initialColorRectangle.MouseLeftButtonDown += _initialColorRectangle_MouseLeftButtonDown;
             }
 
-            if (_copyHexButton != null)
-            {
-                _copyHexButton.Click -= _copyHexButton_Click;
-            }
-            _copyHexButton = GetTemplateChild(PART_CopyHexButton) as Button;
-            if (_copyHexButton != null)
-            {
-                _copyHexButton.Click += _copyHexButton_Click;
-            }
+            //if (_copyHexButton != null)
+            //{
+            //    _copyHexButton.Click -= _copyHexButton_Click;
+            //}
+            //_copyHexButton = GetTemplateChild(PART_CopyHexButton) as Button;
+            //if (_copyHexButton != null)
+            //{
+            //    _copyHexButton.Click += _copyHexButton_Click;
+            //}
 
-            if (_copyRGBButton != null)
-            {
-                _copyRGBButton.Click -= _copyRGBButton_Click;
-            }
-            _copyRGBButton = GetTemplateChild(PART_CopyRGBButton) as Button;
-            if (_copyRGBButton != null)
-            {
-                _copyRGBButton.Click += _copyRGBButton_Click;
-            }
+            //if (_copyRGBButton != null)
+            //{
+            //    _copyRGBButton.Click -= _copyRGBButton_Click;
+            //}
+            //_copyRGBButton = GetTemplateChild(PART_CopyRGBButton) as Button;
+            //if (_copyRGBButton != null)
+            //{
+            //    _copyRGBButton.Click += _copyRGBButton_Click;
+            //}
 
             _colorShadeSelector = GetTemplateChild(PART_ColorShadeSelector) as Canvas;
             if (_colorShadeSelector != null)
