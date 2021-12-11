@@ -545,32 +545,32 @@ namespace ag.WPF.ColorPicker
             if (_spectrumSlider == null || _colorShadingCanvas == null)
                 return;
             _currentColorPosition = new Point?();
-            var hsb = color.ToHsbColor();
-            var hueValue = Math.Round(hsb.Hue, MidpointRounding.AwayFromZero);
+            //var hsb = color.ToHsbColor();
+            //var hueValue = HueHsb;// Math.Round(hsb.Hue, MidpointRounding.AwayFromZero);
             if (_updateSpectrumSliderValue)
             {
                 //_spectrumSlider.Value = 360.0 - hsb.Hue;
                 if (_firstTimeLodaded)
                 {
                     _firstTimeLodaded = false;
-                    if (_spectrumSlider.Value != hueValue)
+                    if (_spectrumSlider.Value != HueHsb)
                     {
-                        _spectrumSlider.Value = hueValue;
+                        _spectrumSlider.Value = HueHsb;
                     }
                     else
                     {
                         _spectrumSlider.Value = _spectrumSlider.Value < 360.0 ? _spectrumSlider.Value + 1.0 : _spectrumSlider.Value - 1.0;
-                        _spectrumSlider.Value = hueValue;
+                        _spectrumSlider.Value = HueHsb;
                     }
                 }
                 else
                 {
-                    _spectrumSlider.Value = hueValue;
+                    _spectrumSlider.Value = HueHsb;
                 }
                 _spectrumSlider.SetAlphaChannel(color.A);
             }
 
-            var point = new Point(hsb.Saturation, 1.0 - hsb.Brightness);
+            var point = new Point(SaturationHsb, 1.0 - BrightnessHsb);
             _currentColorPosition = new Point?(point);
             _colorShadeSelectorTransform.X = point.X * _colorShadingCanvas.Width - 5.0;
             _colorShadeSelectorTransform.Y = point.Y * _colorShadingCanvas.Height - 5.0;

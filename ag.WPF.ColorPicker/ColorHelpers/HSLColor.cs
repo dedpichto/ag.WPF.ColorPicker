@@ -109,10 +109,8 @@ namespace ag.WPF.ColorPicker.ColorHelpers
                 // achromatic color (gray scale}
                 return Color.FromArgb(byte.MaxValue,
                     (byte)Math.Round(Luminance * 255.0, MidpointRounding.AwayFromZero),
-                    (byte)Math.Round(Luminance * 255.0,
-                    MidpointRounding.AwayFromZero),
-                    (byte)Math.Round(Luminance * 255.0,
-                    MidpointRounding.AwayFromZero)
+                    (byte)Math.Round(Luminance * 255.0, MidpointRounding.AwayFromZero),
+                    (byte)Math.Round(Luminance * 255.0, MidpointRounding.AwayFromZero)
                 );
             }
             else
