@@ -133,7 +133,7 @@ namespace ag.WPF.ColorPicker
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var color = (Color)value;
-            var shadeColor = color.GetBighterOrDarker((double)parameter);
+            var shadeColor = color.MakeBighterOrDarker((double)parameter);
             return new SolidColorBrush(shadeColor);
         }
         public object ConvertBack(

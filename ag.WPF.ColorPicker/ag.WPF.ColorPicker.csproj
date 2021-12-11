@@ -56,7 +56,6 @@
     <Compile Include="ColorConverters.cs" />
     <Compile Include="ColorHelpers\HSBColor.cs" />
     <Compile Include="ColorHelpers\HSLColor.cs" />
-    <Compile Include="ColorHelpers\HSVColor.cs" />
     <Compile Include="ColorHelpers\Utils.cs" />
     <Compile Include="ColorPanel.cs" />
     <Compile Include="ColorSlider.cs">
