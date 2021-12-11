@@ -134,6 +134,7 @@ namespace ag.WPF.ColorPicker.ColorHelpers
             }
             hsb = new HsbColor(0.0, 1.0, 1.0);
             colorList.Add(hsb.ToRgbColor());
+            colorList.Reverse();
             return colorList;
         }
 

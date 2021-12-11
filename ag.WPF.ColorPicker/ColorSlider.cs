@@ -74,21 +74,34 @@ namespace ag.WPF.ColorPicker
                 EndPoint = new Point(0.5, 1.0),
                 ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation
             };
+            SpectrumBrush = new LinearGradientBrush
+            {
+                StartPoint = new Point(0.0, 0.5),
+                EndPoint = new Point(1.0, 0.5),
+                ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation
+            };
             List<Color> hsvSpectrum = Utils.GenerateHsvPalette();
             var num = 1.0 / (hsvSpectrum.Count - 1);
             int index;
             for (index = 0; index < hsvSpectrum.Count; ++index)
             {
                 _spectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)index * num));
+                SpectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)(hsvSpectrum.Count-index-1) * num));
             }
-
             _spectrumBrush.GradientStops[index - 1].Offset = 1.0;
+            SpectrumBrush.GradientStops[index - 1].Offset = 0.0;
+            //for (index=hsvSpectrum.Count-1; index > 0; --index)
+            //{
+            //    SpectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)index * num));
+            //}
+            //SpectrumBrush.GradientStops[0].Offset = 1.0;
+
             if (_spectrumDisplay == null)
                 return;
             _spectrumDisplay.Fill = _spectrumBrush;
-            SpectrumBrush = _spectrumBrush.CloneCurrentValue();
-            SpectrumBrush.StartPoint = new Point(0, 0.5);
-            SpectrumBrush.EndPoint = new Point(1, 0.5);
+            //SpectrumBrush = _spectrumBrush.CloneCurrentValue();
+            //SpectrumBrush.StartPoint = new Point(0, 0.5);
+            //SpectrumBrush.EndPoint = new Point(1, 0.5);
         }
     }
 }

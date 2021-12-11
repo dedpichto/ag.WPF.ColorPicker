@@ -88,7 +88,7 @@ namespace ag.WPF.ColorPicker
         {
             if (!(value is Color color)) return null;
             var hsl = color.ToHslColor();
-            hsl.Saturation =  1.0;
+            hsl.Saturation = 1.0;
             hsl.Luminance = 0.5;
             return hsl.ToRgbColor();
         }
@@ -99,11 +99,24 @@ namespace ag.WPF.ColorPicker
         }
     }
 
+    public class UpDownValueConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return Math.Round(System.Convert.ToDouble(value), MidpointRounding.AwayFromZero);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return Math.Round(System.Convert.ToDouble(value), MidpointRounding.AwayFromZero);
+        }
+    }
+
     public class ColorToSolidColorBrushConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null ? new SolidColorBrush((Color)value) : value;
+            return 360.0 - Math.Round(System.Convert.ToDouble(value), MidpointRounding.AwayFromZero);
         }
         public object ConvertBack(
           object value,

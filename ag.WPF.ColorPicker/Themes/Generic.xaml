@@ -11,6 +11,7 @@
     <picker:PureColorConverter x:Key="PureColorConverter"/>
     <picker:UpDownTextToValueConverter x:Key="UpDownTextToValueConverter"/>
     <picker:UpDownForegroundConverter x:Key="UpDownForegroundConverter"/>
+    <picker:UpDownValueConverter x:Key="UpDownValueConverter"/>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
     <Geometry x:Key="CopyGeometry">
@@ -39,13 +40,14 @@
     <Style TargetType="{x:Type picker:ColorSlider}">
         <Setter Property="BorderBrush" Value="DarkGray"/>
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="SmallChange" Value="10"/>
+        <Setter Property="SmallChange" Value="1"/>
+        <Setter Property="LargeChange" Value="10"/>
         <Setter Property="Orientation" Value="Vertical"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
         <Setter Property="Minimum" Value="0"/>
         <Setter Property="Maximum" Value="360"/>
-        <Setter Property="TickFrequency" Value="0.001"/>
+        <Setter Property="TickFrequency" Value="1"/>
         <Setter Property="IsSnapToTickEnabled" Value="True"/>
         <Setter Property="IsDirectionReversed" Value="False"/>
         <Setter Property="IsMoveToPointEnabled" Value="True"/>
@@ -324,7 +326,7 @@
                                         <TextBlock Grid.Column="0" Grid.Row="1" Margin="4" Text="S" VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="0" Grid.Row="2" Margin="4" Text="B" VerticalAlignment="Center"/>
 
-                                        <Slider Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="360" LargeChange="10" SmallChange="1" TickFrequency="1" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}}" Background="{Binding SpectrumBrush, ElementName=PART_SpectrumSlider}"/>
+                                        <Slider Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="360" LargeChange="10" SmallChange="1" TickFrequency="1" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding Value, ElementName=PART_SpectrumSlider}" Background="{Binding SpectrumBrush, ElementName=PART_SpectrumSlider}"/>
                                         <Slider Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="1" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding SaturationHsb, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                             <Slider.Background>
                                                 <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
@@ -345,7 +347,7 @@
                                                 </LinearGradientBrush>
                                             </Slider.Background>
                                         </Slider>
-                                        <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4" Width="48" MinValue="0" MaxValue="360" Step="1" IsReadOnly="False" Value="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                        <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4" Width="48" MinValue="0" MaxValue="360" Step="1" IsReadOnly="False" Value="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
                                         <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4" Width="48" MinValue="0" MaxValue="1" Step="0.01" IsReadOnly="False" Value="{Binding SaturationHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
                                         <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4" Width="48" MinValue="0" MaxValue="1" Step="0.01" IsReadOnly="False" Value="{Binding BrightnessHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
                                     </Grid>
@@ -366,7 +368,7 @@
                                         <TextBlock Grid.Column="0" Grid.Row="1" Margin="4" Text="S" VerticalAlignment="Center"/>
                                         <TextBlock Grid.Column="0" Grid.Row="2" Margin="4" Text="L" VerticalAlignment="Center"/>
 
-                                        <Slider Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="359" LargeChange="10" SmallChange="1" TickFrequency="1" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding HueHsl, RelativeSource={RelativeSource Mode=TemplatedParent}}" Background="{Binding SpectrumBrush, ElementName=PART_SpectrumSlider}"/>
+                                        <Slider Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="360" LargeChange="10" SmallChange="1" TickFrequency="1" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding Value, ElementName=PART_SpectrumSlider}" Background="{Binding SpectrumBrush, ElementName=PART_SpectrumSlider}"/>
                                         <Slider Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="1" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding SaturationHsl, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                             <Slider.Background>
                                                 <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
@@ -388,7 +390,7 @@
                                                 </LinearGradientBrush>
                                             </Slider.Background>
                                         </Slider>
-                                        <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4" Width="48" MinValue="0" MaxValue="360" Step="1" IsReadOnly="False" Value="{Binding HueHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                        <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4" Width="48" MinValue="0" MaxValue="360" Step="1" IsReadOnly="False" Value="{Binding HueHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
                                         <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4" Width="48" MinValue="0" MaxValue="1" Step="0.01" IsReadOnly="False" Value="{Binding SaturationHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
                                         <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4" Width="48" MinValue="0" MaxValue="1" Step="0.01" IsReadOnly="False" Value="{Binding LuminanceHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
                                     </Grid>

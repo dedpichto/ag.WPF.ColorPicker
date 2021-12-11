@@ -48,6 +48,7 @@ namespace ag.WPF.ColorPicker
         private bool _updateSpectrumSliderValue = true;
         private bool _updateHsl = true;
         private bool _updateHsb = true;
+        private bool _firstTimeLodaded = true;
 
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPanel), new FrameworkPropertyMetadata(Colors.Red, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedColorChanged));
         public static readonly DependencyProperty InitialColorProperty = DependencyProperty.Register(nameof(InitialColor), typeof(Color), typeof(ColorPanel), new FrameworkPropertyMetadata(Colors.Red, OnInitialColorChanged));
@@ -480,9 +481,27 @@ namespace ag.WPF.ColorPicker
                 return;
             _currentColorPosition = new Point?();
             var hsb = color.ToHsbColor();
+            var hueValue=Math.Round(hsb.Hue,  MidpointRounding.AwayFromZero);
             if (_updateSpectrumSliderValue)
             {
-                _spectrumSlider.Value = 360.0 - hsb.Hue;
+                //_spectrumSlider.Value = 360.0 - hsb.Hue;
+                if (_firstTimeLodaded)
+                {
+                    _firstTimeLodaded = false;
+                    if (_spectrumSlider.Value != hueValue)
+                    {
+                        _spectrumSlider.Value = hueValue;
+                    }
+                    else
+                    {
+                        _spectrumSlider.Value = _spectrumSlider.Value < 360.0 ? _spectrumSlider.Value + 1.0 : _spectrumSlider.Value - 1.0;
+                        _spectrumSlider.Value = hueValue;
+                    }
+                }
+                else
+                {
+                    _spectrumSlider.Value = hueValue;
+                }
                 _spectrumSlider.SetAlphaChannel(color.A);
             }
 
@@ -496,7 +515,8 @@ namespace ag.WPF.ColorPicker
         {
             if (_spectrumSlider == null)
                 return;
-            var hsb = new HsbColor(360.0 - _spectrumSlider.Value, 1.0, 1.0)
+            //var hsb = new HsbColor(360.0 - _spectrumSlider.Value, 1.0, 1.0)
+            var hsb = new HsbColor(_spectrumSlider.Value, 1.0, 1.0)
             {
                 Saturation = p.X,
                 Brightness = 1.0 - p.Y
