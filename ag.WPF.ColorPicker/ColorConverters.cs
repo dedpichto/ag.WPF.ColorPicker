@@ -112,11 +112,29 @@ namespace ag.WPF.ColorPicker
         }
     }
 
+    public class ShadeRectngleSizeConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            var actualHeight = (double)value;
+
+            return actualHeight == 0 ? 0 : (actualHeight - 4 * 11) / 10;
+
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class ColorToSolidColorBrushConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return 360.0 - Math.Round(System.Convert.ToDouble(value), MidpointRounding.AwayFromZero);
+            var color = (Color)value;
+            var shadeColor = color.GetBighterOrDarker((double)parameter);
+            return new SolidColorBrush(shadeColor);
         }
         public object ConvertBack(
           object value,
@@ -124,7 +142,7 @@ namespace ag.WPF.ColorPicker
           object parameter,
           CultureInfo culture)
         {
-            return value != null ? (object)((SolidColorBrush)value).Color : value;
+            return value != null ? ((SolidColorBrush)value).Color : value;
         }
     }
 }

@@ -55,7 +55,7 @@ namespace ag.WPF.ColorPicker
         protected override void OnValueChanged(double oldValue, double newValue)
         {
             base.OnValueChanged(oldValue, newValue);
-            var hsb = new HsbColor(360.0 - newValue, 1.0, 1.0);
+            var hsb = new HsbColor(newValue, 1.0, 1.0);
             var color = hsb.ToRgbColor();
             SelectedColor = Color.FromArgb(_alpha, color.R, color.G, color.B);
         }

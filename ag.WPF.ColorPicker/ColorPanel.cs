@@ -25,6 +25,8 @@ namespace ag.WPF.ColorPicker
     [TemplatePart(Name = "PART_InitialColorRectangle", Type = typeof(Rectangle))]
     [TemplatePart(Name = "PART_CopyHexButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_CopyRGBButton", Type = typeof(Button))]
+    [TemplatePart(Name = "PART_ShadesPanel", Type = typeof(StackPanel))]
+    [TemplatePart(Name = "PART_TintsPanel", Type = typeof(StackPanel))]
 
     public class ColorPanel : Control
     {
@@ -35,6 +37,11 @@ namespace ag.WPF.ColorPicker
         private const string PART_InitialColorRectangle = "PART_InitialColorRectangle";
         private const string PART_CopyHexButton = "PART_CopyHexButton";
         private const string PART_CopyRGBButton = "PART_CopyRGBButton";
+        private const string PART_ShadesPanel = "PART_ShadesPanel";
+        private const string PART_TintsPanel = "PART_TintsPanel";
+
+        private const int SHADES_COUNT = 12;
+
         private TranslateTransform _colorShadeSelectorTransform = new TranslateTransform();
         private Canvas _colorShadingCanvas;
         private Canvas _colorShadeSelector;
@@ -43,6 +50,8 @@ namespace ag.WPF.ColorPicker
         private Rectangle _initialColorRectangle;
         private Button _copyHexButton;
         private Button _copyRGBButton;
+        private StackPanel _shadesPanel;
+        private StackPanel _tintsPanel;
         private Point? _currentColorPosition;
         private bool _surpressPropertyChanged;
         private bool _updateSpectrumSliderValue = true;
@@ -116,7 +125,7 @@ namespace ag.WPF.ColorPicker
             get { return (double)GetValue(LuminanceHslProperty); }
             set { SetValue(LuminanceHslProperty, value); }
         }
-        
+
         public double HueHsb
         {
             get { return (double)GetValue(HueHsbProperty); }
@@ -388,6 +397,9 @@ namespace ag.WPF.ColorPicker
             if (_hexadecimalTextBox != null)
                 _hexadecimalTextBox.LostFocus += _hexadecimalTextBox_LostFocus;
 
+            _shadesPanel = GetTemplateChild(PART_ShadesPanel) as StackPanel;
+            _tintsPanel = GetTemplateChild(PART_TintsPanel) as StackPanel;
+
             if (SelectedColor != InitialColor)
             {
                 SelectedColor = InitialColor;
@@ -400,6 +412,8 @@ namespace ag.WPF.ColorPicker
                 UpdateColorStrings(SelectedColor);
                 UpdateColorShadeSelectorPosition(SelectedColor);
             }
+
+            createsShadesAndTints();
 
             SetHexadecimalTextBoxTextProperty(GetFormatedColorString(SelectedColor));
         }
@@ -417,6 +431,57 @@ namespace ag.WPF.ColorPicker
         private void _initialColorRectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SelectedColor = InitialColor;
+        }
+
+        private void createsShadesAndTints()
+        {
+            var step = 1.0 / SHADES_COUNT;
+            var factor = 0.0;
+            for (var i = 0; i < SHADES_COUNT; i++)
+            {
+                var rect = new Rectangle() { Width = 24, Height = 24, Cursor = Cursors.Hand, Stroke=Brushes.Gray };
+                rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToSolidColorBrushConverter(), ConverterParameter = factor });
+                rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
+                if (i == 0)
+                    rect.Margin = new Thickness(4, 4, 4, 2);
+                else if (i == 11)
+                    rect.Margin = new Thickness(4, 2, 4, 4);
+                else
+                    rect.Margin = new Thickness(4);
+                _tintsPanel.Children.Add(rect);
+
+                if (i < SHADES_COUNT - 2)
+                    factor += step;
+                else
+                    factor = 1.0;
+            }
+
+            factor = 0.0;
+            for (var i = 0; i < SHADES_COUNT; i++)
+            {
+                var rect = new Rectangle() { Width = 24, Height = 24, Cursor = Cursors.Hand, Stroke = Brushes.Gray };
+                rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToSolidColorBrushConverter(), ConverterParameter = factor });
+                rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
+                if (i == 0)
+                    rect.Margin = new Thickness(4, 4, 4, 2);
+                else if (i == 11)
+                    rect.Margin = new Thickness(4, 2, 4, 4);
+                else
+                    rect.Margin = new Thickness(4);
+                _shadesPanel.Children.Add(rect);
+
+                if (i < SHADES_COUNT - 2)
+                    factor -= step;
+                else
+                    factor = -1.0;
+            }
+        }
+
+        private void Rect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (!(sender is Rectangle rect)) return;
+            if (!(rect.Fill is SolidColorBrush brush)) return;
+            SelectedColor = brush.Color;
         }
 
         private void SetHexadecimalTextBoxTextProperty(string newValue)
@@ -481,7 +546,7 @@ namespace ag.WPF.ColorPicker
                 return;
             _currentColorPosition = new Point?();
             var hsb = color.ToHsbColor();
-            var hueValue=Math.Round(hsb.Hue,  MidpointRounding.AwayFromZero);
+            var hueValue = Math.Round(hsb.Hue, MidpointRounding.AwayFromZero);
             if (_updateSpectrumSliderValue)
             {
                 //_spectrumSlider.Value = 360.0 - hsb.Hue;
@@ -545,8 +610,8 @@ namespace ag.WPF.ColorPicker
             HueHsl = hsl.Hue;
             SaturationHsl = hsl.Saturation;
             LuminanceHsl = hsl.Luminance;
-        }        
-        
+        }
+
         private void UpdateHSBValues(Color color)
         {
             var hsb = color.ToHsbColor();

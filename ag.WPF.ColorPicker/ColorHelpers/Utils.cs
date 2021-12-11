@@ -349,5 +349,24 @@ namespace ag.WPF.ColorPicker.ColorHelpers
             double s = (max == 0) ? 0.0 : (1.0 - (min / max));
             return new HsbColor(h, s, (double)max);
         }
+
+        public static Color GetBighterOrDarker(this Color color, double factor)
+        {
+            if(factor<-1)throw new ArgumentException("Factor must bew greater equal -1",nameof(factor));
+            if (factor > 1) throw new ArgumentException("Factor mast be smaller equal 1", nameof(factor));
+            if (factor == 0) return color;
+            if (factor < 0)
+            {
+                factor += 1;
+                return Color.FromArgb(color.A,(byte)(color.R*factor), (byte)(color.G*factor), (byte)(color.B*factor));
+            }
+            else
+            {
+                return Color.FromArgb(color.A,
+                    (byte)(color.R + (byte.MaxValue - color.R) * factor),
+                    (byte)(color.G + (byte.MaxValue - color.G) * factor),
+                    (byte)(color.B + (byte.MaxValue - color.B) * factor));
+            }
+        }
     }
 }

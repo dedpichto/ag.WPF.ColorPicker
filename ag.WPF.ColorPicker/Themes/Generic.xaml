@@ -182,6 +182,7 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition/>
@@ -421,70 +422,16 @@
                             </Grid>
                         </StackPanel>
 
-                        <!--<TextBox x:Name="PART_HexadecimalTextBox" Visibility="Collapsed" Grid.Column="0" Grid.Row="3" Foreground="{TemplateBinding Foreground}" Margin="2,0" VerticalAlignment="Center">
-                            <TextBox.Style>
-                                <Style TargetType="{x:Type TextBox}">
-                                    <Setter Property="Background" Value="Transparent"/>
-                                    <Style.BasedOn>
-                                        <Style TargetType="{x:Type TextBox}">
-                                            <Style.BasedOn>
-                                                <Style TargetType="{x:Type TextBoxBase}">
-                                                    <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
-                                                    <Setter Property="BorderBrush" Value="#FFABADB3"/>
-                                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-                                                    <Setter Property="BorderThickness" Value="1"/>
-                                                    <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
-                                                    <Setter Property="HorizontalContentAlignment" Value="Left"/>
-                                                    <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-                                                    <Setter Property="AllowDrop" Value="True"/>
-                                                    <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
-                                                    <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-                                                    <Setter Property="Template">
-                                                        <Setter.Value>
-                                                            <ControlTemplate TargetType="{x:Type TextBoxBase}">
-                                                                <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                                                                    <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
-                                                                </Border>
-                                                                <ControlTemplate.Triggers>
-                                                                    <Trigger Property="IsEnabled" Value="False">
-                                                                        <Setter Property="Opacity" TargetName="border" Value="0.56"/>
-                                                                    </Trigger>
-                                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                                        <Setter Property="BorderBrush" TargetName="border" Value="#FF7EB4EA"/>
-                                                                    </Trigger>
-                                                                    <Trigger Property="IsKeyboardFocused" Value="True">
-                                                                        <Setter Property="BorderBrush" TargetName="border" Value="#FF569DE5"/>
-                                                                    </Trigger>
-                                                                </ControlTemplate.Triggers>
-                                                            </ControlTemplate>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                    --><!--<Style.Triggers>
-                                                        <DataTrigger Binding="{Binding 0}" Value="false">
-                                                            <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                                                            <Setter Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
-                                                        </DataTrigger>
-                                                        <MultiTrigger>
-                                                            <MultiTrigger.Conditions>
-                                                                <Condition Property="IsInactiveSelectionHighlightEnabled" Value="True"/>
-                                                                <Condition Property="IsSelectionActive" Value="False"/>
-                                                            </MultiTrigger.Conditions>
-                                                            <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
-                                                            <Setter Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}"/>
-                                                        </MultiTrigger>
-                                                    </Style.Triggers>--><!--
-                                                </Style>
-                                            </Style.BasedOn>
-                                        </Style>
-                                    </Style.BasedOn>
-                                    <Style.Triggers>
-                                        <Trigger Property="IsFocused" Value="False">
-                                            <Setter Property="BorderBrush" Value="Transparent"/>
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TextBox.Style>
-                        </TextBox>-->
+                        <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Shades and tints" Margin="10,0,0,0">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <StackPanel x:Name="PART_ShadesPanel" Grid.Column="0" Orientation="Vertical" Width="32"/>
+                                <StackPanel x:Name="PART_TintsPanel" Grid.Column="1" Orientation="Vertical" Width="32"/>
+                            </Grid>
+                        </GroupBox>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
