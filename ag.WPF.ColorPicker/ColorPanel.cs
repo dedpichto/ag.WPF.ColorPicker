@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -50,14 +51,15 @@ namespace ag.WPF.ColorPicker
         private Rectangle _initialColorRectangle;
         private Button _copyHexButton;
         private Button _copyRGBButton;
-        private StackPanel _shadesPanel;
-        private StackPanel _tintsPanel;
+        private UniformGrid _shadesPanel;
+        private UniformGrid _tintsPanel;
         private Point? _currentColorPosition;
         private bool _surpressPropertyChanged;
         private bool _updateSpectrumSliderValue = true;
         private bool _updateHsl = true;
         private bool _updateHsb = true;
         private bool _firstTimeLodaded = true;
+        private bool _fromMouseMove = false;
 
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPanel), new FrameworkPropertyMetadata(Colors.Red, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedColorChanged));
         public static readonly DependencyProperty InitialColorProperty = DependencyProperty.Register(nameof(InitialColor), typeof(Color), typeof(ColorPanel), new FrameworkPropertyMetadata(Colors.Red, OnInitialColorChanged));
@@ -397,8 +399,8 @@ namespace ag.WPF.ColorPicker
             if (_hexadecimalTextBox != null)
                 _hexadecimalTextBox.LostFocus += _hexadecimalTextBox_LostFocus;
 
-            _shadesPanel = GetTemplateChild(PART_ShadesPanel) as StackPanel;
-            _tintsPanel = GetTemplateChild(PART_TintsPanel) as StackPanel;
+            _shadesPanel = GetTemplateChild(PART_ShadesPanel) as UniformGrid;
+            _tintsPanel = GetTemplateChild(PART_TintsPanel) as UniformGrid;
 
             if (SelectedColor != InitialColor)
             {
@@ -435,11 +437,11 @@ namespace ag.WPF.ColorPicker
 
         private void createsShadesAndTints()
         {
-            var step = 1.0 / SHADES_COUNT;
+            var step = 1.0 / (SHADES_COUNT);
             var factor = 0.0;
             for (var i = 0; i < SHADES_COUNT; i++)
             {
-                var rect = new Rectangle() { Width = 24, Height = 24, Cursor = Cursors.Hand, Stroke = Brushes.Gray };
+                var rect = new Rectangle() { Cursor = Cursors.Hand, Stroke = Brushes.Gray };
                 rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToSolidColorBrushConverter(), ConverterParameter = factor });
                 rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
                 if (i == 0)
@@ -459,7 +461,7 @@ namespace ag.WPF.ColorPicker
             factor = 0.0;
             for (var i = 0; i < SHADES_COUNT; i++)
             {
-                var rect = new Rectangle() { Width = 24, Height = 24, Cursor = Cursors.Hand, Stroke = Brushes.Gray };
+                var rect = new Rectangle() { Cursor = Cursors.Hand, Stroke = Brushes.Gray };
                 rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToSolidColorBrushConverter(), ConverterParameter = factor });
                 rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
                 if (i == 0)
@@ -547,7 +549,7 @@ namespace ag.WPF.ColorPicker
             _currentColorPosition = new Point?();
             //var hsb = color.ToHsbColor();
             //var hueValue = HueHsb;// Math.Round(hsb.Hue, MidpointRounding.AwayFromZero);
-            if (_updateSpectrumSliderValue || !_updateHsl)
+            if (_updateSpectrumSliderValue || _fromMouseMove)
             {
                 //_spectrumSlider.Value = 360.0 - hsb.Hue;
                 if (_firstTimeLodaded)
@@ -607,7 +609,8 @@ namespace ag.WPF.ColorPicker
         private void UpdateHSLValues(Color color)
         {
             var hsl = color.ToHslColor();
-            HueHsl = hsl.Hue;
+            if (!_fromMouseMove)
+                HueHsl = hsl.Hue;
             SaturationHsl = hsl.Saturation;
             LuminanceHsl = hsl.Luminance;
         }
@@ -615,7 +618,7 @@ namespace ag.WPF.ColorPicker
         private void UpdateHSBValues(Color color)
         {
             var hsb = color.ToHsbColor();
-            if (_updateHsl)
+            if (!_fromMouseMove)
                 HueHsb = hsb.Hue;
             SaturationHsb = hsb.Saturation;
             BrightnessHsb = hsb.Brightness;
@@ -649,11 +652,11 @@ namespace ag.WPF.ColorPicker
 
         private void _colorShadingCanvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (_colorShadingCanvas == null || e.LeftButton != MouseButtonState.Pressed)
+            if (_colorShadingCanvas == null || e.LeftButton != MouseButtonState.Pressed || !_fromMouseMove)
                 return;
-            _updateHsl = false;
+
             UpdateColorShadeSelectorPositionAndCalculateColor(e.GetPosition(_colorShadingCanvas), true);
-            _updateHsl = true;
+
             Mouse.Synchronize();
         }
 
@@ -661,7 +664,9 @@ namespace ag.WPF.ColorPicker
         {
             if (_colorShadingCanvas == null)
                 return;
+
             _colorShadingCanvas.ReleaseMouseCapture();
+            _fromMouseMove = false;
             e.Handled = true;
         }
 
@@ -669,6 +674,7 @@ namespace ag.WPF.ColorPicker
         {
             if (_colorShadingCanvas == null)
                 return;
+            _fromMouseMove = true;
             UpdateColorShadeSelectorPositionAndCalculateColor(e.GetPosition(_colorShadingCanvas), true);
             _colorShadingCanvas.CaptureMouse();
             e.Handled = true;
