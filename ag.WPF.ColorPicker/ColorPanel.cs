@@ -651,7 +651,9 @@ namespace ag.WPF.ColorPicker
         {
             if (_colorShadingCanvas == null || e.LeftButton != MouseButtonState.Pressed)
                 return;
+            _updateHsl = false;
             UpdateColorShadeSelectorPositionAndCalculateColor(e.GetPosition(_colorShadingCanvas), true);
+            _updateHsl = true;
             Mouse.Synchronize();
         }
 
@@ -660,6 +662,7 @@ namespace ag.WPF.ColorPicker
             if (_colorShadingCanvas == null)
                 return;
             _colorShadingCanvas.ReleaseMouseCapture();
+            e.Handled = true;
         }
 
         private void _colorShadingCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
