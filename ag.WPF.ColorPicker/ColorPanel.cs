@@ -439,7 +439,7 @@ namespace ag.WPF.ColorPicker
             var factor = 0.0;
             for (var i = 0; i < SHADES_COUNT; i++)
             {
-                var rect = new Rectangle() { Width = 24, Height = 24, Cursor = Cursors.Hand, Stroke=Brushes.Gray };
+                var rect = new Rectangle() { Width = 24, Height = 24, Cursor = Cursors.Hand, Stroke = Brushes.Gray };
                 rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToSolidColorBrushConverter(), ConverterParameter = factor });
                 rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
                 if (i == 0)
@@ -547,7 +547,7 @@ namespace ag.WPF.ColorPicker
             _currentColorPosition = new Point?();
             //var hsb = color.ToHsbColor();
             //var hueValue = HueHsb;// Math.Round(hsb.Hue, MidpointRounding.AwayFromZero);
-            if (_updateSpectrumSliderValue)
+            if (_updateSpectrumSliderValue || !_updateHsl)
             {
                 //_spectrumSlider.Value = 360.0 - hsb.Hue;
                 if (_firstTimeLodaded)
@@ -615,7 +615,8 @@ namespace ag.WPF.ColorPicker
         private void UpdateHSBValues(Color color)
         {
             var hsb = color.ToHsbColor();
-            HueHsb = hsb.Hue;
+            if (_updateHsl)
+                HueHsb = hsb.Hue;
             SaturationHsb = hsb.Saturation;
             BrightnessHsb = hsb.Brightness;
         }
