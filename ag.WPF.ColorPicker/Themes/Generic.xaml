@@ -217,7 +217,7 @@
                 <ControlTemplate TargetType="{x:Type picker:ColorPanel}">
                     <TabControl x:Name="PART_TabMain">
                         <TabItem Header="Custom">
-                            <Grid>
+                            <Grid x:Name="_customGrid">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="auto"/>
@@ -526,6 +526,9 @@
                                 <RadioButton Style="{StaticResource ColorRadio}" Background="#FF400000"/>
                                 <RadioButton Style="{StaticResource ColorRadio}" Background="#FF400040"/>
                             </UniformGrid>
+                        </TabItem>
+                        <TabItem Header="Standard">
+                            <ListBox x:Name="PART_ListStandard" Height="{Binding ActualHeight, ElementName=_customGrid, Mode=OneWay}"/>
                         </TabItem>
                     </TabControl>
 

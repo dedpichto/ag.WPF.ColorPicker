@@ -30,6 +30,7 @@ namespace ag.WPF.ColorPicker
     [TemplatePart(Name = "PART_TintsPanel", Type = typeof(UniformGrid))]
     [TemplatePart(Name = "PART_Basic", Type = typeof(UniformGrid))]
     [TemplatePart(Name = "PART_TabMain", Type = typeof(TabControl))]
+    [TemplatePart(Name = "PART_ListStandard", Type = typeof(ListBox))]
 
     public class ColorPanel : Control
     {
@@ -44,6 +45,7 @@ namespace ag.WPF.ColorPicker
         private const string PART_TintsPanel = "PART_TintsPanel";
         private const string PART_Basic = "PART_Basic";
         private const string PART_TabMain = "PART_TabMain";
+        private const string PART_ListStandard = "PART_ListStandard";
 
         private const int SHADES_COUNT = 12;
 
@@ -59,6 +61,7 @@ namespace ag.WPF.ColorPicker
         private UniformGrid _tintsPanel;
         private UniformGrid _basicPanel;
         private TabControl _tabMain;
+        private ListBox _listStandard;
         private Point? _currentColorPosition;
         private bool _surpressPropertyChanged;
         private bool _updateSpectrumSliderValue = true;
@@ -66,6 +69,7 @@ namespace ag.WPF.ColorPicker
         private bool _updateHsb = true;
         private bool _firstTimeLodaded = true;
         private bool _fromMouseMove = false;
+        private readonly List<StandardColorItem> _standardColorItems = new List<StandardColorItem>();
 
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPanel), new FrameworkPropertyMetadata(Colors.Red, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedColorChanged));
         public static readonly DependencyProperty InitialColorProperty = DependencyProperty.Register(nameof(InitialColor), typeof(Color), typeof(ColorPanel), new FrameworkPropertyMetadata(Colors.Red, OnInitialColorChanged));
@@ -428,6 +432,17 @@ namespace ag.WPF.ColorPicker
                 }
             }
 
+            if (_listStandard != null)
+            {
+                _listStandard.SelectionChanged -= _listStandard_SelectionChanged;
+            }
+            _listStandard = GetTemplateChild(PART_ListStandard) as ListBox;
+            if (_listStandard != null)
+            {
+                _listStandard.SelectionChanged += _listStandard_SelectionChanged;
+                loadStandardColors();
+            }
+
             if (SelectedColor != InitialColor)
             {
                 SelectedColor = InitialColor;
@@ -444,6 +459,11 @@ namespace ag.WPF.ColorPicker
             createsShadesAndTints();
 
             SetHexadecimalTextBoxTextProperty(GetFormatedColorString(SelectedColor));
+        }
+
+        private void _listStandard_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
         private void Radio_Click(object sender, RoutedEventArgs e)
@@ -482,6 +502,18 @@ namespace ag.WPF.ColorPicker
                     radio.IsChecked = true;
                 }
             }
+        }
+
+        private void loadStandardColors()
+        {
+            if (_listStandard.Items.Count > 0)
+                return;
+            var standardColors = Utils.KnownColors;
+            foreach (var color in standardColors)
+            {
+                _standardColorItems.Add(new StandardColorItem(color.Value, color.Key));
+            }
+            _listStandard.ItemsSource = _standardColorItems;
         }
 
         private void createsShadesAndTints()
