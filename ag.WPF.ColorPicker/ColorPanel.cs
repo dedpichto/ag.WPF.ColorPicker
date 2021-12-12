@@ -317,6 +317,8 @@ namespace ag.WPF.ColorPicker
 
             selectBasicColor(newValue);
 
+            selectStandardColor(newValue);
+
             RoutedPropertyChangedEventArgs<Color> changedEventArgs = new RoutedPropertyChangedEventArgs<Color>(oldValue, newValue)
             {
                 RoutedEvent = SelectedColorChangedEvent
@@ -463,7 +465,13 @@ namespace ag.WPF.ColorPicker
 
         private void _listStandard_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            if (e.AddedItems.Count == 0) return;
+            if (!(e.AddedItems[0] is StandardColorItem standardColorItem)) return;
+            var color = standardColorItem.Color;
+            if (SelectedColor.R == color.R && SelectedColor.G == color.G && SelectedColor.B == color.B)
+                return;
+            SelectedColor = Color.FromArgb(SelectedColor.A, color.R, color.G, color.B);
+            _tabMain.SelectedIndex = 0;
         }
 
         private void Radio_Click(object sender, RoutedEventArgs e)
@@ -511,9 +519,24 @@ namespace ag.WPF.ColorPicker
             var standardColors = Utils.KnownColors;
             foreach (var color in standardColors)
             {
-                _standardColorItems.Add(new StandardColorItem(color.Value, color.Key));
+                var colorItem = new StandardColorItem(color.Value, color.Key);
+                _standardColorItems.Add(colorItem);
             }
             _listStandard.ItemsSource = _standardColorItems;
+        }
+
+        private void selectStandardColor(Color color)
+        {
+            _listStandard.SelectedIndex = -1;
+            foreach (var colorItem in _standardColorItems)
+            {
+                if (colorItem.Color.R == color.R && colorItem.Color.G == color.G && colorItem.Color.B == color.B)
+                {
+                    _listStandard.SelectedItem = colorItem;
+                    _listStandard.ScrollIntoView(colorItem);
+                    break;
+                }
+            }
         }
 
         private void createsShadesAndTints()
