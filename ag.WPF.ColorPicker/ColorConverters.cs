@@ -99,6 +99,40 @@ namespace ag.WPF.ColorPicker
         }
     }
 
+    /// <summary>
+    /// Represents class for inverting color of solid brush
+    /// </summary>
+    public class InvertColorConverter : IValueConverter
+    {
+        /// <summary>
+        /// Inverts color of solid brush
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (!(value is SolidColorBrush brush)) return null;
+            var color = brush.Color;
+            return Color.FromArgb(255, (byte)~color.R, (byte)~color.G, (byte)~color.B);
+        }
+
+        /// <summary>
+        /// Not implemented
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public class UpDownValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

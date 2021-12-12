@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 
 namespace ag.WPF.ColorPicker.ColorHelpers
@@ -23,7 +24,7 @@ namespace ag.WPF.ColorPicker.ColorHelpers
         public static string FormatColorString(string stringToFormat, bool isUseAlphaChannel) => !isUseAlphaChannel && stringToFormat.Length == 9 ? stringToFormat.Remove(1, 2) : stringToFormat;
 
         private static Dictionary<string, Color> GetKnownColors() => ((IEnumerable<PropertyInfo>)typeof(Colors).GetProperties(BindingFlags.Static | BindingFlags.Public)).ToDictionary(p => p.Name, p => (Color)p.GetValue(null, null));
-        
+
         public static double ConvertHsbToDouble(Color color)
         {
             var hsv = color.ToHsbColor();
@@ -147,6 +148,20 @@ namespace ag.WPF.ColorPicker.ColorHelpers
                     (byte)(color.G + (byte.MaxValue - color.G) * factor),
                     (byte)(color.B + (byte.MaxValue - color.B) * factor));
             }
+        }
+
+        public static DrawingBrush TransparentBrush()
+        {
+            var geometryGroup = new GeometryGroup();
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(0, 0, 50, 50)));
+            geometryGroup.Children.Add(new RectangleGeometry(new Rect(50, 50, 50, 50)));
+            var geometryDrawingGray = new GeometryDrawing { Brush = Brushes.LightGray, Geometry = geometryGroup };
+            var geometryDrawingWhile = new GeometryDrawing { Brush = Brushes.White, Geometry = new RectangleGeometry(new Rect(0, 0, 100, 100)) };
+            var drawingGroup = new DrawingGroup();
+            drawingGroup.Children.Add(geometryDrawingWhile);
+            drawingGroup.Children.Add(geometryDrawingGray);
+            var drawingBrush = new DrawingBrush { TileMode = TileMode.Tile, Viewport = new Rect(0, 0, 10, 10), ViewportUnits = BrushMappingMode.Absolute, Drawing = drawingGroup };
+            return drawingBrush;
         }
     }
 }

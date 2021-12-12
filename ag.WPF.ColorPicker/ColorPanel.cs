@@ -26,8 +26,10 @@ namespace ag.WPF.ColorPicker
     [TemplatePart(Name = "PART_InitialColorRectangle", Type = typeof(Rectangle))]
     [TemplatePart(Name = "PART_CopyHexButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_CopyRGBButton", Type = typeof(Button))]
-    [TemplatePart(Name = "PART_ShadesPanel", Type = typeof(StackPanel))]
-    [TemplatePart(Name = "PART_TintsPanel", Type = typeof(StackPanel))]
+    [TemplatePart(Name = "PART_ShadesPanel", Type = typeof(UniformGrid))]
+    [TemplatePart(Name = "PART_TintsPanel", Type = typeof(UniformGrid))]
+    [TemplatePart(Name = "PART_Basic", Type = typeof(UniformGrid))]
+    [TemplatePart(Name = "PART_TabMain", Type = typeof(TabControl))]
 
     public class ColorPanel : Control
     {
@@ -40,6 +42,8 @@ namespace ag.WPF.ColorPicker
         private const string PART_CopyRGBButton = "PART_CopyRGBButton";
         private const string PART_ShadesPanel = "PART_ShadesPanel";
         private const string PART_TintsPanel = "PART_TintsPanel";
+        private const string PART_Basic = "PART_Basic";
+        private const string PART_TabMain = "PART_TabMain";
 
         private const int SHADES_COUNT = 12;
 
@@ -53,6 +57,8 @@ namespace ag.WPF.ColorPicker
         private Button _copyRGBButton;
         private UniformGrid _shadesPanel;
         private UniformGrid _tintsPanel;
+        private UniformGrid _basicPanel;
+        private TabControl _tabMain;
         private Point? _currentColorPosition;
         private bool _surpressPropertyChanged;
         private bool _updateSpectrumSliderValue = true;
@@ -399,8 +405,25 @@ namespace ag.WPF.ColorPicker
             if (_hexadecimalTextBox != null)
                 _hexadecimalTextBox.LostFocus += _hexadecimalTextBox_LostFocus;
 
+            _tabMain = GetTemplateChild(PART_TabMain) as TabControl;
             _shadesPanel = GetTemplateChild(PART_ShadesPanel) as UniformGrid;
             _tintsPanel = GetTemplateChild(PART_TintsPanel) as UniformGrid;
+
+            if (_basicPanel != null)
+            {
+                foreach (var radio in _basicPanel.Children.OfType<RadioButton>())
+                {
+                    radio.Click -= Radio_Click;
+                }
+            }
+            _basicPanel = GetTemplateChild(PART_Basic) as UniformGrid;
+            if (_basicPanel != null)
+            {
+                foreach (var radio in _basicPanel.Children.OfType<RadioButton>())
+                {
+                    radio.Click += Radio_Click;
+                }
+            }
 
             if (SelectedColor != InitialColor)
             {
@@ -420,6 +443,15 @@ namespace ag.WPF.ColorPicker
             SetHexadecimalTextBoxTextProperty(GetFormatedColorString(SelectedColor));
         }
 
+        private void Radio_Click(object sender, RoutedEventArgs e)
+        {
+            if (!(sender is RadioButton radio)) return;
+            if (!(radio.Background is SolidColorBrush brush)) return;
+            var color = brush.Color;
+            SelectedColor = Color.FromArgb(SelectedColor.A, color.R, color.G, color.B);
+            _tabMain.SelectedIndex = 0;
+        }
+
         private void _copyRGBButton_Click(object sender, RoutedEventArgs e)
         {
             Clipboard.SetText(RGBString);
@@ -437,20 +469,23 @@ namespace ag.WPF.ColorPicker
 
         private void createsShadesAndTints()
         {
-            var step = 1.0 / (SHADES_COUNT);
+            var transparentBackgroundBrush = Utils.TransparentBrush();
+            var step = 1.0 / (SHADES_COUNT - 1);
             var factor = 0.0;
             for (var i = 0; i < SHADES_COUNT; i++)
             {
+                var border = new Border { Background = transparentBackgroundBrush };
                 var rect = new Rectangle() { Cursor = Cursors.Hand, Stroke = Brushes.Gray };
                 rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToSolidColorBrushConverter(), ConverterParameter = factor });
                 rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
+                border.Child = rect;
                 if (i == 0)
-                    rect.Margin = new Thickness(4, 4, 4, 2);
+                    border.Margin = new Thickness(4, 4, 4, 2);
                 else if (i == 11)
-                    rect.Margin = new Thickness(4, 2, 4, 4);
+                    border.Margin = new Thickness(4, 2, 4, 4);
                 else
-                    rect.Margin = new Thickness(4);
-                _tintsPanel.Children.Add(rect);
+                    border.Margin = new Thickness(4);
+                _tintsPanel.Children.Add(border);
 
                 if (i < SHADES_COUNT - 2)
                     factor += step;
@@ -461,16 +496,18 @@ namespace ag.WPF.ColorPicker
             factor = 0.0;
             for (var i = 0; i < SHADES_COUNT; i++)
             {
+                var border = new Border { Background = transparentBackgroundBrush };
                 var rect = new Rectangle() { Cursor = Cursors.Hand, Stroke = Brushes.Gray };
                 rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToSolidColorBrushConverter(), ConverterParameter = factor });
                 rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
+                border.Child = rect;
                 if (i == 0)
-                    rect.Margin = new Thickness(4, 4, 4, 2);
+                    border.Margin = new Thickness(4, 4, 4, 2);
                 else if (i == 11)
-                    rect.Margin = new Thickness(4, 2, 4, 4);
+                    border.Margin = new Thickness(4, 2, 4, 4);
                 else
-                    rect.Margin = new Thickness(4);
-                _shadesPanel.Children.Add(rect);
+                    border.Margin = new Thickness(4);
+                _shadesPanel.Children.Add(border);
 
                 if (i < SHADES_COUNT - 2)
                     factor -= step;

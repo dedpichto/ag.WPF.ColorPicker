@@ -9,6 +9,7 @@
     <picker:SliderThumbVisibilityConverter x:Key="SliderThumbVisibilityConverter"/>
     <picker:OpaqueColorConverter x:Key="OpaqueColorConverter"/>
     <picker:PureColorConverter x:Key="PureColorConverter"/>
+    <picker:InvertColorConverter x:Key="InvertColorConverter"/>
     <picker:UpDownTextToValueConverter x:Key="UpDownTextToValueConverter"/>
     <picker:UpDownForegroundConverter x:Key="UpDownForegroundConverter"/>
     <picker:UpDownValueConverter x:Key="UpDownValueConverter"/>
@@ -17,6 +18,7 @@
     <Geometry x:Key="CopyGeometry">
         M2,6 L12,6 L12,18 L2,18 Z M8,6 L8,2 L18,2 L18,14 L12,14
     </Geometry>
+    
     <DrawingBrush x:Key="TransparentBackgroundBrush" TileMode="Tile" Viewport="0,0,10,10" ViewportUnits="Absolute">
         <DrawingBrush.Drawing>
             <DrawingGroup>
@@ -48,21 +50,21 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RadioButton}">
-                    <Border x:Name="bd" Background="{TemplateBinding Background}">
-                        <Rectangle x:Name="rect"
+                    <Border x:Name="_radioBorder" Background="{TemplateBinding Background}">
+                        <Rectangle x:Name="_focusRect"
                                    SnapsToDevicePixels="true" 
                                    StrokeDashArray="2 2" 
                                    StrokeThickness="1" 
-                                   Margin="1"
+                                   Margin="2"
                                    Visibility="Hidden">
-                            <!--<Rectangle.Stroke>
-                                <SolidColorBrush Color="{Binding Path=Background, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}, Converter={StaticResource ColorInvertConverter}}"/>
-                            </Rectangle.Stroke>-->
+                            <Rectangle.Stroke>
+                                <SolidColorBrush Color="{Binding Background, ElementName=_radioBorder, Converter={StaticResource InvertColorConverter}}"/>
+                            </Rectangle.Stroke>
                         </Rectangle>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="true">
-                            <Setter TargetName="rect"
+                            <Setter TargetName="_focusRect"
                                     Property="Visibility"
                                     Value="Visible"/>
                         </Trigger>
@@ -213,7 +215,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type picker:ColorPanel}">
-                    <TabControl>
+                    <TabControl x:Name="PART_TabMain">
                         <TabItem Header="Custom">
                             <Grid>
                                 <Grid.ColumnDefinitions>
