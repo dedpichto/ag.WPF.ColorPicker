@@ -517,9 +517,9 @@ namespace ag.WPF.ColorPicker
             if (_listStandard.Items.Count > 0)
                 return;
             var standardColors = Utils.KnownColors;
-            foreach (var color in standardColors)
+            foreach (var color in standardColors.OrderBy(kvp => kvp.Value.Item2.Hue).ThenBy(kvp => kvp.Value.Item2.Saturation).ThenBy(kvp => kvp.Value.Item2.Brightness))
             {
-                var colorItem = new StandardColorItem(color.Value, color.Key);
+                var colorItem = new StandardColorItem(color.Value.Item1, color.Key);
                 _standardColorItems.Add(colorItem);
             }
             _listStandard.ItemsSource = _standardColorItems;

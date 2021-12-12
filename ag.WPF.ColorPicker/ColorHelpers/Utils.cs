@@ -11,7 +11,7 @@ namespace ag.WPF.ColorPicker.ColorHelpers
 {
     internal static class Utils
     {
-        public static readonly Dictionary<string, Color> KnownColors = GetKnownColors();
+        public static readonly Dictionary<string, (Color, HsbColor)> KnownColors = GetKnownColors();
 
         public static string GetColorName(this Color color)
         {
@@ -23,7 +23,7 @@ namespace ag.WPF.ColorPicker.ColorHelpers
 
         public static string FormatColorString(string stringToFormat, bool isUseAlphaChannel) => !isUseAlphaChannel && stringToFormat.Length == 9 ? stringToFormat.Remove(1, 2) : stringToFormat;
 
-        private static Dictionary<string, Color> GetKnownColors() => ((IEnumerable<PropertyInfo>)typeof(Colors).GetProperties(BindingFlags.Static | BindingFlags.Public)).ToDictionary(p => p.Name, p => (Color)p.GetValue(null, null));
+        private static Dictionary<string, (Color,HsbColor)> GetKnownColors() => ((IEnumerable<PropertyInfo>)typeof(Colors).GetProperties(BindingFlags.Static | BindingFlags.Public)).ToDictionary(p => p.Name, p => ((Color)p.GetValue(null, null),((Color)p.GetValue(null, null)).ToHsbColor()));
 
         public static double ConvertHsbToDouble(Color color)
         {
