@@ -4,7 +4,6 @@
     xmlns:picker="clr-namespace:ag.WPF.ColorPicker">
 
     <picker:ValueToColorConverter x:Key="ValueToColorConverter"/>
-    <picker:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter"/>
     <picker:HueValueConverter x:Key="HueValueConverter"/>
     <picker:SliderThumbVisibilityConverter x:Key="SliderThumbVisibilityConverter"/>
     <picker:OpaqueColorConverter x:Key="OpaqueColorConverter"/>
@@ -13,6 +12,7 @@
     <picker:UpDownTextToValueConverter x:Key="UpDownTextToValueConverter"/>
     <picker:UpDownForegroundConverter x:Key="UpDownForegroundConverter"/>
     <picker:UpDownValueConverter x:Key="UpDownValueConverter"/>
+    <picker:SBSLValueConverter x:Key="SBSLValueConverter"/>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
     <Geometry x:Key="CopyGeometry">
@@ -180,23 +180,6 @@
                                                                 <Path Fill="{x:Static SystemColors.WindowTextBrush}" Data="M0,0 L10,12 L0,12 Z M24,0 L13.5,12 L24,12 Z"/>
                                                             </Viewbox>
                                                         </Grid>
-                                                        <!--<Canvas Background="Transparent" SnapsToDevicePixels="True">
-                                                            <Path x:Name="LeftArrow" Canvas.Left="0" Data="F1M276.761,316L262.619,307.835 262.619,324.165 276.761,316z" Fill="{x:Static SystemColors.WindowTextBrush}" Height="8" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Stroke="{x:Static SystemColors.WindowTextBrush}" StrokeLineJoin="Round" Width="8">
-                                                                <Path.RenderTransform>
-                                                                    <TransformGroup>
-                                                                        <TranslateTransform Y="6"/>
-                                                                    </TransformGroup>
-                                                                </Path.RenderTransform>
-                                                            </Path>
-                                                            <Path x:Name="RightArrow" Canvas.Left="7" Data="F1M276.761,316L262.619,307.835 262.619,324.165 276.761,316z" Fill="{x:Static SystemColors.WindowTextBrush}" Height="8" RenderTransformOrigin="0.5,0.5" Stretch="Fill" Stroke="{x:Static SystemColors.WindowTextBrush}" StrokeLineJoin="Round" Width="8">
-                                                                <Path.RenderTransform>
-                                                                    <TransformGroup>
-                                                                        <RotateTransform Angle="-180"/>
-                                                                        <TranslateTransform X="9" Y="6"/>
-                                                                    </TransformGroup>
-                                                                </Path.RenderTransform>
-                                                            </Path>
-                                                        </Canvas>-->
                                                     </ControlTemplate>
                                                 </Setter.Value>
                                             </Setter>
@@ -278,18 +261,6 @@
                                         </Border>
                                     </Canvas>
                                     <TextBox x:Name="PART_HexadecimalTextBox" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
-                                    <!--<TextBlock Grid.Column="1" Grid.Row="0" VerticalAlignment="Center" Text="{Binding HexString, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"/>
-                            <Button x:Name="PART_CopyHexButton" Grid.Column="2" Grid.Row="0" Margin="4">
-                                <Button.Content>
-                                    <Path Stroke="{Binding ElementName=PART_CopyRGBButton, Path=Foreground}" StrokeThickness="1" Data="{StaticResource CopyGeometry}"/>
-                                </Button.Content>
-                            </Button>
-                            <TextBlock Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" Text="{Binding RGBString, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"/>
-                            <Button x:Name="PART_CopyRGBButton" Grid.Column="2" Grid.Row="1" Margin="4">
-                                <Button.Content>
-                                    <Path Stroke="{Binding ElementName=PART_CopyRGBButton, Path=Foreground}" StrokeThickness="1" Data="{StaticResource CopyGeometry}"/>
-                                </Button.Content>
-                            </Button>-->
                                 </Grid>
 
                                 <GroupBox Grid.Column="0" Grid.Row="2" Header="Color modes">
@@ -341,9 +312,9 @@
                                                     </Slider.Background>
                                                 </Slider>
 
-                                                <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4" Width="48" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4" Width="48" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4" Width="48" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
                                             </Grid>
                                         </TabItem>
                                         <TabItem Header="HSB">
@@ -351,6 +322,7 @@
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="auto"/>
                                                     <ColumnDefinition/>
+                                                    <ColumnDefinition Width="auto"/>
                                                     <ColumnDefinition Width="auto"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Grid.RowDefinitions>
@@ -383,9 +355,13 @@
                                                         </LinearGradientBrush>
                                                     </Slider.Background>
                                                 </Slider>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4" Width="48" MinValue="0" MaxValue="360" Step="1" IsReadOnly="False" Value="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4" Width="48" MinValue="0" MaxValue="1" Step="0.01" IsReadOnly="False" Value="{Binding SaturationHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4" Width="48" MinValue="0" MaxValue="1" Step="0.01" IsReadOnly="False" Value="{Binding BrightnessHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4" Width="40" MinValue="0" MaxValue="360" Step="1" IsReadOnly="False" Value="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding SaturationHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding BrightnessHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
+
+                                                <TextBlock Grid.Column="3" Grid.Row="0" VerticalAlignment="Top" Text="o"/>
+                                                <TextBlock Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" Text="%"/>
+                                                <TextBlock Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" Text="%"/>
                                             </Grid>
                                         </TabItem>
                                         <TabItem Header="HSL">
@@ -393,6 +369,7 @@
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="auto"/>
                                                     <ColumnDefinition/>
+                                                    <ColumnDefinition Width="auto"/>
                                                     <ColumnDefinition Width="auto"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Grid.RowDefinitions>
@@ -426,9 +403,13 @@
                                                         </LinearGradientBrush>
                                                     </Slider.Background>
                                                 </Slider>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4" Width="48" MinValue="0" MaxValue="360" Step="1" IsReadOnly="False" Value="{Binding HueHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4" Width="48" MinValue="0" MaxValue="1" Step="0.01" IsReadOnly="False" Value="{Binding SaturationHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4" Width="48" MinValue="0" MaxValue="1" Step="0.01" IsReadOnly="False" Value="{Binding LuminanceHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4" Width="40" MinValue="0" MaxValue="360" Step="1" IsReadOnly="False" Value="{Binding HueHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding SaturationHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding LuminanceHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
+                                                
+                                                <TextBlock Grid.Column="3" Grid.Row="0" VerticalAlignment="Top" Text="o"/>
+                                                <TextBlock Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" Text="%"/>
+                                                <TextBlock Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" Text="%"/>
                                             </Grid>
                                         </TabItem>
                                     </TabControl>
@@ -453,7 +434,7 @@
                                                 </LinearGradientBrush>
                                             </Slider.Background>
                                         </Slider>
-                                        <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4" Width="48" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                        <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
                                     </Grid>
                                 </StackPanel>
 

@@ -540,7 +540,7 @@ namespace ag.WPF.ColorPicker
             {
                 var border = new Border { Background = transparentBackgroundBrush };
                 var rect = new Rectangle() { Cursor = Cursors.Hand, Stroke = Brushes.Gray };
-                rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToSolidColorBrushConverter(), ConverterParameter = factor });
+                rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToBighterOrDarkerConverter(), ConverterParameter = factor });
                 rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
                 border.Child = rect;
                 if (i == 0)
@@ -562,7 +562,7 @@ namespace ag.WPF.ColorPicker
             {
                 var border = new Border { Background = transparentBackgroundBrush };
                 var rect = new Rectangle() { Cursor = Cursors.Hand, Stroke = Brushes.Gray };
-                rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToSolidColorBrushConverter(), ConverterParameter = factor });
+                rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToBighterOrDarkerConverter(), ConverterParameter = factor });
                 rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
                 border.Child = rect;
                 if (i == 0)

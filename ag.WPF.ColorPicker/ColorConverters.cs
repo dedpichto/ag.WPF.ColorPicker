@@ -41,6 +41,21 @@ namespace ag.WPF.ColorPicker
         }
     }
 
+    public class SBSLValueConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (!Utils.NumericTypes.Contains(value.GetType())) return null;
+            return Math.Round(System.Convert.ToDouble(value), 2, MidpointRounding.AwayFromZero) * 100;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (!Utils.NumericTypes.Contains(value.GetType())) return null;
+            return System.Convert.ToDouble(value) / 100.0;
+        }
+    }
+
     public class SliderThumbVisibilityConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -87,10 +102,10 @@ namespace ag.WPF.ColorPicker
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(value is Color color)) return null;
-            var hsl = color.ToHslColor();
-            hsl.Saturation = 1.0;
-            hsl.Luminance = 0.5;
-            return hsl.ToRgbColor();
+            var hsb = color.ToHsbColor();
+            hsb.Saturation = 1.0;
+            hsb.Brightness = 1.0;
+            return hsb.ToRgbColor();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
@@ -146,23 +161,7 @@ namespace ag.WPF.ColorPicker
         }
     }
 
-    public class ShadeRectngleSizeConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            var actualHeight = (double)value;
-
-            return actualHeight == 0 ? 0 : (actualHeight - 4 * 11) / 10;
-
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class ColorToSolidColorBrushConverter : IValueConverter
+    public class ColorToBighterOrDarkerConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -170,13 +169,9 @@ namespace ag.WPF.ColorPicker
             var shadeColor = color.MakeBighterOrDarker((double)parameter);
             return new SolidColorBrush(shadeColor);
         }
-        public object ConvertBack(
-          object value,
-          Type targetType,
-          object parameter,
-          CultureInfo culture)
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return value != null ? ((SolidColorBrush)value).Color : value;
+            throw new NotImplementedException();
         }
     }
 }
