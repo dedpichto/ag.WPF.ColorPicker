@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
@@ -18,7 +19,7 @@ namespace ag.WPF.ColorPicker
         {
             Color = color;
             ColorName = colorName;
-
+            Cursor = Cursors.Hand;
             var stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
             var rectangle = new Rectangle
             {

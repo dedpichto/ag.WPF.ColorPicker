@@ -267,7 +267,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Canvas Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Height="36" Width="36" Margin="4">
                                         <Border Width="24" Height="24" Background="{StaticResource TransparentBackgroundBrush}" BorderThickness="2">
-                                            <Rectangle x:Name="PART_InitialColorRectangle"/>
+                                            <Rectangle x:Name="PART_InitialColorRectangle" Cursor="Hand"/>
                                         </Border>
                                         <Border Canvas.Left="12" Canvas.Top="12" Width="24" Height="24" Background="{StaticResource TransparentBackgroundBrush}" BorderThickness="2" BorderBrush="{x:Static SystemColors.WindowBrush}">
                                             <Rectangle>
@@ -473,54 +473,54 @@
                         </TabItem>
                         <TabItem Header="Basic">
                             <UniformGrid x:Name="PART_Basic" Rows="6" Columns="8">
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFFFFFFF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFC0C0FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFC0E0FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFC0FFFF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFC0FFC0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFFFFFC0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFFFC0C0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFFFC0FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFE0E0E0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF8080FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF80C0FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF80FFFF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF80FF80"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFFFFF80"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFFF8080"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFFF80FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFC0C0C0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF0000FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF0080FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF00FFFF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF00FF00"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFFFFF00"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFFF0000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFFF00FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF808080"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF0000C0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF0040C0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF00C0C0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF00C000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFC0C000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFC00000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FFC000C0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF404040"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF000080"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF004080"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF008080"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF008000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF808000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF800000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF800080"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF000000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF000040"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF404080"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF004040"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF004000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF404000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF400000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Background="#FF400040"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFFFFF"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0C0FF"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0E0FF"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0FFFF"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0FFC0"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFFFC0"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFC0C0"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFC0FF"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFE0E0E0"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF8080FF"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF80C0FF"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF80FFFF"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF80FF80"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFFF80"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFF8080"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFF80FF"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0C0C0"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF0000FF"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF0080FF"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF00FFFF"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF00FF00"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFFF00"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFF0000"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFF00FF"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF808080"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF0000C0"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF0040C0"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF00C0C0"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF00C000"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0C000"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC00000"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC000C0"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF404040"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF000080"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF004080"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF008080"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF008000"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF808000"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF800000"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF800080"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF000000"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF000040"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF404080"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF004040"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF004000"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF404000"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF400000"/>
+                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF400040"/>
                             </UniformGrid>
                         </TabItem>
                         <TabItem Header="Standard">

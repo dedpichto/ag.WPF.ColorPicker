@@ -482,13 +482,14 @@ namespace ag.WPF.ColorPicker
 
         private void _initialColorRectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if(!(sender is Rectangle rectangle)) return;
-            if(!(rectangle.Fill is SolidColorBrush brush)) return;  
+            if (!(sender is Rectangle rectangle)) return;
+            if (!(rectangle.Fill is SolidColorBrush brush)) return;
             SelectedColor = brush.Color;
         }
 
         private void selectBasicColor(Color color)
         {
+            if (_basicPanel == null) return;
             foreach (var radio in _basicPanel.Children.OfType<RadioButton>())
             {
                 radio.IsChecked = false;
@@ -503,6 +504,7 @@ namespace ag.WPF.ColorPicker
 
         private void loadStandardColors()
         {
+            if (_listStandard is null) return;
             if (_listStandard.Items.Count > 0)
                 return;
             var standardColors = Utils.KnownColors;
@@ -516,6 +518,7 @@ namespace ag.WPF.ColorPicker
 
         private void selectStandardColor(Color color)
         {
+            if (_listStandard is null) return;
             _listStandard.SelectedIndex = -1;
             foreach (var colorItem in _standardColorItems)
             {
