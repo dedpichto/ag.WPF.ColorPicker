@@ -72,7 +72,6 @@ namespace ag.WPF.ColorPicker
         private readonly List<StandardColorItem> _standardColorItems = new List<StandardColorItem>();
 
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPanel), new FrameworkPropertyMetadata(Colors.Red, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnSelectedColorChanged));
-        public static readonly DependencyProperty InitialColorProperty = DependencyProperty.Register(nameof(InitialColor), typeof(Color), typeof(ColorPanel), new FrameworkPropertyMetadata(Colors.Red, OnInitialColorChanged));
         public static readonly DependencyProperty AProperty = DependencyProperty.Register(nameof(A), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnByteChanged));
         public static readonly DependencyProperty RProperty = DependencyProperty.Register(nameof(R), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnByteChanged));
         public static readonly DependencyProperty GProperty = DependencyProperty.Register(nameof(G), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnByteChanged));
@@ -160,12 +159,6 @@ namespace ag.WPF.ColorPicker
         {
             get { return (Color)GetValue(SelectedColorProperty); }
             set { SetValue(SelectedColorProperty, value); }
-        }
-
-        public Color InitialColor
-        {
-            get { return (Color)GetValue(InitialColorProperty); }
-            set { SetValue(InitialColorProperty, value); }
         }
 
         public byte A
@@ -372,6 +365,7 @@ namespace ag.WPF.ColorPicker
             if (_initialColorRectangle != null)
             {
                 _initialColorRectangle.MouseLeftButtonDown += _initialColorRectangle_MouseLeftButtonDown;
+                _initialColorRectangle.Fill = new SolidColorBrush(SelectedColor);
             }
 
             //if (_copyHexButton != null)
@@ -445,18 +439,11 @@ namespace ag.WPF.ColorPicker
                 loadStandardColors();
             }
 
-            if (SelectedColor != InitialColor)
-            {
-                SelectedColor = InitialColor;
-            }
-            else
-            {
-                UpdateRGBValues(SelectedColor);
-                UpdateHSLValues(SelectedColor);
-                UpdateHSBValues(SelectedColor);
-                UpdateColorStrings(SelectedColor);
-                UpdateColorShadeSelectorPosition(SelectedColor);
-            }
+            UpdateRGBValues(SelectedColor);
+            UpdateHSLValues(SelectedColor);
+            UpdateHSBValues(SelectedColor);
+            UpdateColorStrings(SelectedColor);
+            UpdateColorShadeSelectorPosition(SelectedColor);
 
             createsShadesAndTints();
 
@@ -495,7 +482,9 @@ namespace ag.WPF.ColorPicker
 
         private void _initialColorRectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SelectedColor = InitialColor;
+            if(!(sender is Rectangle rectangle)) return;
+            if(!(rectangle.Fill is SolidColorBrush brush)) return;  
+            SelectedColor = brush.Color;
         }
 
         private void selectBasicColor(Color color)

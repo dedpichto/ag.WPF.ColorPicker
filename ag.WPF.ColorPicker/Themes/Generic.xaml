@@ -267,11 +267,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Canvas Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Height="36" Width="36" Margin="4">
                                         <Border Width="24" Height="24" Background="{StaticResource TransparentBackgroundBrush}" BorderThickness="2">
-                                            <Rectangle x:Name="PART_InitialColorRectangle">
-                                                <Rectangle.Fill>
-                                                    <SolidColorBrush Color="{Binding Path=InitialColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                                </Rectangle.Fill>
-                                            </Rectangle>
+                                            <Rectangle x:Name="PART_InitialColorRectangle"/>
                                         </Border>
                                         <Border Canvas.Left="12" Canvas.Top="12" Width="24" Height="24" Background="{StaticResource TransparentBackgroundBrush}" BorderThickness="2" BorderBrush="{x:Static SystemColors.WindowBrush}">
                                             <Rectangle>
