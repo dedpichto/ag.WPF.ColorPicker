@@ -11,7 +11,7 @@ using System.Windows.Shapes;
 
 namespace ag.WPF.ColorPicker
 {
-    internal class StandardColorItem : ListBoxItem
+    internal class StandardColorItem : StackPanel
     {
         public Color Color { get; private set; }
         public string ColorName { get; private set; }
@@ -20,7 +20,7 @@ namespace ag.WPF.ColorPicker
             Color = color;
             ColorName = colorName;
             Cursor = Cursors.Hand;
-            var stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
+            Orientation = Orientation.Horizontal;
             var rectangle = new Rectangle
             {
                 Fill = new SolidColorBrush(color),
@@ -37,11 +37,8 @@ namespace ag.WPF.ColorPicker
                 HorizontalAlignment = HorizontalAlignment.Right,
                 VerticalAlignment = VerticalAlignment.Center
             };
-            stackPanel.Children.Add(rectangle);
-            stackPanel.Children.Add(textBlock);
-            VerticalContentAlignment = VerticalAlignment.Center;
-            Content = stackPanel;
+            Children.Add(rectangle);
+            Children.Add(textBlock);
         }
-
     }
 }
