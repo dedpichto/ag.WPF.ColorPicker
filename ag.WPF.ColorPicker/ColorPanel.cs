@@ -310,6 +310,9 @@ namespace ag.WPF.ColorPicker
 
             UpdateColorStrings(newValue);
             UpdateColorShadeSelectorPosition(newValue);
+
+            selectBasicColor(newValue);
+
             RoutedPropertyChangedEventArgs<Color> changedEventArgs = new RoutedPropertyChangedEventArgs<Color>(oldValue, newValue)
             {
                 RoutedEvent = SelectedColorChangedEvent
@@ -465,6 +468,20 @@ namespace ag.WPF.ColorPicker
         private void _initialColorRectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             SelectedColor = InitialColor;
+        }
+
+        private void selectBasicColor(Color color)
+        {
+            foreach (var radio in _basicPanel.Children.OfType<RadioButton>())
+            {
+                radio.IsChecked = false;
+                if (!(radio.Background is SolidColorBrush brush))
+                    continue;
+                if (color.R == brush.Color.R && color.G == brush.Color.G && color.B == brush.Color.B)
+                {
+                    radio.IsChecked = true;
+                }
+            }
         }
 
         private void createsShadesAndTints()
