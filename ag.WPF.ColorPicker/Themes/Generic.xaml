@@ -75,8 +75,7 @@
     </Style>
     
     <Style TargetType="{x:Type picker:ColorSlider}">
-        <Setter Property="BorderBrush" Value="DarkGray"/>
-        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="SmallChange" Value="1"/>
         <Setter Property="LargeChange" Value="10"/>
         <Setter Property="Orientation" Value="Vertical"/>
@@ -93,10 +92,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type picker:ColorSlider}">
                     <Grid>
-                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                            <Border x:Name="PART_TrackBackground" Width="24">
-                                <Rectangle x:Name="PART_SpectrumDisplay" Stretch="Fill" VerticalAlignment="Stretch"/>
-                            </Border>
+                        <Border x:Name="PART_TrackBackground" Width="24">
+                            <Rectangle x:Name="PART_SpectrumDisplay" Stretch="Fill" VerticalAlignment="Stretch"/>
                         </Border>
                         <Track x:Name="PART_Track">
                             <Track.DecreaseRepeatButton>
@@ -148,7 +145,7 @@
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type Thumb}">
-                                                        <Grid Background="Transparent" Height="12" SnapsToDevicePixels="True" Margin="-1,0,0,0">
+                                                        <Grid Background="Transparent" Height="12" SnapsToDevicePixels="True">
                                                             <Viewbox Stretch="Fill">
                                                                 <Viewbox.Visibility>
                                                                     <MultiBinding Converter="{StaticResource SliderThumbVisibilityConverter}" ConverterParameter="middle">
@@ -157,7 +154,7 @@
                                                                         <Binding Path="Value" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
                                                                     </MultiBinding>
                                                                 </Viewbox.Visibility>
-                                                                <Path Fill="{x:Static SystemColors.WindowTextBrush}" Data="M0,0 L10,6 L0,12 Z M24,0 L13.5,6 L24,12 Z"/>
+                                                                <Path Fill="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" Data="M0,0 L10,6 L0,12 Z M24,0 L13.5,6 L24,12 Z"/>
                                                             </Viewbox>
                                                             <Viewbox Stretch="Fill">
                                                                 <Viewbox.Visibility>
@@ -167,7 +164,7 @@
                                                                         <Binding Path="Value" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
                                                                     </MultiBinding>
                                                                 </Viewbox.Visibility>
-                                                                <Path Fill="{x:Static SystemColors.WindowTextBrush}" Data="M0,6 L10,0 L0,0 Z M24,6 L13.5,0 L24,0 Z"/>
+                                                                <Path Fill="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" Data="M0,6 L10,0 L0,0 Z M24,6 L13.5,0 L24,0 Z"/>
                                                             </Viewbox>
                                                             <Viewbox Stretch="Fill">
                                                                 <Viewbox.Visibility>
@@ -177,7 +174,7 @@
                                                                         <Binding Path="Value" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
                                                                     </MultiBinding>
                                                                 </Viewbox.Visibility>
-                                                                <Path Fill="{x:Static SystemColors.WindowTextBrush}" Data="M0,0 L10,12 L0,12 Z M24,0 L13.5,12 L24,12 Z"/>
+                                                                <Path Fill="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}" Data="M0,0 L10,12 L0,12 Z M24,0 L13.5,12 L24,12 Z"/>
                                                             </Viewbox>
                                                         </Grid>
                                                     </ControlTemplate>
@@ -195,6 +192,7 @@
     </Style>
 
     <Style TargetType="{x:Type picker:ColorPanel}">
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type picker:ColorPanel}">
@@ -212,7 +210,7 @@
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
-                                <Border x:Name="borderCanvas" BorderBrush="DarkGray" BorderThickness="1" ClipToBounds="True" Background="{StaticResource TransparentBackgroundBrush}">
+                                <Border x:Name="borderCanvas" BorderBrush="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" BorderThickness="1" ClipToBounds="True" Background="{StaticResource TransparentBackgroundBrush}">
                                     <Canvas x:Name="PART_ColorShadingCanvas" Height="{Binding ActualHeight, ElementName=borderCanvas}" Width="{Binding ActualWidth, ElementName=borderCanvas}">
                                         <Rectangle x:Name="ColorShadingRectangle" Height="{Binding ActualHeight, ElementName=PART_ColorShadingCanvas}" Width="{Binding ActualWidth, ElementName=PART_ColorShadingCanvas}">
                                             <Rectangle.Fill>
@@ -252,7 +250,7 @@
                                         <Border Width="24" Height="24" Background="{StaticResource TransparentBackgroundBrush}" BorderThickness="2">
                                             <Rectangle x:Name="PART_InitialColorRectangle" Cursor="Hand"/>
                                         </Border>
-                                        <Border Canvas.Left="12" Canvas.Top="12" Width="24" Height="24" Background="{StaticResource TransparentBackgroundBrush}" BorderThickness="2" BorderBrush="{x:Static SystemColors.WindowBrush}">
+                                        <Border Canvas.Left="12" Canvas.Top="12" Width="24" Height="24" Background="{StaticResource TransparentBackgroundBrush}" BorderThickness="2" BorderBrush="{TemplateBinding Background}">
                                             <Rectangle>
                                                 <Rectangle.Fill>
                                                     <SolidColorBrush Color="{Binding Path=SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
@@ -612,9 +610,9 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Background" TargetName="Border" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-                            <Setter TargetName="Border"
+                            <!--<Setter TargetName="Border"
                                     Property="BorderBrush"
-                                    Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>
+                                    Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>-->
                             <Setter Property="Fill" TargetName="RepeatButtonArrowUp" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                             <Setter Property="Fill" TargetName="RepeatButtonArrowDown" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                         </Trigger>
