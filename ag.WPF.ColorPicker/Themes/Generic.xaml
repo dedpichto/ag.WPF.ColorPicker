@@ -340,7 +340,7 @@
                                                         <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                                             <LinearGradientBrush.GradientStops>
                                                                 <GradientStop Offset="0" Color="#FFFFFFFF"/>
-                                                                <GradientStop Offset="1" Color="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PureColorConverter}}"/>
+                                                                <GradientStop Offset="1" Color="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PureColorConverter}}"/>
                                                             </LinearGradientBrush.GradientStops>
                                                         </LinearGradientBrush>
                                                     </Slider.Background>
@@ -350,7 +350,7 @@
                                                         <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                                             <LinearGradientBrush.GradientStops>
                                                                 <GradientStop Offset="0" Color="#FF000000"/>
-                                                                <GradientStop Offset="1" Color="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PureColorConverter}}"/>
+                                                                <GradientStop Offset="1" Color="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PureColorConverter}}"/>
                                                             </LinearGradientBrush.GradientStops>
                                                         </LinearGradientBrush>
                                                     </Slider.Background>
@@ -387,7 +387,7 @@
                                                         <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                                             <LinearGradientBrush.GradientStops>
                                                                 <GradientStop Offset="0" Color="#8F8F8F"/>
-                                                                <GradientStop Offset="1" Color="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PureColorConverter}}"/>
+                                                                <GradientStop Offset="1" Color="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PureColorConverter}}"/>
                                                             </LinearGradientBrush.GradientStops>
                                                         </LinearGradientBrush>
                                                     </Slider.Background>
@@ -397,7 +397,7 @@
                                                         <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                                             <LinearGradientBrush.GradientStops>
                                                                 <GradientStop Offset="0" Color="#FF000000"/>
-                                                                <GradientStop Offset="0.5" Color="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PureColorConverter}}"/>
+                                                                <GradientStop Offset="0.5" Color="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PureColorConverter}}"/>
                                                                 <GradientStop Offset="1" Color="#FFFFFFFF"/>
                                                             </LinearGradientBrush.GradientStops>
                                                         </LinearGradientBrush>

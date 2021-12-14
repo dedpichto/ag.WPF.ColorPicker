@@ -101,11 +101,8 @@ namespace ag.WPF.ColorPicker
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is Color color)) return null;
-            var hsb = color.ToHsbColor();
-            hsb.Saturation = 1.0;
-            hsb.Brightness = 1.0;
-            return hsb.ToRgbColor();
+            if (!Utils.NumericTypes.Contains(value.GetType())) return null;
+            return new HsbColor(System.Convert.ToDouble(value), 1.0, 1.0).ToRgbColor();
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
