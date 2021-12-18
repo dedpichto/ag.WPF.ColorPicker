@@ -187,7 +187,7 @@
         <Setter Property="TickFrequency" Value="1"/>
         <Setter Property="IsSnapToTickEnabled" Value="True"/>
         <Setter Property="IsDirectionReversed" Value="False"/>
-        <!--<Setter Property="IsMoveToPointEnabled" Value="True"/>-->
+        <Setter Property="IsMoveToPointEnabled" Value="True"/>
         <Setter Property="Value" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
