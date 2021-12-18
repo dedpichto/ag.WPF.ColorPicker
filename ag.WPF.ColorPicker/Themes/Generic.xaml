@@ -185,7 +185,7 @@
         <Setter Property="TickFrequency" Value="1"/>
         <Setter Property="IsSnapToTickEnabled" Value="True"/>
         <Setter Property="IsDirectionReversed" Value="False"/>
-        <Setter Property="IsMoveToPointEnabled" Value="True"/>
+        <!--<Setter Property="IsMoveToPointEnabled" Value="True"/>-->
         <Setter Property="Value" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -196,43 +196,8 @@
                         </Border>
                         <Track x:Name="PART_Track">
                             <Track.DecreaseRepeatButton>
-                                <RepeatButton Command="Slider.DecreaseLarge">
-                                    <RepeatButton.Style>
-                                        <Style TargetType="{x:Type RepeatButton}">
-                                            <Setter Property="OverridesDefaultStyle" Value="True"/>
-                                            <Setter Property="IsTabStop" Value="False"/>
-                                            <Setter Property="Focusable" Value="False"/>
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type RepeatButton}">
-                                                        <Border Background="{TemplateBinding Background}"/>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </RepeatButton.Style>
-                                </RepeatButton>
+                                <RepeatButton Command="Slider.DecreaseLarge" Style="{StaticResource SliderButtonStyle}"/>
                             </Track.DecreaseRepeatButton>
-                            <Track.IncreaseRepeatButton>
-                                <RepeatButton Command="Slider.IncreaseLarge">
-                                    <RepeatButton.Style>
-                                        <Style TargetType="{x:Type RepeatButton}">
-                                            <Setter Property="OverridesDefaultStyle" Value="True"/>
-                                            <Setter Property="IsTabStop" Value="False"/>
-                                            <Setter Property="Focusable" Value="False"/>
-                                            <Setter Property="Background" Value="Transparent"/>
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type RepeatButton}">
-                                                        <Border Background="{TemplateBinding Background}"/>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </RepeatButton.Style>
-                                </RepeatButton>
-                            </Track.IncreaseRepeatButton>
                             <Track.Thumb>
                                 <Thumb>
                                     <Thumb.Style>
@@ -283,6 +248,9 @@
                                     </Thumb.Style>
                                 </Thumb>
                             </Track.Thumb>
+                            <Track.IncreaseRepeatButton>
+                                <RepeatButton Command="Slider.IncreaseLarge" Style="{StaticResource SliderButtonStyle}"/>
+                            </Track.IncreaseRepeatButton>
                         </Track>
                     </Grid>
                 </ControlTemplate>
