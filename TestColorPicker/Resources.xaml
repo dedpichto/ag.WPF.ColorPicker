@@ -1,0 +1,445 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="ThemeName">Dark Gray</sys:String>
+
+    <sys:Double x:Key="DisabledOpacity">0.3</sys:Double>
+
+    <CornerRadius x:Key="CommonCornerRadius" TopLeft="0" TopRight="0" BottomLeft="0" BottomRight="0"/>
+
+    <Geometry x:Key="NormalCheckMark">M 1,8 L 5,13 L 13,1</Geometry>
+
+    <Color x:Key="NormalTextColor">#FFF0F0F0</Color>
+    <SolidColorBrush x:Key="NormalTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <Color x:Key="WarningTextColor">#FF00E676</Color>
+    <SolidColorBrush x:Key="WarningTextBrush" Color="{StaticResource WarningTextColor}"/>
+    <SolidColorBrush x:Key="DisabledTextBrush" Color="{StaticResource NormalTextColor}" Opacity="{StaticResource DisabledOpacity}"/>
+
+    <Color x:Key="DarkContrastColor">#FFC56000</Color>
+    <Color x:Key="LightContrastColor">#FFFF8F00</Color>
+    <Color x:Key="LightLightContrastColor">#FFFFC046</Color>
+
+    <Color x:Key="SecondLightContrastColor">#FF388e3c</Color>
+    <Color x:Key="SecondDarkContrastColor">#FF00600f</Color>
+    <Color x:Key="SecondLightLightContrastColor">#FF6abf69</Color>
+
+    <Color x:Key="ControlBorderColor">#FF545454</Color>
+    <Color x:Key="ControlDarkBorderColor">#FF6B6B6B</Color>
+    <Color x:Key="ContentControlBackColor">#FF252525</Color>
+    <Color x:Key="ButtonBackgroundColor">#FF3F3F3F</Color>
+    <Color x:Key="ButtonBorderColor">#FFBDBDBD</Color>
+    <Color x:Key="ButtonBorderHoverColor">#FF6A6A6A</Color>
+    <Color x:Key="ContainerBackgroundColor">#FF373737</Color>
+    <Color x:Key="DropdownBackgroundColor">#FF2A2A2A</Color>
+
+    <SolidColorBrush x:Key="CommonControlBorderBrush" Color="{StaticResource ControlBorderColor}"/>
+    <SolidColorBrush x:Key="CommonControlBackColorBrush" Color="{StaticResource ContentControlBackColor}"/>
+    <SolidColorBrush x:Key="FocusVisualBrush" Color="{StaticResource NormalTextColor}"/>
+
+    <Color x:Key="ScrollBarBackgroundColor">#FF3E3E3E</Color>
+    <Color x:Key="ScrollBarThumbBackgroundColor">#FF686868</Color>
+    <Color x:Key="ScrollBarThumbHoverBackgroundColor">#FF9E9E9E</Color>
+    <Color x:Key="ScrollBarThumbPressedBackgroundColor">#FFEFEFEF</Color>
+    <Color x:Key="ScrollBarThumbDisabledBackgroundColor">#FF555555</Color>
+
+    <Color x:Key="InactiveItemBackColor">#FF3F3F3F</Color>
+    <Color x:Key="ComboBoxDropDownBorderColor">#FF333333</Color>
+
+    <SolidColorBrush x:Key="GridLineBrush" Color="{StaticResource NormalTextColor}" Opacity="{StaticResource DisabledOpacity}"/>
+    <!--#region Window -->
+    <Color x:Key="WindowBackgroundColor">#FF2D2D2D</Color>
+    <Color x:Key="WindowBorderColor">#FF2D2D2D</Color>
+    <Color x:Key="WindowBorderInactiveColor">#FF424242</Color>
+    <Color x:Key="TitleBarBackgroundColor">#FF5E5E5E</Color>
+    <Color x:Key="TitleBarHighlightColor">#FF3F3F3F</Color>
+    <Color x:Key="TitleBarBackgroundInactiveColor">#FF414141</Color>
+
+    <Thickness x:Key="WindowBorderThickness" Left=".8" Top=".8" Right=".8" Bottom=".8"/>
+    <Thickness x:Key="WindowDialogBorderThickness" Top="{x:Static SystemParameters.ThinVerticalBorderWidth}" Left="{x:Static SystemParameters.ThinVerticalBorderWidth}" Right="{x:Static SystemParameters.ThinVerticalBorderWidth}" Bottom="{x:Static SystemParameters.ThinVerticalBorderWidth}"/>
+    <SolidColorBrush x:Key="WindowBorderBrush" Color="{StaticResource DarkContrastColor}" />
+    <SolidColorBrush x:Key="WindowBorderInactiveBrush" Color="{StaticResource WindowBorderInactiveColor}" />
+    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{StaticResource WindowBackgroundColor}" />
+    <SolidColorBrush x:Key="TitleBarBackgroundBrush" Color="{StaticResource TitleBarBackgroundColor}" />
+    <SolidColorBrush x:Key="TitleBarTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="TitleBarButtonTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="TitleBarButtonHighlightBrush" Color="{StaticResource TitleBarHighlightColor}" />
+    <SolidColorBrush x:Key="TitleBarButtonPressedBrush" Color="{StaticResource DarkContrastColor}" />
+    <SolidColorBrush x:Key="WindowDialogBorderBrush" Color="{StaticResource DarkContrastColor}" />
+
+    <CornerRadius x:Key="WindowCornerRadius" TopLeft="0" TopRight="0" BottomLeft="0" BottomRight="0"/>
+    <CornerRadius x:Key="TitleBarCornerRadius" TopLeft="0" TopRight="0" BottomLeft="0" BottomRight="0"/>
+    <DropShadowEffect x:Key="TitleBarButtonHoverEffect" BlurRadius="0" ShadowDepth="0" Opacity="0" Color="Transparent"/>
+    <DropShadowEffect x:Key="TitleBarButtonPressedEffect" BlurRadius="0" ShadowDepth="0" Opacity="0" Color="Transparent"/>
+    <GridLength x:Key="TitleBarRightGap">0</GridLength>
+    <sys:Double x:Key="TitleBarInactiveOpacity">0.4</sys:Double>
+    <sys:Double x:Key="TitleBarButtonOpacity">1</sys:Double>
+    <sys:Double x:Key="TitleBarButtonDisabledOpacity">0.4</sys:Double>
+    <sys:Double x:Key="TitleBarButtonPressedOpacity">1</sys:Double>
+    <SolidColorBrush x:Key="TitleBarButtonBorderBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="TitleBarButtonBackgroundBrush" Color="Transparent"/>
+    <sys:Double x:Key="TitleBarMinButtonWidth">34</sys:Double>
+    <sys:Double x:Key="TitleBarMinButtonHeight">26</sys:Double>
+    <Style x:Key="TitleBarMinButtonBorder" TargetType="{x:Type Border}">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Background" Value="{StaticResource TitleBarButtonBackgroundBrush}"/>
+    </Style>
+    <Style x:Key="TitleBarMinButtonPath" TargetType="{x:Type Path}">
+        <Setter Property="Stroke" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}"/>
+        <Setter Property="Fill" Value="Transparent"/>
+        <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="Stretch" Value="None"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        <Setter Property="Data" Value="M0,8 H8 M0,7 H8 M0,6 H8"/>
+    </Style>
+    <sys:Double x:Key="TitleBarMaxButtonWidth">34</sys:Double>
+    <sys:Double x:Key="TitleBarMaxButtonHeight">26</sys:Double>
+    <Style x:Key="TitleBarMaxButtonBorder" TargetType="{x:Type Border}">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Background" Value="{StaticResource TitleBarButtonBackgroundBrush}"/>
+    </Style>
+    <Style x:Key="TitleBarMaxButtonPath1" TargetType="{x:Type Path}">
+        <Setter Property="Stroke" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}"/>
+        <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="Stretch" Value="None"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        <Setter Property="Data" Value="M0,0 H8 V8 H0 V0 M0,1 H8 M0,2 H8"/>
+    </Style>
+    <Style x:Key="TitleBarMaxButtonPath2" TargetType="{x:Type Path}">
+        <Setter Property="Stroke" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}"/>
+        <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="Stretch" Value="None"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        <Setter Property="Data" Value="M0,3 H5 V8 H0 V3 M0,4 H5 M3,0 H8 V5 H7 M3,1 H8"/>
+    </Style>
+    <sys:Double x:Key="TitleBarCloseButtonWidth">34</sys:Double>
+    <sys:Double x:Key="TitleBarCloseButtonHeight">26</sys:Double>
+    <Style x:Key="TitleBarCloseButtonBorder" TargetType="{x:Type Border}">
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Background" Value="{StaticResource TitleBarButtonBackgroundBrush}"/>
+    </Style>
+    <Style x:Key="TitleBarCloseButtonPath1" TargetType="{x:Type Path}">
+        <Setter Property="Stroke" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}"/>
+        <Setter Property="StrokeThickness" Value="1.5"/>
+        <Setter Property="Stretch" Value="None"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        <Setter Property="Data" Value="M0,0 L8,8"/>
+    </Style>
+    <Style x:Key="TitleBarCloseButtonPath2" TargetType="{x:Type Path}">
+        <Setter Property="Stroke" Value="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}"/>
+        <Setter Property="StrokeThickness" Value="1.5"/>
+        <Setter Property="Stretch" Value="None"/>
+        <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        <Setter Property="Data" Value="M0,8 L8,0"/>
+    </Style>
+    <!--#endregion-->
+
+    <!--#region Toolbar -->
+    <Color x:Key="TooolbarMenuBorderColor">#FF333337</Color>
+    <SolidColorBrush x:Key="ToolbarBackgroundBrush" Color="{StaticResource WindowBackgroundColor}"/>
+    <SolidColorBrush x:Key="ToolbarOverflowArrowBrush" Color="{StaticResource NormalTextColor}" Opacity="0.5"/>
+    <SolidColorBrush x:Key="ToolBarGripperBrush" Color="{StaticResource NormalTextColor}" Opacity="0.5"/>
+    <SolidColorBrush x:Key="TooolbarButtonHoverBrush" Color="{StaticResource ControlBorderColor}"/>
+    <SolidColorBrush x:Key="TooolbarMenuBackgroundBrush" Color="{StaticResource WindowBackgroundColor}"/>
+    <SolidColorBrush x:Key="TooolbarMenuBorderBrush" Color="{StaticResource TooolbarMenuBorderColor}"/>
+    <!--#endregion-->
+
+    <!--#region Tab control -->
+    <SolidColorBrush x:Key="TabControlPanelBrush" Color="{StaticResource ControlBorderColor}"/>
+    <!--#endregion-->
+
+    <!--#region Tab item -->
+    <SolidColorBrush x:Key="TabItemForegroundBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="TabItemSelectedForegroundBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="TabItemBackgroundBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="TabItemSideBackgroundBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="TabItemBorderBrush" Color="Transparent"/>
+    <Thickness x:Key="TabItemBorderThickness" Left="0" Top="0" Right="0" Bottom="0"/>
+    <Thickness x:Key="TabItemSideBorderThickness" Left="0" Top="0" Right="0" Bottom="0"/>
+    <sys:Double x:Key="TabItemSideWidth">18</sys:Double>
+    <CornerRadius x:Key="TabItemCornerRadius" TopLeft="0" TopRight="0" BottomLeft="0" BottomRight="0"/>
+    <CornerRadius x:Key="TabItemSideCornerRadius" TopLeft="0" TopRight="3" BottomLeft="0" BottomRight="0"/>
+    <SolidColorBrush x:Key="TabItemHoverBackgroundBrush" Color="{StaticResource ControlDarkBorderColor}"/>
+    <SolidColorBrush x:Key="TabItemSideHoverBrush" Color="{StaticResource ControlDarkBorderColor}"/>
+    <SolidColorBrush x:Key="TabItemHighlightedBrush" Color="{StaticResource ControlBorderColor}"/>
+    <SolidColorBrush x:Key="TabItemSideHighlightedBrush" Color="{StaticResource ControlBorderColor}"/>
+    <Thickness x:Key="TabItemHoverMargin" Left="0" Top="0" Right="0" Bottom="-1"/>
+    <Thickness x:Key="TabItemSelectedMargin" Left="0" Top="0" Right="0" Bottom="0"/>
+    <SolidColorBrush x:Key="TabItemInactiveBrush" Color="{StaticResource ButtonBackgroundColor}"/>
+    <SolidColorBrush x:Key="TabItemSideDisabledBrush" Color="Transparent"/>
+    <!--#endregion-->
+
+    <!--#region Group box -->
+    <SolidColorBrush x:Key="GroupBoxBorderBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="GroupBoxBackgroundBrush" Color="{StaticResource ContainerBackgroundColor}"/>
+    <SolidColorBrush x:Key="GroupBoxHeaderBackgroundBrush" Color="{StaticResource ButtonBackgroundColor}"/>
+    <SolidColorBrush x:Key="GroupBoxHeaderTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <CornerRadius x:Key="GroupBoxCornerRadius" TopLeft="0" TopRight="0" BottomLeft="0" BottomRight="0"/>
+    <!--#endregion-->
+
+    <!--#region Button -->
+    <SolidColorBrush x:Key="ButtonTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="ButtonBorderBrush" Color="{StaticResource ControlBorderColor}"/>
+    <SolidColorBrush x:Key="ButtonInnerBorderBrush" Color="Transparent"/>
+    <SolidColorBrush x:Key="ButtonBackgroundBrush" Color="{StaticResource ButtonBackgroundColor}"/>
+    <SolidColorBrush x:Key="ButtonBackgroundHoverBrush" Color="{StaticResource ControlBorderColor}"/>
+    <SolidColorBrush x:Key="ButtonBackgroundPressedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="ButtonSelectedTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="ButtonDefaultBorderBrush" Color="{StaticResource ButtonBorderColor}"/>
+    <SolidColorBrush x:Key="ButtonBorderHoverBrush" Color="{StaticResource ButtonBorderHoverColor}"/>
+    <SolidColorBrush x:Key="ButtonBorderPressedBrush" Color="{StaticResource LightContrastColor}"/>
+    <SolidColorBrush x:Key="ButtonBorderFocusedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="ButtonDefaultBackgroundBrush" Color="{StaticResource ButtonBackgroundColor}"/>
+    <CornerRadius x:Key="ButtonInnerCornerRadius" TopLeft="0" TopRight="0" BottomRight="0" BottomLeft="0"/>
+    <!--#endregion-->
+
+    <!--#region Check box -->
+    <SolidColorBrush x:Key="CheckboxTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="CheckboxBackgroundBrush" Color="{StaticResource ContentControlBackColor}"/>
+    <SolidColorBrush x:Key="CheckboxBorderBrush" Color="{StaticResource ControlBorderColor}"/>
+    <SolidColorBrush x:Key="CheckboxBackgroundHoverBrush" Color="{StaticResource ButtonBackgroundColor}"/>
+    <SolidColorBrush x:Key="CheckboxBorderHoverBrush" Color="{StaticResource ButtonBorderHoverColor}"/>
+    <SolidColorBrush x:Key="CheckboxBackgroundPressedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="CheckboxBorderPressedBrush" Color="{StaticResource LightContrastColor}"/>
+    <SolidColorBrush x:Key="CheckboxCheckMarkBrush" Color="{StaticResource LightContrastColor}"/>
+    <SolidColorBrush x:Key="CheckboxBackgroundDisabledBrush" Color="Transparent"/>
+    <!--#endregion-->
+
+    <!--#region Radio button -->
+    <SolidColorBrush x:Key="RadioTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="RadioBackgroundBrush" Color="{StaticResource ContentControlBackColor}"/>
+    <SolidColorBrush x:Key="RadioBorderBrush" Color="{StaticResource ControlBorderColor}"/>
+    <SolidColorBrush x:Key="RadioBackgroundHoverBrush" Color="{StaticResource ButtonBackgroundColor}"/>
+    <SolidColorBrush x:Key="RadioBorderHoverBrush" Color="{StaticResource ButtonBorderHoverColor}"/>
+    <SolidColorBrush x:Key="RadioBackgroundPressedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="RadioBorderPressedBrush" Color="{StaticResource LightContrastColor}"/>
+    <SolidColorBrush x:Key="RadioCheckMarkBrush" Color="{StaticResource LightContrastColor}"/>
+    <SolidColorBrush x:Key="RadioBackgroundDisabledBrush" Color="Transparent"/>
+    <!--#endregion-->
+
+    <!--#region Scroll bar -->
+    <SolidColorBrush x:Key="ScrollBarBorderBrush" Color="{StaticResource ScrollBarBackgroundColor}"/>
+    <SolidColorBrush x:Key="ScrollBarDisabledBackgroundBrush" Color="{StaticResource ScrollBarBackgroundColor}"/>
+
+    <SolidColorBrush x:Key="ScrollBarButtonBackgroundBrush" Color="{StaticResource ScrollBarBackgroundColor}"/>
+    <SolidColorBrush x:Key="ScrollBarButtonHoverBrush" Color="{StaticResource ScrollBarBackgroundColor}"/>
+    <SolidColorBrush x:Key="ScrollBarArrowHoverBrush" Color="{StaticResource LightContrastColor}"/>
+    <SolidColorBrush x:Key="ScrollBarArrowPressedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="ScrollBarButtonPressedBrush" Color="{StaticResource ScrollBarBackgroundColor}"/>
+    <SolidColorBrush x:Key="ScrollBarButtonArrowBrush" Color="{StaticResource ScrollBarThumbBackgroundColor}"/>
+    <SolidColorBrush x:Key="ScrollBarArrowDisabledBrush" Color="{StaticResource ScrollBarBackgroundColor}"/>
+    <SolidColorBrush x:Key="ScrollBarButtonDisabledBrush" Color="{StaticResource ScrollBarBackgroundColor}"/>
+
+    <Thickness x:Key="ScrollBarVerticalMargin" Left="4" Top="0" Right="4" Bottom="0"/>
+    <SolidColorBrush x:Key="ScrollBarVerticalBackgroundBrush" Color="{StaticResource ScrollBarBackgroundColor}"/>
+    <SolidColorBrush x:Key="ScrollBarVerticalThumbBackgroundBrush" Color="{StaticResource ScrollBarThumbBackgroundColor}"/>
+    <SolidColorBrush x:Key="ScrollBarVerticalThumbHoverBackgroundBrush" Color="{StaticResource ScrollBarThumbHoverBackgroundColor}"/>
+    <SolidColorBrush x:Key="ScrollBarVerticalThumbPressedBackgroundBrush" Color="{StaticResource ScrollBarThumbPressedBackgroundColor}"/>
+    <SolidColorBrush x:Key="ScrollBarVerticalThumbDisabledBackgroundBrush" Color="{StaticResource ScrollBarThumbDisabledBackgroundColor}"/>
+
+    <Thickness x:Key="ScrollBaHorizontalMargin" Left="0" Top="4" Right="0" Bottom="4"/>
+    <SolidColorBrush x:Key="ScrollBarHorizontalBackgroundBrush" Color="{StaticResource ScrollBarBackgroundColor}"/>
+    <SolidColorBrush x:Key="ScrollBarHorizontalThumbBackgroundBrush" Color="{StaticResource ScrollBarThumbBackgroundColor}"/>
+    <SolidColorBrush x:Key="ScrollBarHorizontalThumbHoverBackgroundBrush" Color="{StaticResource ScrollBarThumbHoverBackgroundColor}"/>
+    <SolidColorBrush x:Key="ScrollBarHorizontalThumbPressedBackgroundBrush" Color="{StaticResource ScrollBarThumbPressedBackgroundColor}"/>
+    <SolidColorBrush x:Key="ScrollBarHorizontalThumbDisabledBackgroundBrush" Color="{StaticResource ScrollBarThumbDisabledBackgroundColor}"/>
+    <!--#endregion-->
+
+    <!--#region List box -->
+    <SolidColorBrush x:Key="ListBoxBorderBrush" Color="Transparent"/>
+    <!--<SolidColorBrush x:Key="ListBoxBorderBrush" Color="{StaticResource ControlBorderColor}"/>-->
+    <SolidColorBrush x:Key="ListBoxBackgroundBrush" Color="{StaticResource ContentControlBackColor}"/>
+    <SolidColorBrush x:Key="ListBoxForegroundBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="ListBoxItemHoverBrush" Color="{StaticResource InactiveItemBackColor}"/>
+    <SolidColorBrush x:Key="ListBoxItemSelectedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="ListBoxItemSelectedTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="ListBoxItemInactiveBrush" Color="{StaticResource InactiveItemBackColor}"/>
+    <SolidColorBrush x:Key="ListBoxItemInactiveTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <!--#endregion-->
+
+    <!--#region Combo box -->
+    <CornerRadius x:Key="ComboBoxToggleButtonCornerRadius" TopLeft="0" TopRight="0" BottomRight="0" BottomLeft="0"/>
+    <SolidColorBrush x:Key="ComboBoxBackgroundBrush" Color="{StaticResource ButtonBackgroundColor}"/>
+    <!--<SolidColorBrush x:Key="ComboBoxBorderBrush" Color="Transparent"/>-->
+    <SolidColorBrush x:Key="ComboBoxForegroundBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="ComboBoxBorderBrush" Color="{StaticResource ControlBorderColor}"/>
+    <SolidColorBrush x:Key="ComboBoxToggleButtonBackgroundBrush" Color="{StaticResource ButtonBackgroundColor}"/>
+    <SolidColorBrush x:Key="ComboBoxToggleButtonBorderBrush" Color="{StaticResource ButtonBackgroundColor}"/>
+    <SolidColorBrush x:Key="ComboBoxArrowFillBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="ComboBoxArrowSelectedFillBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="ComboBoxBackgroundHoverBrush" Color="{StaticResource WindowBackgroundColor}"/>
+    <SolidColorBrush x:Key="ComboBoxBorderHoverBrush" Color="{StaticResource LightContrastColor}"/>
+    <SolidColorBrush x:Key="ComboBoxToggleButtonBackgroundHoverBrush" Color="{StaticResource LightContrastColor}"/>
+    <SolidColorBrush x:Key="ComboBoxBackgroundPressedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="ComboBoxBorderPressedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="ComboBoxToggleButtonBackgroundPressedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="ComboBoxDropDownBackgroundBrush" Color="{StaticResource DropdownBackgroundColor}"/>
+    <SolidColorBrush x:Key="ComboBoxDropDownBorderBrush" Color="{StaticResource ComboBoxDropDownBorderColor}"/>
+    <SolidColorBrush x:Key="ComboBoxItemHoverBrush" Color="{StaticResource InactiveItemBackColor}"/>
+    <SolidColorBrush x:Key="ComboBoxItemSelectedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="ComboBoxItemSelectedTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="ComboBoxItemInactiveBrush" Color="{StaticResource InactiveItemBackColor}"/>
+    <SolidColorBrush x:Key="ComboBoxBackgroundDisabledBrush" Color="{StaticResource ButtonBackgroundColor}"/>
+    <!--#endregion-->
+
+    <!--#region Text box -->
+    <SolidColorBrush x:Key="TextBoxBackgroundBrush" Color="{StaticResource ContentControlBackColor}"/>
+    <!--<SolidColorBrush x:Key="TextBoxBorderBrush" Color="Transparent"/>-->
+    <SolidColorBrush x:Key="TextBoxForegroundBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="TextBoxBorderBrush" Color="{StaticResource ControlBorderColor}"/>
+    <SolidColorBrush x:Key="TextBoxBorderFocusedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="TextBoxDisabledTextBrush" Color="{StaticResource NormalTextColor}" Opacity="{StaticResource DisabledOpacity}"/>
+    <!--#endregion-->
+
+    <!--#region List view -->
+    <SolidColorBrush x:Key="ListViewBorderBrush" Color="Transparent"/>
+    <!--<SolidColorBrush x:Key="ListViewBorderBrush" Color="{StaticResource ControlBorderColor}"/>-->
+    <SolidColorBrush x:Key="ListViewBackgroundBrush" Color="{StaticResource ContentControlBackColor}"/>
+    <SolidColorBrush x:Key="ListViewColumnGripperBrush" Color="{StaticResource ControlBorderColor}"/>
+    <SolidColorBrush x:Key="ListViewColumnHeaderBackgroundBrush" Color="{StaticResource ButtonBackgroundColor}"/>
+    <SolidColorBrush x:Key="ListViewColumnHeaderHoverBrush" Color="{StaticResource ButtonBorderHoverColor}"/>
+    <SolidColorBrush x:Key="ListViewColumnHeaderSelectedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="ListViewSelectedTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="ListViewArrowSelectedBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="ListViewItemTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="ListViewItemHoverBrush" Color="{StaticResource InactiveItemBackColor}"/>
+    <SolidColorBrush x:Key="ListViewItemSelectedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="ListViewItemInactiveBrush" Color="{StaticResource InactiveItemBackColor}"/>
+    <SolidColorBrush x:Key="ListViewItemInactiveTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="ListViewSortArrowBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="ListViewSortArrowDisabledBrush" Color="{StaticResource NormalTextColor}" Opacity="{StaticResource DisabledOpacity}"/>
+    <!--#endregion-->
+
+
+    <!--#region Tree view -->
+    <SolidColorBrush x:Key="TreeViewBorderBrush" Color="Transparent"/>
+    <!--<SolidColorBrush x:Key="TreeViewBorderBrush" Color="{StaticResource ControlBorderColor}"/>-->
+    <SolidColorBrush x:Key="TreeViewBackgroundBrush" Color="{StaticResource ContentControlBackColor}"/>
+    <SolidColorBrush x:Key="TreeViewArrowBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="TreeViewArrowHoverBrush" Color="{StaticResource LightContrastColor}"/>
+    <SolidColorBrush x:Key="TreeViewArrowSelectedBrush" Color="{StaticResource LightLightContrastColor}"/>
+    <SolidColorBrush x:Key="TreeViewItemTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="TreeViewItemHoverBrush" Color="{StaticResource InactiveItemBackColor}"/>
+    <SolidColorBrush x:Key="TreeViewItemSelectedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="TreeViewItemSelectedTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="TreeViewItemInactiveBrush" Color="{StaticResource InactiveItemBackColor}"/>
+    <SolidColorBrush x:Key="TreeViewItemInactiveTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <!--#endregion-->
+
+    <Color x:Key="CalendarDayTodayBackground">#FF9B4D16</Color>
+    <Color x:Key="CalendarDayBlackoutColor">#FF6abf69</Color>
+
+    <!--#region Calendar -->
+    <SolidColorBrush x:Key="CalendarBackgroundBrush" Color="{StaticResource ContentControlBackColor}"/>
+    <SolidColorBrush x:Key="CalendarBorderBrush" Color="Transparent"/>
+    <!--new-->
+    <SolidColorBrush x:Key="CalendarWeekdaysBrush" Color="{StaticResource SecondLightContrastColor}"/>
+    <!--***********-->
+    <!--<SolidColorBrush x:Key="CalendarBorderBrush" Color="{StaticResource ControlBorderColor}"/>-->
+    <SolidColorBrush x:Key="CalendarCaptionBackgroundBrush" Color="{StaticResource ButtonBackgroundColor}"/>
+    <SolidColorBrush x:Key="CalendarDayInactiveTextBrush" Color="{StaticResource NormalTextColor}" Opacity="0.5"/>
+    <SolidColorBrush x:Key="CalendarDayTodayTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="CalendarSelectedTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="CalendarDayTodayBackgroundBrush" Color="{StaticResource CalendarDayTodayBackground}"/>
+    <SolidColorBrush x:Key="CalendarDaySelectedBackgroundBrush" Color="{StaticResource ContainerBackgroundColor}"/>
+    <SolidColorBrush x:Key="CalendarDayHoverBrush" Color="{StaticResource InactiveItemBackColor}"/>
+    <SolidColorBrush x:Key="CalendarDayBlackoutBrush" Color="{StaticResource CalendarDayBlackoutColor}"/>
+    <SolidColorBrush x:Key="CalendarDayBlackoutEllipseBrush" Color="{StaticResource ButtonBorderColor}"/>
+    <SolidColorBrush x:Key="CalendarButtonSelectedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="CalendarButtonHoverBrush" Color="{StaticResource InactiveItemBackColor}"/>
+    <SolidColorBrush x:Key="CalendarButtonSelectedBorderBrush" Color="{StaticResource LightContrastColor}"/>
+    <SolidColorBrush x:Key="CalendarNavigateBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="CalendarNavigateHoverBrush" Color="{StaticResource LightContrastColor}"/>
+    <!--<SolidColorBrush x:Key="CalendarDisabledBrush" Color="#C1272727"/>-->
+    <Rectangle x:Key="CalendarShape" RadiusX="1" RadiusY="1"/>
+    <!--#endregion-->
+
+    <!--#region Menu and context menu -->
+    <Color x:Key="MenuSeparatorColor">#FF333337</Color>
+    <Color x:Key="MenuItemHoverColor">#FF333334</Color>
+
+    <Color x:Key="MenuAndDropdownBackgroundColor">#FF3C3F41</Color>
+    <!--new-->
+    <SolidColorBrush x:Key="MenuItemTextColorBrush" Color="{StaticResource NormalTextColor}"/>
+    <!--***********-->
+    <SolidColorBrush x:Key="MenuBackgroundBrush" Color="{StaticResource WindowBackgroundColor}"/>
+    <SolidColorBrush x:Key="MenuItemBackgroundBrush" Color="{StaticResource MenuAndDropdownBackgroundColor}"/>
+    <SolidColorBrush x:Key="MenuItemIconBackgroundBrush" Color="{StaticResource MenuAndDropdownBackgroundColor}"/>
+    <SolidColorBrush x:Key="MenuBorderBrush" Color="{StaticResource MenuSeparatorColor}"/>
+    <SolidColorBrush x:Key="MenuSeparatorBrush"  Color="{StaticResource MenuSeparatorColor}"/>
+    <SolidColorBrush x:Key="MenuBackgroundHoverBrush"  Color="{StaticResource MenuItemHoverColor}"/>
+    <SolidColorBrush x:Key="MenuSelectedBrush" Color="{StaticResource MenuItemHoverColor}"/>
+    <SolidColorBrush x:Key="MenuSelectedTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="MenuCheckboxBorderBrush"  Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="MenuRightArrowHighlightedBrush" Color="{StaticResource LightContrastColor}"/>
+    <SolidColorBrush x:Key="MenuGlyphBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="MenuGlyphDisabledBrush" Color="{StaticResource NormalTextColor}" Opacity="{StaticResource DisabledOpacity}"/>
+    <SolidColorBrush x:Key="MenuScrollArrowBrush" Color="{StaticResource NormalTextColor}"/>
+    <!--#endregion-->
+
+    <!--#region ProgressBar -->
+    <SolidColorBrush x:Key="ProgressGlowRectBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="ProgressForegroundBrush" Color="{StaticResource LightContrastColor}"/>
+    <SolidColorBrush x:Key="LightLightBrush" Color="{StaticResource LightLightContrastColor}"/>
+    <!--#endregion-->
+
+    <!--#region Expander -->
+    <SolidColorBrush x:Key="ExpanderBackgroundBrush" Color="{StaticResource ButtonBackgroundColor}"/>
+    <SolidColorBrush x:Key="ExpanderBorderBrush" Color="Transparent"/>
+    <!--<SolidColorBrush x:Key="ExpanderBorderBrush" Color="{StaticResource ControlBorderColor}"/>-->
+    <SolidColorBrush x:Key="ExpanderHoverBrush" Color="{StaticResource LightContrastColor}"/>
+    <SolidColorBrush x:Key="ExpanderPressedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="ExpanderArrowBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="ExpanderDisabledArrowBrush" Color="{StaticResource NormalTextColor}" Opacity="{StaticResource DisabledOpacity}"/>
+    <!--#endregion-->
+
+    <!--#region Slider -->
+    <SolidColorBrush x:Key="SliderBackgroundBrush" Color="{StaticResource ButtonBackgroundColor}"/>
+    <SolidColorBrush x:Key="SliderBorderBrush" Color="Transparent"/>
+    <!--<SolidColorBrush x:Key="SliderBorderBrush" Color="{StaticResource ControlBorderColor}"/>-->
+    <SolidColorBrush x:Key="SliderHoverBrush" Color="{StaticResource LightContrastColor}"/>
+    <SolidColorBrush x:Key="SliderPressedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="SliderTickBarBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="SliderTickBarBackgroundBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="SliderDisabledBrush" Color="{StaticResource NormalTextColor}" Opacity="{StaticResource DisabledOpacity}"/>
+    <!--#endregion-->
+
+    <!--#region Status bar -->
+    <Color x:Key="StatusBarSeparatorColor">#FF636363</Color>
+    <SolidColorBrush x:Key="StatusBarSeparatorBrush"  Color="{StaticResource StatusBarSeparatorColor}"/>
+    <SolidColorBrush x:Key="StatusBarBackgroundBrush" Color="{StaticResource ButtonBackgroundColor}"/>
+    <SolidColorBrush x:Key="StatusBarBorderBrush" Color="Transparent"/>
+    <!--<SolidColorBrush x:Key="StatusBarBorderBrush" Color="{StaticResource ControlBorderColor}"/>-->
+    <SolidColorBrush x:Key="StatusBarDisabledBrush" Color="{StaticResource NormalTextColor}" Opacity="{StaticResource DisabledOpacity}"/>
+    <!--#endregion-->
+
+    <!--#region Data grid -->
+    <SolidColorBrush x:Key="DataGridBorderBrush" Color="Transparent"/>
+    <!--<SolidColorBrush x:Key="DataGridBorderBrush" Color="{StaticResource ControlBorderColor}"/>-->
+    <SolidColorBrush x:Key="DataGridBackgroundBrush" Color="{StaticResource ContentControlBackColor}"/>
+    <SolidColorBrush x:Key="DataGridColumnGripperBrush" Color="{StaticResource ControlBorderColor}"/>
+    <SolidColorBrush x:Key="DataGridColumnHeaderBackgroundBrush" Color="{StaticResource ButtonBackgroundColor}"/>
+    <SolidColorBrush x:Key="DataGridColumnHeaderHoverBrush" Color="{StaticResource LightContrastColor}"/>
+    <SolidColorBrush x:Key="DataGridColumnHeaderSelectedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="DataGridSelectedTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="DataGridArrowSelectedBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="DataGridItemHoverBrush" Color="{StaticResource LightContrastColor}"/>
+    <SolidColorBrush x:Key="DataGridItemSelectedBrush" Color="{StaticResource DarkContrastColor}"/>
+    <SolidColorBrush x:Key="DataGridItemSelectedBorderBrush" Color="{StaticResource ControlBorderColor}"/>
+    <SolidColorBrush x:Key="DataGridItemInactiveBrush" Color="{StaticResource InactiveItemBackColor}"/>
+    <SolidColorBrush x:Key="DataGridItemInactiveTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="DataGridSortArrowBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="DataGridSortArrowHoverBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="DataGridSortArrowPressedBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="DataGridSortArrowDisabledBrush" Color="{StaticResource DisabledTextColor}"/>
+    <SolidColorBrush x:Key="DataGridValidationErrorBrush" Color="{StaticResource WarningTextColor}"/>
+    <SolidColorBrush x:Key="DataGridAlternativeBackgroundBrush" Color="{StaticResource LightLightContrastColor}"/>
+    <SolidColorBrush x:Key="DataGridAlternativeForegroundBrush" Color="{StaticResource ContentControlBackColor}"/>
+    <SolidColorBrush x:Key="DataGridDisabledTextBrush" Color="{StaticResource NormalTextColor}" Opacity="{StaticResource DisabledOpacity}"/>
+    <SolidColorBrush x:Key="DataGridGridBrush" Color="{StaticResource NormalTextColor}" Opacity="{StaticResource DisabledOpacity}"/>
+    <SolidColorBrush x:Key="DataGridHeaderTextBrush" Color="{StaticResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="DataGridBackgroundDisabledBrush" Color="{StaticResource ContentControlBackColor}"/>
+    <!--#endregion-->
+</ResourceDictionary>

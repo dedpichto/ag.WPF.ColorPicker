@@ -23,7 +23,7 @@ namespace ag.WPF.ColorPicker
     [TemplatePart(Name = "PART_ColorShadeSelector", Type = typeof(Canvas))]
     [TemplatePart(Name = "PART_SpectrumSlider", Type = typeof(ColorSlider))]
     [TemplatePart(Name = "PART_HexadecimalTextBox", Type = typeof(TextBox))]
-    [TemplatePart(Name = "PART_InitialColorRectangle", Type = typeof(Rectangle))]
+    [TemplatePart(Name = "PART_InitialColorPath", Type = typeof(System.Windows.Shapes.Path))]
     [TemplatePart(Name = "PART_CopyHexButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_CopyRGBButton", Type = typeof(Button))]
     [TemplatePart(Name = "PART_ShadesPanel", Type = typeof(UniformGrid))]
@@ -31,6 +31,7 @@ namespace ag.WPF.ColorPicker
     [TemplatePart(Name = "PART_Basic", Type = typeof(UniformGrid))]
     [TemplatePart(Name = "PART_TabMain", Type = typeof(TabControl))]
     [TemplatePart(Name = "PART_ListStandard", Type = typeof(ListBox))]
+    [TemplatePart(Name = "PART_DropPickerBorder", Type = typeof(Border))]
 
     public class ColorPanel : Control
     {
@@ -38,7 +39,7 @@ namespace ag.WPF.ColorPicker
         private const string PART_ColorShadeSelector = "PART_ColorShadeSelector";
         private const string PART_SpectrumSlider = "PART_SpectrumSlider";
         private const string PART_HexadecimalTextBox = "PART_HexadecimalTextBox";
-        private const string PART_InitialColorRectangle = "PART_InitialColorRectangle";
+        private const string PART_InitialColorPath = "PART_InitialColorPath";
         private const string PART_CopyHexButton = "PART_CopyHexButton";
         private const string PART_CopyRGBButton = "PART_CopyRGBButton";
         private const string PART_ShadesPanel = "PART_ShadesPanel";
@@ -46,6 +47,7 @@ namespace ag.WPF.ColorPicker
         private const string PART_Basic = "PART_Basic";
         private const string PART_TabMain = "PART_TabMain";
         private const string PART_ListStandard = "PART_ListStandard";
+        private const string PART_DropPickerBorder = "PART_DropPickerBorder";
 
         private const int SHADES_COUNT = 12;
 
@@ -54,7 +56,8 @@ namespace ag.WPF.ColorPicker
         private Canvas _colorShadeSelector;
         private ColorSlider _spectrumSlider;
         private TextBox _hexadecimalTextBox;
-        private Rectangle _initialColorRectangle;
+        private System.Windows.Shapes.Path _initialColorPath;
+        private Border _initialColorBorder;
         private Button _copyHexButton;
         private Button _copyRGBButton;
         private UniformGrid _shadesPanel;
@@ -62,6 +65,7 @@ namespace ag.WPF.ColorPicker
         private UniformGrid _basicPanel;
         private TabControl _tabMain;
         private ListBox _listStandard;
+        private Border _dropPickerBorder;
         private Point? _currentColorPosition;
         private bool _surpressPropertyChanged;
         private bool _updateSpectrumSliderValue = true;
@@ -430,15 +434,16 @@ namespace ag.WPF.ColorPicker
                 _colorShadingCanvas.SizeChanged += _colorShadingCanvas_SizeChanged;
             }
 
-            if (_initialColorRectangle != null)
+            if (_initialColorPath != null)
             {
-                _initialColorRectangle.MouseLeftButtonDown -= _initialColorRectangle_MouseLeftButtonDown;
+                _initialColorPath.MouseLeftButtonDown -= _initialColorPath_MouseLeftButtonDown;
             }
-            _initialColorRectangle = GetTemplateChild(PART_InitialColorRectangle) as Rectangle;
-            if (_initialColorRectangle != null)
+            _initialColorPath = GetTemplateChild(PART_InitialColorPath) as System.Windows.Shapes.Path;
+            if (_initialColorPath != null)
             {
-                _initialColorRectangle.MouseLeftButtonDown += _initialColorRectangle_MouseLeftButtonDown;
-                _initialColorRectangle.Fill = new SolidColorBrush(SelectedColor);
+                _initialColorPath.MouseLeftButtonDown += _initialColorPath_MouseLeftButtonDown;
+                _initialColorPath.Fill = new SolidColorBrush(SelectedColor);
+                _initialColorPath.Stroke = new SolidColorBrush(SelectedColor);
             }
 
             //if (_copyHexButton != null)
@@ -512,6 +517,16 @@ namespace ag.WPF.ColorPicker
                 loadStandardColors();
             }
 
+            if (_dropPickerBorder != null)
+            {
+                _dropPickerBorder.MouseLeftButtonDown -= _dropPickerBorder_MouseLeftButtonDown;
+            }
+            _dropPickerBorder = GetTemplateChild(PART_DropPickerBorder) as Border;
+            if (_dropPickerBorder != null)
+            {
+                _dropPickerBorder.MouseLeftButtonDown += _dropPickerBorder_MouseLeftButtonDown;
+            }
+
             UpdateRGBValues(SelectedColor);
             UpdateHSLValues(SelectedColor);
             UpdateHSBValues(SelectedColor);
@@ -521,6 +536,16 @@ namespace ag.WPF.ColorPicker
             createsShadesAndTints();
 
             SetHexadecimalTextBoxTextProperty(GetFormatedColorString(SelectedColor));
+        }
+
+        private void _dropPickerBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            var pickerPanel = new PickerPanel { Left = 0, Top = 0 };
+            var result = pickerPanel.ShowDialog();
+            if (result != null && result.Value)
+            {
+                SelectedColor = pickerPanel.SelectedColor;
+            }
         }
 
         private void _listStandard_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -553,10 +578,10 @@ namespace ag.WPF.ColorPicker
             Clipboard.SetText(HexString);
         }
 
-        private void _initialColorRectangle_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void _initialColorPath_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (!(sender is Rectangle rectangle)) return;
-            if (!(rectangle.Fill is SolidColorBrush brush)) return;
+            if (!(sender is System.Windows.Shapes.Path path)) return;
+            if (!(path.Fill is SolidColorBrush brush)) return;
             SelectedColor = brush.Color;
         }
 

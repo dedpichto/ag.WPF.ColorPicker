@@ -141,7 +141,7 @@
                                             <Setter Property="Focusable" Value="False"/>
                                             <Setter Property="OverridesDefaultStyle" Value="True"/>
                                             <Setter Property="Height" Value="12"/>
-                                            <Setter Property="Width" Value="24"/>
+                                            <Setter Property="Width" Value="26"/>
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="{x:Type Thumb}">
@@ -193,11 +193,12 @@
 
     <Style TargetType="{x:Type picker:ColorPanel}">
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type picker:ColorPanel}">
                     <TabControl x:Name="PART_TabMain">
-                        <TabItem Header="Custom">
+                        <TabItem Name="_tabCustom" Header="Custom">
                             <Grid x:Name="_customGrid">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
@@ -244,13 +245,15 @@
                                 <Grid Grid.Column="0" Grid.Row="1">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <Canvas Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Height="36" Width="36" Margin="4">
-                                        <Border Width="24" Height="24" Background="{StaticResource TransparentBackgroundBrush}" BorderThickness="2">
-                                            <Rectangle x:Name="PART_InitialColorRectangle" Cursor="Hand"/>
+                                    <Canvas Grid.Column="0" Grid.Row="0" Height="36" Width="36" Margin="4">
+                                        <Border Width="24" Height="24">
+                                            <Path x:Name="PART_InitialColorPath" Cursor="Hand" Data="M0,0 L24,0 L24,8 L8,8 L8,24 L0,24 Z"/>
                                         </Border>
-                                        <Border Canvas.Left="12" Canvas.Top="12" Width="24" Height="24" Background="{StaticResource TransparentBackgroundBrush}" BorderThickness="2" BorderBrush="{TemplateBinding Background}">
+                                        <Border Canvas.Left="12" Canvas.Top="12" Width="24" Height="24" Background="{StaticResource TransparentBackgroundBrush}">
                                             <Rectangle>
                                                 <Rectangle.Fill>
                                                     <SolidColorBrush Color="{Binding Path=SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
@@ -258,7 +261,13 @@
                                             </Rectangle>
                                         </Border>
                                     </Canvas>
-                                    <TextBox x:Name="PART_HexadecimalTextBox" Grid.Column="1" Grid.Row="0" VerticalAlignment="Center"/>
+                                    <Border x:Name="PART_DropPickerBorder" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center" Cursor="Hand" Margin="4">
+                                        <Grid>
+                                            <Path Stroke="{TemplateBinding Foreground}" Fill="{TemplateBinding Background}" StrokeThickness="1" StrokeEndLineCap="Round" StrokeLineJoin="Round" StrokeStartLineCap="Round" Data="M21,0 L 24,3 L18,9 L20,11 L18,13 L11,6 L13,4L15,6 Z M12.5,7.5 L1,19 L0,22 L0,24 L2,24 L5,23 L16.5,11.5"/>
+                                            <Path Fill="{TemplateBinding Foreground}" StrokeThickness="0" Data="M21,1.5 L22.5,3 L17,8.5 L15.5,7 M13,4 L20,11 L18,12.5 L11.5,6 Z M8,14 L12,14 L4,22 L2,23 L1,23 L1,22 L2,20 Z"/>
+                                        </Grid>
+                                    </Border>
+                                    <TextBox x:Name="PART_HexadecimalTextBox" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Margin="4"/>
                                 </Grid>
 
                                 <GroupBox Grid.Column="0" Grid.Row="2" Header="Color modes">
