@@ -24,8 +24,7 @@ namespace ag.WPF.ColorPicker
     [TemplatePart(Name = "PART_SpectrumSlider", Type = typeof(ColorSlider))]
     [TemplatePart(Name = "PART_HexadecimalTextBox", Type = typeof(TextBox))]
     [TemplatePart(Name = "PART_InitialColorPath", Type = typeof(System.Windows.Shapes.Path))]
-    [TemplatePart(Name = "PART_CopyHexButton", Type = typeof(Button))]
-    [TemplatePart(Name = "PART_CopyRGBButton", Type = typeof(Button))]
+    [TemplatePart(Name = "PART_CopyTextBorder", Type = typeof(Border))]
     [TemplatePart(Name = "PART_ShadesPanel", Type = typeof(UniformGrid))]
     [TemplatePart(Name = "PART_TintsPanel", Type = typeof(UniformGrid))]
     [TemplatePart(Name = "PART_Basic", Type = typeof(UniformGrid))]
@@ -40,8 +39,7 @@ namespace ag.WPF.ColorPicker
         private const string PART_SpectrumSlider = "PART_SpectrumSlider";
         private const string PART_HexadecimalTextBox = "PART_HexadecimalTextBox";
         private const string PART_InitialColorPath = "PART_InitialColorPath";
-        private const string PART_CopyHexButton = "PART_CopyHexButton";
-        private const string PART_CopyRGBButton = "PART_CopyRGBButton";
+        private const string PART_CopyTextBorder = "PART_CopyTextBorder";
         private const string PART_ShadesPanel = "PART_ShadesPanel";
         private const string PART_TintsPanel = "PART_TintsPanel";
         private const string PART_Basic = "PART_Basic";
@@ -57,9 +55,7 @@ namespace ag.WPF.ColorPicker
         private ColorSlider _spectrumSlider;
         private TextBox _hexadecimalTextBox;
         private System.Windows.Shapes.Path _initialColorPath;
-        private Border _initialColorBorder;
-        private Button _copyHexButton;
-        private Button _copyRGBButton;
+        private Border _copyTextBorder;
         private UniformGrid _shadesPanel;
         private UniformGrid _tintsPanel;
         private UniformGrid _basicPanel;
@@ -450,7 +446,7 @@ namespace ag.WPF.ColorPicker
             //{
             //    _copyHexButton.Click -= _copyHexButton_Click;
             //}
-            //_copyHexButton = GetTemplateChild(PART_CopyHexButton) as Button;
+            //_copyHexButton = GetTemplateChild(PART_CopyTextBorder) as Button;
             //if (_copyHexButton != null)
             //{
             //    _copyHexButton.Click += _copyHexButton_Click;
@@ -527,6 +523,16 @@ namespace ag.WPF.ColorPicker
                 _dropPickerBorder.MouseLeftButtonDown += _dropPickerBorder_MouseLeftButtonDown;
             }
 
+            if (_copyTextBorder != null)
+            {
+                _copyTextBorder.MouseLeftButtonDown -= _copyTextBorder_MouseLeftButtonDown;
+            }
+            _copyTextBorder =GetTemplateChild(PART_CopyTextBorder) as Border;
+            if(_copyTextBorder != null)
+            {
+                _copyTextBorder.MouseLeftButtonDown += _copyTextBorder_MouseLeftButtonDown;
+            }
+
             UpdateRGBValues(SelectedColor);
             UpdateHSLValues(SelectedColor);
             UpdateHSBValues(SelectedColor);
@@ -536,6 +542,11 @@ namespace ag.WPF.ColorPicker
             createsShadesAndTints();
 
             SetHexadecimalTextBoxTextProperty(GetFormatedColorString(SelectedColor));
+        }
+
+        private void _copyTextBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Clipboard.SetText(_hexadecimalTextBox.Text);
         }
 
         private void _dropPickerBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -566,16 +577,6 @@ namespace ag.WPF.ColorPicker
             var color = brush.Color;
             SelectedColor = Color.FromArgb(SelectedColor.A, color.R, color.G, color.B);
             _tabMain.SelectedIndex = 0;
-        }
-
-        private void _copyRGBButton_Click(object sender, RoutedEventArgs e)
-        {
-            Clipboard.SetText(RGBString);
-        }
-
-        private void _copyHexButton_Click(object sender, RoutedEventArgs e)
-        {
-            Clipboard.SetText(HexString);
         }
 
         private void _initialColorPath_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

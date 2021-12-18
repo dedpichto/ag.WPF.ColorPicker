@@ -40,7 +40,9 @@
     </DrawingBrush>
 
     <SolidColorBrush x:Key="SliderThumbBackgroundBrush" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
-    <SolidColorBrush x:Key="SliderThumbBorderBrush" Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}"/>
+    <SolidColorBrush x:Key="SliderThumbBorderBrush" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
+    <SolidColorBrush x:Key="IconBrushFg" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
+    <SolidColorBrush x:Key="IconBrushBg" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
 
     <Style x:Key="ColorRadio" 
            TargetType="{x:Type RadioButton}">
@@ -330,11 +332,14 @@
                                     </Canvas>
                                     <Border x:Name="PART_DropPickerBorder" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center" Cursor="Hand" Margin="4">
                                         <Grid>
-                                            <Path Stroke="{TemplateBinding Foreground}" Fill="{TemplateBinding Background}" StrokeThickness="1" StrokeEndLineCap="Round" StrokeLineJoin="Round" StrokeStartLineCap="Round" Data="M21,0 L 24,3 L18,9 L20,11 L18,13 L11,6 L13,4L15,6 Z M12.5,7.5 L1,19 L0,22 L0,24 L2,24 L5,23 L16.5,11.5"/>
-                                            <Path Fill="{TemplateBinding Foreground}" StrokeThickness="0" Data="M21,1.5 L22.5,3 L17,8.5 L15.5,7 M13,4 L20,11 L18,12.5 L11.5,6 Z M8,14 L12,14 L4,22 L2,23 L1,23 L1,22 L2,20 Z"/>
+                                            <Path Stroke="{StaticResource IconBrushFg}" Fill="{StaticResource IconBrushBg}" StrokeThickness="1" StrokeEndLineCap="Round" StrokeLineJoin="Round" StrokeStartLineCap="Round" Data="M21,0 L 24,3 L18,9 L20,11 L18,13 L11,6 L13,4L15,6 Z M12.5,7.5 L1,19 L0,22 L0,24 L2,24 L5,23 L16.5,11.5"/>
+                                            <Path Fill="{StaticResource IconBrushFg}" StrokeThickness="0" Data="M21,1.5 L22.5,3 L17,8.5 L15.5,7 M13,4 L20,11 L18,12.5 L11.5,6 Z M8,14 L12,14 L4,22 L2,23 L1,23 L1,22 L2,20 Z"/>
                                         </Grid>
                                     </Border>
                                     <TextBox x:Name="PART_HexadecimalTextBox" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Margin="4"/>
+                                    <Border x:Name="PART_CopyTextBorder" Grid.Column="3" Width="24" Height="24" VerticalAlignment="Center" Cursor="Hand" Margin="4">
+                                        <Path Stroke="{StaticResource IconBrushFg}" Fill="{StaticResource IconBrushBg}" StrokeThickness="1" Data="M1,1 L15,1 L15,3 L9,3 L9,21 L1,21 Z M9,3 L23,3 L23,23 L9,23 L9,3 M3,6 L9,6 M3,12 L9,12 M12,9 L21,9 M12,15 L21,15"/>
+                                    </Border>
                                 </Grid>
 
                                 <GroupBox Grid.Column="0" Grid.Row="2" Header="Color modes">
@@ -675,7 +680,7 @@
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
                                 <RepeatButton x:Name="PART_Up" Padding="0" Focusable="False">
-                                    <Path x:Name="RepeatButtonArrowUp" Data="{StaticResource UpArrow}"  Fill="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                                    <Path x:Name="RepeatButtonArrowUp" Data="{StaticResource UpArrow}" Fill="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
                                 </RepeatButton>
                                 <RepeatButton Grid.Row="1" x:Name="PART_Down" Padding="0" Focusable="False" Margin="0,1,0,0">
                                     <Path x:Name="RepeatButtonArrowDown" Data="{StaticResource DownArrow}" Fill="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
