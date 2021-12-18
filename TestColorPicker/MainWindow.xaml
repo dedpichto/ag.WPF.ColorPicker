@@ -6,7 +6,7 @@
         xmlns:clp="clr-namespace:ag.WPF.ColorPicker;assembly=ag.WPF.ColorPicker"
         xmlns:local="clr-namespace:TestColorPicker"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" Background="Black" MouseDoubleClick="Window_MouseDoubleClick">
+        Title="MainWindow" Height="450" Width="800" MouseDoubleClick="Window_MouseDoubleClick">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
