@@ -87,7 +87,7 @@ namespace ag.WPF.ColorPicker
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var stream = Application.GetResourceStream(new Uri("pack://application:,,,/ag.WPF.ColorPicker;component/dropper24.cur"));
+            var stream = Application.GetResourceStream(new Uri("pack://application:,,,/ag.WPF.ColorPicker;component/dropper.cur"));
             if (stream == null || stream.Stream == null) return;
             _cursor = new Cursor(stream.Stream);
             if (_cursor != null)

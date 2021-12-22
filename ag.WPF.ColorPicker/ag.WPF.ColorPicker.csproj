@@ -95,7 +95,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="dropper24.cur" />
+    <Resource Include="dropper.cur" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
