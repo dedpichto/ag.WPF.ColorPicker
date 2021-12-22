@@ -527,8 +527,8 @@ namespace ag.WPF.ColorPicker
             {
                 _copyTextBorder.MouseLeftButtonDown -= _copyTextBorder_MouseLeftButtonDown;
             }
-            _copyTextBorder =GetTemplateChild(PART_CopyTextBorder) as Border;
-            if(_copyTextBorder != null)
+            _copyTextBorder = GetTemplateChild(PART_CopyTextBorder) as Border;
+            if (_copyTextBorder != null)
             {
                 _copyTextBorder.MouseLeftButtonDown += _copyTextBorder_MouseLeftButtonDown;
             }
@@ -809,7 +809,7 @@ namespace ag.WPF.ColorPicker
         private void UpdateHSLValues(Color color)
         {
             var hsl = color.ToHslColor();
-            if (!_fromMouseMove && !_saturationHslUpdated && !_saturationHsbUpdated && !_brightnessHsbUpdated && !_luminanceHslUpdated)
+            if (!_fromMouseMove && !_saturationHslUpdated && !_saturationHsbUpdated && !_brightnessHsbUpdated && !_luminanceHslUpdated && !isRGBGray(color))
                 HueHsl = hsl.Hue;
             SaturationHsl = hsl.Saturation;
             LuminanceHsl = hsl.Luminance;
@@ -818,7 +818,7 @@ namespace ag.WPF.ColorPicker
         private void UpdateHSBValues(Color color)
         {
             var hsb = color.ToHsbColor();
-            if (!_fromMouseMove && !_saturationHslUpdated && !_saturationHsbUpdated && !_brightnessHsbUpdated && !_luminanceHslUpdated)
+            if (!_fromMouseMove && !_saturationHslUpdated && !_saturationHsbUpdated && !_brightnessHsbUpdated && !_luminanceHslUpdated && !isRGBGray(color))
                 HueHsb = hsb.Hue;
             SaturationHsb = hsb.Saturation;
             BrightnessHsb = hsb.Brightness;
@@ -828,6 +828,11 @@ namespace ag.WPF.ColorPicker
         {
             HexString = $"#{color.A:X2}{color.R:X2}{color.G:X2}{color.B:X2}";
             RGBString = $"rgb({color.R},{color.G},{color.B})";
+        }
+
+        private bool isRGBGray(Color color)
+        {
+            return (color.R == color.G && color.G == color.B);
         }
 
         private void _hexadecimalTextBox_LostFocus(object sender, RoutedEventArgs e) => SetHexadecimalStringProperty((sender as TextBox).Text, true);
