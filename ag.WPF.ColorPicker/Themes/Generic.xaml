@@ -40,7 +40,6 @@
     </DrawingBrush>
 
     <SolidColorBrush x:Key="SliderThumbBackgroundBrush" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
-    <SolidColorBrush x:Key="SliderThumbBorderBrush" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
     <SolidColorBrush x:Key="IconBrushFg" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
     <SolidColorBrush x:Key="IconBrushBg" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
 
@@ -93,58 +92,30 @@
         </Setter>
     </Style>
 
-    <Style x:Key="SliderThumbPath" TargetType="{x:Type Path}">
-        <Setter Property="Fill" Value="{StaticResource SliderThumbBackgroundBrush}"/>
-        <Setter Property="Stroke" Value="{StaticResource SliderThumbBorderBrush}"/>
-    </Style>
-        
-    <!--<SnippetThumb>-->
-    <Style x:Key="SliderThumbStyle" TargetType="{x:Type Thumb}">
-        <Setter Property="SnapsToDevicePixels" Value="true" />
-        <Setter Property="OverridesDefaultStyle" Value="true" />
-        <Setter Property="Height" Value="21" />
-        <Setter Property="Width" Value="12" />
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Grid>
-                        <Border>
-                            <Border.Visibility>
-                                <MultiBinding Converter="{StaticResource SliderThumbVisibilityConverter}" ConverterParameter="middle">
-                                    <Binding Path="Maximum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                    <Binding Path="Minimum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                    <Binding Path="Value" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                </MultiBinding>
-                            </Border.Visibility>
-                            <Path Style="{StaticResource SliderThumbPath}" Data="M0,0 L12,0 L6,9 Z M0,21 L12,21 L6,12 Z"/>
-                        </Border>
-                        <Border>
-                            <Border.Visibility>
-                                <MultiBinding Converter="{StaticResource SliderThumbVisibilityConverter}" ConverterParameter="up">
-                                    <Binding Path="Maximum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                    <Binding Path="Minimum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                    <Binding Path="Value" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                </MultiBinding>
-                            </Border.Visibility>
-                            <Path Style="{StaticResource SliderThumbPath}" Data="M6,0 L12,0 L12,9 Z M6,21 L12,21 L12,12 Z"/>
-                        </Border>
-                        <Border>
-                            <Border.Visibility>
-                                <MultiBinding Converter="{StaticResource SliderThumbVisibilityConverter}" ConverterParameter="down">
-                                    <Binding Path="Maximum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                    <Binding Path="Minimum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                    <Binding Path="Value" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                </MultiBinding>
-                            </Border.Visibility>
-                            <Path Style="{StaticResource SliderThumbPath}" Data="M0,0 L6,0 L0,9 Z M0,21 L6,21 L0,12 Z"/>
-                        </Border>
-                    </Grid>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <!--</SnippetThumb>-->
+    <ControlTemplate x:Key="SliderThumbHorizontalDefault" TargetType="{x:Type Thumb}">
+        <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
+            <Path Data="M0,0 L10,0 L5,5 Z" 
+                  Fill="{StaticResource SliderThumbBackgroundBrush}" 
+                  Stroke="{StaticResource SliderThumbBackgroundBrush}" 
+                  SnapsToDevicePixels="True" 
+                  Stretch="Fill" 
+                  StrokeThickness="1" 
+                  UseLayoutRounding="True" 
+                  VerticalAlignment="Center"/>
+        </Grid>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="SliderThumbVerticalDefault" TargetType="{x:Type Thumb}">
+        <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
+            <Path Data="M0,5 L10,0 L10,10 Z" 
+                  Fill="{StaticResource SliderThumbBackgroundBrush}" 
+                  Stroke="{StaticResource SliderThumbBackgroundBrush}" 
+                  Stretch="Fill"
+                  StrokeThickness="1" 
+                  UseLayoutRounding="True" 
+                  HorizontalAlignment="Center"/>
+        </Grid>
+    </ControlTemplate>
 
     <Style x:Key="RGBSlider" TargetType="{x:Type Slider}">
         <Setter Property="BorderThickness" Value="0"/>
@@ -153,21 +124,24 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Slider}">
                     <Grid>
-                        <Border x:Name="PART_TrackBackground" Height="21">
-                            <Rectangle Stretch="Fill" Fill="{TemplateBinding Background}" HorizontalAlignment="Stretch"/>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <Border x:Name="TrackBackground" Background="{TemplateBinding Background}" BorderThickness="0" Height="21" Margin="5,0" Grid.Row="0" VerticalAlignment="Bottom">
+                            <Canvas Margin="-6,-1">
+                                <Rectangle x:Name="PART_SelectionRange" Fill="Transparent" Height="4.0" Visibility="Hidden"/>
+                            </Canvas>
                         </Border>
-                        <Track Grid.Row="1" x:Name="PART_Track">
+                        <Track x:Name="PART_Track" Grid.Row="0" VerticalAlignment="Top">
                             <Track.DecreaseRepeatButton>
-                                <RepeatButton Style="{StaticResource SliderButtonStyle}"
-                                  Command="Slider.DecreaseLarge" />
+                                <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource SliderButtonStyle}"/>
                             </Track.DecreaseRepeatButton>
-                            <Track.Thumb>
-                                <Thumb Style="{StaticResource SliderThumbStyle}" />
-                            </Track.Thumb>
                             <Track.IncreaseRepeatButton>
-                                <RepeatButton Style="{StaticResource SliderButtonStyle}"
-                                  Command="Slider.IncreaseLarge" />
+                                <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource SliderButtonStyle}"/>
                             </Track.IncreaseRepeatButton>
+                            <Track.Thumb>
+                                <Thumb x:Name="Thumb" Margin="0,0,0,21" Focusable="False" Height="10" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbHorizontalDefault}" VerticalAlignment="Top" Width="10"/>
+                            </Track.Thumb>
                         </Track>
                     </Grid>
                 </ControlTemplate>
@@ -192,69 +166,29 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type picker:ColorSlider}">
-                    <Grid>
-                        <Border x:Name="PART_TrackBackground" Width="24">
-                            <Rectangle x:Name="PART_SpectrumDisplay" Stretch="Fill" VerticalAlignment="Stretch"/>
-                        </Border>
-                        <Track x:Name="PART_Track">
-                            <Track.DecreaseRepeatButton>
-                                <RepeatButton Command="Slider.DecreaseLarge" Style="{StaticResource SliderButtonStyle}"/>
-                            </Track.DecreaseRepeatButton>
-                            <Track.Thumb>
-                                <Thumb>
-                                    <Thumb.Style>
-                                        <Style TargetType="{x:Type Thumb}">
-                                            <Setter Property="Focusable" Value="False"/>
-                                            <Setter Property="OverridesDefaultStyle" Value="True"/>
-                                            <Setter Property="Height" Value="12"/>
-                                            <Setter Property="Width" Value="24"/>
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type Thumb}">
-                                                        <Grid>
-                                                            <Border>
-                                                                <Border.Visibility>
-                                                                    <MultiBinding Converter="{StaticResource SliderThumbVisibilityConverter}" ConverterParameter="middle">
-                                                                        <Binding Path="Maximum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                                                        <Binding Path="Minimum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                                                        <Binding Path="Value" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                                                    </MultiBinding>
-                                                                </Border.Visibility>
-                                                                <Path Style="{StaticResource SliderThumbPath}" Data="M0,0 L10,6 L0,12 Z M24,0 L14,6 L24,12 Z"/>
-                                                            </Border>
-                                                            <Border>
-                                                                <Border.Visibility>
-                                                                    <MultiBinding Converter="{StaticResource SliderThumbVisibilityConverter}" ConverterParameter="up">
-                                                                        <Binding Path="Maximum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                                                        <Binding Path="Minimum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                                                        <Binding Path="Value" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                                                    </MultiBinding>
-                                                                </Border.Visibility>
-                                                                <Path Style="{StaticResource SliderThumbPath}" Data="M0,0 L10,0 L0,6 Z M24,6 L14,0 L24,0 Z"/>
-                                                            </Border>
-                                                            <Border>
-                                                                <Border.Visibility>
-                                                                    <MultiBinding Converter="{StaticResource SliderThumbVisibilityConverter}" ConverterParameter="down">
-                                                                        <Binding Path="Maximum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                                                        <Binding Path="Minimum" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                                                        <Binding Path="Value" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=Slider}"/>
-                                                                    </MultiBinding>
-                                                                </Border.Visibility>
-                                                                <Path Style="{StaticResource SliderThumbPath}" Data="M0,6 L10,12 L0,12 Z M24,6 L14,12 L24,12 Z"/>
-                                                            </Border>
-                                                        </Grid>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </Thumb.Style>
-                                </Thumb>
-                            </Track.Thumb>
-                            <Track.IncreaseRepeatButton>
-                                <RepeatButton Command="Slider.IncreaseLarge" Style="{StaticResource SliderButtonStyle}"/>
-                            </Track.IncreaseRepeatButton>
-                        </Track>
-                    </Grid>
+                    <Border x:Name="border" Background="Transparent" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border x:Name="TrackBackground" Background="{TemplateBinding Background}" BorderThickness="0" Grid.Column="0" HorizontalAlignment="Left" Margin="0,5" Width="21">
+                                <Canvas Margin="-1,-6">
+                                    <Rectangle x:Name="PART_SelectionRange" Fill="Transparent" Visibility="Hidden" Width="4.0"/>
+                                </Canvas>
+                            </Border>
+                            <Track x:Name="PART_Track" Grid.Column="0">
+                                <Track.DecreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource SliderButtonStyle}"/>
+                                </Track.DecreaseRepeatButton>
+                                <Track.IncreaseRepeatButton>
+                                    <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource SliderButtonStyle}"/>
+                                </Track.IncreaseRepeatButton>
+                                <Track.Thumb>
+                                    <Thumb x:Name="Thumb" Focusable="False" Margin="21,0,0,0" Height="10" OverridesDefaultStyle="True" Template="{StaticResource SliderThumbVerticalDefault}" HorizontalAlignment="Right" Width="10"/>
+                                </Track.Thumb>
+                            </Track>
+                        </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -280,7 +214,7 @@
                                     <RowDefinition Height="auto"/>
                                     <RowDefinition Height="auto"/>
                                 </Grid.RowDefinitions>
-                                <Border x:Name="borderCanvas" BorderBrush="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" BorderThickness="1" ClipToBounds="True" Background="{StaticResource TransparentBackgroundBrush}">
+                                <Border x:Name="borderCanvas" BorderBrush="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" BorderThickness="1" Margin="0,5,0,0" ClipToBounds="True" Background="{StaticResource TransparentBackgroundBrush}">
                                     <Canvas x:Name="PART_ColorShadingCanvas" Height="{Binding ActualHeight, ElementName=borderCanvas}" Width="{Binding ActualWidth, ElementName=borderCanvas}">
                                         <Rectangle x:Name="ColorShadingRectangle" Height="{Binding ActualHeight, ElementName=PART_ColorShadingCanvas}" Width="{Binding ActualWidth, ElementName=PART_ColorShadingCanvas}">
                                             <Rectangle.Fill>
@@ -356,9 +290,9 @@
                                                     <RowDefinition/>
                                                     <RowDefinition/>
                                                 </Grid.RowDefinitions>
-                                                <TextBlock Grid.Column="0" Grid.Row="0" Margin="4" Text="R" VerticalAlignment="Center"/>
-                                                <TextBlock Grid.Column="0" Grid.Row="1" Margin="4" Text="G" VerticalAlignment="Center"/>
-                                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="4" Text="B" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="0" Grid.Row="0" Margin="4,14,4,4" Text="R" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="0" Grid.Row="1" Margin="4,14,4,4" Text="G" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="4,14,4,4" Text="B" VerticalAlignment="Center"/>
 
                                                 <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                                     <Slider.Background>
@@ -391,9 +325,9 @@
                                                     </Slider.Background>
                                                 </Slider>
 
-                                                <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
                                             </Grid>
                                         </TabItem>
                                         <TabItem Header="HSB">
@@ -409,9 +343,9 @@
                                                     <RowDefinition/>
                                                     <RowDefinition/>
                                                 </Grid.RowDefinitions>
-                                                <TextBlock Grid.Column="0" Grid.Row="0" Margin="4" Text="H" VerticalAlignment="Center"/>
-                                                <TextBlock Grid.Column="0" Grid.Row="1" Margin="4" Text="S" VerticalAlignment="Center"/>
-                                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="4" Text="B" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="0" Grid.Row="0" Margin="4,14,4,4" Text="H" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="0" Grid.Row="1" Margin="4,14,4,4" Text="S" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="4,14,4,4" Text="B" VerticalAlignment="Center"/>
 
                                                 <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="360" LargeChange="10" SmallChange="1" TickFrequency="1" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding Value, ElementName=PART_SpectrumSlider}" Background="{Binding SpectrumBrush, ElementName=PART_SpectrumSlider}"/>
                                                 <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="1" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding SaturationHsb, RelativeSource={RelativeSource Mode=TemplatedParent}}">
@@ -434,13 +368,13 @@
                                                         </LinearGradientBrush>
                                                     </Slider.Background>
                                                 </Slider>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4" Width="40" MinValue="0" MaxValue="360" Step="1" IsReadOnly="False" Value="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding SaturationHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding BrightnessHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="360" Step="1" IsReadOnly="False" Value="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding SaturationHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding BrightnessHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
 
-                                                <TextBlock Grid.Column="3" Grid.Row="0" VerticalAlignment="Top" Text="o"/>
-                                                <TextBlock Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" Text="%"/>
-                                                <TextBlock Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" Text="%"/>
+                                                <TextBlock Grid.Column="3" Grid.Row="0" VerticalAlignment="Top" Margin="0,9,0,0" Text="o"/>
+                                                <TextBlock Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" Margin="0,14,0,0" Text="%"/>
+                                                <TextBlock Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" Margin="0,14,0,0" Text="%"/>
                                             </Grid>
                                         </TabItem>
                                         <TabItem Header="HSL">
@@ -456,9 +390,9 @@
                                                     <RowDefinition/>
                                                     <RowDefinition/>
                                                 </Grid.RowDefinitions>
-                                                <TextBlock Grid.Column="0" Grid.Row="0" Margin="4" Text="H" VerticalAlignment="Center"/>
-                                                <TextBlock Grid.Column="0" Grid.Row="1" Margin="4" Text="S" VerticalAlignment="Center"/>
-                                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="4" Text="L" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="0" Grid.Row="0" Margin="4,14,4,4" Text="H" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="0" Grid.Row="1" Margin="4,14,4,4" Text="S" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="4,14,4,4" Text="L" VerticalAlignment="Center"/>
 
                                                 <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="360" LargeChange="10" SmallChange="1" TickFrequency="1" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding Value, ElementName=PART_SpectrumSlider}" Background="{Binding SpectrumBrush, ElementName=PART_SpectrumSlider}"/>
                                                 <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="1" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding SaturationHsl, RelativeSource={RelativeSource Mode=TemplatedParent}}">
@@ -482,28 +416,28 @@
                                                         </LinearGradientBrush>
                                                     </Slider.Background>
                                                 </Slider>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4" Width="40" MinValue="0" MaxValue="360" Step="1" IsReadOnly="False" Value="{Binding HueHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding SaturationHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding LuminanceHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="360" Step="1" IsReadOnly="False" Value="{Binding HueHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding SaturationHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
+                                                <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding LuminanceHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
 
-                                                <TextBlock Grid.Column="3" Grid.Row="0" VerticalAlignment="Top" Text="o"/>
-                                                <TextBlock Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" Text="%"/>
-                                                <TextBlock Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" Text="%"/>
+                                                <TextBlock Grid.Column="3" Grid.Row="0" VerticalAlignment="Top" Margin="0,9,0,0" Text="o"/>
+                                                <TextBlock Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" Margin="0,14,0,0" Text="%"/>
+                                                <TextBlock Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" Margin="0,14,0,0" Text="%"/>
                                             </Grid>
                                         </TabItem>
                                     </TabControl>
                                 </GroupBox>
 
-                                <StackPanel Grid.Column="0" Grid.Row="3">
-                                    <CheckBox x:Name="_useAlpha" Margin="0,4,0,4" Content="Use alpha channel" IsChecked="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                <StackPanel Grid.Column="0" Grid.Row="3" Margin="0,0,0,5">
+                                    <CheckBox x:Name="_useAlpha" Margin="0,4,0,0" Content="Use alpha channel" IsChecked="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="auto"/>
                                             <ColumnDefinition/>
                                             <ColumnDefinition Width="auto"/>
                                         </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Margin="4" Text="A" IsEnabled="{Binding IsChecked, ElementName=_useAlpha}"/>
-                                        <Slider Style="{StaticResource RGBSlider}" x:Name="_alphaSlider" Grid.Column="1" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsEnabled="{Binding IsChecked, ElementName=_useAlpha}">
+                                        <TextBlock Grid.Column="0" Margin="4,14,4,0" Text="A" IsEnabled="{Binding IsChecked, ElementName=_useAlpha}" VerticalAlignment="Center"/>
+                                        <Slider Style="{StaticResource RGBSlider}" x:Name="_alphaSlider" Grid.Column="1" Margin="4,4,4,0" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsEnabled="{Binding IsChecked, ElementName=_useAlpha}">
                                             <Slider.Background>
                                                 <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                                     <LinearGradientBrush.GradientStops>
@@ -513,7 +447,7 @@
                                                 </LinearGradientBrush>
                                             </Slider.Background>
                                         </Slider>
-                                        <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                        <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,0" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
                                     </Grid>
                                 </StackPanel>
 

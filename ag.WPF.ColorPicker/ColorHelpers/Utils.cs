@@ -46,11 +46,16 @@ namespace ag.WPF.ColorPicker.ColorHelpers
             var colorList = new List<Color>();
             int num = 60;
             HsbColor hsb;
-            for (int index = 0; index < 360; index += num)
+            for (int index = 359; index >= 0; index -= num)
             {
                 hsb = new HsbColor(index, 1.0, 1.0);
                 colorList.Add(hsb.ToRgbColor());
             }
+            //for (int index = 0; index < 360; index += num)
+            //{
+            //    hsb = new HsbColor(index, 1.0, 1.0);
+            //    colorList.Add(hsb.ToRgbColor());
+            //}
             hsb = new HsbColor(0.0, 1.0, 1.0);
             colorList.Add(hsb.ToRgbColor());
             colorList.Reverse();

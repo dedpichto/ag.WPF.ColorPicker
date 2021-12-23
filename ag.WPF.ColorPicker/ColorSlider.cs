@@ -24,7 +24,6 @@ namespace ag.WPF.ColorPicker
 
         private Rectangle _spectrumDisplay;
         private byte _alpha = byte.MaxValue;
-        private LinearGradientBrush _spectrumBrush;
         public static readonly DependencyProperty SpectrumBrushProperty = DependencyProperty.Register(nameof(SpectrumBrush), typeof(LinearGradientBrush), typeof(ColorSlider), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorSlider), new PropertyMetadata(Colors.Transparent));
 
@@ -55,7 +54,8 @@ namespace ag.WPF.ColorPicker
         protected override void OnValueChanged(double oldValue, double newValue)
         {
             base.OnValueChanged(oldValue, newValue);
-            var hsb = new HsbColor(newValue, 1.0, 1.0);
+            var hsb = new HsbColor(360.0 - newValue, 1.0, 1.0);
+            //var hsb = new HsbColor(360.0 - newValue, 1.0, 1.0);
             var color = hsb.ToRgbColor();
             SelectedColor = Color.FromArgb(_alpha, color.R, color.G, color.B);
         }
@@ -68,7 +68,7 @@ namespace ag.WPF.ColorPicker
 
         private void CreateSpectrum()
         {
-            _spectrumBrush = new LinearGradientBrush
+            var spectrumBrush = new LinearGradientBrush
             {
                 StartPoint = new Point(0.5, 0.0),
                 EndPoint = new Point(0.5, 1.0),
@@ -85,23 +85,13 @@ namespace ag.WPF.ColorPicker
             int index;
             for (index = 0; index < hsvSpectrum.Count; ++index)
             {
-                _spectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)index * num));
-                SpectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)(hsvSpectrum.Count-index-1) * num));
+                spectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)index * num));
+                SpectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)(hsvSpectrum.Count - index - 1) * num));
             }
-            _spectrumBrush.GradientStops[index - 1].Offset = 1.0;
+            spectrumBrush.GradientStops[index - 1].Offset = 1.0;
             SpectrumBrush.GradientStops[index - 1].Offset = 0.0;
-            //for (index=hsvSpectrum.Count-1; index > 0; --index)
-            //{
-            //    SpectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)index * num));
-            //}
-            //SpectrumBrush.GradientStops[0].Offset = 1.0;
 
-            if (_spectrumDisplay == null)
-                return;
-            _spectrumDisplay.Fill = _spectrumBrush;
-            //SpectrumBrush = _spectrumBrush.CloneCurrentValue();
-            //SpectrumBrush.StartPoint = new Point(0, 0.5);
-            //SpectrumBrush.EndPoint = new Point(1, 0.5);
+            Background = spectrumBrush;
         }
     }
 }
