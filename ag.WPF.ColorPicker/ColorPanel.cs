@@ -20,11 +20,22 @@ using System.Windows.Shapes;
 
 namespace ag.WPF.ColorPicker
 {
+    #region Enums
+    public enum ColorStringFormat
+    {
+        HEX,
+        ARGB,
+        RGB,
+        HSB,
+        HSL
+    }
+    #endregion
+
     #region Named parts
     [TemplatePart(Name = "PART_ColorShadingCanvas", Type = typeof(Canvas))]
     [TemplatePart(Name = "PART_ColorShadeSelector", Type = typeof(Canvas))]
     [TemplatePart(Name = "PART_SpectrumSlider", Type = typeof(ColorSlider))]
-    [TemplatePart(Name = "PART_HexadecimalTextBox", Type = typeof(TextBox))]
+    [TemplatePart(Name = "PART_ColorStringTextBox", Type = typeof(TextBox))]
     [TemplatePart(Name = "PART_InitialColorPath", Type = typeof(System.Windows.Shapes.Path))]
     [TemplatePart(Name = "PART_CopyTextBorder", Type = typeof(Border))]
     [TemplatePart(Name = "PART_ShadesPanel", Type = typeof(UniformGrid))]
@@ -42,7 +53,7 @@ namespace ag.WPF.ColorPicker
         private const string PART_ColorShadingCanvas = "PART_ColorShadingCanvas";
         private const string PART_ColorShadeSelector = "PART_ColorShadeSelector";
         private const string PART_SpectrumSlider = "PART_SpectrumSlider";
-        private const string PART_HexadecimalTextBox = "PART_HexadecimalTextBox";
+        private const string PART_ColorStringTextBox = "PART_ColorStringTextBox";
         private const string PART_InitialColorPath = "PART_InitialColorPath";
         private const string PART_CopyTextBorder = "PART_CopyTextBorder";
         private const string PART_ShadesPanel = "PART_ShadesPanel";
@@ -60,7 +71,7 @@ namespace ag.WPF.ColorPicker
         private Canvas _colorShadingCanvas;
         private Canvas _colorShadeSelector;
         private ColorSlider _spectrumSlider;
-        private TextBox _hexadecimalTextBox;
+        private TextBox _colorStringTextBox;
         private System.Windows.Shapes.Path _initialColorPath;
         private Border _copyTextBorder;
         private UniformGrid _shadesPanel;
@@ -100,13 +111,12 @@ namespace ag.WPF.ColorPicker
         public static readonly DependencyProperty SaturationHsbProperty = DependencyProperty.Register(nameof(SaturationHsb), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnSaturationHsbChanged));
         public static readonly DependencyProperty BrightnessHsbProperty = DependencyProperty.Register(nameof(BrightnessHsb), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnBrightnessHsbChanged));
 
-        public static readonly DependencyProperty HexStringProperty = DependencyProperty.Register(nameof(HexString), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata(""));
-        public static readonly DependencyProperty RGBStringProperty = DependencyProperty.Register(nameof(RGBString), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata(""));
+        public static readonly DependencyProperty ColorStringProperty = DependencyProperty.Register(nameof(ColorString), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata(""));
 
-        public static readonly DependencyProperty UseAlphaChannelProperty = DependencyProperty.Register(nameof(UseAlphaChannel), typeof(bool), typeof(ColorPanel), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnUseAlphaChannelPropertyChanged)));
+        public static readonly DependencyProperty UseAlphaChannelProperty = DependencyProperty.Register(nameof(UseAlphaChannel), typeof(bool), typeof(ColorPanel), new FrameworkPropertyMetadata(true, OnUseAlphaChannelPropertyChanged));
 
         public static readonly DependencyProperty ShowCommandsPanelProperty = DependencyProperty.Register(nameof(ShowCommandsPanel), typeof(bool), typeof(ColorPanel), new FrameworkPropertyMetadata(true));
-
+        public static readonly DependencyProperty ColorStringFormatProperty = DependencyProperty.Register(nameof(ColorStringFormat), typeof(ColorStringFormat), typeof(ColorPanel), new FrameworkPropertyMetadata(ColorStringFormat.HEX, OnColorStringFormatChanged));
         #endregion
 
         #region Routed events
@@ -136,22 +146,22 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Dependency properties handlers
+        public ColorStringFormat ColorStringFormat
+        {
+            get { return (ColorStringFormat)GetValue(ColorStringFormatProperty); }
+            set { SetValue(ColorStringFormatProperty, value); }
+        }
+
         public bool ShowCommandsPanel
         {
             get { return (bool)GetValue(ShowCommandsPanelProperty); }
             set { SetValue(ShowCommandsPanelProperty, value); }
         }
 
-        public string HexString
+        public string ColorString
         {
-            get { return (string)GetValue(HexStringProperty); }
-            private set { SetValue(HexStringProperty, value); }
-        }
-
-        public string RGBString
-        {
-            get { return (string)GetValue(RGBStringProperty); }
-            private set { SetValue(RGBStringProperty, value); }
+            get { return (string)GetValue(ColorStringProperty); }
+            private set { SetValue(ColorStringProperty, value); }
         }
 
         public bool UseAlphaChannel
@@ -397,13 +407,24 @@ namespace ag.WPF.ColorPicker
                 return;
             UpdateSelectedColor();
         }
+
+        private static void OnColorStringFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is ColorPanel colorPanel)) return;
+            colorPanel.OnColorStringFormatChanged((ColorStringFormat)e.OldValue, (ColorStringFormat)e.NewValue);
+        }
+
+        protected virtual void OnColorStringFormatChanged(ColorStringFormat oldValue, ColorStringFormat newValue)
+        {
+            ColorString = getColorString();
+        }
         #endregion
 
         #region ctor
         static ColorPanel()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorPanel), new FrameworkPropertyMetadata(typeof(ColorPanel)));
-        } 
+        }
         #endregion
 
         #region Overrides
@@ -493,7 +514,7 @@ namespace ag.WPF.ColorPicker
                 _spectrumSlider.ValueChanged += _spectrumSlider_ValueChanged;
             }
 
-            _hexadecimalTextBox = GetTemplateChild(PART_HexadecimalTextBox) as TextBox;
+            _colorStringTextBox = GetTemplateChild(PART_ColorStringTextBox) as TextBox;
 
             _tabMain = GetTemplateChild(PART_TabMain) as TabControl;
             _shadesPanel = GetTemplateChild(PART_ShadesPanel) as UniformGrid;
@@ -570,7 +591,7 @@ namespace ag.WPF.ColorPicker
 
         private void _copyTextBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Clipboard.SetText(_hexadecimalTextBox.Text);
+            Clipboard.SetText(_colorStringTextBox.Text);
         }
 
         private void _dropPickerBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -667,6 +688,19 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Private procedures
+        private string getColorString()
+        {
+            return ColorStringFormat switch
+            {
+                ColorStringFormat.HEX => $"#{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}",
+                ColorStringFormat.ARGB => $"{SelectedColor.A}, {SelectedColor.R}, {SelectedColor.G}, {SelectedColor.B}",
+                ColorStringFormat.RGB => $"{SelectedColor.R}, {SelectedColor.G}, {SelectedColor.B}",
+                ColorStringFormat.HSB => $"{HueHsb:f0}, {SaturationHsb:f2}, {BrightnessHsb:f2}",
+                ColorStringFormat.HSL => $"{HueHsl:f0}, {SaturationHsl:f2}, {LuminanceHsl:f2}",
+                _ => $"#{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}"
+            };
+        }
+
         private void raiseColorAppliedEvent()
         {
             var appliedEventArgs = new RoutedPropertyChangedEventArgs<Color>(_initialColor, SelectedColor)
@@ -880,8 +914,7 @@ namespace ag.WPF.ColorPicker
 
         private void UpdateColorStrings(Color color)
         {
-            HexString = $"#{color.A:X2}{color.R:X2}{color.G:X2}{color.B:X2}";
-            RGBString = $"rgb({color.R},{color.G},{color.B})";
+            ColorString = getColorString();
         }
 
         private bool isRGBGray(Color color)
