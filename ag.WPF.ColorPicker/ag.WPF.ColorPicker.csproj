@@ -49,6 +49,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Events\ColorChangedEventArgs.cs" />
     <Compile Include="PickerPanel.xaml.cs">
       <DependentUpon>PickerPanel.xaml</DependentUpon>
     </Compile>

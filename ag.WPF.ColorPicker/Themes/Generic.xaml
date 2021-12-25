@@ -200,329 +200,355 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type picker:ColorPanel}">
-                    <TabControl x:Name="PART_TabMain">
-                        <TabItem Name="_tabCustom" Header="Custom">
-                            <Grid x:Name="_customGrid">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition/>
-                                    <ColumnDefinition Width="auto"/>
-                                    <ColumnDefinition Width="auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                    <RowDefinition Height="auto"/>
-                                </Grid.RowDefinitions>
-                                <Border x:Name="borderCanvas" BorderBrush="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" BorderThickness="1" Margin="0,5,0,0" ClipToBounds="True" Background="{StaticResource TransparentBackgroundBrush}">
-                                    <Canvas x:Name="PART_ColorShadingCanvas" Height="{Binding ActualHeight, ElementName=borderCanvas}" Width="{Binding ActualWidth, ElementName=borderCanvas}">
-                                        <Rectangle x:Name="ColorShadingRectangle" Height="{Binding ActualHeight, ElementName=PART_ColorShadingCanvas}" Width="{Binding ActualWidth, ElementName=PART_ColorShadingCanvas}">
-                                            <Rectangle.Fill>
-                                                <SolidColorBrush Color="{Binding ElementName=PART_SpectrumSlider, Path=SelectedColor}"/>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                        <Rectangle x:Name="WhiteGradient" Height="{Binding ActualHeight, ElementName=PART_ColorShadingCanvas}" Width="{Binding ActualWidth, ElementName=PART_ColorShadingCanvas}">
-                                            <Rectangle.Fill>
-                                                <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
-                                                    <GradientStop Color="White" Offset="0"/>
-                                                    <GradientStop Color="Transparent" Offset="1"/>
-                                                </LinearGradientBrush>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                        <Rectangle x:Name="BlackGradient" Height="{Binding ActualHeight, ElementName=PART_ColorShadingCanvas}" Width="{Binding ActualWidth, ElementName=PART_ColorShadingCanvas}">
-                                            <Rectangle.Fill>
-                                                <LinearGradientBrush EndPoint="0,0" StartPoint="0,1">
-                                                    <GradientStop Color="Black" Offset="0"/>
-                                                    <GradientStop Color="#00000000" Offset="1"/>
-                                                </LinearGradientBrush>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                        <Canvas x:Name="PART_ColorShadeSelector" Height="10" IsHitTestVisible="False" Width="10">
-                                            <Ellipse Height="10" IsHitTestVisible="False" Stroke="White" StrokeThickness="3" Width="10"/>
-                                            <Ellipse Height="10" IsHitTestVisible="False" Stroke="Black" StrokeThickness="1" Width="10"/>
-                                        </Canvas>
-                                    </Canvas>
-                                </Border>
-                                <picker:ColorSlider x:Name="PART_SpectrumSlider" VerticalAlignment="Stretch" Grid.Column="1" Grid.RowSpan="5" Margin="8,0,0,0" />
-
-                                <Grid Grid.Column="0" Grid.Row="1">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
+                        <TabControl x:Name="PART_TabMain">
+                            <TabItem Name="_tabCustom" Header="Custom">
+                                <Grid x:Name="_customGrid">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="auto"/>
-                                        <ColumnDefinition Width="auto"/>
                                         <ColumnDefinition/>
                                         <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
                                     </Grid.ColumnDefinitions>
-                                    <Canvas Grid.Column="0" Grid.Row="0" Height="36" Width="36" Margin="4">
-                                        <Border Width="24" Height="24">
-                                            <Path x:Name="PART_InitialColorPath" Cursor="Hand" Data="M0,0 L24,0 L24,8 L8,8 L8,24 L0,24 Z"/>
-                                        </Border>
-                                        <Border Canvas.Left="12" Canvas.Top="12" Width="24" Height="24" Background="{StaticResource TransparentBackgroundBrush}">
-                                            <Rectangle>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                        <RowDefinition Height="auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Border x:Name="borderCanvas" BorderBrush="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" BorderThickness="1" Margin="0,5,0,0" ClipToBounds="True" Background="{StaticResource TransparentBackgroundBrush}">
+                                        <Canvas x:Name="PART_ColorShadingCanvas" Height="{Binding ActualHeight, ElementName=borderCanvas}" Width="{Binding ActualWidth, ElementName=borderCanvas}">
+                                            <Rectangle x:Name="ColorShadingRectangle" Height="{Binding ActualHeight, ElementName=PART_ColorShadingCanvas}" Width="{Binding ActualWidth, ElementName=PART_ColorShadingCanvas}">
                                                 <Rectangle.Fill>
-                                                    <SolidColorBrush Color="{Binding Path=SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                                    <SolidColorBrush Color="{Binding ElementName=PART_SpectrumSlider, Path=SelectedColor}"/>
                                                 </Rectangle.Fill>
                                             </Rectangle>
+                                            <Rectangle x:Name="WhiteGradient" Height="{Binding ActualHeight, ElementName=PART_ColorShadingCanvas}" Width="{Binding ActualWidth, ElementName=PART_ColorShadingCanvas}">
+                                                <Rectangle.Fill>
+                                                    <LinearGradientBrush EndPoint="1,0" StartPoint="0,0">
+                                                        <GradientStop Color="White" Offset="0"/>
+                                                        <GradientStop Color="Transparent" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Rectangle.Fill>
+                                            </Rectangle>
+                                            <Rectangle x:Name="BlackGradient" Height="{Binding ActualHeight, ElementName=PART_ColorShadingCanvas}" Width="{Binding ActualWidth, ElementName=PART_ColorShadingCanvas}">
+                                                <Rectangle.Fill>
+                                                    <LinearGradientBrush EndPoint="0,0" StartPoint="0,1">
+                                                        <GradientStop Color="Black" Offset="0"/>
+                                                        <GradientStop Color="#00000000" Offset="1"/>
+                                                    </LinearGradientBrush>
+                                                </Rectangle.Fill>
+                                            </Rectangle>
+                                            <Canvas x:Name="PART_ColorShadeSelector" Height="10" IsHitTestVisible="False" Width="10">
+                                                <Ellipse Height="10" IsHitTestVisible="False" Stroke="White" StrokeThickness="3" Width="10"/>
+                                                <Ellipse Height="10" IsHitTestVisible="False" Stroke="Black" StrokeThickness="1" Width="10"/>
+                                            </Canvas>
+                                        </Canvas>
+                                    </Border>
+                                    <picker:ColorSlider x:Name="PART_SpectrumSlider" VerticalAlignment="Stretch" Grid.Column="1" Grid.RowSpan="5" Margin="8,0,0,0" />
+
+                                    <Grid Grid.Column="0" Grid.Row="1">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition Width="auto"/>
+                                            <ColumnDefinition/>
+                                            <ColumnDefinition Width="auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Canvas Grid.Column="0" Grid.Row="0" Height="36" Width="36" Margin="4">
+                                            <Border Width="24" Height="24">
+                                                <Path x:Name="PART_InitialColorPath" Cursor="Hand" Data="M0,0 L24,0 L24,8 L8,8 L8,24 L0,24 Z"/>
+                                            </Border>
+                                            <Border Canvas.Left="12" Canvas.Top="12" Width="24" Height="24" Background="{StaticResource TransparentBackgroundBrush}">
+                                                <Rectangle>
+                                                    <Rectangle.Fill>
+                                                        <SolidColorBrush Color="{Binding Path=SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
+                                            </Border>
+                                        </Canvas>
+                                        <Border x:Name="PART_DropPickerBorder" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center" Cursor="Hand" Margin="4">
+                                            <Grid>
+                                                <Path Stroke="{StaticResource IconBrushFg}" Fill="{StaticResource IconBrushBg}" StrokeThickness="1" StrokeEndLineCap="Round" StrokeLineJoin="Round" StrokeStartLineCap="Round" Data="M21,0 L 24,3 L18,9 L20,11 L18,13 L11,6 L13,4L15,6 Z M12.5,7.5 L1,19 L0,22 L0,24 L2,24 L5,23 L16.5,11.5"/>
+                                                <Path Fill="{StaticResource IconBrushFg}" StrokeThickness="0" Data="M21,1.5 L22.5,3 L17,8.5 L15.5,7 M13,4 L20,11 L18,12.5 L11.5,6 Z M8,14 L12,14 L4,22 L2,23 L1,23 L1,22 L2,20 Z"/>
+                                            </Grid>
                                         </Border>
-                                    </Canvas>
-                                    <Border x:Name="PART_DropPickerBorder" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center" Cursor="Hand" Margin="4">
+                                        <TextBox x:Name="PART_HexadecimalTextBox" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Margin="4" Text="{Binding HexString, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                        <Border x:Name="PART_CopyTextBorder" Grid.Column="3" Width="24" Height="24" VerticalAlignment="Center" Cursor="Hand" Margin="4">
+                                            <Path Stroke="{StaticResource IconBrushFg}" Fill="{StaticResource IconBrushBg}" StrokeThickness="1" Data="M1,1 L15,1 L15,3 L9,3 L9,21 L1,21 Z M9,3 L23,3 L23,23 L9,23 L9,3 M3,6 L9,6 M3,12 L9,12 M12,9 L21,9 M12,15 L21,15"/>
+                                        </Border>
+                                    </Grid>
+
+                                    <GroupBox Grid.Column="0" Grid.Row="2" Header="Color modes">
+                                        <TabControl>
+                                            <TabItem Header="RGB">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Column="0" Grid.Row="0" Margin="4,14,4,4" Text="R" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="0" Grid.Row="1" Margin="4,14,4,4" Text="G" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="0" Grid.Row="2" Margin="4,14,4,4" Text="B" VerticalAlignment="Center"/>
+
+                                                    <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                                        <Slider.Background>
+                                                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="Transparent"/>
+                                                                    <GradientStop Offset="1" Color="#FFFF0000"/>
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Slider.Background>
+                                                    </Slider>
+                                                    <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                                        <Slider.Background>
+                                                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="Transparent"/>
+                                                                    <GradientStop Offset="1" Color="#FF00FF00"/>
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Slider.Background>
+                                                    </Slider>
+                                                    <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="2" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                                        <Slider.Background>
+                                                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="Transparent"/>
+                                                                    <GradientStop Offset="1" Color="#FF0000FF"/>
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Slider.Background>
+                                                    </Slider>
+
+                                                    <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                                    <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                                    <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                                </Grid>
+                                            </TabItem>
+                                            <TabItem Header="HSB">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Column="0" Grid.Row="0" Margin="4,14,4,4" Text="H" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="0" Grid.Row="1" Margin="4,14,4,4" Text="S" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="0" Grid.Row="2" Margin="4,14,4,4" Text="B" VerticalAlignment="Center"/>
+
+                                                    <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="360" LargeChange="10" SmallChange="1" TickFrequency="1" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding Value, ElementName=PART_SpectrumSlider}" Background="{Binding SpectrumBrush, ElementName=PART_SpectrumSlider}"/>
+                                                    <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="1" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding SaturationHsb, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                                        <Slider.Background>
+                                                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="#FFFFFFFF"/>
+                                                                    <GradientStop Offset="1" Color="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PureColorConverter}}"/>
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Slider.Background>
+                                                    </Slider>
+                                                    <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="2" Margin="4" Minimum="0" Maximum="1" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding BrightnessHsb, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                                        <Slider.Background>
+                                                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="#FF000000"/>
+                                                                    <GradientStop Offset="1" Color="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PureColorConverter}}"/>
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Slider.Background>
+                                                    </Slider>
+                                                    <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="360" Step="1" IsReadOnly="False" Value="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
+                                                    <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding SaturationHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
+                                                    <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding BrightnessHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
+
+                                                    <TextBlock Grid.Column="3" Grid.Row="0" VerticalAlignment="Top" Margin="0,9,0,0" Text="o"/>
+                                                    <TextBlock Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" Margin="0,14,0,0" Text="%"/>
+                                                    <TextBlock Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" Margin="0,14,0,0" Text="%"/>
+                                                </Grid>
+                                            </TabItem>
+                                            <TabItem Header="HSL">
+                                                <Grid>
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                        <ColumnDefinition Width="auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Column="0" Grid.Row="0" Margin="4,14,4,4" Text="H" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="0" Grid.Row="1" Margin="4,14,4,4" Text="S" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="0" Grid.Row="2" Margin="4,14,4,4" Text="L" VerticalAlignment="Center"/>
+
+                                                    <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="360" LargeChange="10" SmallChange="1" TickFrequency="1" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding Value, ElementName=PART_SpectrumSlider}" Background="{Binding SpectrumBrush, ElementName=PART_SpectrumSlider}"/>
+                                                    <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="1" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding SaturationHsl, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                                        <Slider.Background>
+                                                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="#8F8F8F"/>
+                                                                    <GradientStop Offset="1" Color="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PureColorConverter}}"/>
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Slider.Background>
+                                                    </Slider>
+                                                    <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="2" Margin="4" Minimum="0" Maximum="1" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding LuminanceHsl, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                                        <Slider.Background>
+                                                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="#FF000000"/>
+                                                                    <GradientStop Offset="0.5" Color="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PureColorConverter}}"/>
+                                                                    <GradientStop Offset="1" Color="#FFFFFFFF"/>
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Slider.Background>
+                                                    </Slider>
+                                                    <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="360" Step="1" IsReadOnly="False" Value="{Binding HueHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
+                                                    <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding SaturationHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
+                                                    <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding LuminanceHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
+
+                                                    <TextBlock Grid.Column="3" Grid.Row="0" VerticalAlignment="Top" Margin="0,9,0,0" Text="o"/>
+                                                    <TextBlock Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" Margin="0,14,0,0" Text="%"/>
+                                                    <TextBlock Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" Margin="0,14,0,0" Text="%"/>
+                                                </Grid>
+                                            </TabItem>
+                                        </TabControl>
+                                    </GroupBox>
+
+                                    <StackPanel Grid.Column="0" Grid.Row="3" Margin="0,0,0,5">
+                                        <CheckBox x:Name="_useAlpha" Margin="0,4,0,0" Content="Use alpha channel" IsChecked="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                         <Grid>
-                                            <Path Stroke="{StaticResource IconBrushFg}" Fill="{StaticResource IconBrushBg}" StrokeThickness="1" StrokeEndLineCap="Round" StrokeLineJoin="Round" StrokeStartLineCap="Round" Data="M21,0 L 24,3 L18,9 L20,11 L18,13 L11,6 L13,4L15,6 Z M12.5,7.5 L1,19 L0,22 L0,24 L2,24 L5,23 L16.5,11.5"/>
-                                            <Path Fill="{StaticResource IconBrushFg}" StrokeThickness="0" Data="M21,1.5 L22.5,3 L17,8.5 L15.5,7 M13,4 L20,11 L18,12.5 L11.5,6 Z M8,14 L12,14 L4,22 L2,23 L1,23 L1,22 L2,20 Z"/>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="auto"/>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Margin="4,14,4,0" Text="A" IsEnabled="{Binding IsChecked, ElementName=_useAlpha}" VerticalAlignment="Center"/>
+                                            <Slider Style="{StaticResource RGBSlider}" x:Name="_alphaSlider" Grid.Column="1" Margin="4,4,4,0" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsEnabled="{Binding IsChecked, ElementName=_useAlpha}">
+                                                <Slider.Background>
+                                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                        <LinearGradientBrush.GradientStops>
+                                                            <GradientStop Offset="0" Color="Transparent"/>
+                                                            <GradientStop Offset="1" Color="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OpaqueColorConverter}}"/>
+                                                        </LinearGradientBrush.GradientStops>
+                                                    </LinearGradientBrush>
+                                                </Slider.Background>
+                                            </Slider>
+                                            <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,0" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
                                         </Grid>
-                                    </Border>
-                                    <TextBox x:Name="PART_HexadecimalTextBox" Grid.Column="2" Grid.Row="0" VerticalAlignment="Center" Margin="4"/>
-                                    <Border x:Name="PART_CopyTextBorder" Grid.Column="3" Width="24" Height="24" VerticalAlignment="Center" Cursor="Hand" Margin="4">
-                                        <Path Stroke="{StaticResource IconBrushFg}" Fill="{StaticResource IconBrushBg}" StrokeThickness="1" Data="M1,1 L15,1 L15,3 L9,3 L9,21 L1,21 Z M9,3 L23,3 L23,23 L9,23 L9,3 M3,6 L9,6 M3,12 L9,12 M12,9 L21,9 M12,15 L21,15"/>
-                                    </Border>
-                                </Grid>
+                                    </StackPanel>
 
-                                <GroupBox Grid.Column="0" Grid.Row="2" Header="Color modes">
-                                    <TabControl>
-                                        <TabItem Header="RGB">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition Width="auto"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition/>
-                                                    <RowDefinition/>
-                                                    <RowDefinition/>
-                                                </Grid.RowDefinitions>
-                                                <TextBlock Grid.Column="0" Grid.Row="0" Margin="4,14,4,4" Text="R" VerticalAlignment="Center"/>
-                                                <TextBlock Grid.Column="0" Grid.Row="1" Margin="4,14,4,4" Text="G" VerticalAlignment="Center"/>
-                                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="4,14,4,4" Text="B" VerticalAlignment="Center"/>
-
-                                                <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}}">
-                                                    <Slider.Background>
-                                                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                            <LinearGradientBrush.GradientStops>
-                                                                <GradientStop Offset="0" Color="Transparent"/>
-                                                                <GradientStop Offset="1" Color="#FFFF0000"/>
-                                                            </LinearGradientBrush.GradientStops>
-                                                        </LinearGradientBrush>
-                                                    </Slider.Background>
-                                                </Slider>
-                                                <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}}">
-                                                    <Slider.Background>
-                                                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                            <LinearGradientBrush.GradientStops>
-                                                                <GradientStop Offset="0" Color="Transparent"/>
-                                                                <GradientStop Offset="1" Color="#FF00FF00"/>
-                                                            </LinearGradientBrush.GradientStops>
-                                                        </LinearGradientBrush>
-                                                    </Slider.Background>
-                                                </Slider>
-                                                <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="2" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}}">
-                                                    <Slider.Background>
-                                                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                            <LinearGradientBrush.GradientStops>
-                                                                <GradientStop Offset="0" Color="Transparent"/>
-                                                                <GradientStop Offset="1" Color="#FF0000FF"/>
-                                                            </LinearGradientBrush.GradientStops>
-                                                        </LinearGradientBrush>
-                                                    </Slider.Background>
-                                                </Slider>
-
-                                                <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
-                                            </Grid>
-                                        </TabItem>
-                                        <TabItem Header="HSB">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition Width="auto"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition/>
-                                                    <RowDefinition/>
-                                                    <RowDefinition/>
-                                                </Grid.RowDefinitions>
-                                                <TextBlock Grid.Column="0" Grid.Row="0" Margin="4,14,4,4" Text="H" VerticalAlignment="Center"/>
-                                                <TextBlock Grid.Column="0" Grid.Row="1" Margin="4,14,4,4" Text="S" VerticalAlignment="Center"/>
-                                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="4,14,4,4" Text="B" VerticalAlignment="Center"/>
-
-                                                <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="360" LargeChange="10" SmallChange="1" TickFrequency="1" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding Value, ElementName=PART_SpectrumSlider}" Background="{Binding SpectrumBrush, ElementName=PART_SpectrumSlider}"/>
-                                                <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="1" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding SaturationHsb, RelativeSource={RelativeSource Mode=TemplatedParent}}">
-                                                    <Slider.Background>
-                                                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                            <LinearGradientBrush.GradientStops>
-                                                                <GradientStop Offset="0" Color="#FFFFFFFF"/>
-                                                                <GradientStop Offset="1" Color="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PureColorConverter}}"/>
-                                                            </LinearGradientBrush.GradientStops>
-                                                        </LinearGradientBrush>
-                                                    </Slider.Background>
-                                                </Slider>
-                                                <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="2" Margin="4" Minimum="0" Maximum="1" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding BrightnessHsb, RelativeSource={RelativeSource Mode=TemplatedParent}}">
-                                                    <Slider.Background>
-                                                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                            <LinearGradientBrush.GradientStops>
-                                                                <GradientStop Offset="0" Color="#FF000000"/>
-                                                                <GradientStop Offset="1" Color="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PureColorConverter}}"/>
-                                                            </LinearGradientBrush.GradientStops>
-                                                        </LinearGradientBrush>
-                                                    </Slider.Background>
-                                                </Slider>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="360" Step="1" IsReadOnly="False" Value="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding SaturationHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding BrightnessHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
-
-                                                <TextBlock Grid.Column="3" Grid.Row="0" VerticalAlignment="Top" Margin="0,9,0,0" Text="o"/>
-                                                <TextBlock Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" Margin="0,14,0,0" Text="%"/>
-                                                <TextBlock Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" Margin="0,14,0,0" Text="%"/>
-                                            </Grid>
-                                        </TabItem>
-                                        <TabItem Header="HSL">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition Width="auto"/>
-                                                    <ColumnDefinition Width="auto"/>
-                                                </Grid.ColumnDefinitions>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition/>
-                                                    <RowDefinition/>
-                                                    <RowDefinition/>
-                                                </Grid.RowDefinitions>
-                                                <TextBlock Grid.Column="0" Grid.Row="0" Margin="4,14,4,4" Text="H" VerticalAlignment="Center"/>
-                                                <TextBlock Grid.Column="0" Grid.Row="1" Margin="4,14,4,4" Text="S" VerticalAlignment="Center"/>
-                                                <TextBlock Grid.Column="0" Grid.Row="2" Margin="4,14,4,4" Text="L" VerticalAlignment="Center"/>
-
-                                                <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="360" LargeChange="10" SmallChange="1" TickFrequency="1" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding Value, ElementName=PART_SpectrumSlider}" Background="{Binding SpectrumBrush, ElementName=PART_SpectrumSlider}"/>
-                                                <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="1" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding SaturationHsl, RelativeSource={RelativeSource Mode=TemplatedParent}}">
-                                                    <Slider.Background>
-                                                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                            <LinearGradientBrush.GradientStops>
-                                                                <GradientStop Offset="0" Color="#8F8F8F"/>
-                                                                <GradientStop Offset="1" Color="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PureColorConverter}}"/>
-                                                            </LinearGradientBrush.GradientStops>
-                                                        </LinearGradientBrush>
-                                                    </Slider.Background>
-                                                </Slider>
-                                                <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="2" Margin="4" Minimum="0" Maximum="1" LargeChange="0.1" SmallChange="0.01" TickFrequency="0.01" IsSnapToTickEnabled="True" VerticalAlignment="Center" Value="{Binding LuminanceHsl, RelativeSource={RelativeSource Mode=TemplatedParent}}">
-                                                    <Slider.Background>
-                                                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                            <LinearGradientBrush.GradientStops>
-                                                                <GradientStop Offset="0" Color="#FF000000"/>
-                                                                <GradientStop Offset="0.5" Color="{Binding HueHsb, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource PureColorConverter}}"/>
-                                                                <GradientStop Offset="1" Color="#FFFFFFFF"/>
-                                                            </LinearGradientBrush.GradientStops>
-                                                        </LinearGradientBrush>
-                                                    </Slider.Background>
-                                                </Slider>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="360" Step="1" IsReadOnly="False" Value="{Binding HueHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding SaturationHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
-                                                <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="100" Step="1" IsReadOnly="False" Value="{Binding LuminanceHsl, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource SBSLValueConverter}}"/>
-
-                                                <TextBlock Grid.Column="3" Grid.Row="0" VerticalAlignment="Top" Margin="0,9,0,0" Text="o"/>
-                                                <TextBlock Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" Margin="0,14,0,0" Text="%"/>
-                                                <TextBlock Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" Margin="0,14,0,0" Text="%"/>
-                                            </Grid>
-                                        </TabItem>
-                                    </TabControl>
-                                </GroupBox>
-
-                                <StackPanel Grid.Column="0" Grid.Row="3" Margin="0,0,0,5">
-                                    <CheckBox x:Name="_useAlpha" Margin="0,4,0,0" Content="Use alpha channel" IsChecked="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="auto"/>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition Width="auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Grid.Column="0" Margin="4,14,4,0" Text="A" IsEnabled="{Binding IsChecked, ElementName=_useAlpha}" VerticalAlignment="Center"/>
-                                        <Slider Style="{StaticResource RGBSlider}" x:Name="_alphaSlider" Grid.Column="1" Margin="4,4,4,0" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsEnabled="{Binding IsChecked, ElementName=_useAlpha}">
-                                            <Slider.Background>
-                                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                    <LinearGradientBrush.GradientStops>
-                                                        <GradientStop Offset="0" Color="Transparent"/>
-                                                        <GradientStop Offset="1" Color="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OpaqueColorConverter}}"/>
-                                                    </LinearGradientBrush.GradientStops>
-                                                </LinearGradientBrush>
-                                            </Slider.Background>
-                                        </Slider>
-                                        <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,0" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
-                                    </Grid>
-                                </StackPanel>
-
-                                <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Shades and tints" Margin="10,0,0,0">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition/>
-                                        </Grid.ColumnDefinitions>
-                                        <!--<StackPanel x:Name="PART_ShadesPanel" Grid.Column="0" Orientation="Vertical" Width="32"/>
+                                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Shades and tints" Margin="10,0,0,0">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <!--<StackPanel x:Name="PART_ShadesPanel" Grid.Column="0" Orientation="Vertical" Width="32"/>
                                         <StackPanel x:Name="PART_TintsPanel" Grid.Column="1" Orientation="Vertical" Width="32"/>-->
-                                        <UniformGrid x:Name="PART_ShadesPanel" Grid.Column="0" Rows="12"/>
-                                        <UniformGrid x:Name="PART_TintsPanel" Grid.Column="1" Rows="12"/>
-                                    </Grid>
-                                </GroupBox>
-                            </Grid>
-                        </TabItem>
-                        <TabItem Header="Basic">
-                            <UniformGrid x:Name="PART_Basic" Rows="6" Columns="8">
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFFFFF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0C0FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0E0FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0FFFF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0FFC0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFFFC0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFC0C0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFC0FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFE0E0E0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF8080FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF80C0FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF80FFFF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF80FF80"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFFF80"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFF8080"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFF80FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0C0C0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF0000FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF0080FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF00FFFF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF00FF00"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFFF00"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFF0000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFF00FF"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF808080"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF0000C0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF0040C0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF00C0C0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF00C000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0C000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC00000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC000C0"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF404040"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF000080"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF004080"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF008080"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF008000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF808000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF800000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF800080"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF000000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF000040"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF404080"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF004040"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF004000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF404000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF400000"/>
-                                <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF400040"/>
-                            </UniformGrid>
-                        </TabItem>
-                        <TabItem Header="Standard">
-                            <ListBox x:Name="PART_ListStandard" Height="{Binding ActualHeight, ElementName=_customGrid, Mode=OneWay}"/>
-                        </TabItem>
-                    </TabControl>
-
+                                            <UniformGrid x:Name="PART_ShadesPanel" Grid.Column="0" Rows="12"/>
+                                            <UniformGrid x:Name="PART_TintsPanel" Grid.Column="1" Rows="12"/>
+                                        </Grid>
+                                    </GroupBox>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Header="Basic">
+                                <UniformGrid x:Name="PART_Basic" Rows="6" Columns="8">
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFFFFF"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0C0FF"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0E0FF"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0FFFF"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0FFC0"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFFFC0"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFC0C0"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFC0FF"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFE0E0E0"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF8080FF"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF80C0FF"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF80FFFF"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF80FF80"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFFF80"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFF8080"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFF80FF"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0C0C0"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF0000FF"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF0080FF"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF00FFFF"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF00FF00"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFFF00"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFF0000"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFF00FF"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF808080"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF0000C0"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF0040C0"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF00C0C0"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF00C000"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0C000"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC00000"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC000C0"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF404040"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF000080"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF004080"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF008080"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF008000"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF808000"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF800000"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF800080"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF000000"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF000040"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF404080"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF004040"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF004000"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF404000"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF400000"/>
+                                    <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF400040"/>
+                                </UniformGrid>
+                            </TabItem>
+                            <TabItem Header="Standard">
+                                <ListBox x:Name="PART_ListStandard" Height="{Binding ActualHeight, ElementName=_customGrid, Mode=OneWay}"/>
+                            </TabItem>
+                        </TabControl>
+                        <Grid x:Name="_commandsGrid" Grid.Row="1">
+                            <!--<Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Border Width="24" Height="24" HorizontalAlignment="Right" Margin="4,4,4,0" Background="Transparent" Cursor="Hand">
+                                <Path Stroke="{StaticResource IconBrushFg}" StrokeThickness="1" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeDashCap="Round"  Data="M0.5,10 L4,10 L8,18 L20,0.5 L23.5,0.5 L23.5,4 L10,23.5 L6,23.5 L0.5,14 z"/>
+                            </Border>
+                            <Border Width="24" Height="24" HorizontalAlignment="Left" Grid.Column="1" Background="Transparent" Cursor="Hand" Margin="4,4,0,0">
+                                <Path Stroke="{StaticResource IconBrushFg}" StrokeThickness="1" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeDashCap="Round"  Data="M0.5,0.5 L4,0.5 L12,8 L20,0.5 L23.5,0.5 L23.5,4 L16,12 L23.5,20 L23.5,23.5 L20,23.5 L12,16 L4,23.5 L0.5,23.5 L0.5,20 L8,12 L0.5,4 L0.5,0.5"/>
+                            </Border>-->
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="PART_ApplyButton" Content="Apply" HorizontalAlignment="Right" Margin="4,4,4,0" Padding="2" MinWidth="64"/>
+                            <Button x:Name="PART_CancelButton" Grid.Column="1" Content="Cancel" Margin="4,4,0,0" Padding="2" MinWidth="64"/>
+                        </Grid>
+                    </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="ShowCommandsPanel" Value="False">
+                            <Setter Property="Visibility" TargetName="_commandsGrid" Value="Collapsed"/>
+                        </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                         </Trigger>

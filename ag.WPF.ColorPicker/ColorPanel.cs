@@ -1,4 +1,5 @@
 ﻿using ag.WPF.ColorPicker.ColorHelpers;
+using ag.WPF.ColorPicker.Events;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -31,6 +32,8 @@ namespace ag.WPF.ColorPicker
     [TemplatePart(Name = "PART_TabMain", Type = typeof(TabControl))]
     [TemplatePart(Name = "PART_ListStandard", Type = typeof(ListBox))]
     [TemplatePart(Name = "PART_DropPickerBorder", Type = typeof(Border))]
+    [TemplatePart(Name = "PART_ApplyButton", Type = typeof(Button))]
+    [TemplatePart(Name = "PART_CancelButton", Type = typeof(Border))]
 
     public class ColorPanel : Control
     {
@@ -46,6 +49,8 @@ namespace ag.WPF.ColorPicker
         private const string PART_TabMain = "PART_TabMain";
         private const string PART_ListStandard = "PART_ListStandard";
         private const string PART_DropPickerBorder = "PART_DropPickerBorder";
+        private const string PART_ApplyButton = "PART_ApplyButton";
+        private const string PART_CancelButton = "PART_CancelButton";
 
         private const int SHADES_COUNT = 12;
 
@@ -62,6 +67,8 @@ namespace ag.WPF.ColorPicker
         private TabControl _tabMain;
         private ListBox _listStandard;
         private Border _dropPickerBorder;
+        private Button _applyButton;
+        private Button _cancelButton;
         private Point? _currentColorPosition;
         private bool _surpressPropertyChanged;
         private bool _updateSpectrumSliderValue = true;
@@ -92,13 +99,47 @@ namespace ag.WPF.ColorPicker
         public static readonly DependencyProperty HexStringProperty = DependencyProperty.Register(nameof(HexString), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata(""));
         public static readonly DependencyProperty RGBStringProperty = DependencyProperty.Register(nameof(RGBString), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata(""));
 
-        public static readonly DependencyProperty HexadecimalStringProperty = DependencyProperty.Register(nameof(HexadecimalString), typeof(string), typeof(ColorPanel), new UIPropertyMetadata("", new PropertyChangedCallback(OnHexadecimalStringChanged), new CoerceValueCallback(OnCoerceHexadecimalString)));
-
-
         public static readonly DependencyProperty UseAlphaChannelProperty = DependencyProperty.Register(nameof(UseAlphaChannel), typeof(bool), typeof(ColorPanel), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, new PropertyChangedCallback(OnUseAlphaChannelPropertyChanged)));
 
+        public static readonly DependencyProperty ShowCommandsPanelProperty = DependencyProperty.Register(nameof(ShowCommandsPanel), typeof(bool), typeof(ColorPanel), new FrameworkPropertyMetadata(true));
 
         public static readonly RoutedEvent SelectedColorChangedEvent = EventManager.RegisterRoutedEvent("SelectedColorChanged", RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<Color>), typeof(ColorPanel));
+        //public static readonly RoutedEvent ColorChangedEvent = EventManager.RegisterRoutedEvent("ColorChanged", RoutingStrategy.Bubble, typeof(EventHandler<ColorChangedEventArgs>), typeof(ColorPanel));
+
+        //protected virtual void OnColorChanged(ColorData oldValue, ColorData newValue)
+        //{
+        //    var e = new RoutedPropertyChangedEventArgs<ColorData>(oldValue, newValue)
+        //    {
+        //        RoutedEvent = ColorChangedEvent
+        //    };
+        //    RaiseEvent(e);
+        //}
+
+        //public event RoutedPropertyChangedEventHandler<ColorChangedEventArgs> ColorChanged
+        //{
+        //    add { AddHandler(ColorChangedEvent, value); }
+        //    remove { RemoveHandler(ColorChangedEvent, value); }
+        //}
+
+        //public static readonly RoutedEvent ColorChangedEvent =
+        //    EventManager.RegisterRoutedEvent("ColorChanged", RoutingStrategy.Bubble,
+        //        typeof(RoutedPropertyChangedEventHandler<ColorData>), typeof(ColorPanel));
+
+
+        //// This method raises the Tap event
+        //private void RaiseColorChangedEvent()
+        //{
+        //    var oldColor = ((SolidColorBrush)_initialColorPath.Fill).Color;
+        //    var oldString = $"#{oldColor.A:X2}{oldColor.R:X2}{oldColor.G:X2}{oldColor.B:X2}";
+
+        //    OnColorChanged(new ColorData { ColorValue = oldColor, ColorString = oldString }, new ColorData { ColorValue = SelectedColor, ColorString = HexString });
+        //}
+
+        public bool ShowCommandsPanel
+        {
+            get { return (bool)GetValue(ShowCommandsPanelProperty); }
+            set { SetValue(ShowCommandsPanelProperty, value); }
+        }
 
         public string HexString
         {
@@ -110,12 +151,6 @@ namespace ag.WPF.ColorPicker
         {
             get { return (string)GetValue(RGBStringProperty); }
             private set { SetValue(RGBStringProperty, value); }
-        }
-
-        public string HexadecimalString
-        {
-            get { return (string)GetValue(HexadecimalStringProperty); }
-            set { SetValue(HexadecimalStringProperty, value); }
         }
 
         public bool UseAlphaChannel
@@ -298,7 +333,6 @@ namespace ag.WPF.ColorPicker
         protected virtual void OnUseAlphaChannelChanged()
         {
             UpdateSelectedColor();
-            SetHexadecimalStringProperty(GetFormatedColorString(SelectedColor), false);
         }
 
         private static object OnCoerceHexadecimalString(DependencyObject d, object baseValue)
@@ -343,7 +377,7 @@ namespace ag.WPF.ColorPicker
                     color = (Color)ColorConverter.ConvertFromString(formatedColorString);
                 UpdateSelectedColor(color);
             }
-            SetHexadecimalTextBoxTextProperty(newValue);
+            //SetHexadecimalTextBoxTextProperty(newValue);
         }
 
         private static void OnInitialColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -365,7 +399,6 @@ namespace ag.WPF.ColorPicker
 
         protected virtual void OnSelectedColorChanged(Color oldValue, Color newValue)
         {
-            SetHexadecimalStringProperty(GetFormatedColorString(newValue), false);
             UpdateRGBValues(newValue);
 
             if (_updateHsl)
@@ -442,6 +475,25 @@ namespace ag.WPF.ColorPicker
                 _initialColorPath.Stroke = new SolidColorBrush(SelectedColor);
             }
 
+            if (_applyButton != null)
+            {
+                _applyButton.Click -= _applyButton_Click;
+            }
+            _applyButton = GetTemplateChild(PART_ApplyButton) as Button;
+            if (_applyButton != null)
+            {
+                _applyButton.Click += _applyButton_Click;
+            }
+
+            if (_cancelButton != null)
+            {
+                _cancelButton.Click -= _cancelButton_Click;
+            }
+            _cancelButton = GetTemplateChild(PART_CancelButton) as Button;
+            if( _cancelButton != null)
+            {
+                _cancelButton.Click += _cancelButton_Click;
+            }
             //if (_copyHexButton != null)
             //{
             //    _copyHexButton.Click -= _copyHexButton_Click;
@@ -476,11 +528,7 @@ namespace ag.WPF.ColorPicker
                 _spectrumSlider.ValueChanged += _spectrumSlider_ValueChanged;
             }
 
-            if (_hexadecimalTextBox != null)
-                _hexadecimalTextBox.LostFocus -= _hexadecimalTextBox_LostFocus;
             _hexadecimalTextBox = GetTemplateChild(PART_HexadecimalTextBox) as TextBox;
-            if (_hexadecimalTextBox != null)
-                _hexadecimalTextBox.LostFocus += _hexadecimalTextBox_LostFocus;
 
             _tabMain = GetTemplateChild(PART_TabMain) as TabControl;
             _shadesPanel = GetTemplateChild(PART_ShadesPanel) as UniformGrid;
@@ -541,7 +589,17 @@ namespace ag.WPF.ColorPicker
 
             createsShadesAndTints();
 
-            SetHexadecimalTextBoxTextProperty(GetFormatedColorString(SelectedColor));
+            //SetHexadecimalTextBoxTextProperty(GetFormatedColorString(SelectedColor));
+        }
+
+        private void _cancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void _applyButton_Click(object sender, RoutedEventArgs e)
+        {
+            //RaiseColorChangedEvent();
         }
 
         private void _copyTextBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -693,29 +751,6 @@ namespace ag.WPF.ColorPicker
             _hexadecimalTextBox.Text = newValue;
         }
 
-        private void SetHexadecimalStringProperty(string newValue, bool modifyFromUI)
-        {
-            if (modifyFromUI)
-            {
-                try
-                {
-                    if (!string.IsNullOrEmpty(newValue))
-                    {
-                        if (int.TryParse(newValue, NumberStyles.HexNumber, null, out int _))
-                            newValue = "#" + newValue;
-                        ColorConverter.ConvertFromString(newValue);
-                    }
-                    HexadecimalString = newValue;
-                }
-                catch
-                {
-                    SetHexadecimalTextBoxTextProperty(HexadecimalString);
-                }
-            }
-            else
-                HexadecimalString = newValue;
-        }
-
         private string GetFormatedColorString(Color colorToFormat) => Utils.FormatColorString(colorToFormat.ToString(), UseAlphaChannel);
 
         private string GetFormatedColorString(string stringToFormat) => Utils.FormatColorString(stringToFormat, UseAlphaChannel);
@@ -793,7 +828,6 @@ namespace ag.WPF.ColorPicker
             _updateSpectrumSliderValue = false;
             SelectedColor = Color.FromArgb(rgb.A, rgb.R, rgb.G, rgb.B);
             _updateSpectrumSliderValue = true;
-            SetHexadecimalStringProperty(GetFormatedColorString(SelectedColor), false);
         }
 
         private void UpdateRGBValues(Color color)
@@ -835,7 +869,6 @@ namespace ag.WPF.ColorPicker
             return (color.R == color.G && color.G == color.B);
         }
 
-        private void _hexadecimalTextBox_LostFocus(object sender, RoutedEventArgs e) => SetHexadecimalStringProperty((sender as TextBox).Text, true);
 
         private void _spectrumSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
