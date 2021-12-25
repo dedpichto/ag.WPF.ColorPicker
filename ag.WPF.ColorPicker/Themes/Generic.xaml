@@ -716,9 +716,7 @@
                                        StaysOpen="False"
                                        HorizontalOffset="0"
                                        PopupAnimation="Scroll">
-                                <Border MinWidth="400" MinHeight="434">
-                                    <picker:ColorPanel x:Name="PART_ColorPanel" Margin="4" Width="392" Height="426" SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"/>
-                                </Border>
+                                <picker:ColorPanel x:Name="PART_ColorPanel" Width="392" Height="426" SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"/>
                             </Popup>
                         </Grid>
                     </Border>
