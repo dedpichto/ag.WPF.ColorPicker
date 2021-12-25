@@ -29,5 +29,16 @@ namespace TestColorPicker
         {
             //_panel.InitialColor = Colors.Yellow;
         }
+
+
+        private void _panel_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color> e)
+        {
+            Background = new SolidColorBrush(e.NewValue);
+        }
+
+        private void _panel_ColorApplied(object sender, RoutedPropertyChangedEventArgs<Color> e)
+        {
+            Background=new SolidColorBrush(e.OldValue);
+        }
     }
 }
