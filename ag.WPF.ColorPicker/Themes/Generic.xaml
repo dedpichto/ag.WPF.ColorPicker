@@ -203,12 +203,12 @@
     </Style>
 
     <Style TargetType="{x:Type picker:ColorPanel}">
-        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type picker:ColorPanel}">
-                    <Grid>
+                    <Grid Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="auto"/>
@@ -559,8 +559,8 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="PART_ApplyButton" Content="Apply" HorizontalAlignment="Right" Margin="4,4,4,0" Padding="2" MinWidth="64"/>
-                            <Button x:Name="PART_CancelButton" Grid.Column="1" Content="Cancel" Margin="4,4,0,0" Padding="2" MinWidth="64"/>
+                            <Button x:Name="PART_ApplyButton" Content="Apply" HorizontalAlignment="Right" Margin="4" Padding="2" MinWidth="64"/>
+                            <Button x:Name="PART_CancelButton" Grid.Column="1" Content="Cancel" Margin="4" Padding="2" MinWidth="64"/>
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -676,6 +676,52 @@
                             <Setter Property="Fill" TargetName="RepeatButtonArrowDown" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type picker:ColorPicker}">
+        <Setter Property="MinHeight" Value="21"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Once"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type picker:ColorPicker}">
+                    <Border x:Name="border" Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
+                            BorderBrush="{StaticResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                            BorderThickness="1">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Margin="1"
+                                    BorderBrush="{StaticResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                                    BorderThickness="1"
+                                    Grid.Column="0">
+                                <Border.Background>
+                                    <SolidColorBrush Color="{Binding Path=SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                </Border.Background>
+                            </Border>
+                            <Button x:Name="PART_Button"
+                                    Margin="1"
+                                    Grid.Column="1"
+                                    Content="..."
+                                    Padding="4,0,4,0"/>
+                            <Popup x:Name="PART_Popup" 
+                                       AllowsTransparency="True" 
+                                       Placement="Bottom"
+                                       PlacementTarget="{Binding ElementName=border}" 
+                                       StaysOpen="False"
+                                       HorizontalOffset="0"
+                                       PopupAnimation="Scroll">
+                                <Border MinWidth="400" MinHeight="434">
+                                    <picker:ColorPanel x:Name="PART_ColorPanel" Margin="4" Width="392" Height="426" SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"/>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
