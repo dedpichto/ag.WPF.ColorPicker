@@ -11,36 +11,6 @@ using System.Windows.Media;
 
 namespace ag.WPF.ColorPicker
 {
-    public class ValueToColorConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (!(value is double newValue)) return Colors.Red;
-            var hsb = new HsbColor(360.0 - newValue, 1.0, 1.0);
-            return hsb.ToRgbColor();
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (!(value is Color color)) return 0.0;
-            return Utils.ConvertHsbToDouble(color);
-        }
-    }
-
-    public class HueValueConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (!(value is double hue)) return null;
-            return Math.Round(hue, MidpointRounding.AwayFromZero);
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-
     public class SBSLValueConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -53,33 +23,6 @@ namespace ag.WPF.ColorPicker
         {
             if (!Utils.NumericTypes.Contains(value.GetType())) return null;
             return System.Convert.ToDouble(value) / 100.0;
-        }
-    }
-
-    public class SliderThumbVisibilityConverter : IMultiValueConverter
-    {
-        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (values.Length < 3
-                || !(values[0] is double maxValue)
-                || !(values[1] is double minValue)
-                || !(values[2] is double currentValue)
-                || !(parameter is string position)) return Visibility.Collapsed;
-
-            switch (position)
-            {
-                case "up":
-                    return currentValue == maxValue ? Visibility.Visible : (object)Visibility.Collapsed;
-                case "down":
-                    return currentValue == minValue ? Visibility.Visible : (object)Visibility.Collapsed;
-                default:
-                    return currentValue < maxValue && currentValue > minValue ? Visibility.Visible : Visibility.Collapsed;
-            }
-        }
-
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
         }
     }
 
@@ -111,10 +54,42 @@ namespace ag.WPF.ColorPicker
         }
     }
 
+    public class ColorToHexStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (!(value is Color color)) return null;
+            return $"#{color.A:X2}{color.R:X2}{color.G:X2}{color.B:X2}";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
+    public class InvertColorByColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            System.Diagnostics.Debug.WriteLine(value);
+            if (!(value is Color color))
+                return null;
+            var result= Color.FromArgb(255, (byte)~color.R, (byte)~color.G, (byte)~color.B);
+            System.Diagnostics.Debug.WriteLine(result);
+            return result;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     /// <summary>
     /// Represents class for inverting color of solid brush
     /// </summary>
-    public class InvertColorConverter : IValueConverter
+    public class InvertColorByBrushConverter : IValueConverter
     {
         /// <summary>
         /// Inverts color of solid brush
@@ -126,7 +101,8 @@ namespace ag.WPF.ColorPicker
         /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is SolidColorBrush brush)) return null;
+            if (!(value is SolidColorBrush brush))
+                return null;
             var color = brush.Color;
             return Color.FromArgb(255, (byte)~color.R, (byte)~color.G, (byte)~color.B);
         }

@@ -55,6 +55,7 @@
       <DependentUpon>PickerPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="StandardColorItem.cs" />
+    <Compile Include="UnsafeNativeMethods.cs" />
     <Compile Include="UpDown.cs" />
     <Page Include="PickerPanel.xaml">
       <Generator>MSBuild:Compile</Generator>

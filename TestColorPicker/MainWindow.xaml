@@ -19,6 +19,6 @@
                 <SolidColorBrush Color="{Binding ElementName=_slider, Path=SelectedColor}"/>
             </Rectangle.Fill>
         </Rectangle>-->
-        <clp:ColorPicker Grid.Column="1" Height="21" Margin="4" SelectedColor="CadetBlue"/>
+        <clp:ColorPicker Grid.Column="1" Height="21" Margin="4" SelectedColorChanged="ColorPicker_SelectedColorChanged"/>
     </Grid>
 </Window>

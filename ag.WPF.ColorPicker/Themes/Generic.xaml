@@ -4,12 +4,9 @@
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
     xmlns:picker="clr-namespace:ag.WPF.ColorPicker">
 
-    <picker:ValueToColorConverter x:Key="ValueToColorConverter"/>
-    <picker:HueValueConverter x:Key="HueValueConverter"/>
-    <picker:SliderThumbVisibilityConverter x:Key="SliderThumbVisibilityConverter"/>
     <picker:OpaqueColorConverter x:Key="OpaqueColorConverter"/>
     <picker:PureColorConverter x:Key="PureColorConverter"/>
-    <picker:InvertColorConverter x:Key="InvertColorConverter"/>
+    <picker:InvertColorByBrushConverter x:Key="InvertColorByBrushConverter"/>
     <picker:UpDownTextToValueConverter x:Key="UpDownTextToValueConverter"/>
     <picker:UpDownForegroundConverter x:Key="UpDownForegroundConverter"/>
     <picker:UpDownValueConverter x:Key="UpDownValueConverter"/>
@@ -70,7 +67,7 @@
                                    Margin="2"
                                    Visibility="Hidden">
                             <Rectangle.Stroke>
-                                <SolidColorBrush Color="{Binding Background, ElementName=_radioBorder, Converter={StaticResource InvertColorConverter}}"/>
+                                <SolidColorBrush Color="{Binding Background, ElementName=_radioBorder, Converter={StaticResource InvertColorByBrushConverter}}"/>
                             </Rectangle.Stroke>
                         </Rectangle>
                     </Border>
@@ -266,6 +263,9 @@
                                             <ColumnDefinition Width="auto"/>
                                         </Grid.ColumnDefinitions>
                                         <Canvas Grid.Column="0" Grid.Row="0" Height="36" Width="36" Margin="4">
+                                            <Border Width="24" Height="24">
+                                                <Path Fill="{StaticResource TransparentBackgroundBrush}" Cursor="Hand" Data="M0,0 L24,0 L24,8 L8,8 L8,24 L0,24 Z"/>
+                                            </Border>
                                             <Border Width="24" Height="24">
                                                 <Path x:Name="PART_InitialColorPath" Cursor="Hand" Data="M0,0 L24,0 L24,8 L8,8 L8,24 L0,24 Z"/>
                                             </Border>

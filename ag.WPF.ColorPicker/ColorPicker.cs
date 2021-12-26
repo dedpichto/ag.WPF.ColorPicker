@@ -29,25 +29,21 @@ namespace ag.WPF.ColorPicker
         private Button _button;
         private Popup _popup;
         private ColorPanel _colorPanel;
-        private bool _allowPopup = true;
 
-        public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPicker), new FrameworkPropertyMetadata(Colors.Red, OnSelectedColorChanged));
+        public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPicker), new FrameworkPropertyMetadata(Colors.Transparent));
+
+        public static readonly RoutedEvent SelectedColorChangedEvent = EventManager.RegisterRoutedEvent("SelectedColorChanged", RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<Color>), typeof(ColorPicker));
+
+        public event RoutedPropertyChangedEventHandler<Color> SelectedColorChanged
+        {
+            add => AddHandler(SelectedColorChangedEvent, (Delegate)value, false);
+            remove => RemoveHandler(SelectedColorChangedEvent, (Delegate)value);
+        }
 
         public Color SelectedColor
         {
             get { return (Color)GetValue(SelectedColorProperty); }
             set { SetValue(SelectedColorProperty, value); }
-        }
-
-        private static void OnSelectedColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (!(d is ColorPicker colorPicker)) return;
-            colorPicker.OnSelectedColorChanged((Color)e.OldValue, (Color)e.NewValue);
-        }
-
-        protected virtual void OnSelectedColorChanged(Color oldValue, Color newValue)
-        {
-
         }
 
         static ColorPicker()
@@ -61,32 +57,32 @@ namespace ag.WPF.ColorPicker
 
             if (_button != null)
             {
-                _button.Click += _button_Click;
-                _button.PreviewKeyDown -= _button_PreviewKeyDown;
+                _button.Click += button_Click;
+                _button.PreviewKeyDown -= button_PreviewKeyDown;
             }
             _button = GetTemplateChild(PART_Button) as Button;
-            if( _button != null)
+            if (_button != null)
             {
-                _button.Click += _button_Click;
-                _button.PreviewKeyDown += _button_PreviewKeyDown;
+                _button.Click += button_Click;
+                _button.PreviewKeyDown += button_PreviewKeyDown;
             }
 
             _popup = GetTemplateChild(PART_Popup) as Popup;
 
             if (_colorPanel != null)
             {
-                _colorPanel.ColorApplied -= _colorPanel_ColorApplied;
-                _colorPanel.ColorCanceled -= _colorPanel_ColorCanceled;
+                _colorPanel.ColorApplied -= colorPanel_ColorApplied;
+                _colorPanel.ColorCanceled -= colorPanel_ColorCanceled;
             }
             _colorPanel = GetTemplateChild(PART_ColorPanel) as ColorPanel;
-            if(_colorPanel != null)
+            if (_colorPanel != null)
             {
-                _colorPanel.ColorApplied += _colorPanel_ColorApplied;
-                _colorPanel.ColorCanceled += _colorPanel_ColorCanceled;
+                _colorPanel.ColorApplied += colorPanel_ColorApplied;
+                _colorPanel.ColorCanceled += colorPanel_ColorCanceled;
             }
         }
 
-        private void _button_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void button_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
             {
@@ -95,21 +91,27 @@ namespace ag.WPF.ColorPicker
             }
         }
 
-        private void _colorPanel_ColorCanceled(object sender, RoutedEventArgs e)
+        private void colorPanel_ColorCanceled(object sender, RoutedEventArgs e)
         {
             _popup.IsOpen = false;
         }
 
-        private void _colorPanel_ColorApplied(object sender, RoutedPropertyChangedEventArgs<Color> e)
+        private void colorPanel_ColorApplied(object sender, RoutedPropertyChangedEventArgs<Color> e)
         {
             SelectedColor = e.NewValue;
+            var changedEventArgs = new RoutedPropertyChangedEventArgs<Color>(e.OldValue, e.NewValue)
+            {
+                RoutedEvent = SelectedColorChangedEvent
+            };
+            RaiseEvent(changedEventArgs);
             _popup.IsOpen = false;
         }
 
-        private void _button_Click(object sender, RoutedEventArgs e)
+        private void button_Click(object sender, RoutedEventArgs e)
         {
             if (_popup.IsOpen)
                 return;
+            _colorPanel.SetInitialColors(SelectedColor, SelectedColor);
             _popup.IsOpen = true;
         }
     }
