@@ -20,18 +20,9 @@ namespace ag.WPF.ColorPicker
 
     public class ColorSlider : Slider
     {
-        private const string PART_SpectrumDisplay = "PART_SpectrumDisplay";
 
-        private Rectangle _spectrumDisplay;
         private byte _alpha = byte.MaxValue;
-        public static readonly DependencyProperty SpectrumBrushProperty = DependencyProperty.Register(nameof(SpectrumBrush), typeof(LinearGradientBrush), typeof(ColorSlider), new FrameworkPropertyMetadata(null));
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorSlider), new PropertyMetadata(Colors.Transparent));
-
-        public LinearGradientBrush SpectrumBrush
-        {
-            get { return (LinearGradientBrush)GetValue(SpectrumBrushProperty); }
-            set { SetValue(SpectrumBrushProperty, value); }
-        }
 
         public Color SelectedColor
         {
@@ -47,7 +38,6 @@ namespace ag.WPF.ColorPicker
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            _spectrumDisplay = (Rectangle)GetTemplateChild(PART_SpectrumDisplay);
             CreateSpectrum();
         }
 
@@ -74,22 +64,14 @@ namespace ag.WPF.ColorPicker
                 EndPoint = new Point(0.5, 1.0),
                 ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation
             };
-            SpectrumBrush = new LinearGradientBrush
-            {
-                StartPoint = new Point(0.0, 0.5),
-                EndPoint = new Point(1.0, 0.5),
-                ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation
-            };
             List<Color> hsvSpectrum = Utils.GenerateHsvPalette();
             var num = 1.0 / (hsvSpectrum.Count - 1);
             int index;
             for (index = 0; index < hsvSpectrum.Count; ++index)
             {
                 spectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)index * num));
-                SpectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)(hsvSpectrum.Count - index - 1) * num));
             }
             spectrumBrush.GradientStops[index - 1].Offset = 1.0;
-            SpectrumBrush.GradientStops[index - 1].Offset = 0.0;
 
             Background = spectrumBrush;
         }

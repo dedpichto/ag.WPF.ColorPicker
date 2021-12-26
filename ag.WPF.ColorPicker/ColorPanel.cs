@@ -117,6 +117,8 @@ namespace ag.WPF.ColorPicker
 
         public static readonly DependencyProperty ShowCommandsPanelProperty = DependencyProperty.Register(nameof(ShowCommandsPanel), typeof(bool), typeof(ColorPanel), new FrameworkPropertyMetadata(true));
         public static readonly DependencyProperty ColorStringFormatProperty = DependencyProperty.Register(nameof(ColorStringFormat), typeof(ColorStringFormat), typeof(ColorPanel), new FrameworkPropertyMetadata(ColorStringFormat.HEX, OnColorStringFormatChanged));
+        public static readonly DependencyProperty HorizontalSpectrumBrushProperty = DependencyProperty.Register(nameof(HorizontalSpectrumBrush), typeof(LinearGradientBrush), typeof(ColorPanel), new FrameworkPropertyMetadata(null));
+        public static readonly DependencyProperty VerticalSpectrumBrushProperty = DependencyProperty.Register(nameof(VerticalSpectrumBrush), typeof(LinearGradientBrush), typeof(ColorPanel), new FrameworkPropertyMetadata(null));
         #endregion
 
         #region Routed events
@@ -125,7 +127,7 @@ namespace ag.WPF.ColorPicker
         public static readonly RoutedEvent ColorCanceledEvent = EventManager.RegisterRoutedEvent("ColorCanceled", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(ColorPanel));
         #endregion
 
-        #region Pablic event handlers
+        #region Public event handlers
         public event RoutedPropertyChangedEventHandler<Color> ColorApplied
         {
             add => AddHandler(ColorAppliedEvent, (Delegate)value, false);
@@ -146,6 +148,18 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Dependency properties handlers
+        public LinearGradientBrush VerticalSpectrumBrush
+        {
+            get { return (LinearGradientBrush)GetValue(VerticalSpectrumBrushProperty); }
+            set { SetValue(VerticalSpectrumBrushProperty, value); }
+        }
+
+        public LinearGradientBrush HorizontalSpectrumBrush
+        {
+            get { return (LinearGradientBrush)GetValue(HorizontalSpectrumBrushProperty); }
+            set { SetValue(HorizontalSpectrumBrushProperty, value); }
+        }
+
         public ColorStringFormat ColorStringFormat
         {
             get { return (ColorStringFormat)GetValue(ColorStringFormatProperty); }
@@ -432,6 +446,8 @@ namespace ag.WPF.ColorPicker
         {
             base.OnApplyTemplate();
 
+            createSpectrum();
+
             if (_colorShadingCanvas != null)
             {
                 _colorShadingCanvas.MouseLeftButtonDown -= _colorShadingCanvas_MouseLeftButtonDown;
@@ -688,6 +704,33 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Private procedures
+        private void createSpectrum()
+        {
+            VerticalSpectrumBrush = new LinearGradientBrush
+            {
+                StartPoint = new Point(0.5, 0.0),
+                EndPoint = new Point(0.5, 1.0),
+                ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation
+            };
+            HorizontalSpectrumBrush = new LinearGradientBrush
+            {
+                StartPoint = new Point(0.0, 0.5),
+                EndPoint = new Point(1.0, 0.5),
+                ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation
+            };
+            List<Color> hsvSpectrum = Utils.GenerateHsvPalette();
+            var num = 1.0 / (hsvSpectrum.Count - 1);
+            int index;
+            for (index = 0; index < hsvSpectrum.Count; ++index)
+            {
+                VerticalSpectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)index * num));
+                HorizontalSpectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)(hsvSpectrum.Count - index - 1) * num));
+            }
+            VerticalSpectrumBrush.GradientStops[index - 1].Offset = 1.0;
+            HorizontalSpectrumBrush.GradientStops[index - 1].Offset = 0.0;
+
+        }
+
         private string getColorString()
         {
             return ColorStringFormat switch
