@@ -111,7 +111,7 @@ namespace ag.WPF.ColorPicker
         {
             if (_popup.IsOpen)
                 return;
-            _colorPanel.SetInitialColors(SelectedColor, SelectedColor);
+            _colorPanel.SetInitialColors(SelectedColor);
             _popup.IsOpen = true;
         }
     }

@@ -964,7 +964,7 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Internal procedures
-        internal void SetInitialColors(Color initialColor, Color selectedColor)
+        internal void SetInitialColors(Color initialColor)
         {
             _initialColor = initialColor;
             if (_initialColorPath != null)
@@ -972,7 +972,7 @@ namespace ag.WPF.ColorPicker
                 _initialColorPath.Fill = new SolidColorBrush(initialColor);
                 _initialColorPath.Stroke = new SolidColorBrush(initialColor);
             }
-            SelectedColor = selectedColor;
+            SelectedColor = initialColor;
         }
         #endregion
     }
