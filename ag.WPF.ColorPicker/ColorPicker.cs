@@ -19,18 +19,21 @@ namespace ag.WPF.ColorPicker
     [TemplatePart(Name = "PART_Button", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Popup", Type = typeof(Popup))]
     [TemplatePart(Name = "PART_ColorPanel", Type = typeof(ColorPanel))]
+    [TemplatePart(Name = "PART_ColorBorder", Type = typeof(Border))]
 
     public class ColorPicker : Control
     {
         private const string PART_Button = "PART_Button";
         private const string PART_Popup = "PART_Popup";
         private const string PART_ColorPanel = "PART_ColorPanel";
+        private const string PART_ColorBorder = "PART_ColorBorder";
 
         private Button _button;
         private Popup _popup;
         private ColorPanel _colorPanel;
+        private Border _border;
 
-        public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPicker), new FrameworkPropertyMetadata(Colors.Transparent));
+        public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPicker), new FrameworkPropertyMetadata(Colors.Gray));
 
         public static readonly RoutedEvent SelectedColorChangedEvent = EventManager.RegisterRoutedEvent("SelectedColorChanged", RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<Color>), typeof(ColorPicker));
 
@@ -80,6 +83,21 @@ namespace ag.WPF.ColorPicker
                 _colorPanel.ColorApplied += colorPanel_ColorApplied;
                 _colorPanel.ColorCanceled += colorPanel_ColorCanceled;
             }
+
+            if (_border != null)
+            {
+                _border.MouseLeftButtonDown -= border_MouseLeftButtonDown;
+            }
+            _border =GetTemplateChild(PART_ColorBorder)as Border;
+            if(_border != null)
+            {
+                _border.MouseLeftButtonDown += border_MouseLeftButtonDown;
+            }
+        }
+
+        private void border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            openPopup();
         }
 
         private void button_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -108,6 +126,11 @@ namespace ag.WPF.ColorPicker
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
+        {
+            openPopup();
+        }
+
+        private void openPopup()
         {
             if (_popup.IsOpen)
                 return;

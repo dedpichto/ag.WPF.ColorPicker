@@ -700,7 +700,7 @@
                                     Grid.Column="0" 
                                     BorderThickness="1" 
                                     Background="{StaticResource TransparentBackgroundBrush}"/>
-                            <Border Margin="1"
+                            <Border x:Name="PART_ColorBorder" Margin="1"
                                     BorderBrush="{StaticResource {x:Static SystemColors.ControlDarkBrushKey}}"
                                     BorderThickness="1"
                                     Grid.Column="0">

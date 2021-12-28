@@ -914,7 +914,6 @@ namespace ag.WPF.ColorPicker
         {
             if (_spectrumSlider == null)
                 return;
-            //var hsb = new HsbColor(360.0 - _spectrumSlider.Value, 1.0, 1.0)
             var hsb = new HsbColor(_spectrumSlider.Value, 1.0, 1.0)
             {
                 Saturation = p.X,
@@ -924,6 +923,11 @@ namespace ag.WPF.ColorPicker
             rgb.A = A;
             _updateSpectrumSliderValue = false;
             SelectedColor = Color.FromArgb(rgb.A, rgb.R, rgb.G, rgb.B);
+            // change hue in case of white, black or gray
+            if (isRGBGray(SelectedColor))
+            {
+                HueHsb = hsb.Hue;
+            }
             _updateSpectrumSliderValue = true;
         }
 

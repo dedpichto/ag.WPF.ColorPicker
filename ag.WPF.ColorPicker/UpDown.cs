@@ -470,46 +470,70 @@ namespace ag.WPF.ColorPicker
 
             if (_textBox != null)
             {
-                _textBox.GotFocus -= _texBox_GotFocus;
-                _textBox.PreviewKeyDown -= _textBox_PreviewKeyDown;
-                _textBox.PreviewMouseRightButtonUp -= _textBox_PreviewMouseRightButtonUp;
-                _textBox.TextChanged -= _textBox_TextChanged;
+                _textBox.GotFocus -= textBox_GotFocus;
+                _textBox.PreviewKeyDown -= textBox_PreviewKeyDown;
+                _textBox.PreviewMouseRightButtonUp -= textBox_PreviewMouseRightButtonUp;
+                _textBox.TextChanged -= textBox_TextChanged;
                 //BindingOperations.ClearAllBindings(_Text);
             }
             _textBox = GetTemplateChild(ElementText) as TextBox;
             if (_textBox != null)
             {
-                _textBox.GotFocus += _texBox_GotFocus;
-                _textBox.PreviewKeyDown += _textBox_PreviewKeyDown;
-                _textBox.PreviewMouseRightButtonUp += _textBox_PreviewMouseRightButtonUp;
-                _textBox.TextChanged += _textBox_TextChanged;
+                _textBox.GotFocus += textBox_GotFocus;
+                _textBox.PreviewKeyDown += textBox_PreviewKeyDown;
+                _textBox.PreviewMouseRightButtonUp += textBox_PreviewMouseRightButtonUp;
+                _textBox.TextChanged += textBox_TextChanged;
                 //_Text.SetBinding(TextBox.TextProperty, bd);
             }
 
             if (_downButton != null)
             {
-                _downButton.Click -= _downButton_Click;
+                _downButton.Click -= downButton_Click;
             }
             _downButton = GetTemplateChild(ElementButtonDown) as RepeatButton;
             if (_downButton != null)
             {
-                _downButton.Click += _downButton_Click;
+                _downButton.Click += downButton_Click;
             }
 
             if (_upButton != null)
             {
-                _upButton.Click -= _upButton_Click;
+                _upButton.Click -= upButton_Click;
             }
             _upButton = GetTemplateChild(ElementButtonUp) as RepeatButton;
             if (_upButton != null)
             {
-                _upButton.Click += _upButton_Click;
+                _upButton.Click += upButton_Click;
             }
         }
         #endregion
 
         #region Private event handlers
-        private void _textBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void upButton_Click(object sender, RoutedEventArgs e)
+        {
+            addStep(true);
+            if (!_textBox.IsFocused)
+                _textBox.Focus();
+            else
+                _textBox.SelectAll();
+        }
+
+        private void downButton_Click(object sender, RoutedEventArgs e)
+        {
+            addStep(false);
+            if (!_textBox.IsFocused)
+                _textBox.Focus();
+            else
+                _textBox.SelectAll();
+        }
+
+        private void textBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            _textBox.SelectAll();
+            e.Handled = true;
+        }
+
+        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (!IsReadOnly)
             {
@@ -527,36 +551,12 @@ namespace ag.WPF.ColorPicker
             }
         }
 
-        private void _textBox_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        private void textBox_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
         }
 
-        private void _upButton_Click(object sender, RoutedEventArgs e)
-        {
-            addStep(true);
-            if (!_textBox.IsFocused)
-                _textBox.Focus();
-            else
-                _textBox.SelectAll();
-        }
-
-        private void _downButton_Click(object sender, RoutedEventArgs e)
-        {
-            addStep(false);
-            if (!_textBox.IsFocused)
-                _textBox.Focus();
-            else
-                _textBox.SelectAll();
-        }
-
-        private void _texBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            _textBox.SelectAll();
-            e.Handled = true;
-        }
-
-        private void _textBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void textBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
             {
