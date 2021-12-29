@@ -1,25 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ag.WPF.ColorPicker
 {
+    #region Named parts
     [TemplatePart(Name = "PART_Button", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Popup", Type = typeof(Popup))]
     [TemplatePart(Name = "PART_ColorPanel", Type = typeof(ColorPanel))]
-    [TemplatePart(Name = "PART_ColorBorder", Type = typeof(Border))]
+    [TemplatePart(Name = "PART_ColorBorder", Type = typeof(Border))] 
+    #endregion
 
     public class ColorPicker : Control
     {
@@ -33,27 +26,38 @@ namespace ag.WPF.ColorPicker
         private ColorPanel _colorPanel;
         private Border _border;
 
-        public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPicker), new FrameworkPropertyMetadata(Colors.Gray));
+        #region Dependecy properties
+        public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPicker), new FrameworkPropertyMetadata(Colors.Blue));
+        #endregion
 
+        #region Routed events
         public static readonly RoutedEvent SelectedColorChangedEvent = EventManager.RegisterRoutedEvent("SelectedColorChanged", RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<Color>), typeof(ColorPicker));
+        #endregion
 
+        #region Public event handlers
         public event RoutedPropertyChangedEventHandler<Color> SelectedColorChanged
         {
             add => AddHandler(SelectedColorChangedEvent, (Delegate)value, false);
             remove => RemoveHandler(SelectedColorChangedEvent, (Delegate)value);
         }
+        #endregion
 
+        #region Dependency properties handlers
         public Color SelectedColor
         {
             get { return (Color)GetValue(SelectedColorProperty); }
             set { SetValue(SelectedColorProperty, value); }
         }
+        #endregion
 
+        #region ctor
         static ColorPicker()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ColorPicker), new FrameworkPropertyMetadata(typeof(ColorPicker)));
         }
+        #endregion
 
+        #region Overrides
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -88,13 +92,15 @@ namespace ag.WPF.ColorPicker
             {
                 _border.MouseLeftButtonDown -= border_MouseLeftButtonDown;
             }
-            _border =GetTemplateChild(PART_ColorBorder)as Border;
-            if(_border != null)
+            _border = GetTemplateChild(PART_ColorBorder) as Border;
+            if (_border != null)
             {
                 _border.MouseLeftButtonDown += border_MouseLeftButtonDown;
             }
         }
+        #endregion
 
+        #region Private event handlers
         private void border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             openPopup();
@@ -129,13 +135,16 @@ namespace ag.WPF.ColorPicker
         {
             openPopup();
         }
+        #endregion
 
+        #region Private procedures
         private void openPopup()
         {
             if (_popup.IsOpen)
                 return;
             _colorPanel.SetInitialColors(SelectedColor);
             _popup.IsOpen = true;
-        }
+        } 
+        #endregion
     }
 }

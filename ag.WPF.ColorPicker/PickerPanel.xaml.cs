@@ -11,9 +11,6 @@ using System.Windows.Media.Imaging;
 
 namespace ag.WPF.ColorPicker
 {
-    /// <summary>
-    /// Interaction logic for Window2.xaml
-    /// </summary>
     public partial class PickerPanel : Window, INotifyPropertyChanged
     {
         private double _previewLeft;

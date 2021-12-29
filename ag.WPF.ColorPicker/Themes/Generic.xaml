@@ -13,10 +13,25 @@
     <picker:SBSLValueConverter x:Key="SBSLValueConverter"/>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
-    <Geometry x:Key="CopyGeometry">
-        M2,6 L12,6 L12,18 L2,18 Z M8,6 L8,2 L18,2 L18,14 L12,14
-    </Geometry>
-
+    <SolidColorBrush x:Key="SliderThumbBackgroundBrush" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
+    <SolidColorBrush x:Key="IconBrushFg" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
+    <SolidColorBrush x:Key="IconBrushBg" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
+    <SolidColorBrush x:Key="PickerBackgroundBrush" Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}"/>
+    <SolidColorBrush x:Key="PickerBorderdBrush" Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}"/>
+    <SolidColorBrush x:Key="UpDownBackgroundBrush" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
+    <SolidColorBrush x:Key="UpDownArrowBrush" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
+    <SolidColorBrush x:Key="DisabledBrush" Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}"/>
+    <SolidColorBrush x:Key="ColorPanelBackgroundBrush" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
+    <SolidColorBrush x:Key="ColorPanelForegroundBrush" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
+    <SolidColorBrush x:Key="ColorPanelCanvasBorderBrush" Color="{DynamicResource {x:Static SystemColors.InactiveBorderColorKey}}"/>
+    <LinearGradientBrush x:Key="UpDownBorderBrush" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}" Offset="0.0" />
+                <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" Offset="1.0" />
+            </GradientStopCollection>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
     <DrawingBrush x:Key="TransparentBackgroundBrush" TileMode="Tile" Viewport="0,0,10,10" ViewportUnits="Absolute">
         <DrawingBrush.Drawing>
             <DrawingGroup>
@@ -37,9 +52,11 @@
         </DrawingBrush.Drawing>
     </DrawingBrush>
 
-    <SolidColorBrush x:Key="SliderThumbBackgroundBrush" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
-    <SolidColorBrush x:Key="IconBrushFg" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
-    <SolidColorBrush x:Key="IconBrushBg" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
+    <Geometry x:Key="UpArrow">M 2 6 L 10 6 L 6 2 Z</Geometry>
+    <Geometry x:Key="DownArrow">M 2 0 L 6 4 L 10 0 Z</Geometry>
+    <Geometry x:Key="CopyGeometry">
+        M2,6 L12,6 L12,18 L2,18 Z M8,6 L8,2 L18,2 L18,14 L12,14
+    </Geometry>
 
     <ObjectDataProvider x:Key="ColorStringFormatEnum" MethodName="GetValues"
                             ObjectType="{x:Type sys:Enum}">
@@ -99,7 +116,7 @@
 
     <ControlTemplate x:Key="SliderThumbHorizontalDefault" TargetType="{x:Type Thumb}">
         <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
-            <Path Data="M0,0 L10,0 L5,5 Z" 
+            <Path x:Name="_pathThumb" Data="M0,0 L10,0 L5,5 Z" 
                   Fill="{StaticResource SliderThumbBackgroundBrush}" 
                   Stroke="{StaticResource SliderThumbBackgroundBrush}" 
                   SnapsToDevicePixels="True" 
@@ -108,11 +125,17 @@
                   UseLayoutRounding="True" 
                   VerticalAlignment="Center"/>
         </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter TargetName="_pathThumb" Property="Fill" Value="{StaticResource DisabledBrush}"/>
+                <Setter TargetName="_pathThumb" Property="Stroke" Value="{StaticResource DisabledBrush}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <ControlTemplate x:Key="SliderThumbVerticalDefault" TargetType="{x:Type Thumb}">
         <Grid HorizontalAlignment="Center" UseLayoutRounding="True" VerticalAlignment="Center">
-            <Path Data="M0,5 L10,0 L10,10 Z" 
+            <Path x:Name="_pathThumb" Data="M0,5 L10,0 L10,10 Z" 
                   Fill="{StaticResource SliderThumbBackgroundBrush}" 
                   Stroke="{StaticResource SliderThumbBackgroundBrush}" 
                   Stretch="Fill"
@@ -120,6 +143,12 @@
                   UseLayoutRounding="True" 
                   HorizontalAlignment="Center"/>
         </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter TargetName="_pathThumb" Property="Fill" Value="{StaticResource DisabledBrush}"/>
+                <Setter TargetName="_pathThumb" Property="Stroke" Value="{StaticResource DisabledBrush}"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
     </ControlTemplate>
 
     <Style x:Key="RGBSlider" TargetType="{x:Type Slider}">
@@ -160,7 +189,7 @@
         <Setter Property="LargeChange" Value="10"/>
         <Setter Property="Orientation" Value="Vertical"/>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorPanelForegroundBrush}"/>
         <Setter Property="Minimum" Value="0"/>
         <Setter Property="Maximum" Value="360"/>
         <Setter Property="TickFrequency" Value="1"/>
@@ -200,12 +229,12 @@
     </Style>
 
     <Style TargetType="{x:Type picker:ColorPanel}">
-        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background" Value="{StaticResource ColorPanelBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorPanelForegroundBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type picker:ColorPanel}">
-                    <Grid Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}">
+                    <Grid Background="{StaticResource ColorPanelBackgroundBrush}">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition Height="auto"/>
@@ -224,7 +253,11 @@
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
-                                    <Border x:Name="borderCanvas" BorderBrush="{DynamicResource {x:Static SystemColors.InactiveBorderBrushKey}}" BorderThickness="1" Margin="0,5,0,0" ClipToBounds="True" Background="{StaticResource TransparentBackgroundBrush}">
+                                    <Border x:Name="borderCanvas" 
+                                            BorderBrush="{StaticResource ColorPanelCanvasBorderBrush}" 
+                                            BorderThickness="1" Margin="0,5,0,0" 
+                                            ClipToBounds="True" 
+                                            Background="{StaticResource TransparentBackgroundBrush}">
                                         <Canvas x:Name="PART_ColorShadingCanvas" Height="{Binding ActualHeight, ElementName=borderCanvas}" Width="{Binding ActualWidth, ElementName=borderCanvas}">
                                             <Rectangle x:Name="ColorShadingRectangle" Height="{Binding ActualHeight, ElementName=PART_ColorShadingCanvas}" Width="{Binding ActualWidth, ElementName=PART_ColorShadingCanvas}">
                                                 <Rectangle.Fill>
@@ -279,8 +312,8 @@
                                         </Canvas>
                                         <Border x:Name="PART_DropPickerBorder" Background="Transparent" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center" Cursor="Hand" Margin="4">
                                             <Grid>
-                                                <Path Stroke="{StaticResource IconBrushFg}" Fill="{StaticResource IconBrushBg}" StrokeThickness="1" StrokeEndLineCap="Round" StrokeLineJoin="Round" StrokeStartLineCap="Round" Data="M21,0 L 24,3 L18,9 L20,11 L18,13 L11,6 L13,4L15,6 Z M12.5,7.5 L1,19 L0,22 L0,24 L2,24 L5,23 L16.5,11.5"/>
-                                                <Path Fill="{StaticResource IconBrushFg}" StrokeThickness="0" Data="M21,1.5 L22.5,3 L17,8.5 L15.5,7 M13,4 L20,11 L18,12.5 L11.5,6 Z M8,14 L12,14 L4,22 L2,23 L1,23 L1,22 L2,20 Z"/>
+                                                <Path x:Name="_dropStrokePath" Stroke="{StaticResource IconBrushFg}" Fill="{StaticResource IconBrushBg}" StrokeThickness="1" StrokeEndLineCap="Round" StrokeLineJoin="Round" StrokeStartLineCap="Round" Data="M21,0 L 24,3 L18,9 L20,11 L18,13 L11,6 L13,4L15,6 Z M12.5,7.5 L1,19 L0,22 L0,24 L2,24 L5,23 L16.5,11.5"/>
+                                                <Path x:Name="_dropFillPath" Fill="{StaticResource IconBrushFg}" StrokeThickness="0" Data="M21,1.5 L22.5,3 L17,8.5 L15.5,7 M13,4 L20,11 L18,12.5 L11.5,6 Z M8,14 L12,14 L4,22 L2,23 L1,23 L1,22 L2,20 Z"/>
                                             </Grid>
                                         </Border>
                                         <StackPanel Grid.Column="2">
@@ -295,7 +328,7 @@
                                             <TextBox x:Name="PART_ColorStringTextBox" VerticalAlignment="Center" Margin="4,2,4,4" Text="{Binding ColorString, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                         </StackPanel>
                                         <Border x:Name="PART_CopyTextBorder" Background="Transparent" Grid.Column="3" Width="24" Height="24" VerticalAlignment="Center" Cursor="Hand" Margin="4">
-                                            <Path Stroke="{StaticResource IconBrushFg}" Fill="{StaticResource IconBrushBg}" StrokeThickness="1" Data="M1,1 L15,1 L15,3 L9,3 L9,21 L1,21 Z M9,3 L23,3 L23,23 L9,23 L9,3 M3,6 L9,6 M3,12 L9,12 M12,9 L21,9 M12,15 L21,15"/>
+                                            <Path x:Name="_copyStrokePath" Stroke="{StaticResource IconBrushFg}" Fill="{StaticResource IconBrushBg}" StrokeThickness="1" Data="M1,1 L15,1 L15,3 L9,3 L9,21 L1,21 Z M9,3 L23,3 L23,23 L9,23 L9,3 M3,6 L9,6 M3,12 L9,12 M12,9 L21,9 M12,15 L21,15"/>
                                         </Border>
                                     </Grid>
 
@@ -568,7 +601,10 @@
                             <Setter Property="Visibility" TargetName="_commandsGrid" Value="Collapsed"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            <Setter Property="Foreground" Value="{StaticResource DisabledBrush}"/>
+                            <Setter TargetName="_dropFillPath" Property="Fill" Value="{StaticResource DisabledBrush}"/>
+                            <Setter TargetName="_dropStrokePath" Property="Stroke" Value="{StaticResource DisabledBrush}"/>
+                            <Setter TargetName="_copyStrokePath" Property="Stroke" Value="{StaticResource DisabledBrush}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" SourceName="_alphaSlider" Value="false">
                             <Setter TargetName="_alphaSlider" Property="Background">
@@ -582,14 +618,6 @@
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
-                        <!--<Trigger Property="SelectedColor" Value="{x:Null}">
-                            <Setter Property="Visibility" TargetName="PART_ColorShadeSelector" Value="Collapsed"/>
-                            -->
-                        <!--<Setter Property="Background" TargetName="SelectedColorBorder" Value="Transparent"/>-->
-                        <!--<Setter Property="IsEnabled" TargetName="RGBBorder" Value="False"/>-->
-                        <!--<Setter Property="TextElement.Foreground" TargetName="RGBBorder" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>-->
-                        <!--
-                        </Trigger>-->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -604,9 +632,6 @@
         <Setter Property="Padding" Value="2"/>
     </Style>
 
-    <Geometry x:Key="UpArrow">M 2 6 L 10 6 L 6 2 Z</Geometry>
-    <Geometry x:Key="DownArrow">M 2 0 L 6 4 L 10 0 Z</Geometry>
-
     <Style TargetType="{x:Type picker:UpDown}">
         <Setter Property="Height" Value="21"/>
         <Setter Property="MinHeight" Value="19"/>
@@ -615,18 +640,10 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type picker:UpDown}">
-                    <Border x:Name="Border" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"
+                    <Border x:Name="Border" 
+                            Background="{StaticResource UpDownBackgroundBrush}" 
+                            BorderBrush="{StaticResource UpDownBorderBrush}"
                             BorderThickness="1">
-                        <Border.BorderBrush>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <LinearGradientBrush.GradientStops>
-                                    <GradientStopCollection>
-                                        <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}" Offset="0.0" />
-                                        <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" Offset="1.0" />
-                                    </GradientStopCollection>
-                                </LinearGradientBrush.GradientStops>
-                            </LinearGradientBrush>
-                        </Border.BorderBrush>
                         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
@@ -657,23 +674,23 @@
                                     <RowDefinition Height="*"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <RepeatButton x:Name="PART_Up" Padding="0" Focusable="False">
-                                    <Path x:Name="RepeatButtonArrowUp" Data="{StaticResource UpArrow}" Fill="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                                <RepeatButton x:Name="PART_Up" Padding="0" Focusable="False" VerticalContentAlignment="Center">
+                                    <Path x:Name="RepeatButtonArrowUp" 
+                                          Data="{StaticResource UpArrow}" 
+                                          Fill="{StaticResource UpDownArrowBrush}"/>
                                 </RepeatButton>
-                                <RepeatButton Grid.Row="1" x:Name="PART_Down" Padding="0" Focusable="False" Margin="0,1,0,0">
-                                    <Path x:Name="RepeatButtonArrowDown" Data="{StaticResource DownArrow}" Fill="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                                <RepeatButton Grid.Row="1" x:Name="PART_Down" Padding="0" Focusable="False" Margin="0,1,0,0" VerticalContentAlignment="Center">
+                                    <Path x:Name="RepeatButtonArrowDown" 
+                                          Data="{StaticResource DownArrow}" 
+                                          Fill="{StaticResource UpDownArrowBrush}"/>
                                 </RepeatButton>
                             </Grid>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Background" TargetName="Border" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
-                            <!--<Setter TargetName="Border"
-                                    Property="BorderBrush"
-                                    Value="{DynamicResource {x:Static SystemColors.ControlDarkBrushKey}}"/>-->
-                            <Setter Property="Fill" TargetName="RepeatButtonArrowUp" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                            <Setter Property="Fill" TargetName="RepeatButtonArrowDown" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                            <Setter Property="Fill" TargetName="RepeatButtonArrowUp" Value="{StaticResource DisabledBrush}"/>
+                            <Setter Property="Fill" TargetName="RepeatButtonArrowDown" Value="{StaticResource DisabledBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -688,8 +705,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type picker:ColorPicker}">
-                    <Border x:Name="border" Background="{StaticResource {x:Static SystemColors.ControlBrushKey}}"
-                            BorderBrush="{StaticResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                    <Border x:Name="border" Background="{StaticResource PickerBackgroundBrush}"
+                            BorderBrush="{StaticResource PickerBorderdBrush}"
                             BorderThickness="1">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -701,7 +718,7 @@
                                     BorderThickness="1" 
                                     Background="{StaticResource TransparentBackgroundBrush}"/>
                             <Border x:Name="PART_ColorBorder" Margin="1"
-                                    BorderBrush="{StaticResource {x:Static SystemColors.ControlDarkBrushKey}}"
+                                    BorderBrush="{StaticResource PickerBorderdBrush}"
                                     BorderThickness="1"
                                     Grid.Column="0">
                                 <Border.Background>
@@ -724,6 +741,11 @@
                             </Popup>
                         </Grid>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="PART_ColorBorder" Property="Background" Value="{StaticResource DisabledBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
