@@ -7,10 +7,13 @@ using System.Windows.Media;
 
 namespace ag.WPF.ColorPicker.ColorHelpers
 {
+    /// <summary>
+    /// Represents HSL color structure.
+    /// </summary>
     public struct HslColor
     {
         /// <summary>
-        /// Gets an empty HSL structure;
+        /// Gets an empty HSL structure.
         /// </summary>
         public static readonly HslColor Empty = new HslColor();
 
@@ -76,6 +79,12 @@ namespace ag.WPF.ColorPicker.ColorHelpers
             luminance = (l > 1) ? 1 : ((l < 0) ? 0 : l);
         }
 
+        /// <summary>
+        /// Compares two HSL structures.
+        /// </summary>
+        /// <param name="item1">First structure.</param>
+        /// <param name="item2">Second structure.</param>
+        /// <returns>True if structures are equal.</returns>
         public static bool operator ==(HslColor item1, HslColor item2)
         {
             return (
@@ -85,11 +94,22 @@ namespace ag.WPF.ColorPicker.ColorHelpers
                 );
         }
 
+        /// <summary>
+        /// Compares two HSL structures.
+        /// </summary>
+        /// <param name="item1">First structure.</param>
+        /// <param name="item2">Second structure.</param>
+        /// <returns>True if structures are inequal.</returns>
         public static bool operator !=(HslColor item1, HslColor item2)
         {
             return !(item1 == item2);
         }
 
+        /// <summary>
+        /// Compares HSL structure with another object.
+        /// </summary>
+        /// <param name="obj">Object to compare with.</param>
+        /// <returns>True if HSL structure is equal to object.</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
@@ -97,11 +117,19 @@ namespace ag.WPF.ColorPicker.ColorHelpers
             return (this == (HslColor)obj);
         }
 
+        /// <summary>
+        /// Gets HSL color hash code.
+        /// </summary>
+        /// <returns>HSL color hash code.</returns>
         public override int GetHashCode()
         {
             return (Hue.GetHashCode(), Saturation.GetHashCode(), Luminance.GetHashCode()).GetHashCode();
         }
 
+        /// <summary>
+        /// Converts HSL color to RGB color.
+        /// </summary>
+        /// <returns>RGB color.</returns>
         public Color ToRgbColor()
         {
             if (Saturation == 0)

@@ -7,6 +7,9 @@ using System.Windows.Shapes;
 
 namespace ag.WPF.ColorPicker
 {
+    /// <summary>
+    /// Represents custom slider
+    /// </summary>
     #region Named parts
     [TemplatePart(Name = "PART_SpectrumDisplay", Type = typeof(Rectangle))]
     #endregion
@@ -17,15 +20,21 @@ namespace ag.WPF.ColorPicker
         private byte _alpha = byte.MaxValue;
 
         #region Dependency properties
+        /// <summary>
+        /// The identifier of the <see cref="SelectedColor"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorSlider), new PropertyMetadata(Colors.Transparent));
         #endregion
 
         #region Dependency properties handlers
+        /// <summary>
+        /// Gets or sets selected color.
+        /// </summary>
         public Color SelectedColor
         {
             get { return (Color)GetValue(SelectedColorProperty); }
             set { SetValue(SelectedColorProperty, value); }
-        } 
+        }
         #endregion
 
         #region ctor
@@ -36,14 +45,20 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Overides
+        /// <summary>
+        /// Initializes control for the first time
+        /// </summary>
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
             createSpectrum();
-        }  
+        }
         #endregion
 
         #region OnXXXChanged procedures
+        /// <summary>
+        /// Occurs when the <see cref="Slider.OnValueChanged(double, double)"/> event occurrs.
+        /// </summary>
         protected override void OnValueChanged(double oldValue, double newValue)
         {
             base.OnValueChanged(oldValue, newValue);
@@ -58,7 +73,7 @@ namespace ag.WPF.ColorPicker
         {
             _alpha = alpha;
             SelectedColor = Color.FromArgb(alpha, SelectedColor.R, SelectedColor.G, SelectedColor.B);
-        } 
+        }
         #endregion
 
         #region Private procedures
@@ -80,7 +95,7 @@ namespace ag.WPF.ColorPicker
             spectrumBrush.GradientStops[index - 1].Offset = 1.0;
 
             Background = spectrumBrush;
-        } 
+        }
         #endregion
     }
 }

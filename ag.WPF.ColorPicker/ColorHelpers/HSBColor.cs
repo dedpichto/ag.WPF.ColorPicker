@@ -8,34 +8,19 @@ using System.Windows.Media;
 namespace ag.WPF.ColorPicker.ColorHelpers
 {
     /// <summary>
-    /// Structure to define HSB.
+    /// Represents HSB color structure.
     /// </summary>
     public struct HsbColor
     {
         /// <summary>
-        /// Gets an empty HSB structure;
+        /// Gets an empty HSB structure.
         /// </summary>
         public static readonly HsbColor Empty = new HsbColor();
         private double hue;
         private double saturation;
         private double brightness;
-        //public static bool operator ==(HSB iteml, HSB item2)
-        //{
-        // return (
-        // iteml.Hue == item2.Hue
-        // && iteml.Saturation == item2.Saturation
-        // && iteml.Brightness == item2.Brightness
-        // ) j
-        //) 
-        //public static bool operator !=(HSB iteml, HSB item2)
-        //4
-        // return ( 
-        // iteml.Hue != item2.Hue
-        // || item1l.Saturation != item2.Saturation
-        // i | iteml.Brightness != item2.Brightness
-        // );
-        //}
-        /// <summary> |
+
+        /// <summary>
         /// Gets or sets the hue component.
         /// </summary> 
         public double Hue
@@ -90,6 +75,12 @@ namespace ag.WPF.ColorPicker.ColorHelpers
             brightness = (b > 1) ? 1 : ((b < 0) ? 0 : b);
         }
 
+        /// <summary>
+        /// Compares two HSB structures.
+        /// </summary>
+        /// <param name="item1">First structure.</param>
+        /// <param name="item2">Second structure.</param>
+        /// <returns>True if structures are equal.</returns>
         public static bool operator ==(HsbColor item1, HsbColor item2)
         {
             return (
@@ -99,22 +90,41 @@ namespace ag.WPF.ColorPicker.ColorHelpers
                 );
         }
 
+        /// <summary>
+        /// Compares two HSB structures.
+        /// </summary>
+        /// <param name="item1">First structure.</param>
+        /// <param name="item2">Second structure.</param>
+        /// <returns>True if structures are inequal.</returns>
         public static bool operator !=(HsbColor item1, HsbColor item2)
         {
             return !(item1 == item2);
         }
 
+        /// <summary>
+        /// Compares HSB structure with another object.
+        /// </summary>
+        /// <param name="obj">Object to compare with.</param>
+        /// <returns>True if HSL structure is equal to object.</returns>
         public override bool Equals(Object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
             return (this == (HsbColor)obj);
         }
 
+        /// <summary>
+        /// Gets HSL color hash code.
+        /// </summary>
+        /// <returns>HSB color hash code.</returns>
         public override int GetHashCode()
         {
             return (Hue.GetHashCode(), Saturation.GetHashCode(), Brightness.GetHashCode()).GetHashCode();
         }
 
+        /// <summary>
+        /// Converts HSB color to RGB color.
+        /// </summary>
+        /// <returns>RGB color.</returns>
         public Color ToRgbColor()
         {
             double num1;

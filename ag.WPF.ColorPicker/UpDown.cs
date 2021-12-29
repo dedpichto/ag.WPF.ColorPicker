@@ -10,6 +10,9 @@ using System.Windows.Media;
 
 namespace ag.WPF.ColorPicker
 {
+    /// <summary>
+    /// Represents custom numeric UpDown control
+    /// </summary>
     #region Named parts
     [TemplatePart(Name = ElementText, Type = typeof(TextBox))]
     [TemplatePart(Name = ElementButtonUp, Type = typeof(RepeatButton))]
@@ -806,22 +809,52 @@ namespace ag.WPF.ColorPicker
         #endregion
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
     public class UpDownForegroundConverter : IMultiValueConverter
     {
+        /// <summary>
+        /// Determines UpDown foreground.
+        /// </summary>
+        /// <param name="values">Array consists of current UpDown value, regular foreground brush and negative foreground brush</param>
+        /// <param name="targetType">Not used.</param>
+        /// <param name="parameter">Not used.</param>
+        /// <param name="culture">Not used.</param>
+        /// <returns>Brush depended on current value sign.</returns>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(values[0] is decimal decimalValue) || !(values[1] is Brush foregroundBrush) || !(values[2] is Brush negativeBrush)) return null;
             return decimalValue >= 0 ? foregroundBrush : negativeBrush;
         }
 
+        /// <summary>
+        /// Not implemented.
+        /// </summary>
+        /// <param name="value">Not used.</param>
+        /// <param name="targetTypes">Not used.</param>
+        /// <param name="parameter">Not used.</param>
+        /// <param name="culture">Not used.</param>
+        /// <returns>Not used.</returns>
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }
     }
 
+    /// <summary>
+    /// Converts decimal value to string.
+    /// </summary>
     public class UpDownTextToValueConverter : IMultiValueConverter
     {
+        /// <summary>
+        /// Converts decimal value to string.
+        /// </summary>
+        /// <param name="values">Array consists of current UpDown value, decimal places and separator using flag.</param>
+        /// <param name="targetType">Not used.</param>
+        /// <param name="parameter">Not used.</param>
+        /// <param name="culture">Not used.</param>
+        /// <returns>Formatted string.</returns>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             if (!(values[0] is decimal decimalValue) || !(values[1] is uint decimalPlaces) || !(values[2] is bool useSeparator)) return "";
@@ -839,6 +872,14 @@ namespace ag.WPF.ColorPicker
             return result;
         }
 
+        /// <summary>
+        /// Converts string to decimal.
+        /// </summary>
+        /// <param name="value">String.</param>
+        /// <param name="targetTypes">Not used.</param>
+        /// <param name="parameter">Not used.</param>
+        /// <param name="culture">Not used.</param>
+        /// <returns>Decimal.</returns>
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             if (!(value is string stringValue)) return null;

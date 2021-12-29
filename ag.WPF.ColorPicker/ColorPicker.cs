@@ -7,11 +7,15 @@ using System.Windows.Media;
 
 namespace ag.WPF.ColorPicker
 {
+    /// <summary>
+    /// Represents custom control that allows users to pick color
+    /// </summary>
+    
     #region Named parts
     [TemplatePart(Name = "PART_Button", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Popup", Type = typeof(Popup))]
     [TemplatePart(Name = "PART_ColorPanel", Type = typeof(ColorPanel))]
-    [TemplatePart(Name = "PART_ColorBorder", Type = typeof(Border))] 
+    [TemplatePart(Name = "PART_ColorBorder", Type = typeof(Border))]
     #endregion
 
     public class ColorPicker : Control
@@ -27,14 +31,23 @@ namespace ag.WPF.ColorPicker
         private Border _border;
 
         #region Dependecy properties
+        /// <summary>
+        /// The identifier of the <see cref="SelectedColor"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPicker), new FrameworkPropertyMetadata(Colors.Blue));
         #endregion
 
+        /// <summary>
+        /// The identifier of the <see cref="SelectedColorChanged"/> routed event.
+        /// </summary>
         #region Routed events
         public static readonly RoutedEvent SelectedColorChangedEvent = EventManager.RegisterRoutedEvent("SelectedColorChanged", RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<Color>), typeof(ColorPicker));
         #endregion
 
         #region Public event handlers
+        /// <summary>
+        /// Handles the <see cref="SelectedColorChanged"/> routed event.
+        /// </summary>
         public event RoutedPropertyChangedEventHandler<Color> SelectedColorChanged
         {
             add => AddHandler(SelectedColorChangedEvent, (Delegate)value, false);
@@ -43,6 +56,9 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Dependency properties handlers
+        /// <summary>
+        /// Gets or sets selected color.
+        /// </summary>
         public Color SelectedColor
         {
             get { return (Color)GetValue(SelectedColorProperty); }
@@ -58,6 +74,9 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Overrides
+        /// <summary>
+        /// Initializes control for the first time
+        /// </summary>
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();

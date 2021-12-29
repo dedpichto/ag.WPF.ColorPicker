@@ -14,16 +14,37 @@ using System.Windows.Shapes;
 namespace ag.WPF.ColorPicker
 {
     #region Enums
+    /// <summary>
+    /// Represents available color string representation formats.
+    /// </summary>
     public enum ColorStringFormat
     {
+        /// <summary>
+        /// HEX format.
+        /// </summary>
         HEX,
+        /// <summary>
+        /// ARGB format.
+        /// </summary>
         ARGB,
+        /// <summary>
+        /// RGB format.
+        /// </summary>
         RGB,
+        /// <summary>
+        /// HSB format.
+        /// </summary>
         HSB,
+        /// <summary>
+        /// HSL format.
+        /// </summary>
         HSL
     }
     #endregion
 
+    /// <summary>
+    /// Represents custom control that allows users to choose color.
+    /// </summary>
     #region Named parts
     [TemplatePart(Name = "PART_ColorShadingCanvas", Type = typeof(Canvas))]
     [TemplatePart(Name = "PART_ColorShadeSelector", Type = typeof(Canvas))]
@@ -91,44 +112,111 @@ namespace ag.WPF.ColorPicker
         private readonly List<StandardColorItem> _standardColorItems = new List<StandardColorItem>();
 
         #region Dependecy properties
+        /// <summary>
+        /// The identifier of the <see cref="SelectedColor"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPanel), new FrameworkPropertyMetadata(Colors.Red, OnSelectedColorChanged));
+        /// <summary>
+        /// The identifier of the <see cref="A"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty AProperty = DependencyProperty.Register(nameof(A), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnByteChanged));
+        /// <summary>
+        /// The identifier of the <see cref="R"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty RProperty = DependencyProperty.Register(nameof(R), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnByteChanged));
+        /// <summary>
+        /// The identifier of the <see cref="G"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty GProperty = DependencyProperty.Register(nameof(G), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnByteChanged));
+        /// <summary>
+        /// The identifier of the <see cref="B"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty BProperty = DependencyProperty.Register(nameof(B), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnByteChanged));
+        /// <summary>
+        /// The identifier of the <see cref="HueHsl"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty HueHslProperty = DependencyProperty.Register(nameof(HueHsl), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnHueHslChanged));
+        /// <summary>
+        /// The identifier of the <see cref="SaturationHsl"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty SaturationHslProperty = DependencyProperty.Register(nameof(SaturationHsl), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnSaturationHslChanged));
+        /// <summary>
+        /// The identifier of the <see cref="LuminanceHsl"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty LuminanceHslProperty = DependencyProperty.Register(nameof(LuminanceHsl), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnLuminanceHslChanged));
+        /// <summary>
+        /// The identifier of the <see cref="HueHsb"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty HueHsbProperty = DependencyProperty.Register(nameof(HueHsb), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnHueHsbChanged));
+        /// <summary>
+        /// The identifier of the <see cref="SaturationHsb"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty SaturationHsbProperty = DependencyProperty.Register(nameof(SaturationHsb), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnSaturationHsbChanged));
+        /// <summary>
+        /// The identifier of the <see cref="BrightnessHsb"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty BrightnessHsbProperty = DependencyProperty.Register(nameof(BrightnessHsb), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnBrightnessHsbChanged));
+        /// <summary>
+        /// The identifier of the <see cref="ColorString"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty ColorStringProperty = DependencyProperty.Register(nameof(ColorString), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata(""));
+        /// <summary>
+        /// The identifier of the <see cref="ShowCommandsPanel"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty ShowCommandsPanelProperty = DependencyProperty.Register(nameof(ShowCommandsPanel), typeof(bool), typeof(ColorPanel), new FrameworkPropertyMetadata(true));
+        /// <summary>
+        /// The identifier of the <see cref="UseAlphaChannel"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty UseAlphaChannelProperty = DependencyProperty.Register(nameof(UseAlphaChannel), typeof(bool), typeof(ColorPanel), new FrameworkPropertyMetadata(true, OnUseAlphaChannelPropertyChanged));
+        /// <summary>
+        /// The identifier of the <see cref="ColorStringFormat"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty ColorStringFormatProperty = DependencyProperty.Register(nameof(ColorStringFormat), typeof(ColorStringFormat), typeof(ColorPanel), new FrameworkPropertyMetadata(ColorStringFormat.HEX, OnColorStringFormatChanged));
+        /// <summary>
+        /// The identifier of the <see cref="HorizontalSpectrumBrush"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty HorizontalSpectrumBrushProperty = DependencyProperty.Register(nameof(HorizontalSpectrumBrush), typeof(LinearGradientBrush), typeof(ColorPanel), new FrameworkPropertyMetadata(null));
+        /// <summary>
+        /// The identifier of the <see cref="VerticalSpectrumBrush"/> dependency property.
+        /// </summary>
         public static readonly DependencyProperty VerticalSpectrumBrushProperty = DependencyProperty.Register(nameof(VerticalSpectrumBrush), typeof(LinearGradientBrush), typeof(ColorPanel), new FrameworkPropertyMetadata(null));
         #endregion
 
         #region Routed events
+        /// <summary>
+        /// The identifier of the <see cref="SelectedColorChanged"/> routed event.
+        /// </summary>
         public static readonly RoutedEvent SelectedColorChangedEvent = EventManager.RegisterRoutedEvent("SelectedColorChanged", RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<Color>), typeof(ColorPanel));
+        /// <summary>
+        /// The identifier of the <see cref="ColorApplied"/> routed event.
+        /// </summary>
         public static readonly RoutedEvent ColorAppliedEvent = EventManager.RegisterRoutedEvent("ColorApplied", RoutingStrategy.Direct, typeof(RoutedPropertyChangedEventHandler<Color>), typeof(ColorPanel));
+        /// <summary>
+        /// The identifier of the <see cref="ColorCanceled"/> routed event.
+        /// </summary>
         public static readonly RoutedEvent ColorCanceledEvent = EventManager.RegisterRoutedEvent("ColorCanceled", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(ColorPanel));
         #endregion
 
         #region Public event handlers
+        /// <summary>
+        /// Handles the <see cref="ColorApplied"/> routed event.
+        /// </summary>
         public event RoutedPropertyChangedEventHandler<Color> ColorApplied
         {
             add => AddHandler(ColorAppliedEvent, (Delegate)value, false);
             remove => RemoveHandler(ColorAppliedEvent, (Delegate)value);
         }
-
+        /// <summary>
+        /// Handles the <see cref="SelectedColorChanged"/> routed event.
+        /// </summary>
         public event RoutedPropertyChangedEventHandler<Color> SelectedColorChanged
         {
             add => AddHandler(SelectedColorChangedEvent, (Delegate)value, false);
             remove => RemoveHandler(SelectedColorChangedEvent, (Delegate)value);
         }
-
+        /// <summary>
+        /// Handles the <see cref="ColorCanceled"/> routed event.
+        /// </summary>
         public event RoutedEventHandler ColorCanceled
         {
             add => AddHandler(ColorCanceledEvent, (Delegate)value, false);
@@ -137,42 +225,63 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Dependency properties handlers
+        /// <summary>
+        /// Gets or sets vertical spectrum brush.
+        /// </summary>
         public LinearGradientBrush VerticalSpectrumBrush
         {
             get { return (LinearGradientBrush)GetValue(VerticalSpectrumBrushProperty); }
             set { SetValue(VerticalSpectrumBrushProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets horizontal spectrum brush.
+        /// </summary>
         public LinearGradientBrush HorizontalSpectrumBrush
         {
             get { return (LinearGradientBrush)GetValue(HorizontalSpectrumBrushProperty); }
             set { SetValue(HorizontalSpectrumBrushProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets format of selected color's string representation.
+        /// </summary>
         public ColorStringFormat ColorStringFormat
         {
             get { return (ColorStringFormat)GetValue(ColorStringFormatProperty); }
             set { SetValue(ColorStringFormatProperty, value); }
         }
 
+        /// <summary>
+        /// Specifies whether Apply and Cancel buttons are shown.
+        /// </summary>
         public bool ShowCommandsPanel
         {
             get { return (bool)GetValue(ShowCommandsPanelProperty); }
             set { SetValue(ShowCommandsPanelProperty, value); }
         }
 
+        /// <summary>
+        /// Gets selected color's string representation.
+        /// </summary>
         public string ColorString
         {
             get { return (string)GetValue(ColorStringProperty); }
             private set { SetValue(ColorStringProperty, value); }
         }
 
+        /// <summary>
+        /// Specifies whether alpha channel is used.
+        /// </summary>
         public bool UseAlphaChannel
         {
             get { return (bool)GetValue(UseAlphaChannelProperty); }
             set { SetValue(UseAlphaChannelProperty, value); }
         }
 
+        /// <summary>
+        ///  Gets or sets hue of HSL color.
+        /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public double HueHsl
         {
@@ -180,6 +289,9 @@ namespace ag.WPF.ColorPicker
             set { SetValue(HueHslProperty, value); }
         }
 
+        /// <summary>
+        ///  Gets or sets saturation of HSL color.
+        /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public double SaturationHsl
         {
@@ -187,6 +299,9 @@ namespace ag.WPF.ColorPicker
             set { SetValue(SaturationHslProperty, value); }
         }
 
+        /// <summary>
+        ///  Gets or sets luminance of HSL color.
+        /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public double LuminanceHsl
         {
@@ -194,6 +309,9 @@ namespace ag.WPF.ColorPicker
             set { SetValue(LuminanceHslProperty, value); }
         }
 
+        /// <summary>
+        ///  Gets or sets hue of HSB color.
+        /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public double HueHsb
         {
@@ -201,6 +319,9 @@ namespace ag.WPF.ColorPicker
             set { SetValue(HueHsbProperty, value); }
         }
 
+        /// <summary>
+        ///  Gets or sets saturation of HSB color.
+        /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public double SaturationHsb
         {
@@ -208,6 +329,9 @@ namespace ag.WPF.ColorPicker
             set { SetValue(SaturationHsbProperty, value); }
         }
 
+        /// <summary>
+        ///  Gets or sets brightness of HSB color.
+        /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public double BrightnessHsb
         {
@@ -215,12 +339,18 @@ namespace ag.WPF.ColorPicker
             set { SetValue(BrightnessHsbProperty, value); }
         }
 
+        /// <summary>
+        /// Gets or sets selected color.
+        /// </summary>
         public Color SelectedColor
         {
             get { return (Color)GetValue(SelectedColorProperty); }
             set { SetValue(SelectedColorProperty, value); }
         }
 
+        /// <summary>
+        ///  Gets or sets A value of selected color.
+        /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public byte A
         {
@@ -228,6 +358,9 @@ namespace ag.WPF.ColorPicker
             set { SetValue(AProperty, value); }
         }
 
+        /// <summary>
+        ///  Gets or sets R value of selected color.
+        /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public byte R
         {
@@ -235,6 +368,9 @@ namespace ag.WPF.ColorPicker
             set { SetValue(RProperty, value); }
         }
 
+        /// <summary>
+        ///  Gets or sets G value of selected color.
+        /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public byte G
         {
@@ -242,6 +378,9 @@ namespace ag.WPF.ColorPicker
             set { SetValue(GProperty, value); }
         }
 
+        /// <summary>
+        ///  Gets or sets B value of selected color.
+        /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public byte B
         {
@@ -269,6 +408,9 @@ namespace ag.WPF.ColorPicker
             colorPanel.OnLuminanceHslChanged((double)e.OldValue, (double)e.NewValue);
         }
 
+        /// <summary>
+        /// Occurs when the <see cref="HueHsl"/> property has been changed in some way.
+        /// </summary>
         protected virtual void OnHueHslChanged(double oldValue, double newValue)
         {
             _updateHsl = false;
@@ -278,6 +420,9 @@ namespace ag.WPF.ColorPicker
             _updateHsl = true;
         }
 
+        /// <summary>
+        /// Occurs when the <see cref="SaturationHsl"/> property has been changed in some way.
+        /// </summary>
         protected virtual void OnSaturationHslChanged(double oldValue, double newValue)
         {
             _updateHsl = false;
@@ -289,6 +434,9 @@ namespace ag.WPF.ColorPicker
             _updateHsl = true;
         }
 
+        /// <summary>
+        /// Occurs when the <see cref="LuminanceHsl"/> property has been changed in some way.
+        /// </summary>
         protected virtual void OnLuminanceHslChanged(double oldValue, double newValue)
         {
             _updateHsl = false;
@@ -318,6 +466,9 @@ namespace ag.WPF.ColorPicker
             colorPanel.OnBrightnessHsbChanged((double)e.OldValue, (double)e.NewValue);
         }
 
+        /// <summary>
+        /// Occurs when the <see cref="HueHsb"/> property has been changed in some way.
+        /// </summary>
         protected virtual void OnHueHsbChanged(double oldValue, double newValue)
         {
             _updateHsb = false;
@@ -327,6 +478,9 @@ namespace ag.WPF.ColorPicker
             _updateHsb = true;
         }
 
+        /// <summary>
+        /// Occurs when the <see cref="SaturationHsb"/> property has been changed in some way.
+        /// </summary>
         protected virtual void OnSaturationHsbChanged(double oldValue, double newValue)
         {
             _updateHsb = false;
@@ -338,6 +492,9 @@ namespace ag.WPF.ColorPicker
             _updateHsb = true;
         }
 
+        /// <summary>
+        /// Occurs when the <see cref="BrightnessHsb"/> property has been changed in some way.
+        /// </summary>
         protected virtual void OnBrightnessHsbChanged(double oldValue, double newValue)
         {
             _updateHsb = false;
@@ -356,6 +513,9 @@ namespace ag.WPF.ColorPicker
             colorPanel.OnUseAlphaChannelChanged();
         }
 
+        /// <summary>
+        /// Occurs when the <see cref="UseAlphaChannel"/> property has been changed in some way.
+        /// </summary>
         protected virtual void OnUseAlphaChannelChanged()
         {
             UpdateSelectedColor();
@@ -367,6 +527,9 @@ namespace ag.WPF.ColorPicker
             colorPanel.OnSelectedColorChanged((Color)e.OldValue, (Color)e.NewValue);
         }
 
+        /// <summary>
+        /// Occurs when the <see cref="SelectedColor"/> property has been changed in some way.
+        /// </summary>
         protected virtual void OnSelectedColorChanged(Color oldValue, Color newValue)
         {
             UpdateRGBValues(newValue);
@@ -404,6 +567,9 @@ namespace ag.WPF.ColorPicker
             colorPanel.OnByteChanged((byte)e.OldValue, (byte)e.NewValue);
         }
 
+        /// <summary>
+        /// Occurs when the <see cref="A"/>, <see cref="R"/>, <see cref="G"/> or <see cref="B"/> property has been changed in some way.
+        /// </summary>
         protected virtual void OnByteChanged(byte oldValue, byte newValue)
         {
             if (_surpressPropertyChanged)
@@ -417,6 +583,9 @@ namespace ag.WPF.ColorPicker
             colorPanel.OnColorStringFormatChanged((ColorStringFormat)e.OldValue, (ColorStringFormat)e.NewValue);
         }
 
+        /// <summary>
+        /// Occurs when the <see cref="ColorStringFormat"/> property has been changed in some way.
+        /// </summary>
         protected virtual void OnColorStringFormatChanged(ColorStringFormat oldValue, ColorStringFormat newValue)
         {
             ColorString = getColorString();
@@ -431,6 +600,9 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Overrides
+        /// <summary>
+        /// Initializes control for the first time
+        /// </summary>
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
