@@ -93,18 +93,28 @@ namespace ag.WPF.ColorPicker
                 _button.PreviewKeyDown += button_PreviewKeyDown;
             }
 
+            if (_popup != null)
+            {
+                _popup.Opened -= popup_Opened;
+            }
             _popup = GetTemplateChild(PART_Popup) as Popup;
+            if( _popup != null)
+            {
+                _popup.Opened += popup_Opened;
+            }
 
             if (_colorPanel != null)
             {
                 _colorPanel.ColorApplied -= colorPanel_ColorApplied;
                 _colorPanel.ColorCanceled -= colorPanel_ColorCanceled;
+                _colorPanel.PreviewKeyDown -= colorPanel_PreviewKeyDown;
             }
             _colorPanel = GetTemplateChild(PART_ColorPanel) as ColorPanel;
             if (_colorPanel != null)
             {
                 _colorPanel.ColorApplied += colorPanel_ColorApplied;
                 _colorPanel.ColorCanceled += colorPanel_ColorCanceled;
+                _colorPanel.PreviewKeyDown += colorPanel_PreviewKeyDown;
             }
 
             if (_border != null)
@@ -120,6 +130,14 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Private event handlers
+        private void popup_Opened(object sender, EventArgs e)
+        {
+            if (_colorPanel != null)
+            {
+                _colorPanel.Focus();
+            }
+        }
+
         private void border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             openPopup();
@@ -148,6 +166,15 @@ namespace ag.WPF.ColorPicker
             };
             RaiseEvent(changedEventArgs);
             _popup.IsOpen = false;
+        }
+
+        private void colorPanel_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                e.Handled = true;
+                _popup.IsOpen = false;
+            }
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
