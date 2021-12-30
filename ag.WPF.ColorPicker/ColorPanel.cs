@@ -757,6 +757,14 @@ namespace ag.WPF.ColorPicker
         }
         #endregion
 
+        #region Public properties
+        /// <summary>
+        /// Returns <see cref="ColorStringFormat"/> enumeration values
+        /// </summary>
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public List<ColorStringFormat> ColorStringFormats { get; } = new List<ColorStringFormat>(Enum.GetValues(typeof(ColorStringFormat)).Cast<ColorStringFormat>());
+        #endregion
+
         #region Private event handlers
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
