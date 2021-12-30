@@ -172,14 +172,14 @@ namespace ag.WPF.ColorPicker
         /// The identifier of the <see cref="ColorStringFormat"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty ColorStringFormatProperty = DependencyProperty.Register(nameof(ColorStringFormat), typeof(ColorStringFormat), typeof(ColorPanel), new FrameworkPropertyMetadata(ColorStringFormat.HEX, OnColorStringFormatChanged));
-        /// <summary>
-        /// The identifier of the <see cref="HorizontalSpectrumBrush"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty HorizontalSpectrumBrushProperty = DependencyProperty.Register(nameof(HorizontalSpectrumBrush), typeof(LinearGradientBrush), typeof(ColorPanel), new FrameworkPropertyMetadata(null));
-        /// <summary>
-        /// The identifier of the <see cref="VerticalSpectrumBrush"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty VerticalSpectrumBrushProperty = DependencyProperty.Register(nameof(VerticalSpectrumBrush), typeof(LinearGradientBrush), typeof(ColorPanel), new FrameworkPropertyMetadata(null));
+        ///// <summary>
+        ///// The identifier of the <see cref="HorizontalSpectrumBrush"/> dependency property.
+        ///// </summary>
+        //public static readonly DependencyProperty HorizontalSpectrumBrushProperty = DependencyProperty.Register(nameof(HorizontalSpectrumBrush), typeof(LinearGradientBrush), typeof(ColorPanel), new FrameworkPropertyMetadata(null));
+        ///// <summary>
+        ///// The identifier of the <see cref="VerticalSpectrumBrush"/> dependency property.
+        ///// </summary>
+        //public static readonly DependencyProperty VerticalSpectrumBrushProperty = DependencyProperty.Register(nameof(VerticalSpectrumBrush), typeof(LinearGradientBrush), typeof(ColorPanel), new FrameworkPropertyMetadata(null));
         #endregion
 
         #region Routed events
@@ -225,23 +225,23 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Dependency properties handlers
-        /// <summary>
-        /// Gets or sets vertical spectrum brush.
-        /// </summary>
-        public LinearGradientBrush VerticalSpectrumBrush
-        {
-            get { return (LinearGradientBrush)GetValue(VerticalSpectrumBrushProperty); }
-            set { SetValue(VerticalSpectrumBrushProperty, value); }
-        }
+        ///// <summary>
+        ///// Gets or sets vertical spectrum brush.
+        ///// </summary>
+        //public LinearGradientBrush VerticalSpectrumBrush
+        //{
+        //    get { return (LinearGradientBrush)GetValue(VerticalSpectrumBrushProperty); }
+        //    set { SetValue(VerticalSpectrumBrushProperty, value); }
+        //}
 
-        /// <summary>
-        /// Gets or sets horizontal spectrum brush.
-        /// </summary>
-        public LinearGradientBrush HorizontalSpectrumBrush
-        {
-            get { return (LinearGradientBrush)GetValue(HorizontalSpectrumBrushProperty); }
-            set { SetValue(HorizontalSpectrumBrushProperty, value); }
-        }
+        ///// <summary>
+        ///// Gets or sets horizontal spectrum brush.
+        ///// </summary>
+        //public LinearGradientBrush HorizontalSpectrumBrush
+        //{
+        //    get { return (LinearGradientBrush)GetValue(HorizontalSpectrumBrushProperty); }
+        //    set { SetValue(HorizontalSpectrumBrushProperty, value); }
+        //}
 
         /// <summary>
         /// Gets or sets format of selected color's string representation.
@@ -607,7 +607,7 @@ namespace ag.WPF.ColorPicker
         {
             base.OnApplyTemplate();
 
-            createSpectrum();
+            //createSpectrum();
 
             if (_colorShadingCanvas != null)
             {
@@ -865,32 +865,32 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Private procedures
-        private void createSpectrum()
-        {
-            VerticalSpectrumBrush = new LinearGradientBrush
-            {
-                StartPoint = new Point(0.5, 0.0),
-                EndPoint = new Point(0.5, 1.0),
-                ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation
-            };
-            HorizontalSpectrumBrush = new LinearGradientBrush
-            {
-                StartPoint = new Point(0.0, 0.5),
-                EndPoint = new Point(1.0, 0.5),
-                ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation
-            };
-            List<Color> hsvSpectrum = Utils.GenerateHsvPalette();
-            var num = 1.0 / (hsvSpectrum.Count - 1);
-            int index;
-            for (index = 0; index < hsvSpectrum.Count; ++index)
-            {
-                VerticalSpectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)index * num));
-                HorizontalSpectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)(hsvSpectrum.Count - index - 1) * num));
-            }
-            VerticalSpectrumBrush.GradientStops[index - 1].Offset = 1.0;
-            HorizontalSpectrumBrush.GradientStops[index - 1].Offset = 0.0;
+        //private void createSpectrum()
+        //{
+        //    VerticalSpectrumBrush = new LinearGradientBrush
+        //    {
+        //        StartPoint = new Point(0.5, 0.0),
+        //        EndPoint = new Point(0.5, 1.0),
+        //        ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation
+        //    };
+        //    HorizontalSpectrumBrush = new LinearGradientBrush
+        //    {
+        //        StartPoint = new Point(0.0, 0.5),
+        //        EndPoint = new Point(1.0, 0.5),
+        //        ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation
+        //    };
+        //    List<Color> hsvSpectrum = Utils.GenerateHsvPalette();
+        //    var num = 1.0 / (hsvSpectrum.Count - 1);
+        //    int index;
+        //    for (index = 0; index < hsvSpectrum.Count; ++index)
+        //    {
+        //        VerticalSpectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)index * num));
+        //        HorizontalSpectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)(hsvSpectrum.Count - index - 1) * num));
+        //    }
+        //    VerticalSpectrumBrush.GradientStops[index - 1].Offset = 1.0;
+        //    HorizontalSpectrumBrush.GradientStops[index - 1].Offset = 0.0;
 
-        }
+        //}
 
         private string getColorString()
         {

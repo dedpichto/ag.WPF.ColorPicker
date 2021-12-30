@@ -1,8 +1,8 @@
-<ResourceDictionary
+﻿<ResourceDictionary 
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:sys="clr-namespace:System;assembly=mscorlib"
-    xmlns:picker="clr-namespace:ag.WPF.ColorPicker">
+    xmlns:picker="clr-namespace:ag.WPF.ColorPicker;assembly=ag.WPF.ColorPicker">
 
     <picker:OpaqueColorConverter x:Key="OpaqueColorConverter"/>
     <picker:PureColorConverter x:Key="PureColorConverter"/>
@@ -13,25 +13,18 @@
     <picker:SBSLValueConverter x:Key="SBSLValueConverter"/>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
-    <SolidColorBrush x:Key="SliderThumbBackgroundBrush" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
-    <SolidColorBrush x:Key="IconBrushFg" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
-    <SolidColorBrush x:Key="IconBrushBg" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
-    <SolidColorBrush x:Key="PickerBackgroundBrush" Color="{DynamicResource {x:Static SystemColors.ControlColorKey}}"/>
-    <SolidColorBrush x:Key="PickerBorderdBrush" Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}"/>
-    <SolidColorBrush x:Key="UpDownBackgroundBrush" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
-    <SolidColorBrush x:Key="UpDownArrowBrush" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
-    <SolidColorBrush x:Key="DisabledBrush" Color="{DynamicResource {x:Static SystemColors.GrayTextColorKey}}"/>
-    <SolidColorBrush x:Key="ColorPanelBackgroundBrush" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
-    <SolidColorBrush x:Key="ColorPanelForegroundBrush" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
-    <SolidColorBrush x:Key="ColorPanelCanvasBorderBrush" Color="{DynamicResource {x:Static SystemColors.InactiveBorderColorKey}}"/>
-    <LinearGradientBrush x:Key="UpDownBorderBrush" StartPoint="0,0" EndPoint="0,1">
-        <LinearGradientBrush.GradientStops>
-            <GradientStopCollection>
-                <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}" Offset="0.0" />
-                <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" Offset="1.0" />
-            </GradientStopCollection>
-        </LinearGradientBrush.GradientStops>
-    </LinearGradientBrush>
+    <SolidColorBrush x:Key="SliderThumbBackgroundBrush" Color="{DynamicResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="IconBrushFg" Color="{DynamicResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="IconBrushBg" Color="{DynamicResource WindowBackgroundColor}"/>
+    <SolidColorBrush x:Key="PickerBackgroundBrush" Color="{DynamicResource ContentControlBackColor}"/>
+    <SolidColorBrush x:Key="PickerBorderdBrush" Color="{DynamicResource ControlBorderColor}"/>
+    <SolidColorBrush x:Key="UpDownBackgroundBrush" Color="{DynamicResource WindowBackgroundColor}"/>
+    <SolidColorBrush x:Key="UpDownArrowBrush" Color="{DynamicResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="DisabledBrush" Color="{DynamicResource NormalTextColor}" Opacity="0.3"/>
+    <SolidColorBrush x:Key="ColorPanelBackgroundBrush" Color="{DynamicResource ContentControlBackColor}"/>
+    <SolidColorBrush x:Key="ColorPanelForegroundBrush" Color="{DynamicResource NormalTextColor}"/>
+    <SolidColorBrush x:Key="ColorPanelCanvasBorderBrush" Color="{DynamicResource ControlBorderColor}"/>
+    <SolidColorBrush x:Key="UpDownBorderBrush" Color="{DynamicResource ControlBorderColor}"/>
     <DrawingBrush x:Key="TransparentBackgroundBrush" TileMode="Tile" Viewport="0,0,10,10" ViewportUnits="Absolute">
         <DrawingBrush.Drawing>
             <DrawingGroup>
@@ -254,8 +247,7 @@
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
                                     <Border x:Name="borderCanvas" 
-                                            BorderBrush="{StaticResource ColorPanelCanvasBorderBrush}" 
-                                            BorderThickness="1" Margin="0,5,0,0" 
+                                            BorderThickness="0" Margin="0,5,0,0" 
                                             ClipToBounds="True" 
                                             Background="{StaticResource TransparentBackgroundBrush}">
                                         <Canvas x:Name="PART_ColorShadingCanvas" Height="{Binding ActualHeight, ElementName=borderCanvas}" Width="{Binding ActualWidth, ElementName=borderCanvas}">
@@ -641,7 +633,7 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox Grid.Column="0" x:Name="PART_Text" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" BorderThickness="0" Padding="2">
+                            <TextBox Grid.Column="0" x:Name="PART_Text" VerticalContentAlignment="Center" HorizontalAlignment="Right" BorderThickness="0" Padding="2">
                                 <TextBox.Text>
                                     <MultiBinding Converter="{StaticResource UpDownTextToValueConverter}" Mode="TwoWay">
                                         <MultiBinding.Bindings>
@@ -737,7 +729,7 @@
                                        PopupAnimation="Scroll">
                                 <picker:ColorPanel x:Name="PART_ColorPanel" 
                                                    Width="400" 
-                                                   Height="426" 
+                                                   Height="460" 
                                                    SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"
                                                    UseAlphaChannel="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                    ColorStringFormat="{Binding ColorStringFormat, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>

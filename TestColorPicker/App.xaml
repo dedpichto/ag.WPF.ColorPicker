@@ -14,7 +14,12 @@
                 <ResourceDictionary Source="Scrollbar.xaml"/>
                 <ResourceDictionary Source="Checkbox.xaml"/>
                 <ResourceDictionary Source="Scrollviewer.xaml"/>
-                <ResourceDictionary Source="listbox.xaml"/>-->
+                <ResourceDictionary Source="listbox.xaml"/>
+                <ResourceDictionary Source="button.xaml"/>
+                <ResourceDictionary Source="repeatbutton.xaml"/>
+                <ResourceDictionary Source="combobox.xaml"/>
+                <ResourceDictionary Source="ColorPicker.xaml"/>-->
+                
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

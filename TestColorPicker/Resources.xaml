@@ -433,7 +433,7 @@
     <SolidColorBrush x:Key="DataGridSortArrowBrush" Color="{StaticResource NormalTextColor}"/>
     <SolidColorBrush x:Key="DataGridSortArrowHoverBrush" Color="{StaticResource NormalTextColor}"/>
     <SolidColorBrush x:Key="DataGridSortArrowPressedBrush" Color="{StaticResource NormalTextColor}"/>
-    <SolidColorBrush x:Key="DataGridSortArrowDisabledBrush" Color="{StaticResource DisabledTextColor}"/>
+    <SolidColorBrush x:Key="DataGridSortArrowDisabledBrush" Color="{StaticResource NormalTextColor}" Opacity="0.3"/>
     <SolidColorBrush x:Key="DataGridValidationErrorBrush" Color="{StaticResource WarningTextColor}"/>
     <SolidColorBrush x:Key="DataGridAlternativeBackgroundBrush" Color="{StaticResource LightLightContrastColor}"/>
     <SolidColorBrush x:Key="DataGridAlternativeForegroundBrush" Color="{StaticResource ContentControlBackColor}"/>
