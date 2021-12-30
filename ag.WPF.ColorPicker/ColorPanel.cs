@@ -232,8 +232,8 @@ namespace ag.WPF.ColorPicker
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public LinearGradientBrush VerticalSpectrumBrush
         {
-            get { return (LinearGradientBrush)GetValue(VerticalSpectrumBrushProperty); }
-            private set { SetValue(VerticalSpectrumBrushProperty, value); }
+            get => (LinearGradientBrush)GetValue(VerticalSpectrumBrushProperty);
+            private set => SetValue(VerticalSpectrumBrushProperty, value);
         }
 
         /// <summary>
@@ -242,8 +242,8 @@ namespace ag.WPF.ColorPicker
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public LinearGradientBrush HorizontalSpectrumBrush
         {
-            get { return (LinearGradientBrush)GetValue(HorizontalSpectrumBrushProperty); }
-            private set { SetValue(HorizontalSpectrumBrushProperty, value); }
+            get => (LinearGradientBrush)GetValue(HorizontalSpectrumBrushProperty);
+            private set => SetValue(HorizontalSpectrumBrushProperty, value);
         }
 
         /// <summary>
@@ -251,8 +251,8 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         public ColorStringFormat ColorStringFormat
         {
-            get { return (ColorStringFormat)GetValue(ColorStringFormatProperty); }
-            set { SetValue(ColorStringFormatProperty, value); }
+            get => (ColorStringFormat)GetValue(ColorStringFormatProperty);
+            set => SetValue(ColorStringFormatProperty, value);
         }
 
         /// <summary>
@@ -260,8 +260,8 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         public bool ShowCommandsPanel
         {
-            get { return (bool)GetValue(ShowCommandsPanelProperty); }
-            set { SetValue(ShowCommandsPanelProperty, value); }
+            get => (bool)GetValue(ShowCommandsPanelProperty);
+            set => SetValue(ShowCommandsPanelProperty, value);
         }
 
         /// <summary>
@@ -269,8 +269,8 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         public string ColorString
         {
-            get { return (string)GetValue(ColorStringProperty); }
-            private set { SetValue(ColorStringProperty, value); }
+            get => (string)GetValue(ColorStringProperty);
+            private set => SetValue(ColorStringProperty, value);
         }
 
         /// <summary>
@@ -278,8 +278,8 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         public bool UseAlphaChannel
         {
-            get { return (bool)GetValue(UseAlphaChannelProperty); }
-            set { SetValue(UseAlphaChannelProperty, value); }
+            get => (bool)GetValue(UseAlphaChannelProperty);
+            set => SetValue(UseAlphaChannelProperty, value);
         }
 
         /// <summary>
@@ -288,8 +288,8 @@ namespace ag.WPF.ColorPicker
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public double HueHsl
         {
-            get { return (double)GetValue(HueHslProperty); }
-            set { SetValue(HueHslProperty, value); }
+            get => (double)GetValue(HueHslProperty);
+            set => SetValue(HueHslProperty, value);
         }
 
         /// <summary>
@@ -298,8 +298,8 @@ namespace ag.WPF.ColorPicker
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public double SaturationHsl
         {
-            get { return (double)GetValue(SaturationHslProperty); }
-            set { SetValue(SaturationHslProperty, value); }
+            get => (double)GetValue(SaturationHslProperty);
+            set => SetValue(SaturationHslProperty, value);
         }
 
         /// <summary>
@@ -308,8 +308,8 @@ namespace ag.WPF.ColorPicker
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public double LuminanceHsl
         {
-            get { return (double)GetValue(LuminanceHslProperty); }
-            set { SetValue(LuminanceHslProperty, value); }
+            get => (double)GetValue(LuminanceHslProperty);
+            set => SetValue(LuminanceHslProperty, value);
         }
 
         /// <summary>
@@ -318,8 +318,8 @@ namespace ag.WPF.ColorPicker
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public double HueHsb
         {
-            get { return (double)GetValue(HueHsbProperty); }
-            set { SetValue(HueHsbProperty, value); }
+            get => (double)GetValue(HueHsbProperty);
+            set => SetValue(HueHsbProperty, value);
         }
 
         /// <summary>
@@ -328,8 +328,8 @@ namespace ag.WPF.ColorPicker
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public double SaturationHsb
         {
-            get { return (double)GetValue(SaturationHsbProperty); }
-            set { SetValue(SaturationHsbProperty, value); }
+            get => (double)GetValue(SaturationHsbProperty);
+            set => SetValue(SaturationHsbProperty, value);
         }
 
         /// <summary>
@@ -338,8 +338,8 @@ namespace ag.WPF.ColorPicker
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public double BrightnessHsb
         {
-            get { return (double)GetValue(BrightnessHsbProperty); }
-            set { SetValue(BrightnessHsbProperty, value); }
+            get => (double)GetValue(BrightnessHsbProperty);
+            set => SetValue(BrightnessHsbProperty, value);
         }
 
         /// <summary>
@@ -347,8 +347,8 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         public Color SelectedColor
         {
-            get { return (Color)GetValue(SelectedColorProperty); }
-            set { SetValue(SelectedColorProperty, value); }
+            get => (Color)GetValue(SelectedColorProperty);
+            set => SetValue(SelectedColorProperty, value);
         }
 
         /// <summary>
@@ -357,8 +357,8 @@ namespace ag.WPF.ColorPicker
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public byte A
         {
-            get { return (byte)GetValue(AProperty); }
-            set { SetValue(AProperty, value); }
+            get => (byte)GetValue(AProperty);
+            set => SetValue(AProperty, value);
         }
 
         /// <summary>
@@ -367,8 +367,8 @@ namespace ag.WPF.ColorPicker
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public byte R
         {
-            get { return (byte)GetValue(RProperty); }
-            set { SetValue(RProperty, value); }
+            get => (byte)GetValue(RProperty);
+            set => SetValue(RProperty, value);
         }
 
         /// <summary>
@@ -377,8 +377,8 @@ namespace ag.WPF.ColorPicker
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public byte G
         {
-            get { return (byte)GetValue(GProperty); }
-            set { SetValue(GProperty, value); }
+            get => (byte)GetValue(GProperty);
+            set => SetValue(GProperty, value);
         }
 
         /// <summary>
@@ -387,8 +387,8 @@ namespace ag.WPF.ColorPicker
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public byte B
         {
-            get { return (byte)GetValue(BProperty); }
-            set { SetValue(BProperty, value); }
+            get => (byte)GetValue(BProperty);
+            set => SetValue(BProperty, value);
         }
         #endregion
 
@@ -547,12 +547,12 @@ namespace ag.WPF.ColorPicker
                 UpdateHSBValues(newValue);
             }
 
-            ColorString = getColorString();
-            UpdateColorShadeSelectorPosition(newValue);
+            ColorString = GetColorString();
+            UpdateColorShadeSelectorPosition();
 
-            selectBasicColor(newValue);
+            SelectBasicColor(newValue);
 
-            selectStandardColor(newValue);
+            SelectStandardColor(newValue);
 
             if (!ShowCommandsPanel)
             {
@@ -609,7 +609,7 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         protected virtual void OnColorStringFormatChanged(ColorStringFormat oldValue, ColorStringFormat newValue)
         {
-            ColorString = getColorString();
+            ColorString = GetColorString();
         }
         #endregion
 
@@ -628,32 +628,32 @@ namespace ag.WPF.ColorPicker
         {
             base.OnApplyTemplate();
 
-            createSpectrum();
+            CreateSpectrum();
 
             if (_colorShadingCanvas != null)
             {
-                _colorShadingCanvas.MouseLeftButtonDown -= colorShadingCanvas_MouseLeftButtonDown;
-                _colorShadingCanvas.MouseLeftButtonUp -= colorShadingCanvas_MouseLeftButtonUp;
-                _colorShadingCanvas.MouseMove -= colorShadingCanvas_MouseMove;
-                _colorShadingCanvas.SizeChanged -= colorShadingCanvas_SizeChanged;
+                _colorShadingCanvas.MouseLeftButtonDown -= ColorShadingCanvas_MouseLeftButtonDown;
+                _colorShadingCanvas.MouseLeftButtonUp -= ColorShadingCanvas_MouseLeftButtonUp;
+                _colorShadingCanvas.MouseMove -= ColorShadingCanvas_MouseMove;
+                _colorShadingCanvas.SizeChanged -= ColorShadingCanvas_SizeChanged;
             }
             _colorShadingCanvas = GetTemplateChild(PART_ColorShadingCanvas) as Canvas;
             if (_colorShadingCanvas != null)
             {
-                _colorShadingCanvas.MouseLeftButtonDown += colorShadingCanvas_MouseLeftButtonDown;
-                _colorShadingCanvas.MouseLeftButtonUp += colorShadingCanvas_MouseLeftButtonUp;
-                _colorShadingCanvas.MouseMove += colorShadingCanvas_MouseMove;
-                _colorShadingCanvas.SizeChanged += colorShadingCanvas_SizeChanged;
+                _colorShadingCanvas.MouseLeftButtonDown += ColorShadingCanvas_MouseLeftButtonDown;
+                _colorShadingCanvas.MouseLeftButtonUp += ColorShadingCanvas_MouseLeftButtonUp;
+                _colorShadingCanvas.MouseMove += ColorShadingCanvas_MouseMove;
+                _colorShadingCanvas.SizeChanged += ColorShadingCanvas_SizeChanged;
             }
 
             if (_initialColorPath != null)
             {
-                _initialColorPath.MouseLeftButtonDown -= initialColorPath_MouseLeftButtonDown;
+                _initialColorPath.MouseLeftButtonDown -= InitialColorPath_MouseLeftButtonDown;
             }
             _initialColorPath = GetTemplateChild(PART_InitialColorPath) as System.Windows.Shapes.Path;
             if (_initialColorPath != null)
             {
-                _initialColorPath.MouseLeftButtonDown += initialColorPath_MouseLeftButtonDown;
+                _initialColorPath.MouseLeftButtonDown += InitialColorPath_MouseLeftButtonDown;
                 _initialColorPath.Fill = new SolidColorBrush(SelectedColor);
                 _initialColorPath.Stroke = new SolidColorBrush(SelectedColor);
                 _initialColor = SelectedColor;
@@ -661,42 +661,23 @@ namespace ag.WPF.ColorPicker
 
             if (_applyButton != null)
             {
-                _applyButton.Click -= applyButton_Click;
+                _applyButton.Click -= ApplyButton_Click;
             }
             _applyButton = GetTemplateChild(PART_ApplyButton) as Button;
             if (_applyButton != null)
             {
-                _applyButton.Click += applyButton_Click;
+                _applyButton.Click += ApplyButton_Click;
             }
 
             if (_cancelButton != null)
             {
-                _cancelButton.Click -= cancelButton_Click;
+                _cancelButton.Click -= CancelButton_Click;
             }
             _cancelButton = GetTemplateChild(PART_CancelButton) as Button;
             if (_cancelButton != null)
             {
-                _cancelButton.Click += cancelButton_Click;
+                _cancelButton.Click += CancelButton_Click;
             }
-            //if (_copyHexButton != null)
-            //{
-            //    _copyHexButton.Click -= _copyHexButton_Click;
-            //}
-            //_copyHexButton = GetTemplateChild(PART_CopyTextBorder) as Button;
-            //if (_copyHexButton != null)
-            //{
-            //    _copyHexButton.Click += _copyHexButton_Click;
-            //}
-
-            //if (_copyRGBButton != null)
-            //{
-            //    _copyRGBButton.Click -= _copyRGBButton_Click;
-            //}
-            //_copyRGBButton = GetTemplateChild(PART_CopyRGBButton) as Button;
-            //if (_copyRGBButton != null)
-            //{
-            //    _copyRGBButton.Click += _copyRGBButton_Click;
-            //}
 
             _colorShadeSelector = GetTemplateChild(PART_ColorShadeSelector) as Canvas;
             if (_colorShadeSelector != null)
@@ -704,12 +685,12 @@ namespace ag.WPF.ColorPicker
 
             if (_spectrumSlider != null)
             {
-                _spectrumSlider.ValueChanged -= spectrumSlider_ValueChanged;
+                _spectrumSlider.ValueChanged -= SpectrumSlider_ValueChanged;
             }
             _spectrumSlider = GetTemplateChild(PART_SpectrumSlider) as ColorSlider;
             if (_spectrumSlider != null)
             {
-                _spectrumSlider.ValueChanged += spectrumSlider_ValueChanged;
+                _spectrumSlider.ValueChanged += SpectrumSlider_ValueChanged;
             }
 
             _colorStringTextBox = GetTemplateChild(PART_ColorStringTextBox) as TextBox;
@@ -722,7 +703,7 @@ namespace ag.WPF.ColorPicker
             {
                 foreach (var radio in _basicPanel.Children.OfType<RadioButton>())
                 {
-                    radio.Click -= radio_Click;
+                    radio.Click -= Radio_Click;
                 }
             }
             _basicPanel = GetTemplateChild(PART_Basic) as UniformGrid;
@@ -730,69 +711,69 @@ namespace ag.WPF.ColorPicker
             {
                 foreach (var radio in _basicPanel.Children.OfType<RadioButton>())
                 {
-                    radio.Click += radio_Click;
+                    radio.Click += Radio_Click;
                 }
             }
 
             if (_listStandard != null)
             {
-                _listStandard.SelectionChanged -= listStandard_SelectionChanged;
+                _listStandard.SelectionChanged -= ListStandard_SelectionChanged;
             }
             _listStandard = GetTemplateChild(PART_ListStandard) as ListBox;
             if (_listStandard != null)
             {
-                _listStandard.SelectionChanged += listStandard_SelectionChanged;
-                loadStandardColors();
+                _listStandard.SelectionChanged += ListStandard_SelectionChanged;
+                LoadStandardColors();
             }
 
             if (_dropPickerBorder != null)
             {
-                _dropPickerBorder.MouseLeftButtonDown -= dropPickerBorder_MouseLeftButtonDown;
+                _dropPickerBorder.MouseLeftButtonDown -= DropPickerBorder_MouseLeftButtonDown;
             }
             _dropPickerBorder = GetTemplateChild(PART_DropPickerBorder) as Border;
             if (_dropPickerBorder != null)
             {
-                _dropPickerBorder.MouseLeftButtonDown += dropPickerBorder_MouseLeftButtonDown;
+                _dropPickerBorder.MouseLeftButtonDown += DropPickerBorder_MouseLeftButtonDown;
             }
 
             if (_copyTextBorder != null)
             {
-                _copyTextBorder.MouseLeftButtonDown -= copyTextBorder_MouseLeftButtonDown;
+                _copyTextBorder.MouseLeftButtonDown -= CopyTextBorder_MouseLeftButtonDown;
             }
             _copyTextBorder = GetTemplateChild(PART_CopyTextBorder) as Border;
             if (_copyTextBorder != null)
             {
-                _copyTextBorder.MouseLeftButtonDown += copyTextBorder_MouseLeftButtonDown;
+                _copyTextBorder.MouseLeftButtonDown += CopyTextBorder_MouseLeftButtonDown;
             }
 
             UpdateRGBValues(SelectedColor);
             UpdateHSLValues(SelectedColor);
             UpdateHSBValues(SelectedColor);
-            ColorString = getColorString();
-            UpdateColorShadeSelectorPosition(SelectedColor);
+            ColorString = GetColorString();
+            UpdateColorShadeSelectorPosition();
 
-            createsShadesAndTints();
+            CreatesShadesAndTints();
 
         }
         #endregion
 
         #region Private event handlers
-        private void cancelButton_Click(object sender, RoutedEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            raiseColorCanceledEvent();
+            RaiseColorCanceledEvent();
         }
 
-        private void applyButton_Click(object sender, RoutedEventArgs e)
+        private void ApplyButton_Click(object sender, RoutedEventArgs e)
         {
-            raiseColorAppliedEvent();
+            RaiseColorAppliedEvent();
         }
 
-        private void copyTextBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void CopyTextBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Clipboard.SetText(_colorStringTextBox.Text);
         }
 
-        private void dropPickerBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void DropPickerBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var pickerPanel = new PickerPanel { Left = 0, Top = 0 };
             var result = pickerPanel.ShowDialog();
@@ -802,7 +783,7 @@ namespace ag.WPF.ColorPicker
             }
         }
 
-        private void listStandard_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ListStandard_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 0) return;
             if (!(e.AddedItems[0] is StandardColorItem standardColorItem)) return;
@@ -813,7 +794,7 @@ namespace ag.WPF.ColorPicker
             _tabMain.SelectedIndex = 0;
         }
 
-        private void radio_Click(object sender, RoutedEventArgs e)
+        private void Radio_Click(object sender, RoutedEventArgs e)
         {
             if (!(sender is RadioButton radio)) return;
             if (!(radio.Background is SolidColorBrush brush)) return;
@@ -822,28 +803,28 @@ namespace ag.WPF.ColorPicker
             _tabMain.SelectedIndex = 0;
         }
 
-        private void initialColorPath_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void InitialColorPath_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (!(sender is System.Windows.Shapes.Path path)) return;
             if (!(path.Fill is SolidColorBrush brush)) return;
             SelectedColor = brush.Color;
         }
 
-        private void rect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void Rect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (!(sender is Rectangle rect)) return;
             if (!(rect.Fill is SolidColorBrush brush)) return;
             SelectedColor = brush.Color;
         }
 
-        private void spectrumSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        private void SpectrumSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             if (!_currentColorPosition.HasValue)
                 return;
             CalculateColor(_currentColorPosition.Value);
         }
 
-        private void colorShadingCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void ColorShadingCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if (!_currentColorPosition.HasValue)
                 return;
@@ -854,7 +835,7 @@ namespace ag.WPF.ColorPicker
             }, false);
         }
 
-        private void colorShadingCanvas_MouseMove(object sender, MouseEventArgs e)
+        private void ColorShadingCanvas_MouseMove(object sender, MouseEventArgs e)
         {
             if (_colorShadingCanvas == null || e.LeftButton != MouseButtonState.Pressed || !_fromMouseMove)
                 return;
@@ -864,7 +845,7 @@ namespace ag.WPF.ColorPicker
             Mouse.Synchronize();
         }
 
-        private void colorShadingCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void ColorShadingCanvas_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             if (_colorShadingCanvas == null)
                 return;
@@ -874,7 +855,7 @@ namespace ag.WPF.ColorPicker
             e.Handled = true;
         }
 
-        private void colorShadingCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void ColorShadingCanvas_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (_colorShadingCanvas == null)
                 return;
@@ -886,7 +867,7 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Private procedures
-        private void createSpectrum()
+        private void CreateSpectrum()
         {
             VerticalSpectrumBrush = new LinearGradientBrush
             {
@@ -913,20 +894,17 @@ namespace ag.WPF.ColorPicker
 
         }
 
-        private string getColorString()
+        private string GetColorString() => ColorStringFormat switch
         {
-            return ColorStringFormat switch
-            {
-                ColorStringFormat.HEX => $"#{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}",
-                ColorStringFormat.ARGB => $"{SelectedColor.A}, {SelectedColor.R}, {SelectedColor.G}, {SelectedColor.B}",
-                ColorStringFormat.RGB => $"{SelectedColor.R}, {SelectedColor.G}, {SelectedColor.B}",
-                ColorStringFormat.HSB => $"{HueHsb:f0}, {SaturationHsb:f2}, {BrightnessHsb:f2}",
-                ColorStringFormat.HSL => $"{HueHsl:f0}, {SaturationHsl:f2}, {LuminanceHsl:f2}",
-                _ => $"#{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}"
-            };
-        }
+            ColorStringFormat.HEX => $"#{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}",
+            ColorStringFormat.ARGB => $"{SelectedColor.A}, {SelectedColor.R}, {SelectedColor.G}, {SelectedColor.B}",
+            ColorStringFormat.RGB => $"{SelectedColor.R}, {SelectedColor.G}, {SelectedColor.B}",
+            ColorStringFormat.HSB => $"{HueHsb:f0}, {SaturationHsb:f2}, {BrightnessHsb:f2}",
+            ColorStringFormat.HSL => $"{HueHsl:f0}, {SaturationHsl:f2}, {LuminanceHsl:f2}",
+            _ => $"#{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}"
+        };
 
-        private void raiseColorAppliedEvent()
+        private void RaiseColorAppliedEvent()
         {
             var appliedEventArgs = new RoutedPropertyChangedEventArgs<Color>(_initialColor, SelectedColor)
             {
@@ -935,13 +913,13 @@ namespace ag.WPF.ColorPicker
             RaiseEvent(appliedEventArgs);
         }
 
-        private void raiseColorCanceledEvent()
+        private void RaiseColorCanceledEvent()
         {
             var canceledEventArgs = new RoutedEventArgs { RoutedEvent = ColorCanceledEvent };
             RaiseEvent(canceledEventArgs);
         }
 
-        private void selectBasicColor(Color color)
+        private void SelectBasicColor(Color color)
         {
             if (_basicPanel == null) return;
             foreach (var radio in _basicPanel.Children.OfType<RadioButton>())
@@ -956,7 +934,7 @@ namespace ag.WPF.ColorPicker
             }
         }
 
-        private void loadStandardColors()
+        private void LoadStandardColors()
         {
             if (_listStandard is null) return;
             if (_listStandard.Items.Count > 0)
@@ -970,7 +948,7 @@ namespace ag.WPF.ColorPicker
             _listStandard.ItemsSource = _standardColorItems;
         }
 
-        private void selectStandardColor(Color color)
+        private void SelectStandardColor(Color color)
         {
             if (_listStandard is null) return;
             _listStandard.SelectedIndex = -1;
@@ -985,7 +963,7 @@ namespace ag.WPF.ColorPicker
             }
         }
 
-        private void createsShadesAndTints()
+        private void CreatesShadesAndTints()
         {
             var transparentBackgroundBrush = Utils.TransparentBrush();
             var step = 1.0 / (SHADES_COUNT - 1);
@@ -995,7 +973,7 @@ namespace ag.WPF.ColorPicker
                 var border = new Border { Background = transparentBackgroundBrush };
                 var rect = new Rectangle() { Cursor = Cursors.Hand, Stroke = Brushes.Gray };
                 rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToBighterOrDarkerConverter(), ConverterParameter = factor });
-                rect.MouseLeftButtonDown += rect_MouseLeftButtonDown;
+                rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
                 border.Child = rect;
                 if (i == 0)
                     border.Margin = new Thickness(4, 4, 4, 2);
@@ -1017,7 +995,7 @@ namespace ag.WPF.ColorPicker
                 var border = new Border { Background = transparentBackgroundBrush };
                 var rect = new Rectangle() { Cursor = Cursors.Hand, Stroke = Brushes.Gray };
                 rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToBighterOrDarkerConverter(), ConverterParameter = factor });
-                rect.MouseLeftButtonDown += rect_MouseLeftButtonDown;
+                rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
                 border.Child = rect;
                 if (i == 0)
                     border.Margin = new Thickness(4, 4, 4, 2);
@@ -1056,7 +1034,7 @@ namespace ag.WPF.ColorPicker
             CalculateColor(p);
         }
 
-        private void UpdateColorShadeSelectorPosition(Color color)
+        private void UpdateColorShadeSelectorPosition()
         {
             if (_spectrumSlider == null || _colorShadingCanvas == null)
                 return;
@@ -1104,7 +1082,7 @@ namespace ag.WPF.ColorPicker
             _updateSpectrumSliderValue = false;
             SelectedColor = Color.FromArgb(rgb.A, rgb.R, rgb.G, rgb.B);
             // change hue in case of white, black or gray
-            if (isNonColor(SelectedColor))
+            if (IsNonColor(SelectedColor))
             {
                 HueHsb = hsb.Hue;
             }
@@ -1124,7 +1102,7 @@ namespace ag.WPF.ColorPicker
         private void UpdateHSLValues(Color color)
         {
             var hsl = color.ToHslColor();
-            if (!_fromMouseMove && !_saturationHslUpdated && !_saturationHsbUpdated && !_brightnessHsbUpdated && !_luminanceHslUpdated && !isNonColor(color))
+            if (!_fromMouseMove && !_saturationHslUpdated && !_saturationHsbUpdated && !_brightnessHsbUpdated && !_luminanceHslUpdated && !IsNonColor(color))
                 HueHsl = hsl.Hue;
             SaturationHsl = hsl.Saturation;
             LuminanceHsl = hsl.Luminance;
@@ -1133,16 +1111,13 @@ namespace ag.WPF.ColorPicker
         private void UpdateHSBValues(Color color)
         {
             var hsb = color.ToHsbColor();
-            if (!_fromMouseMove && !_saturationHslUpdated && !_saturationHsbUpdated && !_brightnessHsbUpdated && !_luminanceHslUpdated && !_alphaUpdated && !isNonColor(color))
+            if (!_fromMouseMove && !_saturationHslUpdated && !_saturationHsbUpdated && !_brightnessHsbUpdated && !_luminanceHslUpdated && !_alphaUpdated && !IsNonColor(color))
                 HueHsb = hsb.Hue;
             SaturationHsb = hsb.Saturation;
             BrightnessHsb = hsb.Brightness;
         }
 
-        private bool isNonColor(Color color)
-        {
-            return (color.R == color.G && color.G == color.B);
-        }
+        private bool IsNonColor(Color color) => (color.R == color.G && color.G == color.B);
 
         private void UpdateSelectedColor() => SelectedColor = Color.FromArgb(UseAlphaChannel ? A : (byte)255, R, G, B);
         #endregion

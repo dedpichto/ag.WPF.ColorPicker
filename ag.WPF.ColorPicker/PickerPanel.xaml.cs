@@ -126,9 +126,9 @@ namespace ag.WPF.ColorPicker
             _cursor = new Cursor(stream.Stream);
             if (_cursor != null)
                 _canvas.Cursor = _cursor;
-            _image.Source = getBitmap();
+            _image.Source = GetBitmap();
             var screenPoint = PointToScreen(Mouse.GetPosition(this));
-            PreviewSource = getBitmap((int)screenPoint.X, (int)screenPoint.Y);
+            PreviewSource = GetBitmap((int)screenPoint.X, (int)screenPoint.Y);
         }
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
@@ -140,7 +140,7 @@ namespace ag.WPF.ColorPicker
             else
                 PreviewTop = 0;
             var screenPoint = PointToScreen(pt);
-            PreviewSource = getBitmap((int)screenPoint.X, (int)screenPoint.Y);
+            PreviewSource = GetBitmap((int)screenPoint.X, (int)screenPoint.Y);
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
@@ -224,7 +224,7 @@ namespace ag.WPF.ColorPicker
             return colors;
         }
 
-        private System.Windows.Media.Color getSelectedColor(int x, int y)
+        private System.Windows.Media.Color GetSelectedColor(int x, int y)
         {
             var bmp = new Bitmap(1, 1);
             var bounds = new System.Drawing.Rectangle(x, y, 1, 1);
@@ -237,7 +237,7 @@ namespace ag.WPF.ColorPicker
             return System.Windows.Media.Color.FromArgb(clr.A, clr.R, clr.G, clr.B);
         }
 
-        private ImageSource getBitmap(int x, int y)
+        private ImageSource GetBitmap(int x, int y)
         {
             var bmp = new Bitmap(9, 9);
             var bounds = new System.Drawing.Rectangle(x - 4, y - 4, 9, 9);
@@ -246,7 +246,7 @@ namespace ag.WPF.ColorPicker
                 g.CopyFromScreen(bounds.Location, System.Drawing.Point.Empty, bounds.Size);
 
             }
-            SelectedColor = getSelectedColor(x, y);
+            SelectedColor = GetSelectedColor(x, y);
             var colors = GetScopeColors(x, y);
             ScopeBrush = new LinearGradientBrush
             {
@@ -259,10 +259,10 @@ namespace ag.WPF.ColorPicker
                     new GradientStop(colors[2], 1)
                 }
             };
-            return toWpfBitmap(bmp);
+            return ToWpfBitmap(bmp);
         }
 
-        private ImageSource getBitmap()
+        private ImageSource GetBitmap()
         {
             var dpi = VisualTreeHelper.GetDpi(this);
             var width = (int)(SystemParameters.VirtualScreenWidth * dpi.DpiScaleX);
@@ -275,10 +275,10 @@ namespace ag.WPF.ColorPicker
                 g.CopyFromScreen(bounds.Location, System.Drawing.Point.Empty, bounds.Size);
 
             }
-            return toWpfBitmap(bmp);
+            return ToWpfBitmap(bmp);
         }
 
-        private BitmapSource toWpfBitmap(Bitmap bitmap)
+        private BitmapSource ToWpfBitmap(Bitmap bitmap)
         {
             using var stream = new MemoryStream();
             bitmap.Save(stream, ImageFormat.Png);
