@@ -54,9 +54,9 @@
 
     <Geometry x:Key="UpArrow">M 2 6 L 10 6 L 6 2 Z</Geometry>
     <Geometry x:Key="DownArrow">M 2 0 L 6 4 L 10 0 Z</Geometry>
-    <Geometry x:Key="CopyGeometry">
-        M2,6 L12,6 L12,18 L2,18 Z M8,6 L8,2 L18,2 L18,14 L12,14
-    </Geometry>
+    <Geometry x:Key="CopyGeometry">M1,1 L15,1 L15,3 L9,3 L9,21 L1,21 Z M9,3 L23,3 L23,23 L9,23 L9,3 M3,6 L9,6 M3,12 L9,12 M12,9 L21,9 M12,15 L21,15</Geometry>
+    <Geometry x:Key="PickGeometryOuter">M21,0 L 24,3 L18,9 L20,11 L18,13 L11,6 L13,4L15,6 Z M12.5,7.5 L1,19 L0,22 L0,24 L2,24 L5,23 L16.5,11.5</Geometry>
+    <Geometry x:Key="PickGeometryInner">M21,1.5 L22.5,3 L17,8.5 L15.5,7 M13,4 L20,11 L18,12.5 L11.5,6 Z M8,14 L12,14 L4,22 L2,23 L1,23 L1,22 L2,20 Z</Geometry>
 
     <ObjectDataProvider x:Key="ColorStringFormatEnum" MethodName="GetValues"
                             ObjectType="{x:Type sys:Enum}">
@@ -312,8 +312,8 @@
                                         </Canvas>
                                         <Border x:Name="PART_DropPickerBorder" Background="Transparent" Grid.Column="1" Width="24" Height="24" VerticalAlignment="Center" Cursor="Hand" Margin="4">
                                             <Grid>
-                                                <Path x:Name="_dropStrokePath" Stroke="{StaticResource IconBrushFg}" Fill="{StaticResource IconBrushBg}" StrokeThickness="1" StrokeEndLineCap="Round" StrokeLineJoin="Round" StrokeStartLineCap="Round" Data="M21,0 L 24,3 L18,9 L20,11 L18,13 L11,6 L13,4L15,6 Z M12.5,7.5 L1,19 L0,22 L0,24 L2,24 L5,23 L16.5,11.5"/>
-                                                <Path x:Name="_dropFillPath" Fill="{StaticResource IconBrushFg}" StrokeThickness="0" Data="M21,1.5 L22.5,3 L17,8.5 L15.5,7 M13,4 L20,11 L18,12.5 L11.5,6 Z M8,14 L12,14 L4,22 L2,23 L1,23 L1,22 L2,20 Z"/>
+                                                <Path x:Name="_dropStrokePath" Stroke="{StaticResource IconBrushFg}" Fill="{StaticResource IconBrushBg}" StrokeThickness="1" StrokeEndLineCap="Round" StrokeLineJoin="Round" StrokeStartLineCap="Round" Data="{StaticResource PickGeometryOuter}"/>
+                                                <Path x:Name="_dropFillPath" Fill="{StaticResource IconBrushFg}" StrokeThickness="0" Data="{StaticResource PickGeometryInner}"/>
                                             </Grid>
                                         </Border>
                                         <StackPanel Grid.Column="2">
@@ -325,10 +325,10 @@
                                                 <TextBlock Grid.Column="0" Margin="4,4,0,2" Text="Format" VerticalAlignment="Center"/>
                                                 <ComboBox Margin="4,4,4,2" Grid.Column="1" ItemsSource="{Binding Source={StaticResource ColorStringFormatEnum}}" SelectedItem="{Binding ColorStringFormat, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                             </Grid>
-                                            <TextBox x:Name="PART_ColorStringTextBox" VerticalAlignment="Center" Margin="4,2,4,4" Text="{Binding ColorString, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                            <TextBox x:Name="PART_ColorStringTextBox" IsReadOnly="True" VerticalAlignment="Center" Margin="4,2,4,4" Text="{Binding ColorString, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                         </StackPanel>
                                         <Border x:Name="PART_CopyTextBorder" Background="Transparent" Grid.Column="3" Width="24" Height="24" VerticalAlignment="Center" Cursor="Hand" Margin="4">
-                                            <Path x:Name="_copyStrokePath" Stroke="{StaticResource IconBrushFg}" Fill="{StaticResource IconBrushBg}" StrokeThickness="1" Data="M1,1 L15,1 L15,3 L9,3 L9,21 L1,21 Z M9,3 L23,3 L23,23 L9,23 L9,3 M3,6 L9,6 M3,12 L9,12 M12,9 L21,9 M12,15 L21,15"/>
+                                            <Path x:Name="_copyStrokePath" Stroke="{StaticResource IconBrushFg}" Fill="{StaticResource IconBrushBg}" StrokeThickness="1" Data="{StaticResource CopyGeometry}"/>
                                         </Border>
                                     </Grid>
 
@@ -699,7 +699,7 @@
     </Style>
 
     <Style TargetType="{x:Type picker:ColorPicker}">
-        <Setter Property="MinHeight" Value="21"/>
+        <Setter Property="Height" Value="24"/>
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Once"/>
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
@@ -728,8 +728,14 @@
                             <Button x:Name="PART_Button"
                                     Margin="1"
                                     Grid.Column="1"
-                                    Content="..."
-                                    Padding="4,0,4,0"/>
+                                    Padding="2">
+                                <Viewbox Stretch="Fill">
+                                    <Grid>
+                                        <Path x:Name="_dropStrokePath" Stroke="{StaticResource IconBrushFg}" Fill="{StaticResource IconBrushBg}" StrokeThickness="1" StrokeEndLineCap="Round" StrokeLineJoin="Round" StrokeStartLineCap="Round" Data="{StaticResource PickGeometryOuter}"/>
+                                        <Path x:Name="_dropFillPath" Fill="{StaticResource IconBrushFg}" StrokeThickness="0" Data="{StaticResource PickGeometryInner}"/>
+                                    </Grid>
+                                </Viewbox>
+                            </Button>
                             <Popup x:Name="PART_Popup" 
                                        AllowsTransparency="True" 
                                        Placement="Bottom"
@@ -737,13 +743,20 @@
                                        StaysOpen="True"
                                        HorizontalOffset="0"
                                        PopupAnimation="Scroll">
-                                <picker:ColorPanel x:Name="PART_ColorPanel" Width="392" Height="426" SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"/>
+                                <picker:ColorPanel x:Name="PART_ColorPanel" 
+                                                   Width="392" 
+                                                   Height="426" 
+                                                   SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"
+                                                   UseAlphaChannel="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                   ColorStringFormat="{Binding ColorStringFormat, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                             </Popup>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="PART_ColorBorder" Property="Background" Value="{StaticResource DisabledBrush}"/>
+                            <Setter TargetName="_dropFillPath" Property="Fill" Value="{StaticResource DisabledBrush}"/>
+                            <Setter TargetName="_dropStrokePath" Property="Stroke" Value="{StaticResource DisabledBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

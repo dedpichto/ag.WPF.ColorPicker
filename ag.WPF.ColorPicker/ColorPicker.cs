@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -35,6 +36,18 @@ namespace ag.WPF.ColorPicker
         /// The identifier of the <see cref="SelectedColor"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPicker), new FrameworkPropertyMetadata(Colors.Blue));
+        /// <summary>
+        /// The identifier of the <see cref="ColorString"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ColorStringProperty = DependencyProperty.Register(nameof(ColorString), typeof(string), typeof(ColorPicker), new FrameworkPropertyMetadata(""));
+        /// <summary>
+        /// The identifier of the <see cref="UseAlphaChannel"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty UseAlphaChannelProperty = DependencyProperty.Register(nameof(UseAlphaChannel), typeof(bool), typeof(ColorPicker), new FrameworkPropertyMetadata(true));
+        /// <summary>
+        /// The identifier of the <see cref="ColorStringFormat"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ColorStringFormatProperty = DependencyProperty.Register(nameof(ColorStringFormat), typeof(ColorStringFormat), typeof(ColorPicker), new FrameworkPropertyMetadata(ColorStringFormat.HEX));
         #endregion
 
         /// <summary>
@@ -63,6 +76,33 @@ namespace ag.WPF.ColorPicker
         {
             get { return (Color)GetValue(SelectedColorProperty); }
             set { SetValue(SelectedColorProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets format of selected color's string representation.
+        /// </summary>
+        public ColorStringFormat ColorStringFormat
+        {
+            get { return (ColorStringFormat)GetValue(ColorStringFormatProperty); }
+            set { SetValue(ColorStringFormatProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets selected color's string representation.
+        /// </summary>
+        public string ColorString
+        {
+            get { return (string)GetValue(ColorStringProperty); }
+            private set { SetValue(ColorStringProperty, value); }
+        }
+
+        /// <summary>
+        /// Specifies whether alpha channel is used.
+        /// </summary>
+        public bool UseAlphaChannel
+        {
+            get { return (bool)GetValue(UseAlphaChannelProperty); }
+            set { SetValue(UseAlphaChannelProperty, value); }
         }
         #endregion
 
@@ -108,6 +148,7 @@ namespace ag.WPF.ColorPicker
                 _colorPanel.ColorApplied -= colorPanel_ColorApplied;
                 _colorPanel.ColorCanceled -= colorPanel_ColorCanceled;
                 _colorPanel.PreviewKeyDown -= colorPanel_PreviewKeyDown;
+                
             }
             _colorPanel = GetTemplateChild(PART_ColorPanel) as ColorPanel;
             if (_colorPanel != null)
@@ -115,6 +156,7 @@ namespace ag.WPF.ColorPicker
                 _colorPanel.ColorApplied += colorPanel_ColorApplied;
                 _colorPanel.ColorCanceled += colorPanel_ColorCanceled;
                 _colorPanel.PreviewKeyDown += colorPanel_PreviewKeyDown;
+                SetBinding(ColorStringProperty,new Binding("ColorString") { Source = _colorPanel });
             }
 
             if (_border != null)

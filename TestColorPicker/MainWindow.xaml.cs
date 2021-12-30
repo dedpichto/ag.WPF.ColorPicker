@@ -44,6 +44,7 @@ namespace TestColorPicker
         private void ColorPicker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color> e)
         {
             Background = new SolidColorBrush(e.NewValue);
+            System.Diagnostics.Debug.WriteLine(_picker.ColorString);
         }
     }
 }
