@@ -108,6 +108,7 @@ namespace ag.WPF.ColorPicker
         private bool _brightnessHsbUpdated;
         private bool _saturationHslUpdated;
         private bool _luminanceHslUpdated;
+        private bool _alphaUpdated;
 
         private readonly List<StandardColorItem> _standardColorItems = new List<StandardColorItem>();
 
@@ -119,19 +120,19 @@ namespace ag.WPF.ColorPicker
         /// <summary>
         /// The identifier of the <see cref="A"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty AProperty = DependencyProperty.Register(nameof(A), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnByteChanged));
+        public static readonly DependencyProperty AProperty = DependencyProperty.Register(nameof(A), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnAChanged));
         /// <summary>
         /// The identifier of the <see cref="R"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty RProperty = DependencyProperty.Register(nameof(R), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnByteChanged));
+        public static readonly DependencyProperty RProperty = DependencyProperty.Register(nameof(R), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnRGBChanged));
         /// <summary>
         /// The identifier of the <see cref="G"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty GProperty = DependencyProperty.Register(nameof(G), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnByteChanged));
+        public static readonly DependencyProperty GProperty = DependencyProperty.Register(nameof(G), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnRGBChanged));
         /// <summary>
         /// The identifier of the <see cref="B"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty BProperty = DependencyProperty.Register(nameof(B), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnByteChanged));
+        public static readonly DependencyProperty BProperty = DependencyProperty.Register(nameof(B), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnRGBChanged));
         /// <summary>
         /// The identifier of the <see cref="HueHsl"/> dependency property.
         /// </summary>
@@ -172,14 +173,14 @@ namespace ag.WPF.ColorPicker
         /// The identifier of the <see cref="ColorStringFormat"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty ColorStringFormatProperty = DependencyProperty.Register(nameof(ColorStringFormat), typeof(ColorStringFormat), typeof(ColorPanel), new FrameworkPropertyMetadata(ColorStringFormat.HEX, OnColorStringFormatChanged));
-        ///// <summary>
-        ///// The identifier of the <see cref="HorizontalSpectrumBrush"/> dependency property.
-        ///// </summary>
-        //public static readonly DependencyProperty HorizontalSpectrumBrushProperty = DependencyProperty.Register(nameof(HorizontalSpectrumBrush), typeof(LinearGradientBrush), typeof(ColorPanel), new FrameworkPropertyMetadata(null));
-        ///// <summary>
-        ///// The identifier of the <see cref="VerticalSpectrumBrush"/> dependency property.
-        ///// </summary>
-        //public static readonly DependencyProperty VerticalSpectrumBrushProperty = DependencyProperty.Register(nameof(VerticalSpectrumBrush), typeof(LinearGradientBrush), typeof(ColorPanel), new FrameworkPropertyMetadata(null));
+        /// <summary>
+        /// The identifier of the <see cref="HorizontalSpectrumBrush"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty HorizontalSpectrumBrushProperty = DependencyProperty.Register(nameof(HorizontalSpectrumBrush), typeof(LinearGradientBrush), typeof(ColorPanel), new FrameworkPropertyMetadata(null));
+        /// <summary>
+        /// The identifier of the <see cref="VerticalSpectrumBrush"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty VerticalSpectrumBrushProperty = DependencyProperty.Register(nameof(VerticalSpectrumBrush), typeof(LinearGradientBrush), typeof(ColorPanel), new FrameworkPropertyMetadata(null));
         #endregion
 
         #region Routed events
@@ -225,23 +226,25 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Dependency properties handlers
-        ///// <summary>
-        ///// Gets or sets vertical spectrum brush.
-        ///// </summary>
-        //public LinearGradientBrush VerticalSpectrumBrush
-        //{
-        //    get { return (LinearGradientBrush)GetValue(VerticalSpectrumBrushProperty); }
-        //    set { SetValue(VerticalSpectrumBrushProperty, value); }
-        //}
+        /// <summary>
+        /// Gets or sets vertical spectrum brush.
+        /// </summary>
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public LinearGradientBrush VerticalSpectrumBrush
+        {
+            get { return (LinearGradientBrush)GetValue(VerticalSpectrumBrushProperty); }
+            private set { SetValue(VerticalSpectrumBrushProperty, value); }
+        }
 
-        ///// <summary>
-        ///// Gets or sets horizontal spectrum brush.
-        ///// </summary>
-        //public LinearGradientBrush HorizontalSpectrumBrush
-        //{
-        //    get { return (LinearGradientBrush)GetValue(HorizontalSpectrumBrushProperty); }
-        //    set { SetValue(HorizontalSpectrumBrushProperty, value); }
-        //}
+        /// <summary>
+        /// Gets or sets horizontal spectrum brush.
+        /// </summary>
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+        public LinearGradientBrush HorizontalSpectrumBrush
+        {
+            get { return (LinearGradientBrush)GetValue(HorizontalSpectrumBrushProperty); }
+            private set { SetValue(HorizontalSpectrumBrushProperty, value); }
+        }
 
         /// <summary>
         /// Gets or sets format of selected color's string representation.
@@ -561,20 +564,38 @@ namespace ag.WPF.ColorPicker
             }
         }
 
-        private static void OnByteChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnRGBChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (!(d is ColorPanel colorPanel)) return;
-            colorPanel.OnByteChanged((byte)e.OldValue, (byte)e.NewValue);
+            colorPanel.OnRGBChanged((byte)e.OldValue, (byte)e.NewValue);
         }
 
         /// <summary>
         /// Occurs when the <see cref="A"/>, <see cref="R"/>, <see cref="G"/> or <see cref="B"/> property has been changed in some way.
         /// </summary>
-        protected virtual void OnByteChanged(byte oldValue, byte newValue)
+        protected virtual void OnRGBChanged(byte oldValue, byte newValue)
         {
             if (_surpressPropertyChanged)
                 return;
             UpdateSelectedColor();
+        }
+
+        private static void OnAChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (!(d is ColorPanel colorPanel)) return;
+            colorPanel.OnAChanged((byte)e.OldValue, (byte)e.NewValue);
+        }
+
+        /// <summary>
+        /// Occurs when the <see cref="A"/>, <see cref="R"/>, <see cref="G"/> or <see cref="B"/> property has been changed in some way.
+        /// </summary>
+        protected virtual void OnAChanged(byte oldValue, byte newValue)
+        {
+            if (_surpressPropertyChanged)
+                return;
+            _alphaUpdated = true;
+            UpdateSelectedColor();
+            _alphaUpdated = false;
         }
 
         private static void OnColorStringFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -607,7 +628,7 @@ namespace ag.WPF.ColorPicker
         {
             base.OnApplyTemplate();
 
-            //createSpectrum();
+            createSpectrum();
 
             if (_colorShadingCanvas != null)
             {
@@ -865,32 +886,32 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Private procedures
-        //private void createSpectrum()
-        //{
-        //    VerticalSpectrumBrush = new LinearGradientBrush
-        //    {
-        //        StartPoint = new Point(0.5, 0.0),
-        //        EndPoint = new Point(0.5, 1.0),
-        //        ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation
-        //    };
-        //    HorizontalSpectrumBrush = new LinearGradientBrush
-        //    {
-        //        StartPoint = new Point(0.0, 0.5),
-        //        EndPoint = new Point(1.0, 0.5),
-        //        ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation
-        //    };
-        //    List<Color> hsvSpectrum = Utils.GenerateHsvPalette();
-        //    var num = 1.0 / (hsvSpectrum.Count - 1);
-        //    int index;
-        //    for (index = 0; index < hsvSpectrum.Count; ++index)
-        //    {
-        //        VerticalSpectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)index * num));
-        //        HorizontalSpectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)(hsvSpectrum.Count - index - 1) * num));
-        //    }
-        //    VerticalSpectrumBrush.GradientStops[index - 1].Offset = 1.0;
-        //    HorizontalSpectrumBrush.GradientStops[index - 1].Offset = 0.0;
+        private void createSpectrum()
+        {
+            VerticalSpectrumBrush = new LinearGradientBrush
+            {
+                StartPoint = new Point(0.5, 0.0),
+                EndPoint = new Point(0.5, 1.0),
+                ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation
+            };
+            HorizontalSpectrumBrush = new LinearGradientBrush
+            {
+                StartPoint = new Point(0.0, 0.5),
+                EndPoint = new Point(1.0, 0.5),
+                ColorInterpolationMode = ColorInterpolationMode.SRgbLinearInterpolation
+            };
+            List<Color> hsvSpectrum = Utils.GenerateHsvPalette();
+            var num = 1.0 / (hsvSpectrum.Count - 1);
+            int index;
+            for (index = 0; index < hsvSpectrum.Count; ++index)
+            {
+                VerticalSpectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)index * num));
+                HorizontalSpectrumBrush.GradientStops.Add(new GradientStop(hsvSpectrum[index], (double)(hsvSpectrum.Count - index - 1) * num));
+            }
+            VerticalSpectrumBrush.GradientStops[index - 1].Offset = 1.0;
+            HorizontalSpectrumBrush.GradientStops[index - 1].Offset = 0.0;
 
-        //}
+        }
 
         private string getColorString()
         {
@@ -1040,8 +1061,7 @@ namespace ag.WPF.ColorPicker
             if (_spectrumSlider == null || _colorShadingCanvas == null)
                 return;
             _currentColorPosition = new Point?();
-            //var hsb = color.ToHsbColor();
-            //var hueValue = HueHsb;// Math.Round(hsb.Hue, MidpointRounding.AwayFromZero);
+
             if (_updateSpectrumSliderValue || _fromMouseMove)
             {
                 //_spectrumSlider.Value = 360.0 - hsb.Hue;
@@ -1062,7 +1082,6 @@ namespace ag.WPF.ColorPicker
                 {
                     _spectrumSlider.Value = HueHsb;
                 }
-                _spectrumSlider.SetAlphaChannel(color.A);
             }
 
             var point = new Point(SaturationHsb, 1.0 - BrightnessHsb);
@@ -1085,7 +1104,7 @@ namespace ag.WPF.ColorPicker
             _updateSpectrumSliderValue = false;
             SelectedColor = Color.FromArgb(rgb.A, rgb.R, rgb.G, rgb.B);
             // change hue in case of white, black or gray
-            if (isRGBGray(SelectedColor))
+            if (isNonColor(SelectedColor))
             {
                 HueHsb = hsb.Hue;
             }
@@ -1105,7 +1124,7 @@ namespace ag.WPF.ColorPicker
         private void UpdateHSLValues(Color color)
         {
             var hsl = color.ToHslColor();
-            if (!_fromMouseMove && !_saturationHslUpdated && !_saturationHsbUpdated && !_brightnessHsbUpdated && !_luminanceHslUpdated && !isRGBGray(color))
+            if (!_fromMouseMove && !_saturationHslUpdated && !_saturationHsbUpdated && !_brightnessHsbUpdated && !_luminanceHslUpdated && !isNonColor(color))
                 HueHsl = hsl.Hue;
             SaturationHsl = hsl.Saturation;
             LuminanceHsl = hsl.Luminance;
@@ -1114,13 +1133,13 @@ namespace ag.WPF.ColorPicker
         private void UpdateHSBValues(Color color)
         {
             var hsb = color.ToHsbColor();
-            if (!_fromMouseMove && !_saturationHslUpdated && !_saturationHsbUpdated && !_brightnessHsbUpdated && !_luminanceHslUpdated && !isRGBGray(color))
+            if (!_fromMouseMove && !_saturationHslUpdated && !_saturationHsbUpdated && !_brightnessHsbUpdated && !_luminanceHslUpdated && !_alphaUpdated && !isNonColor(color))
                 HueHsb = hsb.Hue;
             SaturationHsb = hsb.Saturation;
             BrightnessHsb = hsb.Brightness;
         }
 
-        private bool isRGBGray(Color color)
+        private bool isNonColor(Color color)
         {
             return (color.R == color.G && color.G == color.B);
         }
