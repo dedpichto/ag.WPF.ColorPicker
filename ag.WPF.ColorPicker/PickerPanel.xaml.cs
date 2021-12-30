@@ -13,32 +13,24 @@ namespace ag.WPF.ColorPicker
 {
     public partial class PickerPanel : Window, INotifyPropertyChanged
     {
+        private System.Windows.Media.Color _selectedColor;
+        private LinearGradientBrush _scopeBrush;
         private double _previewLeft;
         private double _previewTop;
         private ImageSource _previewSource;
         private Cursor _cursor;
 
-        #region Dependency properties
-        /// <summary>
-        /// The identifier of the <see cref="SelectedColor"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(System.Windows.Media.Color), typeof(PickerPanel), new FrameworkPropertyMetadata(System.Windows.Media.Colors.Black));
-        /// <summary>
-        /// The identifier of the <see cref="ScopeBrush"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty ScopeBrushBroperty = DependencyProperty.Register(nameof(ScopeBrush), typeof(LinearGradientBrush), typeof(PickerPanel), new FrameworkPropertyMetadata(null));
-
-        #endregion
-
-
-        #region Dependency properties handlers
+        #region Public properties
         /// <summary>
         /// Gets or sets a border brush for currently selected color sample.
         /// </summary>
         public LinearGradientBrush ScopeBrush
         {
-            get { return (LinearGradientBrush)GetValue(ScopeBrushBroperty); }
-            set { SetValue(ScopeBrushBroperty, value); }
+            get => _scopeBrush;
+            set
+            {
+                if (_scopeBrush != null && _scopeBrush.Equals(value)) return; _scopeBrush = value; OnPropertyChanged();
+            }
         }
 
         /// <summary>
@@ -46,12 +38,13 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         public System.Windows.Media.Color SelectedColor
         {
-            get { return (System.Windows.Media.Color)GetValue(SelectedColorProperty); }
-            set { SetValue(SelectedColorProperty, value); }
-        } 
-        #endregion
+            get => _selectedColor;
+            set
+            {
+                if (_selectedColor == value) return; _selectedColor = value; OnPropertyChanged();
+            }
+        }
 
-        #region Public properties
         /// <summary>
         /// Gets or sets preview rectangle Left.
         /// </summary>
@@ -86,7 +79,7 @@ namespace ag.WPF.ColorPicker
             {
                 if (_previewSource != null && _previewSource.Equals(value)) return; _previewSource = value; OnPropertyChanged();
             }
-        } 
+        }
         #endregion
 
         #region ctor
@@ -96,7 +89,7 @@ namespace ag.WPF.ColorPicker
         public PickerPanel()
         {
             InitializeComponent();
-        } 
+        }
         #endregion
 
         #region INotifyPropertyChanged members
@@ -205,7 +198,7 @@ namespace ag.WPF.ColorPicker
         private void Window_Unloaded(object sender, RoutedEventArgs e)
         {
             _cursor?.Dispose();
-        } 
+        }
         #endregion
 
         #region Private procedures
@@ -301,7 +294,7 @@ namespace ag.WPF.ColorPicker
             result.Freeze();
 
             return result;
-        } 
+        }
         #endregion
     }
 }
