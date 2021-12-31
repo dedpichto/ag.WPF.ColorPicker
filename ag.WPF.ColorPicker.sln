@@ -7,7 +7,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ag.WPF.ColorPicker", "ag.WP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestColorPicker", "TestColorPicker\TestColorPicker.csproj", "{2AEF2AB0-B096-4DE9-8D8F-0A4C10F7D1AD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ag.WPF.ColorPicker.NET", "ag.WPF.ColorPicker.NET\ag.WPF.ColorPicker.NET.csproj", "{D9092613-C591-4839-AE33-CB76A1A889A2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ag.WPF.ColorPicker.NET", "ag.WPF.ColorPicker.NET\ag.WPF.ColorPicker.NET.csproj", "{D9092613-C591-4839-AE33-CB76A1A889A2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7F1E16CB-F70D-461B-AA58-DC0E9C4954B0}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
