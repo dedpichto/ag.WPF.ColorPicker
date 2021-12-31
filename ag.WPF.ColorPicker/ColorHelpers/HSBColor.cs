@@ -12,10 +12,11 @@ namespace ag.WPF.ColorPicker.ColorHelpers
     /// </summary>
     public struct HsbColor
     {
+#nullable disable
         /// <summary>
         /// Gets an empty HSB structure.
         /// </summary>
-        public static readonly HsbColor Empty = new HsbColor();
+        public static readonly HsbColor Empty = new();
         private double hue;
         private double saturation;
         private double brightness;
@@ -106,7 +107,7 @@ namespace ag.WPF.ColorPicker.ColorHelpers
         /// </summary>
         /// <param name="obj">Object to compare with.</param>
         /// <returns>True if HSL structure is equal to object.</returns>
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
             return (this == (HsbColor)obj);
@@ -116,10 +117,7 @@ namespace ag.WPF.ColorPicker.ColorHelpers
         /// Gets HSL color hash code.
         /// </summary>
         /// <returns>HSB color hash code.</returns>
-        public override int GetHashCode()
-        {
-            return (Hue.GetHashCode(), Saturation.GetHashCode(), Brightness.GetHashCode()).GetHashCode();
-        }
+        public override int GetHashCode() => (Hue, Saturation, Brightness).GetHashCode();
 
         /// <summary>
         /// Converts HSB color to RGB color.
@@ -184,5 +182,6 @@ namespace ag.WPF.ColorPicker.ColorHelpers
             }
             return Color.FromArgb(byte.MaxValue, (byte)Math.Round(num1 * byte.MaxValue), (byte)Math.Round(num2 * byte.MaxValue), (byte)Math.Round(num3 * byte.MaxValue));
         }
+#nullable restore
     }
 }

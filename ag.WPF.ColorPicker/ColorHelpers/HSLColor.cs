@@ -12,10 +12,11 @@ namespace ag.WPF.ColorPicker.ColorHelpers
     /// </summary>
     public struct HslColor
     {
+#nullable disable
         /// <summary>
         /// Gets an empty HSL structure.
         /// </summary>
-        public static readonly HslColor Empty = new HslColor();
+        public static readonly HslColor Empty = new();
 
         private double hue;
         private double saturation;
@@ -110,7 +111,7 @@ namespace ag.WPF.ColorPicker.ColorHelpers
         /// </summary>
         /// <param name="obj">Object to compare with.</param>
         /// <returns>True if HSL structure is equal to object.</returns>
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             if (obj == null || GetType() != obj.GetType()) return false;
 
@@ -121,10 +122,7 @@ namespace ag.WPF.ColorPicker.ColorHelpers
         /// Gets HSL color hash code.
         /// </summary>
         /// <returns>HSL color hash code.</returns>
-        public override int GetHashCode()
-        {
-            return (Hue.GetHashCode(), Saturation.GetHashCode(), Luminance.GetHashCode()).GetHashCode();
-        }
+        public override int GetHashCode() => (Hue, Saturation, Luminance).GetHashCode();
 
         /// <summary>
         /// Converts HSL color to RGB color.
@@ -179,5 +177,6 @@ namespace ag.WPF.ColorPicker.ColorHelpers
                 }
             }
         }
+#nullable restore
     }
 }

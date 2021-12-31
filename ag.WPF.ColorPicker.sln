@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ag.WPF.ColorPicker", "ag.WP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestColorPicker", "TestColorPicker\TestColorPicker.csproj", "{2AEF2AB0-B096-4DE9-8D8F-0A4C10F7D1AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ag.WPF.ColorPicker.NET", "ag.WPF.ColorPicker.NET\ag.WPF.ColorPicker.NET.csproj", "{D9092613-C591-4839-AE33-CB76A1A889A2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2AEF2AB0-B096-4DE9-8D8F-0A4C10F7D1AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2AEF2AB0-B096-4DE9-8D8F-0A4C10F7D1AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2AEF2AB0-B096-4DE9-8D8F-0A4C10F7D1AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9092613-C591-4839-AE33-CB76A1A889A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9092613-C591-4839-AE33-CB76A1A889A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9092613-C591-4839-AE33-CB76A1A889A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9092613-C591-4839-AE33-CB76A1A889A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

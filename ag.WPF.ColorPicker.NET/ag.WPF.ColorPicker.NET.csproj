@@ -1,0 +1,45 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\ag.WPF.ColorPicker\ColorConverters.cs" Link="ColorConverters.cs" />
+    <Compile Include="..\ag.WPF.ColorPicker\ColorHelpers\HSBColor.cs" Link="ColorHelpers\HSBColor.cs" />
+    <Compile Include="..\ag.WPF.ColorPicker\ColorHelpers\HSLColor.cs" Link="ColorHelpers\HSLColor.cs" />
+    <Compile Include="..\ag.WPF.ColorPicker\ColorHelpers\Utils.cs" Link="ColorHelpers\Utils.cs" />
+    <Compile Include="..\ag.WPF.ColorPicker\ColorPanel.cs" Link="ColorPanel.cs" />
+    <Compile Include="..\ag.WPF.ColorPicker\ColorPicker.cs" Link="ColorPicker.cs" />
+    <Compile Include="..\ag.WPF.ColorPicker\ColorSlider.cs" Link="ColorSlider.cs" />
+    <Compile Include="..\ag.WPF.ColorPicker\PickerPanel.xaml.cs" Link="PickerPanel.xaml.cs" />
+    <Compile Include="..\ag.WPF.ColorPicker\StandardColorItem.cs" Link="StandardColorItem.cs" />
+    <Compile Include="..\ag.WPF.ColorPicker\UnsafeNativeMethods.cs" Link="UnsafeNativeMethods.cs" />
+    <Compile Include="..\ag.WPF.ColorPicker\UpDown.cs" Link="UpDown.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ColorHelpers\" />
+    <Folder Include="Themes\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\ag.WPF.ColorPicker\dropper.cur" Link="dropper.cur" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="..\ag.WPF.ColorPicker\PickerPanel.xaml" Link="PickerPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="..\ag.WPF.ColorPicker\Themes\Generic.xaml" Link="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+</Project>

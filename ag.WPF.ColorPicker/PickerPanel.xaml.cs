@@ -13,6 +13,7 @@ namespace ag.WPF.ColorPicker
 {
     public partial class PickerPanel : Window, INotifyPropertyChanged
     {
+#nullable disable
         private System.Windows.Media.Color _selectedColor;
         private LinearGradientBrush _scopeBrush;
         private double _previewLeft;
@@ -202,7 +203,7 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Private procedures
-        private System.Windows.Media.Color[] GetScopeColors(int x, int y)
+        private static System.Windows.Media.Color[] GetScopeColors(int x, int y)
         {
             var colors = new System.Windows.Media.Color[3];
             var bmp = new Bitmap(3, 3);
@@ -224,7 +225,7 @@ namespace ag.WPF.ColorPicker
             return colors;
         }
 
-        private System.Windows.Media.Color GetSelectedColor(int x, int y)
+        private static System.Windows.Media.Color GetSelectedColor(int x, int y)
         {
             var bmp = new Bitmap(1, 1);
             var bounds = new System.Drawing.Rectangle(x, y, 1, 1);
@@ -278,7 +279,7 @@ namespace ag.WPF.ColorPicker
             return ToWpfBitmap(bmp);
         }
 
-        private BitmapSource ToWpfBitmap(Bitmap bitmap)
+        private static BitmapSource ToWpfBitmap(Bitmap bitmap)
         {
             using var stream = new MemoryStream();
             bitmap.Save(stream, ImageFormat.Png);
@@ -296,5 +297,6 @@ namespace ag.WPF.ColorPicker
             return result;
         }
         #endregion
+#nullable restore
     }
 }

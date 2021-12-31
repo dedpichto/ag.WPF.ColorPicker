@@ -21,6 +21,7 @@ namespace ag.WPF.ColorPicker
 
     public class ColorPicker : Control
     {
+#nullable disable
         private const string PART_Button = "PART_Button";
         private const string PART_Popup = "PART_Popup";
         private const string PART_ColorPanel = "PART_ColorPanel";
@@ -232,7 +233,8 @@ namespace ag.WPF.ColorPicker
                 return;
             _colorPanel.SetInitialColors(SelectedColor);
             _popup.IsOpen = true;
-        } 
+        }
         #endregion
+#nullable restore
     }
 }

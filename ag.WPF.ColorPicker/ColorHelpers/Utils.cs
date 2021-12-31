@@ -11,7 +11,8 @@ namespace ag.WPF.ColorPicker.ColorHelpers
 {
     internal static class Utils
     {
-        public static readonly HashSet<Type> NumericTypes = new HashSet<Type>
+#nullable disable
+        public static readonly HashSet<Type> NumericTypes = new()
         {
             typeof(byte), typeof(sbyte),
             typeof(short), typeof(ushort),
@@ -173,5 +174,6 @@ namespace ag.WPF.ColorPicker.ColorHelpers
             var drawingBrush = new DrawingBrush { TileMode = TileMode.Tile, Viewport = new Rect(0, 0, 10, 10), ViewportUnits = BrushMappingMode.Absolute, Drawing = drawingGroup };
             return drawingBrush;
         }
+#nullable restore
     }
 }

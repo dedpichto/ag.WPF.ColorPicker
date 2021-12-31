@@ -20,6 +20,7 @@ namespace ag.WPF.ColorPicker
     #endregion
     public sealed class UpDown : Control
     {
+#nullable disable
         private enum CurrentKey
         {
             None,
@@ -282,7 +283,7 @@ namespace ag.WPF.ColorPicker
 
         private static void OnUseGroupSeparatorChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if (!(sender is UpDown upd)) return;
+            if (sender is not UpDown upd) return;
             upd.OnUseGroupSeparatorChanged((bool)e.OldValue, (bool)e.NewValue);
         }
         /// <summary>
@@ -301,7 +302,7 @@ namespace ag.WPF.ColorPicker
 
         private static void OnNegativeForegroundChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if (!(sender is UpDown upd)) return;
+            if (sender is not UpDown upd) return;
             upd.OnNegativeForegroundChanged((SolidColorBrush)e.OldValue, (SolidColorBrush)e.NewValue);
         }
         /// <summary>
@@ -320,7 +321,7 @@ namespace ag.WPF.ColorPicker
 
         private static void OnDecimalPlacesChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if (!(sender is UpDown upd)) return;
+            if (sender is not UpDown upd) return;
             upd.OnDecimalPlacesChanged((uint)e.OldValue, (uint)e.NewValue);
         }
 
@@ -352,13 +353,13 @@ namespace ag.WPF.ColorPicker
 
         private static void OnStepChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if (!(sender is UpDown upd)) return;
+            if (sender is not UpDown upd) return;
             upd.OnStepChanged(Convert.ToDecimal(e.OldValue), Convert.ToDecimal(e.NewValue));
         }
 
         private static object CoerceStep(DependencyObject d, object value)
         {
-            if (!(d is UpDown upd)) return value;
+            if (d is not UpDown upd) return value;
             var step = Convert.ToDecimal(value);
             step = step < 0 ? Math.Abs(step) : step;
             var fraction = step - decimal.Truncate(step);
@@ -385,7 +386,7 @@ namespace ag.WPF.ColorPicker
 
         private static void OnMinValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if (!(sender is UpDown upd)) return;
+            if (sender is not UpDown upd) return;
             upd.CoerceValue(MaxValueProperty);
             upd.CoerceValue(ValueProperty);
             upd.OnMinValueChanged(Convert.ToDecimal(e.OldValue), Convert.ToDecimal(e.NewValue));
@@ -406,7 +407,7 @@ namespace ag.WPF.ColorPicker
 
         private static void OnMaxValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if (!(sender is UpDown upd)) return;
+            if (sender is not UpDown upd) return;
             upd.CoerceValue(ValueProperty);
             upd.OnMaxValueChanged(Convert.ToDecimal(e.OldValue), Convert.ToDecimal(e.NewValue));
         }
@@ -414,7 +415,7 @@ namespace ag.WPF.ColorPicker
         private static object CoerceMaximum(DependencyObject d, object value)
         {
             var max = Convert.ToDecimal(value);
-            if (!(d is UpDown upd)) return value;
+            if (d is not UpDown upd) return value;
             return max < upd.MinValue ? upd.MinValue : value;
         }
         /// <summary>
@@ -433,14 +434,14 @@ namespace ag.WPF.ColorPicker
 
         private static void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            if (!(sender is UpDown upd)) return;
+            if (sender is not UpDown upd) return;
             upd.OnValueChanged(Convert.ToDecimal(e.OldValue), Convert.ToDecimal(e.NewValue));
         }
 
         private static object ConstraintValue(DependencyObject d, object value)
         {
             var newValue = Convert.ToDecimal(value);
-            if (!(d is UpDown upd)) return value;
+            if (d is not UpDown upd) return value;
             if (newValue < upd.MinValue) return upd.MinValue;
             return newValue > upd.MaxValue ? upd.MaxValue : value;
         }
@@ -466,70 +467,70 @@ namespace ag.WPF.ColorPicker
 
             if (_textBox != null)
             {
-                _textBox.GotFocus -= textBox_GotFocus;
-                _textBox.PreviewKeyDown -= textBox_PreviewKeyDown;
-                _textBox.PreviewMouseRightButtonUp -= textBox_PreviewMouseRightButtonUp;
-                _textBox.TextChanged -= textBox_TextChanged;
+                _textBox.GotFocus -= TextBox_GotFocus;
+                _textBox.PreviewKeyDown -= TextBox_PreviewKeyDown;
+                _textBox.PreviewMouseRightButtonUp -= TextBox_PreviewMouseRightButtonUp;
+                _textBox.TextChanged -= TextBox_TextChanged;
                 //BindingOperations.ClearAllBindings(_Text);
             }
             _textBox = GetTemplateChild(ElementText) as TextBox;
             if (_textBox != null)
             {
-                _textBox.GotFocus += textBox_GotFocus;
-                _textBox.PreviewKeyDown += textBox_PreviewKeyDown;
-                _textBox.PreviewMouseRightButtonUp += textBox_PreviewMouseRightButtonUp;
-                _textBox.TextChanged += textBox_TextChanged;
+                _textBox.GotFocus += TextBox_GotFocus;
+                _textBox.PreviewKeyDown += TextBox_PreviewKeyDown;
+                _textBox.PreviewMouseRightButtonUp += TextBox_PreviewMouseRightButtonUp;
+                _textBox.TextChanged += TextBox_TextChanged;
                 //_Text.SetBinding(TextBox.TextProperty, bd);
             }
 
             if (_downButton != null)
             {
-                _downButton.Click -= downButton_Click;
+                _downButton.Click -= DownButton_Click;
             }
             _downButton = GetTemplateChild(ElementButtonDown) as RepeatButton;
             if (_downButton != null)
             {
-                _downButton.Click += downButton_Click;
+                _downButton.Click += DownButton_Click;
             }
 
             if (_upButton != null)
             {
-                _upButton.Click -= upButton_Click;
+                _upButton.Click -= UpButton_Click;
             }
             _upButton = GetTemplateChild(ElementButtonUp) as RepeatButton;
             if (_upButton != null)
             {
-                _upButton.Click += upButton_Click;
+                _upButton.Click += UpButton_Click;
             }
         }
         #endregion
 
         #region Private event handlers
-        private void upButton_Click(object sender, RoutedEventArgs e)
+        private void UpButton_Click(object sender, RoutedEventArgs e)
         {
-            addStep(true);
+            AddStep(true);
             if (!_textBox.IsFocused)
                 _textBox.Focus();
             else
                 _textBox.SelectAll();
         }
 
-        private void downButton_Click(object sender, RoutedEventArgs e)
+        private void DownButton_Click(object sender, RoutedEventArgs e)
         {
-            addStep(false);
+            AddStep(false);
             if (!_textBox.IsFocused)
                 _textBox.Focus();
             else
                 _textBox.SelectAll();
         }
 
-        private void textBox_GotFocus(object sender, RoutedEventArgs e)
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             _textBox.SelectAll();
             e.Handled = true;
         }
 
-        private void textBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (!IsReadOnly)
             {
@@ -547,12 +548,12 @@ namespace ag.WPF.ColorPicker
             }
         }
 
-        private void textBox_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
+        private void TextBox_PreviewMouseRightButtonUp(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
         }
 
-        private void textBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             if ((Keyboard.Modifiers & ModifierKeys.Shift) == ModifierKeys.Shift)
             {
@@ -565,12 +566,12 @@ namespace ag.WPF.ColorPicker
                 switch (e.Key)
                 {
                     case Key.Up:
-                        addStep(true);
+                        AddStep(true);
                         _textBox.SelectAll();
                         e.Handled = true;
                         break;
                     case Key.Down:
-                        addStep(false);
+                        AddStep(false);
                         _textBox.SelectAll();
                         e.Handled = true;
                         break;
@@ -687,7 +688,7 @@ namespace ag.WPF.ColorPicker
                                 _Position.Offset = _textBox.SelectionLength == _textBox.Text.Length
                                     ? -1
                                     : _textBox.Text.Length - (_textBox.SelectionLength + _textBox.SelectionStart) - 1;
-                                _textBox.Text = _textBox.Text.Remove(_textBox.SelectionStart, _textBox.SelectionLength).Insert(_textBox.SelectionStart, charFromNumberKey(e.Key)).Insert(_textBox.SelectionStart + 1, CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
+                                _textBox.Text = _textBox.Text.Remove(_textBox.SelectionStart, _textBox.SelectionLength).Insert(_textBox.SelectionStart, CharFromNumberKey(e.Key)).Insert(_textBox.SelectionStart + 1, CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator);
                                 e.Handled = true;
                             }
                             else if (_textBox.SelectionStart > sepPos && _textBox.SelectionStart < _textBox.Text.Length)
@@ -695,7 +696,7 @@ namespace ag.WPF.ColorPicker
                                 if (_textBox.SelectionLength == 0)
                                 {
                                     _Position.Offset = _textBox.Text.Length - _textBox.SelectionStart - 1;
-                                    _textBox.Text = _textBox.Text.Remove(_textBox.SelectionStart, 1).Insert(_textBox.SelectionStart, charFromNumberKey(e.Key));
+                                    _textBox.Text = _textBox.Text.Remove(_textBox.SelectionStart, 1).Insert(_textBox.SelectionStart, CharFromNumberKey(e.Key));
                                     e.Handled = true;
                                 }
                             }
@@ -756,45 +757,25 @@ namespace ag.WPF.ColorPicker
 
         #region Private procedures
 
-        private string charFromNumberKey(Key key)
+        private static string CharFromNumberKey(Key key)
         {
-            switch (key)
+            return key switch
             {
-                case Key.D0:
-                case Key.NumPad0:
-                    return "0";
-                case Key.D1:
-                case Key.NumPad1:
-                    return "1";
-                case Key.D2:
-                case Key.NumPad2:
-                    return "2";
-                case Key.D3:
-                case Key.NumPad3:
-                    return "3";
-                case Key.D4:
-                case Key.NumPad4:
-                    return "4";
-                case Key.D5:
-                case Key.NumPad5:
-                    return "5";
-                case Key.D6:
-                case Key.NumPad6:
-                    return "6";
-                case Key.D7:
-                case Key.NumPad7:
-                    return "7";
-                case Key.D8:
-                case Key.NumPad8:
-                    return "8";
-                case Key.D9:
-                case Key.NumPad9:
-                    return "9";
-            }
-            return "";
+                Key.D0 or Key.NumPad0 => "0",
+                Key.D1 or Key.NumPad1 => "1",
+                Key.D2 or Key.NumPad2 => "2",
+                Key.D3 or Key.NumPad3 => "3",
+                Key.D4 or Key.NumPad4 => "4",
+                Key.D5 or Key.NumPad5 => "5",
+                Key.D6 or Key.NumPad6 => "6",
+                Key.D7 or Key.NumPad7 => "7",
+                Key.D8 or Key.NumPad8 => "8",
+                Key.D9 or Key.NumPad9 => "9",
+                _ => "",
+            };
         }
 
-        private void addStep(bool plus)
+        private void AddStep(bool plus)
         {
             if (plus)
             {
@@ -824,7 +805,7 @@ namespace ag.WPF.ColorPicker
         /// <returns>Brush depended on current value sign.</returns>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(values[0] is decimal decimalValue) || !(values[1] is Brush foregroundBrush) || !(values[2] is Brush negativeBrush)) return null;
+            if (values[0] is not decimal decimalValue || values[1] is not Brush foregroundBrush || values[2] is not Brush negativeBrush) return null;
             return decimalValue >= 0 ? foregroundBrush : negativeBrush;
         }
 
@@ -857,7 +838,7 @@ namespace ag.WPF.ColorPicker
         /// <returns>Formatted string.</returns>
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(values[0] is decimal decimalValue) || !(values[1] is uint decimalPlaces) || !(values[2] is bool useSeparator)) return "";
+            if (values[0] is not decimal decimalValue || values[1] is not uint decimalPlaces || values[2] is not bool useSeparator) return "";
             var partInt = decimal.Truncate(decimalValue);
             var partFraction =
                 Math.Abs(decimal.Truncate((decimalValue - partInt) * (int)Math.Pow(10.0, decimalPlaces)));
@@ -882,10 +863,11 @@ namespace ag.WPF.ColorPicker
         /// <returns>Decimal.</returns>
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
-            if (!(value is string stringValue)) return null;
+            if (value is not string stringValue) return null;
             if (string.IsNullOrEmpty(stringValue)) stringValue = "0";
             stringValue = stringValue.Replace(culture.NumberFormat.NumberGroupSeparator, "");
             return new object[] { decimal.Parse(stringValue, NumberStyles.Any) };
         }
+#nullable restore
     }
 }

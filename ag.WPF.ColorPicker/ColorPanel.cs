@@ -64,6 +64,8 @@ namespace ag.WPF.ColorPicker
 
     public class ColorPanel : Control
     {
+#nullable disable
+
         private const string PART_ColorShadingCanvas = "PART_ColorShadingCanvas";
         private const string PART_ColorShadeSelector = "PART_ColorShadeSelector";
         private const string PART_SpectrumSlider = "PART_SpectrumSlider";
@@ -81,7 +83,7 @@ namespace ag.WPF.ColorPicker
 
         private const int SHADES_COUNT = 12;
 
-        private readonly TranslateTransform _colorShadeSelectorTransform = new TranslateTransform();
+        private readonly TranslateTransform _colorShadeSelectorTransform = new();
         private Canvas _colorShadingCanvas;
         private Canvas _colorShadeSelector;
         private ColorSlider _spectrumSlider;
@@ -110,7 +112,7 @@ namespace ag.WPF.ColorPicker
         private bool _luminanceHslUpdated;
         private bool _alphaUpdated;
 
-        private readonly List<StandardColorItem> _standardColorItems = new List<StandardColorItem>();
+        private readonly List<StandardColorItem> _standardColorItems = new();
 
         #region Dependecy properties
         /// <summary>
@@ -395,19 +397,19 @@ namespace ag.WPF.ColorPicker
         #region OnXXXChanged procedures
         private static void OnHueHslChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is ColorPanel colorPanel)) return;
+            if (d is not ColorPanel colorPanel) return;
             colorPanel.OnHueHslChanged((double)e.OldValue, (double)e.NewValue);
         }
 
         private static void OnSaturationHslChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is ColorPanel colorPanel)) return;
+            if (d is not ColorPanel colorPanel) return;
             colorPanel.OnSaturationHslChanged((double)e.OldValue, (double)e.NewValue);
         }
 
         private static void OnLuminanceHslChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is ColorPanel colorPanel)) return;
+            if (d is not ColorPanel colorPanel) return;
             colorPanel.OnLuminanceHslChanged((double)e.OldValue, (double)e.NewValue);
         }
 
@@ -453,19 +455,19 @@ namespace ag.WPF.ColorPicker
 
         private static void OnHueHsbChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is ColorPanel colorPanel)) return;
+            if (d is not ColorPanel colorPanel) return;
             colorPanel.OnHueHsbChanged((double)e.OldValue, (double)e.NewValue);
         }
 
         private static void OnSaturationHsbChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is ColorPanel colorPanel)) return;
+            if (d is not ColorPanel colorPanel) return;
             colorPanel.OnSaturationHsbChanged((double)e.OldValue, (double)e.NewValue);
         }
 
         private static void OnBrightnessHsbChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is ColorPanel colorPanel)) return;
+            if (d is not ColorPanel colorPanel) return;
             colorPanel.OnBrightnessHsbChanged((double)e.OldValue, (double)e.NewValue);
         }
 
@@ -511,7 +513,7 @@ namespace ag.WPF.ColorPicker
 
         private static void OnUseAlphaChannelPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is ColorPanel colorPanel))
+            if (d is not ColorPanel colorPanel)
                 return;
             colorPanel.OnUseAlphaChannelChanged();
         }
@@ -526,7 +528,7 @@ namespace ag.WPF.ColorPicker
 
         private static void OnSelectedColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is ColorPanel colorPanel)) return;
+            if (d is not ColorPanel colorPanel) return;
             colorPanel.OnSelectedColorChanged((Color)e.OldValue, (Color)e.NewValue);
         }
 
@@ -566,7 +568,7 @@ namespace ag.WPF.ColorPicker
 
         private static void OnRGBChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is ColorPanel colorPanel)) return;
+            if (d is not ColorPanel colorPanel) return;
             colorPanel.OnRGBChanged((byte)e.OldValue, (byte)e.NewValue);
         }
 
@@ -582,7 +584,7 @@ namespace ag.WPF.ColorPicker
 
         private static void OnAChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is ColorPanel colorPanel)) return;
+            if (d is not ColorPanel colorPanel) return;
             colorPanel.OnAChanged((byte)e.OldValue, (byte)e.NewValue);
         }
 
@@ -600,7 +602,7 @@ namespace ag.WPF.ColorPicker
 
         private static void OnColorStringFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (!(d is ColorPanel colorPanel)) return;
+            if (d is not ColorPanel colorPanel) return;
             colorPanel.OnColorStringFormatChanged((ColorStringFormat)e.OldValue, (ColorStringFormat)e.NewValue);
         }
 
@@ -794,7 +796,7 @@ namespace ag.WPF.ColorPicker
         private void ListStandard_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (e.AddedItems.Count == 0) return;
-            if (!(e.AddedItems[0] is StandardColorItem standardColorItem)) return;
+            if (e.AddedItems[0] is not StandardColorItem standardColorItem) return;
             var color = standardColorItem.Color;
             if (SelectedColor.R == color.R && SelectedColor.G == color.G && SelectedColor.B == color.B)
                 return;
@@ -804,8 +806,8 @@ namespace ag.WPF.ColorPicker
 
         private void Radio_Click(object sender, RoutedEventArgs e)
         {
-            if (!(sender is RadioButton radio)) return;
-            if (!(radio.Background is SolidColorBrush brush)) return;
+            if (sender is not RadioButton radio) return;
+            if (radio.Background is not SolidColorBrush brush) return;
             var color = brush.Color;
             SelectedColor = Color.FromArgb(SelectedColor.A, color.R, color.G, color.B);
             _tabMain.SelectedIndex = 0;
@@ -813,15 +815,15 @@ namespace ag.WPF.ColorPicker
 
         private void InitialColorPath_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (!(sender is System.Windows.Shapes.Path path)) return;
-            if (!(path.Fill is SolidColorBrush brush)) return;
+            if (sender is not System.Windows.Shapes.Path path) return;
+            if (path.Fill is not SolidColorBrush brush) return;
             SelectedColor = brush.Color;
         }
 
         private void Rect_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (!(sender is Rectangle rect)) return;
-            if (!(rect.Fill is SolidColorBrush brush)) return;
+            if (sender is not Rectangle rect) return;
+            if (rect.Fill is not SolidColorBrush brush) return;
             SelectedColor = brush.Color;
         }
 
@@ -933,7 +935,7 @@ namespace ag.WPF.ColorPicker
             foreach (var radio in _basicPanel.Children.OfType<RadioButton>())
             {
                 radio.IsChecked = false;
-                if (!(radio.Background is SolidColorBrush brush))
+                if (radio.Background is not SolidColorBrush brush)
                     continue;
                 if (color.R == brush.Color.R && color.G == brush.Color.G && color.B == brush.Color.B)
                 {
@@ -1125,7 +1127,7 @@ namespace ag.WPF.ColorPicker
             BrightnessHsb = hsb.Brightness;
         }
 
-        private bool IsNonColor(Color color) => (color.R == color.G && color.G == color.B);
+        private static bool IsNonColor(Color color) => (color.R == color.G && color.G == color.B);
 
         private void UpdateSelectedColor() => SelectedColor = Color.FromArgb(UseAlphaChannel ? A : (byte)255, R, G, B);
         #endregion
@@ -1142,5 +1144,6 @@ namespace ag.WPF.ColorPicker
             SelectedColor = initialColor;
         }
         #endregion
+#nullable restore
     }
 }

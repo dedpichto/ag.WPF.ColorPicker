@@ -6,6 +6,7 @@ using System.Windows.Media;
 
 namespace ag.WPF.ColorPicker
 {
+#nullable disable
     /// <summary>
     /// Multiplies/divides saturation/brightness/luminance by 100.
     /// </summary>
@@ -55,7 +56,7 @@ namespace ag.WPF.ColorPicker
         /// <returns>Color</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is Color color)) return null;
+            if (value is not Color color) return null;
             return Color.FromRgb(color.R, color.G, color.B);
         }
 
@@ -121,7 +122,7 @@ namespace ag.WPF.ColorPicker
         /// <returns>String.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is Color color)) return null;
+            if (value is not Color color) return null;
             return $"#{color.A:X2}{color.R:X2}{color.G:X2}{color.B:X2}";
         }
 
@@ -155,7 +156,7 @@ namespace ag.WPF.ColorPicker
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             System.Diagnostics.Debug.WriteLine(value);
-            if (!(value is Color color))
+            if (value is not Color color)
                 return null;
             return Color.FromArgb(255, (byte)~color.R, (byte)~color.G, (byte)~color.B);
         }
@@ -189,7 +190,7 @@ namespace ag.WPF.ColorPicker
         /// <returns>Color.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (!(value is SolidColorBrush brush))
+            if (value is not SolidColorBrush brush)
                 return null;
             var color = brush.Color;
             return Color.FromArgb(255, (byte)~color.R, (byte)~color.G, (byte)~color.B);
@@ -274,4 +275,5 @@ namespace ag.WPF.ColorPicker
             throw new NotImplementedException();
         }
     }
+#nullable restore
 }
