@@ -5,14 +5,14 @@ VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ag.WPF.ColorPicker", "ag.WPF.ColorPicker\ag.WPF.ColorPicker.csproj", "{0840EB07-9BCC-436A-BE72-B1BC69DF7808}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestColorPicker", "TestColorPicker\TestColorPicker.csproj", "{2AEF2AB0-B096-4DE9-8D8F-0A4C10F7D1AD}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ag.WPF.ColorPicker.NET", "ag.WPF.ColorPicker.NET\ag.WPF.ColorPicker.NET.csproj", "{D9092613-C591-4839-AE33-CB76A1A889A2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7F1E16CB-F70D-461B-AA58-DC0E9C4954B0}"
 	ProjectSection(SolutionItems) = preProject
 		README.md = README.md
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestNET", "TestNET\TestNET.csproj", "{A2AF1E63-35C6-478E-B580-DBAB2F0711F7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,14 +24,14 @@ Global
 		{0840EB07-9BCC-436A-BE72-B1BC69DF7808}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0840EB07-9BCC-436A-BE72-B1BC69DF7808}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0840EB07-9BCC-436A-BE72-B1BC69DF7808}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2AEF2AB0-B096-4DE9-8D8F-0A4C10F7D1AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2AEF2AB0-B096-4DE9-8D8F-0A4C10F7D1AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2AEF2AB0-B096-4DE9-8D8F-0A4C10F7D1AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2AEF2AB0-B096-4DE9-8D8F-0A4C10F7D1AD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D9092613-C591-4839-AE33-CB76A1A889A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D9092613-C591-4839-AE33-CB76A1A889A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9092613-C591-4839-AE33-CB76A1A889A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9092613-C591-4839-AE33-CB76A1A889A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2AF1E63-35C6-478E-B580-DBAB2F0711F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2AF1E63-35C6-478E-B580-DBAB2F0711F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2AF1E63-35C6-478E-B580-DBAB2F0711F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2AF1E63-35C6-478E-B580-DBAB2F0711F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

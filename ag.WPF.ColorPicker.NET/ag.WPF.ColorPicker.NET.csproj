@@ -26,7 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\ag.WPF.ColorPicker\dropper.cur" Link="dropper.cur" />
+    <Resource Include="..\ag.WPF.ColorPicker\dropper.cur" Link="dropper.cur" />
   </ItemGroup>
 
   <ItemGroup>

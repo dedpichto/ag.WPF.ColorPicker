@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
@@ -122,11 +123,16 @@ namespace ag.WPF.ColorPicker
         #region Private event handlers
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            var stream = Application.GetResourceStream(new Uri("pack://application:,,,/ag.WPF.ColorPicker;component/dropper.cur"));
-            if (stream == null || stream.Stream == null) return;
-            _cursor = new Cursor(stream.Stream);
-            if (_cursor != null)
-                _canvas.Cursor = _cursor;
+            try
+            {
+                var cursorUriPath = $"pack://application:,,,/{Assembly.GetExecutingAssembly().GetName().Name};component/dropper.cur";
+                var stream = Application.GetResourceStream(new Uri(cursorUriPath));
+                if (stream == null || stream.Stream == null) return;
+                _cursor = new Cursor(stream.Stream);
+                if (_cursor != null)
+                    _canvas.Cursor = _cursor;
+            }
+            catch { }
             _image.Source = GetBitmap();
             var screenPoint = PointToScreen(Mouse.GetPosition(this));
             PreviewSource = GetBitmap((int)screenPoint.X, (int)screenPoint.Y);
