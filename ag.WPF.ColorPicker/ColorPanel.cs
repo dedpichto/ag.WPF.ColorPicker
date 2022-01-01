@@ -791,6 +791,7 @@ namespace ag.WPF.ColorPicker
             {
                 SelectedColor = pickerPanel.SelectedColor;
             }
+            _colorStringTextBox.Focus();
         }
 
         private void ListStandard_SelectionChanged(object sender, SelectionChangedEventArgs e)
