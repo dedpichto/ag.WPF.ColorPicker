@@ -232,7 +232,7 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                         <TabControl x:Name="PART_TabMain">
-                            <TabItem Name="_tabCustom" Header="Custom">
+                            <TabItem Name="_tabCustom" Header="{Binding TitleTabCustom, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                 <Grid x:Name="_customGrid">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -314,7 +314,7 @@
                                                     <ColumnDefinition Width="auto"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Margin="4,4,0,2" Text="Format" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="0" Margin="4,4,0,2" Text="{Binding TitleFormat, RelativeSource={RelativeSource Mode=TemplatedParent}}" VerticalAlignment="Center"/>
                                                 <ComboBox Margin="4,4,4,2" Grid.Column="1" ItemsSource="{Binding ColorStringFormats, RelativeSource={RelativeSource Mode=TemplatedParent}}" SelectedItem="{Binding ColorStringFormat, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                             </Grid>
                                             <TextBox x:Name="PART_ColorStringTextBox" IsReadOnly="True" VerticalAlignment="Center" Margin="4,2,4,4" Text="{Binding ColorString, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
@@ -324,7 +324,7 @@
                                         </Border>
                                     </Grid>
 
-                                    <GroupBox Grid.Column="0" Grid.Row="2" Header="Color modes">
+                                    <GroupBox Grid.Column="0" Grid.Row="2" Header="{Binding TitleColorModes, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                         <TabControl>
                                             <TabItem Header="RGB">
                                                 <Grid>
@@ -477,7 +477,7 @@
                                     </GroupBox>
 
                                     <StackPanel Grid.Column="0" Grid.Row="3" Margin="0,0,0,5">
-                                        <CheckBox x:Name="_useAlpha" Margin="0,4,0,0" Content="Use alpha channel" IsChecked="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                        <CheckBox x:Name="_useAlpha" Margin="0,4,0,0" Content="{Binding TitleUseAlpha, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsChecked="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="auto"/>
@@ -499,21 +499,19 @@
                                         </Grid>
                                     </StackPanel>
 
-                                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="Shades and tints" Margin="10,0,0,0">
+                                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="{Binding TitleShadesAndTints, RelativeSource={RelativeSource Mode=TemplatedParent}}" Margin="10,0,0,0">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition/>
                                                 <ColumnDefinition/>
                                             </Grid.ColumnDefinitions>
-                                            <!--<StackPanel x:Name="PART_ShadesPanel" Grid.Column="0" Orientation="Vertical" Width="32"/>
-                                        <StackPanel x:Name="PART_TintsPanel" Grid.Column="1" Orientation="Vertical" Width="32"/>-->
                                             <UniformGrid x:Name="PART_ShadesPanel" Grid.Column="0" Rows="12"/>
                                             <UniformGrid x:Name="PART_TintsPanel" Grid.Column="1" Rows="12"/>
                                         </Grid>
                                     </GroupBox>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Basic">
+                            <TabItem Header="{Binding TitleTabBasic, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                 <UniformGrid x:Name="PART_Basic" Rows="6" Columns="8">
                                     <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFFFFF"/>
                                     <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0C0FF"/>
@@ -565,27 +563,17 @@
                                     <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF400040"/>
                                 </UniformGrid>
                             </TabItem>
-                            <TabItem Header="Standard">
+                            <TabItem Header="{Binding TitleTabStandard, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                 <ListBox x:Name="PART_ListStandard" Height="{Binding ActualHeight, ElementName=_customGrid, Mode=OneWay}"/>
                             </TabItem>
                         </TabControl>
                         <Grid x:Name="_commandsGrid" Grid.Row="1">
-                            <!--<Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Border Width="24" Height="24" HorizontalAlignment="Right" Margin="4,4,4,0" Background="Transparent" Cursor="Hand">
-                                <Path Stroke="{StaticResource IconBrushFg}" StrokeThickness="1" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeDashCap="Round"  Data="M0.5,10 L4,10 L8,18 L20,0.5 L23.5,0.5 L23.5,4 L10,23.5 L6,23.5 L0.5,14 z"/>
-                            </Border>
-                            <Border Width="24" Height="24" HorizontalAlignment="Left" Grid.Column="1" Background="Transparent" Cursor="Hand" Margin="4,4,0,0">
-                                <Path Stroke="{StaticResource IconBrushFg}" StrokeThickness="1" StrokeLineJoin="Round" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeDashCap="Round"  Data="M0.5,0.5 L4,0.5 L12,8 L20,0.5 L23.5,0.5 L23.5,4 L16,12 L23.5,20 L23.5,23.5 L20,23.5 L12,16 L4,23.5 L0.5,23.5 L0.5,20 L8,12 L0.5,4 L0.5,0.5"/>
-                            </Border>-->
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="PART_ApplyButton" Content="Apply" HorizontalAlignment="Right" Margin="4" Padding="2" MinWidth="64"/>
-                            <Button x:Name="PART_CancelButton" Grid.Column="1" Content="Cancel" Margin="4" Padding="2" MinWidth="64"/>
+                            <Button x:Name="PART_ApplyButton" Content="{Binding TitleApply, RelativeSource={RelativeSource Mode=TemplatedParent}}" HorizontalAlignment="Right" Margin="4" Padding="2" MinWidth="64"/>
+                            <Button x:Name="PART_CancelButton" Grid.Column="1" Content="{Binding TitleCancel, RelativeSource={RelativeSource Mode=TemplatedParent}}" Margin="4" Padding="2" MinWidth="64"/>
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
