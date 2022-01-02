@@ -1,7 +1,8 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:picker="clr-namespace:ag.WPF.ColorPicker">
+    xmlns:picker="clr-namespace:ag.WPF.ColorPicker"
+    xmlns:helpers="clr-namespace:ag.WPF.ColorPicker.ColorHelpers">
 
     <picker:OpaqueColorConverter x:Key="OpaqueColorConverter"/>
     <picker:PureColorConverter x:Key="PureColorConverter"/>
@@ -572,7 +573,7 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="PART_ApplyButton" Content="{Binding TitleApply, RelativeSource={RelativeSource Mode=TemplatedParent}}" HorizontalAlignment="Right" Margin="4" Padding="2" MinWidth="64"/>
+                            <Button x:Name="PART_ApplyButton" Content="{Binding Path=(helpers:Titles.TitleApply), RelativeSource={RelativeSource Mode=TemplatedParent}}" HorizontalAlignment="Right" Margin="4" Padding="2" MinWidth="64"/>
                             <Button x:Name="PART_CancelButton" Grid.Column="1" Content="{Binding TitleCancel, RelativeSource={RelativeSource Mode=TemplatedParent}}" Margin="4" Padding="2" MinWidth="64"/>
                         </Grid>
                     </Grid>
@@ -718,7 +719,6 @@
                                 <picker:ColorPanel x:Name="PART_ColorPanel" 
                                                    Width="400" 
                                                    Height="426" 
-                                                   TitleApply="{Binding TitleApply, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                    TitleCancel="{Binding TitleCancel, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                    TitleColorModes="{Binding TitleColorModes, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                    TitleFormat="{Binding TitleFormat, RelativeSource={RelativeSource Mode=TemplatedParent}}"

@@ -208,10 +208,6 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         public static readonly DependencyProperty TitleUseAlphaProperty = DependencyProperty.Register(nameof(TitleUseAlpha), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Use alpha chanell"));
         /// <summary>
-        /// The identifier of the <see cref="TitleApply"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty TitleApplyProperty = DependencyProperty.Register(nameof(TitleApply), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Apply"));
-        /// <summary>
         /// The identifier of the <see cref="TitleCancel"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty TitleCancelProperty = DependencyProperty.Register(nameof(TitleCancel), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Cancel"));
@@ -280,15 +276,6 @@ namespace ag.WPF.ColorPicker
         {
             get => (string)GetValue(TitleCancelProperty);
             set => SetValue(TitleCancelProperty, value);
-        }
-
-        /// <summary>
-        /// Gets or sets the title of Apply button.
-        /// </summary>
-        public string TitleApply
-        {
-            get => (string)GetValue(TitleApplyProperty);
-            set => SetValue(TitleApplyProperty, value); 
         }
 
         /// <summary>
