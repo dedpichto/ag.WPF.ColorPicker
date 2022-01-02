@@ -49,6 +49,42 @@ namespace ag.WPF.ColorPicker
         /// The identifier of the <see cref="ColorStringFormat"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty ColorStringFormatProperty = DependencyProperty.Register(nameof(ColorStringFormat), typeof(ColorStringFormat), typeof(ColorPicker), new FrameworkPropertyMetadata(ColorStringFormat.HEX));
+        /// <summary>
+        /// The identifier of the <see cref="TitleTabCustom"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TitleTabCustomProperty = DependencyProperty.Register(nameof(TitleTabCustom), typeof(string), typeof(ColorPicker), new FrameworkPropertyMetadata("Custom"));
+        /// <summary>
+        /// The identifier of the <see cref="TitleTabBasic"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TitleTabBasicProperty = DependencyProperty.Register(nameof(TitleTabBasic), typeof(string), typeof(ColorPicker), new FrameworkPropertyMetadata("Basic"));
+        /// <summary>
+        /// The identifier of the <see cref="TitleTabStandard"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TitleTabStandardProperty = DependencyProperty.Register(nameof(TitleTabStandard), typeof(string), typeof(ColorPicker), new FrameworkPropertyMetadata("Standard"));
+        /// <summary>
+        /// The identifier of the <see cref="TitleFormat"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TitleFormatProperty = DependencyProperty.Register(nameof(TitleFormat), typeof(string), typeof(ColorPicker), new FrameworkPropertyMetadata("Format"));
+        /// <summary>
+        /// The identifier of the <see cref="TitleColorModes"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TitleColorModesProperty = DependencyProperty.Register(nameof(TitleColorModes), typeof(string), typeof(ColorPicker), new FrameworkPropertyMetadata("Color modes"));
+        /// <summary>
+        /// The identifier of the <see cref="TitleUseAlpha"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TitleUseAlphaProperty = DependencyProperty.Register(nameof(TitleUseAlpha), typeof(string), typeof(ColorPicker), new FrameworkPropertyMetadata("Use alpha chanell"));
+        /// <summary>
+        /// The identifier of the <see cref="TitleApply"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TitleApplyProperty = DependencyProperty.Register(nameof(TitleApply), typeof(string), typeof(ColorPicker), new FrameworkPropertyMetadata("Apply"));
+        /// <summary>
+        /// The identifier of the <see cref="TitleCancel"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TitleCancelProperty = DependencyProperty.Register(nameof(TitleCancel), typeof(string), typeof(ColorPicker), new FrameworkPropertyMetadata("Cancel"));
+        /// <summary>
+        /// The identifier of the <see cref="TitleShadesAndTints"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty TitleShadesAndTintsProperty = DependencyProperty.Register(nameof(TitleShadesAndTints), typeof(string), typeof(ColorPicker), new FrameworkPropertyMetadata("Shades and tints"));
         #endregion
 
         /// <summary>
@@ -105,6 +141,87 @@ namespace ag.WPF.ColorPicker
             get { return (bool)GetValue(UseAlphaChannelProperty); }
             set { SetValue(UseAlphaChannelProperty, value); }
         }
+        /// <summary>
+        /// Gets or sets the title of shades and tints group.
+        /// </summary>
+        public string TitleShadesAndTints
+        {
+            get => (string)GetValue(TitleShadesAndTintsProperty);
+            set { SetValue(TitleShadesAndTintsProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the title of Cancel button.
+        /// </summary>
+        public string TitleCancel
+        {
+            get => (string)GetValue(TitleCancelProperty);
+            set => SetValue(TitleCancelProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the title of Apply button.
+        /// </summary>
+        public string TitleApply
+        {
+            get => (string)GetValue(TitleApplyProperty);
+            set => SetValue(TitleApplyProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the title of Use lpha channel check box.
+        /// </summary>
+        public string TitleUseAlpha
+        {
+            get { return (string)GetValue(TitleUseAlphaProperty); }
+            set { SetValue(TitleUseAlphaProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the title of color modes group.
+        /// </summary>
+        public string TitleColorModes
+        {
+            get { return (string)GetValue(TitleColorModesProperty); }
+            set { SetValue(TitleColorModesProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the title of Format combo box.
+        /// </summary>
+        public string TitleFormat
+        {
+            get => (string)GetValue(TitleFormatProperty);
+            set => SetValue(TitleFormatProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the title of Standard colors tab.
+        /// </summary>
+        public string TitleTabStandard
+        {
+            get => (string)GetValue(TitleTabStandardProperty);
+            set => SetValue(TitleTabStandardProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets the title of Basic colors tab.
+        /// </summary>
+        public string TitleTabBasic
+        {
+            get { return (string)GetValue(TitleTabBasicProperty); }
+            set { SetValue(TitleTabBasicProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the title of Custom colors tab.
+        /// </summary>
+        public string TitleTabCustom
+        {
+            get { return (string)GetValue(TitleTabCustomProperty); }
+            set { SetValue(TitleTabCustomProperty, value); }
+        }
+
         #endregion
 
         #region ctor
