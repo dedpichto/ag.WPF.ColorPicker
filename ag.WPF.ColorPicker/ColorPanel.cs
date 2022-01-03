@@ -43,7 +43,7 @@ namespace ag.WPF.ColorPicker
     #endregion
 
     /// <summary>
-    /// Represents custom control that allows users to choose color.
+    /// Represents custom control that allows user to choose color.
     /// </summary>
     #region Named parts
     [TemplatePart(Name = "PART_ColorShadingCanvas", Type = typeof(Canvas))]
@@ -185,7 +185,7 @@ namespace ag.WPF.ColorPicker
         /// <summary>
         /// The identifier of the <see cref="ColorStringFormatProperty"/>.
         /// </summary>
-        public static readonly DependencyProperty ColorStringFormatProperty = DependencyProperty.RegisterAttached("ColorStringFormat", typeof(ColorStringFormat), typeof(ColorPanel), new FrameworkPropertyMetadata(WPF.ColorPicker.ColorStringFormat.HEX, OnColorStringFormatChanged));
+        public static readonly DependencyProperty ColorStringFormatProperty = DependencyProperty.RegisterAttached("ColorStringFormat", typeof(ColorStringFormat), typeof(ColorPanel), new FrameworkPropertyMetadata(ColorStringFormat.HEX, OnColorStringFormatChanged));
         /// <summary>
         /// The identifier of the <see cref="TitleTabCustomProperty"/>.
         /// </summary>
@@ -1168,11 +1168,11 @@ namespace ag.WPF.ColorPicker
 
         private string GetColorString() => (ColorStringFormat)GetValue(ColorStringFormatProperty) switch
         {
-            WPF.ColorPicker.ColorStringFormat.HEX => $"#{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}",
-            WPF.ColorPicker.ColorStringFormat.ARGB => $"{SelectedColor.A}, {SelectedColor.R}, {SelectedColor.G}, {SelectedColor.B}",
-            WPF.ColorPicker.ColorStringFormat.RGB => $"{SelectedColor.R}, {SelectedColor.G}, {SelectedColor.B}",
-            WPF.ColorPicker.ColorStringFormat.HSB => $"{HueHsb:f0}, {SaturationHsb:f2}, {BrightnessHsb:f2}",
-            WPF.ColorPicker.ColorStringFormat.HSL => $"{HueHsl:f0}, {SaturationHsl:f2}, {LuminanceHsl:f2}",
+            ColorStringFormat.HEX => $"#{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}",
+            ColorStringFormat.ARGB => $"{SelectedColor.A}, {SelectedColor.R}, {SelectedColor.G}, {SelectedColor.B}",
+            ColorStringFormat.RGB => $"{SelectedColor.R}, {SelectedColor.G}, {SelectedColor.B}",
+            ColorStringFormat.HSB => $"{HueHsb:f0}, {SaturationHsb:f2}, {BrightnessHsb:f2}",
+            ColorStringFormat.HSL => $"{HueHsl:f0}, {SaturationHsl:f2}, {LuminanceHsl:f2}",
             _ => $"#{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}"
         };
 
@@ -1244,7 +1244,7 @@ namespace ag.WPF.ColorPicker
             {
                 var border = new Border { Background = transparentBackgroundBrush, MinWidth = 24 };
                 var rect = new Rectangle() { Cursor = Cursors.Hand, Stroke = Brushes.Gray };
-                rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToBighterOrDarkerConverter(), ConverterParameter = factor });
+                rect.SetBinding(Shape.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToBighterOrDarkerConverter(), ConverterParameter = factor });
                 rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
                 border.Child = rect;
                 if (i == 0)
@@ -1266,7 +1266,7 @@ namespace ag.WPF.ColorPicker
             {
                 var border = new Border { Background = transparentBackgroundBrush, MinWidth = 24 };
                 var rect = new Rectangle() { Cursor = Cursors.Hand, Stroke = Brushes.Gray };
-                rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToBighterOrDarkerConverter(), ConverterParameter = factor });
+                rect.SetBinding(Shape.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToBighterOrDarkerConverter(), ConverterParameter = factor });
                 rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
                 border.Child = rect;
                 if (i == 0)
