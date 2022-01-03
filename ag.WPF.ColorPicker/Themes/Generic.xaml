@@ -315,7 +315,7 @@
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock Grid.Column="0" Margin="4,4,0,2" Text="{Binding Path=(picker:ColorPanel.TitleFormat), RelativeSource={RelativeSource Mode=TemplatedParent}}" VerticalAlignment="Center"/>
-                                                <ComboBox Margin="4,4,4,2" Grid.Column="1" ItemsSource="{Binding ColorStringFormats, RelativeSource={RelativeSource Mode=TemplatedParent}}" SelectedItem="{Binding ColorStringFormat, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                                <ComboBox Margin="4,4,4,2" Grid.Column="1" ItemsSource="{Binding ColorStringFormats, RelativeSource={RelativeSource Mode=TemplatedParent}}" SelectedItem="{Binding Path=(picker:ColorPanel.ColorStringFormat), RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                             </Grid>
                                             <TextBox x:Name="PART_ColorStringTextBox" IsReadOnly="True" VerticalAlignment="Center" Margin="4,2,4,4" Text="{Binding ColorString, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                         </StackPanel>
@@ -577,7 +577,7 @@
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="ShowCommandsPanel" Value="False">
+                        <Trigger Property="picker:ColorPanel.ShowCommandsPanel" Value="False">
                             <Setter Property="Visibility" TargetName="_commandsGrid" Value="Collapsed"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
@@ -729,7 +729,8 @@
                                                    TitleUseAlpha="{Binding Path=(picker:ColorPanel.TitleUseAlpha), RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                    SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"
                                                    UseAlphaChannel="{Binding Path=(picker:ColorPanel.UseAlphaChannel), RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                   ColorStringFormat="{Binding ColorStringFormat, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                                   ColorStringFormat="{Binding Path=(picker:ColorPanel.ColorStringFormat), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                   ShowCommandsPanel="{Binding Path=(picker:ColorPanel.ShowCommandsPanel), RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                             </Popup>
                         </Grid>
                     </Border>
