@@ -51,7 +51,6 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ColorHelpers\Titles.cs" />
     <Compile Include="ColorPicker.cs" />
     <Compile Include="PickerPanel.xaml.cs">
       <DependentUpon>PickerPanel.xaml</DependentUpon>

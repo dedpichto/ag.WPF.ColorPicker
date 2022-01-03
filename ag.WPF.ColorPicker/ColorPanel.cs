@@ -122,7 +122,7 @@ namespace ag.WPF.ColorPicker
         /// <summary>
         /// The identifier of the <see cref="A"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty AProperty = DependencyProperty.Register(nameof(A), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnAChanged));
+        public static readonly DependencyProperty AProperty = DependencyProperty.Register(nameof(A), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata(byte.MaxValue, OnAChanged));
         /// <summary>
         /// The identifier of the <see cref="R"/> dependency property.
         /// </summary>
@@ -168,9 +168,9 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         public static readonly DependencyProperty ShowCommandsPanelProperty = DependencyProperty.Register(nameof(ShowCommandsPanel), typeof(bool), typeof(ColorPanel), new FrameworkPropertyMetadata(true));
         /// <summary>
-        /// The identifier of the <see cref="UseAlphaChannel"/> dependency property.
+        /// The identifier of the <see cref="UseAlphaChannelProperty"/>.
         /// </summary>
-        public static readonly DependencyProperty UseAlphaChannelProperty = DependencyProperty.Register(nameof(UseAlphaChannel), typeof(bool), typeof(ColorPanel), new FrameworkPropertyMetadata(true, OnUseAlphaChannelPropertyChanged));
+        public static readonly DependencyProperty UseAlphaChannelProperty = DependencyProperty.RegisterAttached("UseAlphaChannel", typeof(bool), typeof(ColorPanel), new FrameworkPropertyMetadata(true, OnUseAlphaChannelPropertyChanged));
         /// <summary>
         /// The identifier of the <see cref="ColorStringFormat"/> dependency property.
         /// </summary>
@@ -184,37 +184,41 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         public static readonly DependencyProperty VerticalSpectrumBrushProperty = DependencyProperty.Register(nameof(VerticalSpectrumBrush), typeof(LinearGradientBrush), typeof(ColorPanel), new FrameworkPropertyMetadata(null));
         /// <summary>
-        /// The identifier of the <see cref="TitleTabCustom"/> dependency property.
+        /// The identifier of the <see cref="TitleTabCustomProperty"/>.
         /// </summary>
-        public static readonly DependencyProperty TitleTabCustomProperty = DependencyProperty.Register(nameof(TitleTabCustom), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Custom"));
+        public static readonly DependencyProperty TitleTabCustomProperty = DependencyProperty.RegisterAttached("TitleTabCustom", typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Custom"));
         /// <summary>
-        /// The identifier of the <see cref="TitleTabBasic"/> dependency property.
+        /// The identifier of the <see cref="TitleTabBasicProperty"/>.
         /// </summary>
-        public static readonly DependencyProperty TitleTabBasicProperty = DependencyProperty.Register(nameof(TitleTabBasic), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Basic"));
+        public static readonly DependencyProperty TitleTabBasicProperty = DependencyProperty.RegisterAttached("TitleTabBasic", typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Basic"));
         /// <summary>
-        /// The identifier of the <see cref="TitleTabStandard"/> dependency property.
+        /// The identifier of the <see cref="TitleTabStandardProperty"/>.
         /// </summary>
-        public static readonly DependencyProperty TitleTabStandardProperty = DependencyProperty.Register(nameof(TitleTabStandard), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Standard"));
+        public static readonly DependencyProperty TitleTabStandardProperty = DependencyProperty.RegisterAttached("TitleTabStandard", typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Standard"));
         /// <summary>
-        /// The identifier of the <see cref="TitleFormat"/> dependency property.
+        /// The identifier of the <see cref="TitleFormatProperty"/>.
         /// </summary>
-        public static readonly DependencyProperty TitleFormatProperty = DependencyProperty.Register(nameof(TitleFormat), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Format"));
+        public static readonly DependencyProperty TitleFormatProperty = DependencyProperty.RegisterAttached("TitleFormat", typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Format"));
         /// <summary>
-        /// The identifier of the <see cref="TitleColorModes"/> dependency property.
+        /// The identifier of the <see cref="TitleColorModesProperty"/>.
         /// </summary>
-        public static readonly DependencyProperty TitleColorModesProperty = DependencyProperty.Register(nameof(TitleColorModes), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Color modes"));
+        public static readonly DependencyProperty TitleColorModesProperty = DependencyProperty.RegisterAttached("TitleColorModes", typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Color modes"));
         /// <summary>
-        /// The identifier of the <see cref="TitleUseAlpha"/> dependency property.
+        /// The identifier of the <see cref="TitleUseAlphaProperty"/>.
         /// </summary>
-        public static readonly DependencyProperty TitleUseAlphaProperty = DependencyProperty.Register(nameof(TitleUseAlpha), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Use alpha chanell"));
+        public static readonly DependencyProperty TitleUseAlphaProperty = DependencyProperty.RegisterAttached("TitleUseAlpha", typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Use alpha chanell"));
         /// <summary>
-        /// The identifier of the <see cref="TitleCancel"/> dependency property.
+        /// The identifier of the <see cref="TitleApplyProperty"/>.
         /// </summary>
-        public static readonly DependencyProperty TitleCancelProperty = DependencyProperty.Register(nameof(TitleCancel), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Cancel"));
+        public static readonly DependencyProperty TitleApplyProperty = DependencyProperty.RegisterAttached("TitleApply", typeof(string), typeof(ColorPanel), new PropertyMetadata("Apply"));
         /// <summary>
-        /// The identifier of the <see cref="TitleShadesAndTints"/> dependency property.
+        /// The identifier of the <see cref="TitleCancelProperty"/>.
         /// </summary>
-        public static readonly DependencyProperty TitleShadesAndTintsProperty = DependencyProperty.Register(nameof(TitleShadesAndTints), typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Shades and tints"));
+        public static readonly DependencyProperty TitleCancelProperty = DependencyProperty.RegisterAttached("TitleCancel", typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Cancel"));
+        /// <summary>
+        /// The identifier of the <see cref="TitleShadesAndTintsProperty"/>.
+        /// </summary>
+        public static readonly DependencyProperty TitleShadesAndTintsProperty = DependencyProperty.RegisterAttached("TitleShadesAndTints", typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Shades and tints"));
         #endregion
 
         #region Routed events
@@ -260,77 +264,77 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Dependency properties handlers
-        /// <summary>
-        /// Gets or sets the title of shades and tints group.
-        /// </summary>
-        public string TitleShadesAndTints
-        {
-            get => (string)GetValue(TitleShadesAndTintsProperty);
-            set { SetValue(TitleShadesAndTintsProperty, value); }
-        }
+        ///// <summary>
+        ///// Gets or sets the title of shades and tints group.
+        ///// </summary>
+        //public string TitleShadesAndTints
+        //{
+        //    get => (string)GetValue(TitleShadesAndTintsProperty);
+        //    set { SetValue(TitleShadesAndTintsProperty, value); }
+        //}
 
-        /// <summary>
-        /// Gets or sets the title of Cancel button.
-        /// </summary>
-        public string TitleCancel
-        {
-            get => (string)GetValue(TitleCancelProperty);
-            set => SetValue(TitleCancelProperty, value);
-        }
+        ///// <summary>
+        ///// Gets or sets the title of Cancel button.
+        ///// </summary>
+        //public string TitleCancel
+        //{
+        //    get => (string)GetValue(TitleCancelProperty);
+        //    set => SetValue(TitleCancelProperty, value);
+        //}
 
-        /// <summary>
-        /// Gets or sets the title of Use lpha channel check box.
-        /// </summary>
-        public string TitleUseAlpha
-        {
-            get { return (string)GetValue(TitleUseAlphaProperty); }
-            set { SetValue(TitleUseAlphaProperty, value); } 
-        }
+        ///// <summary>
+        ///// Gets or sets the title of Use lpha channel check box.
+        ///// </summary>
+        //public string TitleUseAlpha
+        //{
+        //    get { return (string)GetValue(TitleUseAlphaProperty); }
+        //    set { SetValue(TitleUseAlphaProperty, value); }
+        //}
 
-        /// <summary>
-        /// Gets or sets the title of color modes group.
-        /// </summary>
-        public string TitleColorModes
-        {
-            get { return (string)GetValue(TitleColorModesProperty); }
-            set { SetValue(TitleColorModesProperty, value); }
-        }
+        ///// <summary>
+        ///// Gets or sets the title of color modes group.
+        ///// </summary>
+        //public string TitleColorModes
+        //{
+        //    get { return (string)GetValue(TitleColorModesProperty); }
+        //    set { SetValue(TitleColorModesProperty, value); }
+        //}
 
-        /// <summary>
-        /// Gets or sets the title of Format combo box.
-        /// </summary>
-        public string TitleFormat
-        {
-            get => (string)GetValue(TitleFormatProperty);
-            set => SetValue(TitleFormatProperty, value);   
-        }
+        ///// <summary>
+        ///// Gets or sets the title of Format combo box.
+        ///// </summary>
+        //public string TitleFormat
+        //{
+        //    get => (string)GetValue(TitleFormatProperty);
+        //    set => SetValue(TitleFormatProperty, value);
+        //}
 
-        /// <summary>
-        /// Gets or sets the title of Standard colors tab.
-        /// </summary>
-        public string TitleTabStandard
-        {
-            get => (string)GetValue(TitleTabStandardProperty);
-            set => SetValue(TitleTabStandardProperty, value);
-        }
+        ///// <summary>
+        ///// Gets or sets the title of Standard colors tab.
+        ///// </summary>
+        //public string TitleTabStandard
+        //{
+        //    get => (string)GetValue(TitleTabStandardProperty);
+        //    set => SetValue(TitleTabStandardProperty, value);
+        //}
 
-        /// <summary>
-        /// Gets or sets the title of Basic colors tab.
-        /// </summary>
-        public string TitleTabBasic
-        {
-            get { return (string)GetValue(TitleTabBasicProperty); }
-            set { SetValue(TitleTabBasicProperty, value); }
-        }
+        ///// <summary>
+        ///// Gets or sets the title of Basic colors tab.
+        ///// </summary>
+        //public string TitleTabBasic
+        //{
+        //    get { return (string)GetValue(TitleTabBasicProperty); }
+        //    set { SetValue(TitleTabBasicProperty, value); }
+        //}
 
-        /// <summary>
-        /// Gets or sets the title of Custom colors tab.
-        /// </summary>
-        public string TitleTabCustom
-        {
-            get { return (string)GetValue(TitleTabCustomProperty);}
-            set { SetValue(TitleTabCustomProperty, value); }
-        }
+        ///// <summary>
+        ///// Gets or sets the title of Custom colors tab.
+        ///// </summary>
+        //public string TitleTabCustom
+        //{
+        //    get { return (string)GetValue(TitleTabCustomProperty); }
+        //    set { SetValue(TitleTabCustomProperty, value); }
+        //}
 
         /// <summary>
         /// Gets or sets vertical spectrum brush.
@@ -377,15 +381,6 @@ namespace ag.WPF.ColorPicker
         {
             get => (string)GetValue(ColorStringProperty);
             private set => SetValue(ColorStringProperty, value);
-        }
-
-        /// <summary>
-        /// Specifies whether alpha channel is used.
-        /// </summary>
-        public bool UseAlphaChannel
-        {
-            get => (bool)GetValue(UseAlphaChannelProperty);
-            set => SetValue(UseAlphaChannelProperty, value);
         }
 
         /// <summary>
@@ -458,7 +453,7 @@ namespace ag.WPF.ColorPicker
         }
 
         /// <summary>
-        ///  Gets or sets A value of selected color.
+        /// Gets or sets A value of selected color.
         /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public byte A
@@ -468,7 +463,7 @@ namespace ag.WPF.ColorPicker
         }
 
         /// <summary>
-        ///  Gets or sets R value of selected color.
+        /// Gets or sets R value of selected color.
         /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public byte R
@@ -478,7 +473,7 @@ namespace ag.WPF.ColorPicker
         }
 
         /// <summary>
-        ///  Gets or sets G value of selected color.
+        /// Gets or sets G value of selected color.
         /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public byte G
@@ -488,7 +483,7 @@ namespace ag.WPF.ColorPicker
         }
 
         /// <summary>
-        ///  Gets or sets B value of selected color.
+        /// Gets or sets B value of selected color.
         /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public byte B
@@ -496,6 +491,59 @@ namespace ag.WPF.ColorPicker
             get => (byte)GetValue(BProperty);
             set => SetValue(BProperty, value);
         }
+        #endregion
+
+        #region Attached properties handlers
+        /// <summary>
+        /// Gets the value of the <see cref="UseAlphaChannelProperty"/>.
+        /// </summary>
+        /// <param name="dependencyObject">DependencyObject.</param>
+        /// <returns>Boolean.</returns>
+        public static bool GetUseAlphaChannel(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(UseAlphaChannelProperty);
+
+        /// <summary>
+        /// Sets the value of the <see cref="UseAlphaChannelProperty"/>.
+        /// </summary>
+        /// <param name="dependencyObject">DependencyObject.</param>
+        /// <param name="value">Boolean.</param>
+        public static void SetUseAlphaChannel(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(UseAlphaChannelProperty, value);
+
+        public static string GetTitleShadesAndTints(DependencyObject dependencyObject) => (string)dependencyObject.GetValue(TitleShadesAndTintsProperty);
+
+        public static void SetTitleShadesAndTints(DependencyObject dependencyObject, string value) => dependencyObject.SetValue(TitleShadesAndTintsProperty, value);
+
+        public static string GetTitleCancel(DependencyObject dependencyObject) => (string)dependencyObject.GetValue(TitleCancelProperty);
+
+        public static void SetTitleCancel(DependencyObject dependencyObject, string value) => dependencyObject.SetValue(TitleCancelProperty, value);
+
+        public static string GetTitleUseAlpha(DependencyObject dependencyObject) => (string)dependencyObject.GetValue(TitleUseAlphaProperty);
+
+        public static void SetTitleUseAlpha(DependencyObject dependencyObject, string value) => dependencyObject.SetValue(TitleUseAlphaProperty, value);
+
+        public static string GetTitleApply(DependencyObject dependencyObject) => (string)dependencyObject.GetValue(TitleApplyProperty);
+
+        public static void SetTitleApply(DependencyObject dependencyObject, string value) => dependencyObject.SetValue(TitleApplyProperty, value);
+
+        public static string GetTitleColorModes(DependencyObject dependencyObject) => (string)dependencyObject.GetValue(TitleColorModesProperty);
+
+        public static void SetTitleColorModes(DependencyObject dependencyObject, string value) => dependencyObject.SetValue(TitleColorModesProperty, value);
+
+        public static string GetTitleFormat(DependencyObject dependencyObject) => (string)dependencyObject.GetValue(TitleFormatProperty);
+
+        public static void SetTitleFormat(DependencyObject dependencyObject, string value) => dependencyObject.SetValue(TitleFormatProperty, value);
+
+        public static string GetTitleTabStandard(DependencyObject dependencyObject) => (string)dependencyObject.GetValue(TitleTabStandardProperty);
+
+        public static void SetTitleTabStandard(DependencyObject dependencyObject, string value) => dependencyObject.SetValue(TitleTabStandardProperty, value);
+
+        public static string GetTitleTabBasic(DependencyObject dependencyObject) => (string)dependencyObject.GetValue(TitleTabBasicProperty);
+
+        public static void SetTitleTabBasic(DependencyObject dependencyObject, string value) => dependencyObject.SetValue(TitleTabBasicProperty, value);
+
+        public static string GetTitleTabCustom(DependencyObject dependencyObject) => (string)dependencyObject.GetValue(TitleTabCustomProperty);
+
+        public static void SetTitleTabCustom(DependencyObject dependencyObject, string value) => dependencyObject.SetValue(TitleTabCustomProperty, value);
+
         #endregion
 
         #region OnXXXChanged procedures
@@ -677,7 +725,7 @@ namespace ag.WPF.ColorPicker
         }
 
         /// <summary>
-        /// Occurs when the <see cref="A"/>, <see cref="R"/>, <see cref="G"/> or <see cref="B"/> property has been changed in some way.
+        /// Occurs when the <see cref="R"/>, <see cref="G"/> or <see cref="B"/> property has been changed in some way.
         /// </summary>
         protected virtual void OnRGBChanged(byte oldValue, byte newValue)
         {
@@ -693,7 +741,7 @@ namespace ag.WPF.ColorPicker
         }
 
         /// <summary>
-        /// Occurs when the <see cref="A"/>, <see cref="R"/>, <see cref="G"/> or <see cref="B"/> property has been changed in some way.
+        /// Occurs when the <see cref="A"/> property has been changed in some way.
         /// </summary>
         protected virtual void OnAChanged(byte oldValue, byte newValue)
         {
@@ -858,7 +906,7 @@ namespace ag.WPF.ColorPicker
             ColorString = GetColorString();
             UpdateColorShadeSelectorPosition();
 
-            CreatesShadesAndTints();
+            CreateShadesAndTints();
 
         }
         #endregion
@@ -1078,14 +1126,14 @@ namespace ag.WPF.ColorPicker
             }
         }
 
-        private void CreatesShadesAndTints()
+        private void CreateShadesAndTints()
         {
             var transparentBackgroundBrush = Utils.TransparentBrush();
             var step = 1.0 / (SHADES_COUNT - 1);
             var factor = 0.0;
             for (var i = 0; i < SHADES_COUNT; i++)
             {
-                var border = new Border { Background = transparentBackgroundBrush };
+                var border = new Border { Background = transparentBackgroundBrush, MinWidth = 24  };
                 var rect = new Rectangle() { Cursor = Cursors.Hand, Stroke = Brushes.Gray };
                 rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToBighterOrDarkerConverter(), ConverterParameter = factor });
                 rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
@@ -1107,7 +1155,7 @@ namespace ag.WPF.ColorPicker
             factor = 0.0;
             for (var i = 0; i < SHADES_COUNT; i++)
             {
-                var border = new Border { Background = transparentBackgroundBrush };
+                var border = new Border { Background = transparentBackgroundBrush, MinWidth = 24 };
                 var rect = new Rectangle() { Cursor = Cursors.Hand, Stroke = Brushes.Gray };
                 rect.SetBinding(Rectangle.FillProperty, new Binding(nameof(SelectedColor)) { Source = this, Converter = new ColorToBighterOrDarkerConverter(), ConverterParameter = factor });
                 rect.MouseLeftButtonDown += Rect_MouseLeftButtonDown;
@@ -1234,7 +1282,7 @@ namespace ag.WPF.ColorPicker
 
         private static bool IsNonColor(Color color) => (color.R == color.G && color.G == color.B);
 
-        private void UpdateSelectedColor() => SelectedColor = Color.FromArgb(UseAlphaChannel ? A : (byte)255, R, G, B);
+        private void UpdateSelectedColor() => SelectedColor = Color.FromArgb((bool)GetValue(UseAlphaChannelProperty) ? A : (byte)255, R, G, B);
         #endregion
 
         #region Internal procedures

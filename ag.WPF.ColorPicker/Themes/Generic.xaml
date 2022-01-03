@@ -1,8 +1,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:picker="clr-namespace:ag.WPF.ColorPicker"
-    xmlns:helpers="clr-namespace:ag.WPF.ColorPicker.ColorHelpers">
+    xmlns:picker="clr-namespace:ag.WPF.ColorPicker">
 
     <picker:OpaqueColorConverter x:Key="OpaqueColorConverter"/>
     <picker:PureColorConverter x:Key="PureColorConverter"/>
@@ -233,7 +232,7 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                         <TabControl x:Name="PART_TabMain">
-                            <TabItem Name="_tabCustom" Header="{Binding TitleTabCustom, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                            <TabItem Name="_tabCustom" Header="{Binding Path=(picker:ColorPanel.TitleTabCustom), RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                 <Grid x:Name="_customGrid">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -279,7 +278,7 @@
                                             </Canvas>
                                         </Canvas>
                                     </Border>
-                                    <picker:ColorSlider x:Name="PART_SpectrumSlider" Background="{Binding VerticalSpectrumBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}" VerticalAlignment="Stretch" Grid.Column="1" Grid.RowSpan="5" Margin="8,0,0,0" />
+                                    <picker:ColorSlider x:Name="PART_SpectrumSlider" Background="{Binding VerticalSpectrumBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}" A="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}"  VerticalAlignment="Stretch" Grid.Column="1" Grid.RowSpan="5" Margin="8,0,0,0" />
 
                                     <Grid Grid.Column="0" Grid.Row="1">
                                         <Grid.ColumnDefinitions>
@@ -315,7 +314,7 @@
                                                     <ColumnDefinition Width="auto"/>
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Margin="4,4,0,2" Text="{Binding TitleFormat, RelativeSource={RelativeSource Mode=TemplatedParent}}" VerticalAlignment="Center"/>
+                                                <TextBlock Grid.Column="0" Margin="4,4,0,2" Text="{Binding Path=(picker:ColorPanel.TitleFormat), RelativeSource={RelativeSource Mode=TemplatedParent}}" VerticalAlignment="Center"/>
                                                 <ComboBox Margin="4,4,4,2" Grid.Column="1" ItemsSource="{Binding ColorStringFormats, RelativeSource={RelativeSource Mode=TemplatedParent}}" SelectedItem="{Binding ColorStringFormat, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                             </Grid>
                                             <TextBox x:Name="PART_ColorStringTextBox" IsReadOnly="True" VerticalAlignment="Center" Margin="4,2,4,4" Text="{Binding ColorString, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
@@ -325,7 +324,7 @@
                                         </Border>
                                     </Grid>
 
-                                    <GroupBox Grid.Column="0" Grid.Row="2" Header="{Binding TitleColorModes, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                    <GroupBox Grid.Column="0" Grid.Row="2" Header="{Binding Path=(picker:ColorPanel.TitleColorModes), RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                         <TabControl>
                                             <TabItem Header="RGB">
                                                 <Grid>
@@ -478,7 +477,7 @@
                                     </GroupBox>
 
                                     <StackPanel Grid.Column="0" Grid.Row="3" Margin="0,0,0,5">
-                                        <CheckBox x:Name="_useAlpha" Margin="0,4,0,0" Content="{Binding TitleUseAlpha, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsChecked="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                        <CheckBox x:Name="_useAlpha" Margin="0,4,0,0" Content="{Binding Path=(picker:ColorPanel.TitleUseAlpha), RelativeSource={RelativeSource Mode=TemplatedParent}}" IsChecked="{Binding Path=(picker:ColorPanel.UseAlphaChannel), RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="auto"/>
@@ -500,7 +499,7 @@
                                         </Grid>
                                     </StackPanel>
 
-                                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="{Binding TitleShadesAndTints, RelativeSource={RelativeSource Mode=TemplatedParent}}" Margin="10,0,0,0">
+                                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="{Binding Path=(picker:ColorPanel.TitleShadesAndTints), RelativeSource={RelativeSource Mode=TemplatedParent}}" Margin="10,0,0,0">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition/>
@@ -512,7 +511,7 @@
                                     </GroupBox>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="{Binding TitleTabBasic, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                            <TabItem Header="{Binding Path=(picker:ColorPanel.TitleTabBasic), RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                 <UniformGrid x:Name="PART_Basic" Rows="6" Columns="8">
                                     <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFFFFF"/>
                                     <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0C0FF"/>
@@ -564,7 +563,7 @@
                                     <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF400040"/>
                                 </UniformGrid>
                             </TabItem>
-                            <TabItem Header="{Binding TitleTabStandard, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                            <TabItem Header="{Binding Path=(picker:ColorPanel.TitleTabStandard), RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                 <ListBox x:Name="PART_ListStandard" Height="{Binding ActualHeight, ElementName=_customGrid, Mode=OneWay}"/>
                             </TabItem>
                         </TabControl>
@@ -573,8 +572,8 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
-                            <Button x:Name="PART_ApplyButton" Content="{Binding Path=(helpers:Titles.TitleApply), RelativeSource={RelativeSource Mode=TemplatedParent}}" HorizontalAlignment="Right" Margin="4" Padding="2" MinWidth="64"/>
-                            <Button x:Name="PART_CancelButton" Grid.Column="1" Content="{Binding TitleCancel, RelativeSource={RelativeSource Mode=TemplatedParent}}" Margin="4" Padding="2" MinWidth="64"/>
+                            <Button x:Name="PART_ApplyButton" Content="{Binding Path=(picker:ColorPanel.TitleApply), RelativeSource={RelativeSource Mode=TemplatedParent}}" HorizontalAlignment="Right" Margin="4" Padding="2" MinWidth="64"/>
+                            <Button x:Name="PART_CancelButton" Grid.Column="1" Content="{Binding Path=(picker:ColorPanel.TitleCancel), RelativeSource={RelativeSource Mode=TemplatedParent}}" Margin="4" Padding="2" MinWidth="64"/>
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -719,16 +718,17 @@
                                 <picker:ColorPanel x:Name="PART_ColorPanel" 
                                                    Width="400" 
                                                    Height="426" 
-                                                   TitleCancel="{Binding TitleCancel, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                   TitleColorModes="{Binding TitleColorModes, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                   TitleFormat="{Binding TitleFormat, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                   TitleShadesAndTints="{Binding TitleShadesAndTints, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                   TitleTabBasic="{Binding TitleTabBasic, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                   TitleTabCustom="{Binding TitleTabCustom, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                   TitleTabStandard="{Binding TitleTabStandard, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                   TitleUseAlpha="{Binding TitleUseAlpha, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                   TitleCancel="{Binding Path=(picker:ColorPanel.TitleCancel), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                   TitleApply="{Binding Path=(picker:ColorPanel.TitleApply), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                   TitleColorModes="{Binding Path=(picker:ColorPanel.TitleColorModes), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                   TitleFormat="{Binding Path=(picker:ColorPanel.TitleFormat), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                   TitleShadesAndTints="{Binding Path=(picker:ColorPanel.TitleShadesAndTints), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                   TitleTabBasic="{Binding Path=(picker:ColorPanel.TitleTabBasic), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                   TitleTabCustom="{Binding Path=(picker:ColorPanel.TitleTabCustom), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                   TitleTabStandard="{Binding Path=(picker:ColorPanel.TitleTabStandard), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                   TitleUseAlpha="{Binding Path=(picker:ColorPanel.TitleUseAlpha), RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                    SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"
-                                                   UseAlphaChannel="{Binding UseAlphaChannel, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                   UseAlphaChannel="{Binding Path=(picker:ColorPanel.UseAlphaChannel), RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                    ColorStringFormat="{Binding ColorStringFormat, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                             </Popup>
                         </Grid>

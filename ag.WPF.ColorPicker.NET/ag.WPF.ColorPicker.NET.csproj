@@ -10,7 +10,6 @@
     <Compile Include="..\ag.WPF.ColorPicker\ColorConverters.cs" Link="ColorConverters.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\ColorHelpers\HSBColor.cs" Link="ColorHelpers\HSBColor.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\ColorHelpers\HSLColor.cs" Link="ColorHelpers\HSLColor.cs" />
-    <Compile Include="..\ag.WPF.ColorPicker\ColorHelpers\Titles.cs" Link="ColorHelpers\Titles.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\ColorHelpers\Utils.cs" Link="ColorHelpers\Utils.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\ColorPanel.cs" Link="ColorPanel.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\ColorPicker.cs" Link="ColorPicker.cs" />
