@@ -40,6 +40,21 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         HSL
     }
+
+    /// <summary>
+    /// Represents available <see cref="ColorPanel"/> view
+    /// </summary>
+    public enum PanelView
+    {
+        /// <summary>
+        /// Standard view
+        /// </summary>
+        Standard,
+        /// <summary>
+        /// Simple view
+        /// </summary>
+        Simple
+    }
     #endregion
 
     /// <summary>
@@ -222,6 +237,10 @@ namespace ag.WPF.ColorPicker
         /// The identifier of the <see cref="TitleShadesAndTintsProperty"/>.
         /// </summary>
         public static readonly DependencyProperty TitleShadesAndTintsProperty = DependencyProperty.RegisterAttached("TitleShadesAndTints", typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Shades and tints"));
+        /// <summary>
+        /// The identifier of the <see cref="PanelViewProperty"/>.
+        /// </summary>
+        public static readonly DependencyProperty PanelViewProperty = DependencyProperty.RegisterAttached("PanelView", typeof(PanelView), typeof(ColorPanel), new FrameworkPropertyMetadata(PanelView.Standard));
         #endregion
 
         #region Routed events
@@ -498,6 +517,19 @@ namespace ag.WPF.ColorPicker
 
         #region Attached properties handlers
         /// <summary>
+        /// Gets the value of the <see cref="PanelViewProperty"/>.
+        /// </summary>
+        /// <param name="dependencyObject">DependencyObject.</param>
+        /// <returns>One of <see cref="PanelView"/> enum constants.</returns>
+        public static PanelView GetPanelView(DependencyObject dependencyObject)=>(PanelView)dependencyObject.GetValue(PanelViewProperty);
+        /// <summary>
+        /// Sets the value of the <see cref="PanelViewProperty"/>.
+        /// </summary>
+        /// <param name="dependencyObject">DependencyObject.</param>
+        /// <param name="value">One of <see cref="PanelView"/> enum constants.</param>
+        public static void SetPanelView(DependencyObject dependencyObject, PanelView value)=>dependencyObject.SetValue(PanelViewProperty, value);
+
+        /// <summary>
         /// Gets the value of the <see cref="UseAlphaChannelProperty"/>.
         /// </summary>
         /// <param name="dependencyObject">DependencyObject.</param>
@@ -631,13 +663,13 @@ namespace ag.WPF.ColorPicker
         /// Gets the value of the <see cref="ColorStringFormatProperty"/>.
         /// </summary>
         /// <param name="dependencyObject">DependencyObject.</param>
-        /// <returns>ColorStringFormat.</returns>
+        /// <returns>One of <see cref="ColorStringFormat"/> enum constants.</returns>
         public static ColorStringFormat GetColorStringFormat(DependencyObject dependencyObject) => (ColorStringFormat)dependencyObject.GetValue(ColorStringFormatProperty);
         /// <summary>
         /// Sets the value of the <see cref="ColorStringFormatProperty"/>.
         /// </summary>
         /// <param name="dependencyObject">DependencyObject.</param>
-        /// <param name="value">ColorStringFormat.</param>
+        /// <param name="value">One of <see cref="ColorStringFormat"/> enum constants.</param>
         public static void SetColorStringFormat(DependencyObject dependencyObject, ColorStringFormat value) => dependencyObject.SetValue(ColorStringFormatProperty, value);
 
         /// <summary>

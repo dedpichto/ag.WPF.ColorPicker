@@ -232,7 +232,7 @@
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                         <TabControl x:Name="PART_TabMain">
-                            <TabItem Name="_tabCustom" Header="{Binding Path=(picker:ColorPanel.TitleTabCustom), RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                            <TabItem x:Name="_tabCustom" Header="{Binding Path=(picker:ColorPanel.TitleTabCustom), RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                 <Grid x:Name="_customGrid">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -245,12 +245,12 @@
                                         <RowDefinition Height="auto"/>
                                         <RowDefinition Height="auto"/>
                                     </Grid.RowDefinitions>
-                                    <Border x:Name="borderCanvas" 
+                                    <Border x:Name="_borderCanvas" 
                                             BorderBrush="{StaticResource ColorPanelCanvasBorderBrush}" 
                                             BorderThickness="1" Margin="0,5,0,0" 
                                             ClipToBounds="True" 
                                             Background="{StaticResource TransparentBackgroundBrush}">
-                                        <Canvas x:Name="PART_ColorShadingCanvas" Height="{Binding ActualHeight, ElementName=borderCanvas}" Width="{Binding ActualWidth, ElementName=borderCanvas}">
+                                        <Canvas x:Name="PART_ColorShadingCanvas" Height="{Binding ActualHeight, ElementName=_borderCanvas}" Width="{Binding ActualWidth, ElementName=_borderCanvas}">
                                             <Rectangle x:Name="ColorShadingRectangle" Height="{Binding ActualHeight, ElementName=PART_ColorShadingCanvas}" Width="{Binding ActualWidth, ElementName=PART_ColorShadingCanvas}">
                                                 <Rectangle.Fill>
                                                     <SolidColorBrush Color="{Binding ElementName=PART_SpectrumSlider, Path=SelectedColor}"/>
@@ -315,7 +315,7 @@
                                                     <ColumnDefinition/>
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock Grid.Column="0" Margin="4,4,0,2" Text="{Binding Path=(picker:ColorPanel.TitleFormat), RelativeSource={RelativeSource Mode=TemplatedParent}}" VerticalAlignment="Center"/>
-                                                <ComboBox Margin="4,4,4,2" Grid.Column="1" ItemsSource="{Binding ColorStringFormats, RelativeSource={RelativeSource Mode=TemplatedParent}}" SelectedItem="{Binding Path=(picker:ColorPanel.ColorStringFormat), RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                                <ComboBox x:Name="_comboFormat" Margin="4,4,4,2" Grid.Column="1" ItemsSource="{Binding ColorStringFormats, RelativeSource={RelativeSource Mode=TemplatedParent}}" SelectedItem="{Binding Path=(picker:ColorPanel.ColorStringFormat), RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                             </Grid>
                                             <TextBox x:Name="PART_ColorStringTextBox" IsReadOnly="True" VerticalAlignment="Center" Margin="4,2,4,4" Text="{Binding ColorString, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                         </StackPanel>
@@ -324,7 +324,7 @@
                                         </Border>
                                     </Grid>
 
-                                    <GroupBox Grid.Column="0" Grid.Row="2" Header="{Binding Path=(picker:ColorPanel.TitleColorModes), RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                    <GroupBox x:Name="_groupModes" Grid.Column="0" Grid.Row="2" Header="{Binding Path=(picker:ColorPanel.TitleColorModes), RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                         <TabControl>
                                             <TabItem Header="RGB">
                                                 <Grid>
@@ -476,7 +476,7 @@
                                         </TabControl>
                                     </GroupBox>
 
-                                    <StackPanel Grid.Column="0" Grid.Row="3" Margin="0,0,0,5">
+                                    <StackPanel x:Name="_panelAlpha" Grid.Column="0" Grid.Row="3" Margin="0,0,0,5">
                                         <CheckBox x:Name="_useAlpha" Margin="0,4,0,0" Content="{Binding Path=(picker:ColorPanel.TitleUseAlpha), RelativeSource={RelativeSource Mode=TemplatedParent}}" IsChecked="{Binding Path=(picker:ColorPanel.UseAlphaChannel), RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -499,7 +499,7 @@
                                         </Grid>
                                     </StackPanel>
 
-                                    <GroupBox Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="{Binding Path=(picker:ColorPanel.TitleShadesAndTints), RelativeSource={RelativeSource Mode=TemplatedParent}}" Margin="10,0,0,0">
+                                    <GroupBox x:Name="_groupShades" Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="{Binding Path=(picker:ColorPanel.TitleShadesAndTints), RelativeSource={RelativeSource Mode=TemplatedParent}}" Margin="10,0,0,4">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition/>
@@ -511,7 +511,7 @@
                                     </GroupBox>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="{Binding Path=(picker:ColorPanel.TitleTabBasic), RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                            <TabItem x:Name="_tabBasic" Header="{Binding Path=(picker:ColorPanel.TitleTabBasic), RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                 <UniformGrid x:Name="PART_Basic" Rows="6" Columns="8">
                                     <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFFFFFFF"/>
                                     <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FFC0C0FF"/>
@@ -563,7 +563,7 @@
                                     <RadioButton Style="{StaticResource ColorRadio}" Cursor="Hand" Background="#FF400040"/>
                                 </UniformGrid>
                             </TabItem>
-                            <TabItem Header="{Binding Path=(picker:ColorPanel.TitleTabStandard), RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                            <TabItem x:Name="_tabStandard" Header="{Binding Path=(picker:ColorPanel.TitleTabStandard), RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                 <ListBox x:Name="PART_ListStandard" Height="{Binding ActualHeight, ElementName=_customGrid, Mode=OneWay}"/>
                             </TabItem>
                         </TabControl>
@@ -577,6 +577,16 @@
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="picker:ColorPanel.PanelView" Value="Simple">
+                            <Setter Property="Visibility" TargetName="_tabBasic" Value="Collapsed"/>
+                            <Setter Property="Visibility" TargetName="_tabStandard" Value="Collapsed"/>
+                            <Setter Property="Visibility" TargetName="_groupModes" Value="Collapsed"/>
+                            <Setter Property="Visibility" TargetName="_panelAlpha" Value="Collapsed"/>
+                            <Setter Property="Visibility" TargetName="_groupShades" Value="Collapsed"/>
+                            <Setter Property="Height" TargetName="_borderCanvas" Value="84"/>
+                            <Setter Property="Height" Value="202"/>
+                            <Setter Property="Grid.RowSpan" TargetName="PART_SpectrumSlider" Value="2"/>
+                        </Trigger>
                         <Trigger Property="picker:ColorPanel.ShowCommandsPanel" Value="False">
                             <Setter Property="Visibility" TargetName="_commandsGrid" Value="Collapsed"/>
                         </Trigger>
@@ -730,11 +740,15 @@
                                                    SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"
                                                    UseAlphaChannel="{Binding Path=(picker:ColorPanel.UseAlphaChannel), RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                    ColorStringFormat="{Binding Path=(picker:ColorPanel.ColorStringFormat), RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                                   PanelView="{Binding Path=(picker:ColorPanel.PanelView), RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                    ShowCommandsPanel="{Binding Path=(picker:ColorPanel.ShowCommandsPanel), RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                             </Popup>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="picker:ColorPanel.PanelView" Value="Simple">
+                            <Setter Property="Height" TargetName="PART_ColorPanel" Value="208"/>
+                        </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter TargetName="PART_ColorBorder" Property="Background" Value="{StaticResource DisabledBrush}"/>
                             <Setter TargetName="_dropFillPath" Property="Fill" Value="{StaticResource DisabledBrush}"/>
