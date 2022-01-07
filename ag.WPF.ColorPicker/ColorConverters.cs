@@ -275,5 +275,85 @@ namespace ag.WPF.ColorPicker
             throw new NotImplementedException();
         }
     }
+
+    /// <summary>
+    /// Converts byte value to and from HEX string.
+    /// </summary>
+    public class ARGBHexStringConverter : IValueConverter
+    {
+        /// <summary>
+        /// Converts byte value to HEX string.
+        /// </summary>
+        /// <param name="value">Byte.</param>
+        /// <param name="targetType">Not used.</param>
+        /// <param name="parameter">Not used.</param>
+        /// <param name="culture">Not used.</param>
+        /// <returns>String.</returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is byte b)
+            {
+                var result = $"{b:X2}";
+                if (b != 0 && result.StartsWith("0"))
+                    result = result.Substring(1);
+                return result;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        /// Converts HEX string to byte value.
+        /// </summary>
+        /// <param name="value">String.</param>
+        /// <param name="targetType">Not used.</param>
+        /// <param name="parameter">Not used.</param>
+        /// <param name="culture">Not used.</param>
+        /// <returns>Byte.</returns>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string s)
+                return !string.IsNullOrEmpty(s) ? System.Convert.ToByte($"0x{s}", 16) : 0;
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Converts byte value to and from HEX string.
+    /// </summary>
+    public class ARGBStringConverter : IValueConverter
+    {
+        /// <summary>
+        /// Converts byte value to byte string.
+        /// </summary>
+        /// <param name="value">Byte.</param>
+        /// <param name="targetType">Not used.</param>
+        /// <param name="parameter">Not used.</param>
+        /// <param name="culture">Not used.</param>
+        /// <returns>String.</returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is byte b)
+                return b.ToString();
+            return null;
+        }
+
+        /// <summary>
+        /// Converts byte string to byte value.
+        /// </summary>
+        /// <param name="value">String.</param>
+        /// <param name="targetType">Not used.</param>
+        /// <param name="parameter">Not used.</param>
+        /// <param name="culture">Not used.</param>
+        /// <returns>Byte.</returns>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            int result = 0;
+            if (value is string s)
+                result = !string.IsNullOrEmpty(s) ? System.Convert.ToInt32(s) : 0;
+            if (result > byte.MaxValue) result = byte.MaxValue;
+            return (byte)result;
+        }
+    }
 #nullable restore
 }

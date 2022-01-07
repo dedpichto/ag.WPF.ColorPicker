@@ -14,6 +14,7 @@
     <Compile Include="..\ag.WPF.ColorPicker\ColorPanel.cs" Link="ColorPanel.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\ColorPicker.cs" Link="ColorPicker.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\ColorSlider.cs" Link="ColorSlider.cs" />
+    <Compile Include="..\ag.WPF.ColorPicker\ColorStringBox.cs" Link="ColorStringBox.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\PickerPanel.xaml.cs" Link="PickerPanel.xaml.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\StandardColorItem.cs" Link="StandardColorItem.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\UnsafeNativeMethods.cs" Link="UnsafeNativeMethods.cs" />

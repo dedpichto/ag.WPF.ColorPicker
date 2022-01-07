@@ -10,6 +10,8 @@
     <picker:UpDownForegroundConverter x:Key="UpDownForegroundConverter"/>
     <picker:UpDownValueConverter x:Key="UpDownValueConverter"/>
     <picker:SBSLValueConverter x:Key="SBSLValueConverter"/>
+    <picker:ARGBHexStringConverter x:Key="ARGBHexStringConverter"/>
+    <picker:ARGBStringConverter x:Key="ARGBStringConverter"/>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
     <SolidColorBrush x:Key="SliderThumbBackgroundBrush" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
@@ -23,7 +25,17 @@
     <SolidColorBrush x:Key="ColorPanelBackgroundBrush" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
     <SolidColorBrush x:Key="ColorPanelForegroundBrush" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
     <SolidColorBrush x:Key="ColorPanelCanvasBorderBrush" Color="{DynamicResource {x:Static SystemColors.InactiveBorderColorKey}}"/>
+    <SolidColorBrush x:Key="ColorStringBoxBackgroundBrush" Color="{DynamicResource {x:Static SystemColors.WindowColorKey}}"/>
+    <SolidColorBrush x:Key="ColorStringBoxForegroundBrush" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
     <LinearGradientBrush x:Key="UpDownBorderBrush" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}" Offset="0.0" />
+                <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlLightColorKey}}" Offset="1.0" />
+            </GradientStopCollection>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="ColorStringBoxBorderBrush" StartPoint="0,0" EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
             <GradientStopCollection>
                 <GradientStop Color="{DynamicResource {x:Static SystemColors.ControlDarkColorKey}}" Offset="0.0" />
@@ -753,6 +765,104 @@
                             <Setter TargetName="PART_ColorBorder" Property="Background" Value="{StaticResource DisabledBrush}"/>
                             <Setter TargetName="_dropFillPath" Property="Fill" Value="{StaticResource DisabledBrush}"/>
                             <Setter TargetName="_dropStrokePath" Property="Stroke" Value="{StaticResource DisabledBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type picker:ColorStringBox}">
+        <Setter Property="MinHeight" Value="21"/>
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="Once"/>
+        <Setter Property="Focusable" Value="False"/>
+        <Setter Property="Background" Value="{StaticResource ColorStringBoxBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{StaticResource ColorStringBoxForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{StaticResource ColorStringBoxBorderBrush}"/>
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type picker:ColorStringBox}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            TextBlock.Foreground="{TemplateBinding Foreground}"
+                            BorderBrush="{TemplateBinding BorderBrush}">
+                        <StackPanel x:Name="PART_Stack" Orientation="Horizontal">
+                            <TextBlock x:Name="_delim0" HorizontalAlignment="Left" VerticalAlignment="Bottom" Text="#"/>
+                            <TextBox x:Name="_text0" CharacterCasing="Upper" HorizontalAlignment="Left" TextAlignment="Center" Padding="-2" VerticalContentAlignment="Center" BorderThickness="0" MaxLength="2" Text="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ARGBHexStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock x:Name="_delim1" HorizontalAlignment="Left" Text="" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="_text1" CharacterCasing="Upper" HorizontalAlignment="Left" TextAlignment="Center" Padding="-2" VerticalContentAlignment="Center" BorderThickness="0" MaxLength="2" Text="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ARGBHexStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock x:Name="_delim2" HorizontalAlignment="Left" Text="" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="_text2" CharacterCasing="Upper" HorizontalAlignment="Left" TextAlignment="Center" Padding="-2" VerticalContentAlignment="Center" BorderThickness="0" MaxLength="2" Text="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ARGBHexStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBlock x:Name="_delim3" HorizontalAlignment="Left" Text="" VerticalAlignment="Bottom"/>
+                            <TextBox x:Name="_text3" CharacterCasing="Upper" HorizontalAlignment="Left" TextAlignment="Center" Padding="-2" VerticalContentAlignment="Center" BorderThickness="0" MaxLength="2" Text="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ARGBHexStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="picker:ColorPanel.ColorStringFormat" Value="HEX"/>
+                                <Condition Property="picker:ColorPanel.UseAlphaChannel" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="IsReadOnly" TargetName="_text0" Value="True"/>
+                                <Setter Property="Text" TargetName="_text0" Value="FF"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="picker:ColorPanel.ColorStringFormat" Value="ARGB"/>
+                                <Condition Property="picker:ColorPanel.UseAlphaChannel" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="Visibility" TargetName="_delim0" Value="Collapsed"/>
+                                <Setter Property="Text" TargetName="_delim1" Value=", "/>
+                                <Setter Property="Text" TargetName="_delim2" Value=", "/>
+                                <Setter Property="Text" TargetName="_delim3" Value=", "/>
+                                <Setter Property="Text" TargetName="_text0" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ARGBStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Setter Property="Text" TargetName="_text1" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ARGBStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Setter Property="Text" TargetName="_text2" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ARGBStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Setter Property="Text" TargetName="_text3" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ARGBStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Setter Property="MaxLength" TargetName="_text0" Value="3"/>
+                                <Setter Property="MaxLength" TargetName="_text1" Value="3"/>
+                                <Setter Property="MaxLength" TargetName="_text2" Value="3"/>
+                                <Setter Property="MaxLength" TargetName="_text3" Value="3"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="picker:ColorPanel.ColorStringFormat" Value="ARGB"/>
+                                <Condition Property="picker:ColorPanel.UseAlphaChannel" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter Property="Visibility" TargetName="_delim0" Value="Collapsed"/>
+                                <Setter Property="IsReadOnly" TargetName="_text0" Value="True"/>
+                                <Setter Property="Text" TargetName="_text0" Value="255"/>
+                                <Setter Property="Text" TargetName="_delim1" Value=", "/>
+                                <Setter Property="Text" TargetName="_delim2" Value=", "/>
+                                <Setter Property="Text" TargetName="_delim3" Value=", "/>
+                                <Setter Property="Text" TargetName="_text0" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ARGBStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Setter Property="Text" TargetName="_text1" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ARGBStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Setter Property="Text" TargetName="_text2" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ARGBStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Setter Property="Text" TargetName="_text3" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ARGBStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <Setter Property="MaxLength" TargetName="_text0" Value="3"/>
+                                <Setter Property="MaxLength" TargetName="_text1" Value="3"/>
+                                <Setter Property="MaxLength" TargetName="_text2" Value="3"/>
+                                <Setter Property="MaxLength" TargetName="_text3" Value="3"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <Trigger Property="picker:ColorPanel.ColorStringFormat" Value="RGB">
+                            <Setter Property="Visibility" TargetName="_delim0" Value="Collapsed"/>
+                            <Setter Property="Visibility" TargetName="_delim1" Value="Collapsed"/>
+                            <Setter Property="Visibility" TargetName="_text0" Value="Collapsed"/>
+                            <Setter Property="Text" TargetName="_delim2" Value=", "/>
+                            <Setter Property="Text" TargetName="_delim3" Value=", "/>
+                            <Setter Property="Text" TargetName="_text1" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ARGBStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Setter Property="Text" TargetName="_text2" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ARGBStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Setter Property="Text" TargetName="_text3" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ARGBStringConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <Setter Property="MaxLength" TargetName="_text1" Value="3"/>
+                            <Setter Property="MaxLength" TargetName="_text2" Value="3"/>
+                            <Setter Property="MaxLength" TargetName="_text3" Value="3"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
