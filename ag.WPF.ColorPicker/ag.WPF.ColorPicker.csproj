@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ColorPicker.cs" />
-    <Compile Include="ColorStringBox.cs" />
     <Compile Include="PickerPanel.xaml.cs">
       <DependentUpon>PickerPanel.xaml</DependentUpon>
     </Compile>

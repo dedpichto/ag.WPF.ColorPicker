@@ -64,8 +64,8 @@ namespace ag.WPF.ColorPicker
     [TemplatePart(Name = "PART_ColorShadingCanvas", Type = typeof(Canvas))]
     [TemplatePart(Name = "PART_ColorShadeSelector", Type = typeof(Canvas))]
     [TemplatePart(Name = "PART_SpectrumSlider", Type = typeof(ColorSlider))]
-    [TemplatePart(Name = "PART_ColorStringTextBox", Type = typeof(TextBox))]
-    [TemplatePart(Name = "PART_InitialColorPath", Type = typeof(System.Windows.Shapes.Path))]
+    //[TemplatePart(Name = "PART_ColorStringTextBox", Type = typeof(TextBox))]
+    [TemplatePart(Name = "PART_InitialColorPath", Type = typeof(Path))]
     [TemplatePart(Name = "PART_CopyTextBorder", Type = typeof(Border))]
     [TemplatePart(Name = "PART_ShadesPanel", Type = typeof(UniformGrid))]
     [TemplatePart(Name = "PART_TintsPanel", Type = typeof(UniformGrid))]
@@ -84,7 +84,7 @@ namespace ag.WPF.ColorPicker
         private const string PART_ColorShadingCanvas = "PART_ColorShadingCanvas";
         private const string PART_ColorShadeSelector = "PART_ColorShadeSelector";
         private const string PART_SpectrumSlider = "PART_SpectrumSlider";
-        private const string PART_ColorStringTextBox = "PART_ColorStringTextBox";
+        //private const string PART_ColorStringTextBox = "PART_ColorStringTextBox";
         private const string PART_InitialColorPath = "PART_InitialColorPath";
         private const string PART_CopyTextBorder = "PART_CopyTextBorder";
         private const string PART_ShadesPanel = "PART_ShadesPanel";
@@ -102,7 +102,7 @@ namespace ag.WPF.ColorPicker
         private Canvas _colorShadingCanvas;
         private Canvas _colorShadeSelector;
         private ColorSlider _spectrumSlider;
-        private TextBox _colorStringTextBox;
+        //private TextBox _colorStringTextBox;
         private Path _initialColorPath;
         private Border _copyTextBorder;
         private UniformGrid _shadesPanel;
@@ -900,7 +900,7 @@ namespace ag.WPF.ColorPicker
         }
 
         /// <summary>
-        /// Occurs when the <see cref="WPF.ColorPicker.ColorStringFormat"/> property has been changed in some way.
+        /// Occurs when the <see cref="ColorStringFormat"/> property has been changed in some way.
         /// </summary>
         protected virtual void OnColorStringFormatChanged(ColorStringFormat oldValue, ColorStringFormat newValue)
         {
@@ -945,7 +945,7 @@ namespace ag.WPF.ColorPicker
             {
                 _initialColorPath.MouseLeftButtonDown -= InitialColorPath_MouseLeftButtonDown;
             }
-            _initialColorPath = GetTemplateChild(PART_InitialColorPath) as System.Windows.Shapes.Path;
+            _initialColorPath = GetTemplateChild(PART_InitialColorPath) as Path;
             if (_initialColorPath != null)
             {
                 _initialColorPath.MouseLeftButtonDown += InitialColorPath_MouseLeftButtonDown;
@@ -988,7 +988,7 @@ namespace ag.WPF.ColorPicker
                 _spectrumSlider.ValueChanged += SpectrumSlider_ValueChanged;
             }
 
-            _colorStringTextBox = GetTemplateChild(PART_ColorStringTextBox) as TextBox;
+            //_colorStringTextBox = GetTemplateChild(PART_ColorStringTextBox) as TextBox;
 
             _tabMain = GetTemplateChild(PART_TabMain) as TabControl;
             _shadesPanel = GetTemplateChild(PART_ShadesPanel) as UniformGrid;
@@ -1054,7 +1054,7 @@ namespace ag.WPF.ColorPicker
 
         #region Public properties
         /// <summary>
-        /// Returns <see cref="WPF.ColorPicker.ColorStringFormat"/> enumeration values
+        /// Returns <see cref="ColorStringFormat"/> enumeration values
         /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public List<ColorStringFormat> ColorStringFormats { get; } = new List<ColorStringFormat>(Enum.GetValues(typeof(ColorStringFormat)).Cast<ColorStringFormat>());
@@ -1073,7 +1073,7 @@ namespace ag.WPF.ColorPicker
 
         private void CopyTextBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Clipboard.SetText(_colorStringTextBox.Text);
+            Clipboard.SetText(GetColorString());
         }
 
         private void DropPickerBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -1084,7 +1084,7 @@ namespace ag.WPF.ColorPicker
             {
                 SelectedColor = pickerPanel.SelectedColor;
             }
-            _colorStringTextBox.Focus();
+            //_colorStringTextBox.Focus();
         }
 
         private void ListStandard_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1109,7 +1109,7 @@ namespace ag.WPF.ColorPicker
 
         private void InitialColorPath_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (sender is not System.Windows.Shapes.Path path) return;
+            if (sender is not Path path) return;
             if (path.Fill is not SolidColorBrush brush) return;
             SelectedColor = brush.Color;
         }

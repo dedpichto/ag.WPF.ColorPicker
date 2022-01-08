@@ -213,7 +213,7 @@ namespace ag.WPF.ColorPicker
         {
             var colors = new System.Windows.Media.Color[3];
             var bmp = new Bitmap(3, 3);
-            var bounds = new System.Drawing.Rectangle(x - 1, y - 1, 3, 3);
+            var bounds = new Rectangle(x - 1, y - 1, 3, 3);
             using (var g = Graphics.FromImage(bmp))
             {
                 g.CopyFromScreen(bounds.Location, System.Drawing.Point.Empty, bounds.Size);
@@ -234,7 +234,7 @@ namespace ag.WPF.ColorPicker
         private static System.Windows.Media.Color GetSelectedColor(int x, int y)
         {
             var bmp = new Bitmap(1, 1);
-            var bounds = new System.Drawing.Rectangle(x, y, 1, 1);
+            var bounds = new Rectangle(x, y, 1, 1);
             using (var g = Graphics.FromImage(bmp))
             {
                 g.CopyFromScreen(bounds.Location, System.Drawing.Point.Empty, bounds.Size);
@@ -247,7 +247,7 @@ namespace ag.WPF.ColorPicker
         private ImageSource GetBitmap(int x, int y)
         {
             var bmp = new Bitmap(9, 9);
-            var bounds = new System.Drawing.Rectangle(x - 4, y - 4, 9, 9);
+            var bounds = new Rectangle(x - 4, y - 4, 9, 9);
             using (var g = Graphics.FromImage(bmp))
             {
                 g.CopyFromScreen(bounds.Location, System.Drawing.Point.Empty, bounds.Size);
@@ -276,7 +276,7 @@ namespace ag.WPF.ColorPicker
             var height = (int)(SystemParameters.VirtualScreenHeight * dpi.DpiScaleY);
 
             var bmp = new Bitmap(width, height);
-            var bounds = new System.Drawing.Rectangle(0, 0, width, height);
+            var bounds = new Rectangle(0, 0, width, height);
             using (var g = Graphics.FromImage(bmp))
             {
                 g.CopyFromScreen(bounds.Location, System.Drawing.Point.Empty, bounds.Size);

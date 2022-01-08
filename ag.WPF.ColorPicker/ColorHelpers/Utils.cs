@@ -14,13 +14,24 @@ namespace ag.WPF.ColorPicker.ColorHelpers
 #nullable disable
         public static readonly HashSet<Type> NumericTypes = new()
         {
-            typeof(byte), typeof(sbyte),
-            typeof(short), typeof(ushort),
-            typeof(int), typeof(uint),
-            typeof(long),typeof(ulong),
-            typeof(float),typeof(double),
+            typeof(byte),
+            typeof(sbyte),
+            typeof(short),
+            typeof(ushort),
+            typeof(int),
+            typeof(uint),
+            typeof(long),
+            typeof(ulong),
+            typeof(float),
+            typeof(double),
             typeof(decimal)
         };
+
+        public static bool In<T>(this T obj, params T[] values)
+        {
+            if (obj == null) return false;
+            return values.Contains(obj);
+        }
 
         public static readonly Dictionary<string, (Color, HsbColor)> KnownColors = GetKnownColors();
 

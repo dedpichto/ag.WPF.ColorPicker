@@ -293,10 +293,13 @@ namespace ag.WPF.ColorPicker
         {
             if (value is byte b)
             {
-                var result = $"{b:X2}";
-                if (b != 0 && result.StartsWith("0"))
-                    result = result.Substring(1);
-                return result;
+                if (b.In<byte>(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15))
+                    return $"{b:X1}";
+                return $"{b:X2}";
+                //var result = $"{b:X2}";
+                //if (b != 0 && result.StartsWith("0"))
+                //    result = result.Substring(1);
+                //return result;
             }
 
             return null;
@@ -313,13 +316,17 @@ namespace ag.WPF.ColorPicker
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is string s)
-                return !string.IsNullOrEmpty(s) ? System.Convert.ToByte($"0x{s}", 16) : 0;
+            {
+                var result = !string.IsNullOrEmpty(s) ? System.Convert.ToByte($"0x{s}", 16) : 0;
+                return result;
+            }
+
             return null;
         }
     }
 
     /// <summary>
-    /// Converts byte value to and from HEX string.
+    /// Converts byte value to and from string.
     /// </summary>
     public class ARGBStringConverter : IValueConverter
     {
@@ -353,6 +360,76 @@ namespace ag.WPF.ColorPicker
                 result = !string.IsNullOrEmpty(s) ? System.Convert.ToInt32(s) : 0;
             if (result > byte.MaxValue) result = byte.MaxValue;
             return (byte)result;
+        }
+    }
+
+    /// <summary>
+    /// Converts int value to and from string.
+    /// </summary>
+    public class HueStringConverter : IValueConverter
+    {
+        /// <summary>
+        /// Converts int value to int string.
+        /// </summary>
+        /// <param name="value">Integer.</param>
+        /// <param name="targetType">Not used.</param>
+        /// <param name="parameter">Not used.</param>
+        /// <param name="culture">Not used.</param>
+        /// <returns>String.</returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (!Utils.NumericTypes.Contains(value.GetType())) return null;
+            return Math.Round(System.Convert.ToDouble(value), MidpointRounding.AwayFromZero).ToString();
+        }
+
+        /// <summary>
+        /// Converts int string to int value.
+        /// </summary>
+        /// <param name="value">String.</param>
+        /// <param name="targetType">Not used.</param>
+        /// <param name="parameter">Not used.</param>
+        /// <param name="culture">Not used.</param>
+        /// <returns>Integer.</returns>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            double result = 0;
+            if (value is string s)
+                result = !string.IsNullOrEmpty(s) ? System.Convert.ToDouble(s) : 0;
+            if (result > 360) result = 360;
+            return result;
+        }
+    }
+
+    /// <summary>
+    /// Converts double value to and from string.
+    /// </summary>
+    public class SBLStringConverter : IValueConverter
+    {
+        /// <summary>
+        /// Converts double value to int string.
+        /// </summary>
+        /// <param name="value">Double.</param>
+        /// <param name="targetType">Not used.</param>
+        /// <param name="parameter">Not used.</param>
+        /// <param name="culture">Not used.</param>
+        /// <returns>String.</returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (!Utils.NumericTypes.Contains(value.GetType())) return null;
+            return Math.Round(System.Convert.ToDouble(value), 2, MidpointRounding.AwayFromZero);
+        }
+
+        /// <summary>
+        /// Not used.
+        /// </summary>
+        /// <param name="value">Not used.</param>
+        /// <param name="targetType">Not used.</param>
+        /// <param name="parameter">Not used.</param>
+        /// <param name="culture">Not used.</param>
+        /// <returns>Not used.</returns>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
         }
     }
 #nullable restore
