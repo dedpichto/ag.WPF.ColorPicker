@@ -10,10 +10,6 @@
     <picker:UpDownForegroundConverter x:Key="UpDownForegroundConverter"/>
     <picker:UpDownValueConverter x:Key="UpDownValueConverter"/>
     <picker:SBSLValueConverter x:Key="SBSLValueConverter"/>
-    <picker:ARGBHexStringConverter x:Key="ARGBHexStringConverter"/>
-    <picker:ARGBStringConverter x:Key="ARGBStringConverter"/>
-    <picker:HueStringConverter x:Key="HueStringConverter"/>
-    <picker:SBLStringConverter x:Key="SBLStringConverter"/>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
     <SolidColorBrush x:Key="SliderThumbBackgroundBrush" Color="{DynamicResource {x:Static SystemColors.ControlTextColorKey}}"/>
