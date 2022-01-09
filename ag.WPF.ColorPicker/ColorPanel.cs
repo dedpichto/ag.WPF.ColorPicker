@@ -186,6 +186,10 @@ namespace ag.WPF.ColorPicker
         /// The identifier of the <see cref="VerticalSpectrumBrush"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty VerticalSpectrumBrushProperty = DependencyProperty.Register(nameof(VerticalSpectrumBrush), typeof(LinearGradientBrush), typeof(ColorPanel), new FrameworkPropertyMetadata(null));
+        /// <summary>
+        /// The identifier of the <see cref="ColorStringFormatProperty"/>.
+        /// </summary>
+        public static readonly DependencyProperty ColorStringFormatProperty = DependencyProperty.Register(nameof(ColorStringFormat), typeof(ColorStringFormat), typeof(ColorPanel), new FrameworkPropertyMetadata(ColorStringFormat.HEX, OnColorStringFormatChanged));
         #endregion
 
         #region Attached properties
@@ -193,10 +197,6 @@ namespace ag.WPF.ColorPicker
         /// The identifier of the <see cref="ShowCommandsPanelProperty"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty ShowCommandsPanelProperty = DependencyProperty.RegisterAttached("ShowCommandsPanel", typeof(bool), typeof(ColorPanel), new FrameworkPropertyMetadata(true));
-        /// <summary>
-        /// The identifier of the <see cref="ColorStringFormatProperty"/>.
-        /// </summary>
-        public static readonly DependencyProperty ColorStringFormatProperty = DependencyProperty.RegisterAttached("ColorStringFormat", typeof(ColorStringFormat), typeof(ColorPanel), new FrameworkPropertyMetadata(ColorStringFormat.HEX, OnColorStringFormatChanged));
         /// <summary>
         /// The identifier of the <see cref="TitleTabCustomProperty"/>.
         /// </summary>
@@ -298,23 +298,23 @@ namespace ag.WPF.ColorPicker
             private set => SetValue(HorizontalSpectrumBrushProperty, value);
         }
 
-        ///// <summary>
-        ///// Gets or sets format of selected color's string representation.
-        ///// </summary>
-        //public ColorStringFormat ColorStringFormat
-        //{
-        //    get => (ColorStringFormat)GetValue(ColorStringFormatProperty);
-        //    set => SetValue(ColorStringFormatProperty, value);
-        //}
+        /// <summary>
+        /// Gets or sets format of selected color's string representation.
+        /// </summary>
+        public ColorStringFormat ColorStringFormat
+        {
+            get => (ColorStringFormat)GetValue(ColorStringFormatProperty);
+            set => SetValue(ColorStringFormatProperty, value);
+        }
 
-        ///// <summary>
-        ///// Specifies whether Apply and Cancel buttons are shown.
-        ///// </summary>
-        //public bool ShowCommandsPanel
-        //{
-        //    get => (bool)GetValue(ShowCommandsPanelProperty);
-        //    set => SetValue(ShowCommandsPanelProperty, value);
-        //}
+        /// <summary>
+        /// Specifies whether Apply and Cancel buttons are shown.
+        /// </summary>
+        public bool ShowCommandsPanel
+        {
+            get => (bool)GetValue(ShowCommandsPanelProperty);
+            set => SetValue(ShowCommandsPanelProperty, value);
+        }
 
         /// <summary>
         /// Gets selected color's string representation.
@@ -552,19 +552,6 @@ namespace ag.WPF.ColorPicker
         /// <param name="dependencyObject">DependencyObject.</param>
         /// <param name="value">String.</param>
         public static void SetTitleTabCustom(DependencyObject dependencyObject, string value) => dependencyObject.SetValue(TitleTabCustomProperty, value);
-
-        /// <summary>
-        /// Gets the value of the <see cref="ColorStringFormatProperty"/>.
-        /// </summary>
-        /// <param name="dependencyObject">DependencyObject.</param>
-        /// <returns>One of <see cref="ColorStringFormat"/> enum constants.</returns>
-        public static ColorStringFormat GetColorStringFormat(DependencyObject dependencyObject) => (ColorStringFormat)dependencyObject.GetValue(ColorStringFormatProperty);
-        /// <summary>
-        /// Sets the value of the <see cref="ColorStringFormatProperty"/>.
-        /// </summary>
-        /// <param name="dependencyObject">DependencyObject.</param>
-        /// <param name="value">One of <see cref="ColorStringFormat"/> enum constants.</param>
-        public static void SetColorStringFormat(DependencyObject dependencyObject, ColorStringFormat value) => dependencyObject.SetValue(ColorStringFormatProperty, value);
 
         /// <summary>
         /// Gets the value of the <see cref="ShowCommandsPanelProperty"/>.
@@ -1077,7 +1064,7 @@ namespace ag.WPF.ColorPicker
 
         }
 
-        private string GetColorString() => (ColorStringFormat)GetValue(ColorStringFormatProperty) switch
+        private string GetColorString() => ColorStringFormat switch
         {
             ColorStringFormat.HEX => $"#{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}",
             ColorStringFormat.ARGB => $"{SelectedColor.A}, {SelectedColor.R}, {SelectedColor.G}, {SelectedColor.B}",
