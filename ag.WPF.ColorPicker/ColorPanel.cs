@@ -42,16 +42,16 @@ namespace ag.WPF.ColorPicker
     }
 
     /// <summary>
-    /// Represents available <see cref="ColorPanel"/> view
+    /// Represents available <see cref="ColorPanel"/> views.
     /// </summary>
     public enum PanelView
     {
         /// <summary>
-        /// Standard view
+        /// Standard view with full controls set available
         /// </summary>
         Standard,
         /// <summary>
-        /// Simple view
+        /// Simple minimalistic view
         /// </summary>
         Simple
     }
@@ -252,15 +252,7 @@ namespace ag.WPF.ColorPicker
 
         #region Public event handlers
         /// <summary>
-        /// Handles the <see cref="ColorApplied"/> routed event.
-        /// </summary>
-        public event RoutedPropertyChangedEventHandler<Color> ColorApplied
-        {
-            add => AddHandler(ColorAppliedEvent, (Delegate)value, false);
-            remove => RemoveHandler(ColorAppliedEvent, (Delegate)value);
-        }
-        /// <summary>
-        /// Handles the <see cref="SelectedColorChanged"/> routed event.
+        /// Occurrs when <see cref="SelectedColor"/> property is changed.
         /// </summary>
         public event RoutedPropertyChangedEventHandler<Color> SelectedColorChanged
         {
@@ -268,7 +260,15 @@ namespace ag.WPF.ColorPicker
             remove => RemoveHandler(SelectedColorChangedEvent, (Delegate)value);
         }
         /// <summary>
-        /// Handles the <see cref="ColorCanceled"/> routed event.
+        /// Occurrs when user click on Apply button.
+        /// </summary>
+        public event RoutedPropertyChangedEventHandler<Color> ColorApplied
+        {
+            add => AddHandler(ColorAppliedEvent, (Delegate)value, false);
+            remove => RemoveHandler(ColorAppliedEvent, (Delegate)value);
+        }
+        /// <summary>
+        /// Occurrs when user click on Cancel button.
         /// </summary>
         public event RoutedEventHandler ColorCanceled
         {
@@ -301,28 +301,11 @@ namespace ag.WPF.ColorPicker
         /// <summary>
         /// Gets or sets format of selected color's string representation.
         /// </summary>
+        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
         public ColorStringFormat ColorStringFormat
         {
             get => (ColorStringFormat)GetValue(ColorStringFormatProperty);
             set => SetValue(ColorStringFormatProperty, value);
-        }
-
-        /// <summary>
-        /// Specifies whether Apply and Cancel buttons are shown.
-        /// </summary>
-        public bool ShowCommandsPanel
-        {
-            get => (bool)GetValue(ShowCommandsPanelProperty);
-            set => SetValue(ShowCommandsPanelProperty, value);
-        }
-
-        /// <summary>
-        /// Gets selected color's string representation.
-        /// </summary>
-        public string ColorString
-        {
-            get => (string)GetValue(ColorStringProperty);
-            private set => SetValue(ColorStringProperty, value);
         }
 
         /// <summary>
@@ -386,15 +369,6 @@ namespace ag.WPF.ColorPicker
         }
 
         /// <summary>
-        /// Gets or sets selected color.
-        /// </summary>
-        public Color SelectedColor
-        {
-            get => (Color)GetValue(SelectedColorProperty);
-            set => SetValue(SelectedColorProperty, value);
-        }
-
-        /// <summary>
         /// Gets or sets A value of selected color.
         /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
@@ -432,6 +406,24 @@ namespace ag.WPF.ColorPicker
         {
             get => (byte)GetValue(BProperty);
             set => SetValue(BProperty, value);
+        }
+
+        /// <summary>
+        /// Gets or sets selected color.
+        /// </summary>
+        public Color SelectedColor
+        {
+            get => (Color)GetValue(SelectedColorProperty);
+            set => SetValue(SelectedColorProperty, value);
+        }
+
+        /// <summary>
+        /// Gets selected color's string representation.
+        /// </summary>
+        public string ColorString
+        {
+            get => (string)GetValue(ColorStringProperty);
+            private set => SetValue(ColorStringProperty, value);
         }
         #endregion
 
