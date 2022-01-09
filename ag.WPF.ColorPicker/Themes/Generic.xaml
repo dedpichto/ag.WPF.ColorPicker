@@ -348,12 +348,24 @@
                                                         <RowDefinition/>
                                                         <RowDefinition/>
                                                         <RowDefinition/>
+                                                        <RowDefinition/>
                                                     </Grid.RowDefinitions>
-                                                    <TextBlock Grid.Column="0" Grid.Row="0" Margin="4,14,4,4" Text="R" VerticalAlignment="Center"/>
-                                                    <TextBlock Grid.Column="0" Grid.Row="1" Margin="4,14,4,4" Text="G" VerticalAlignment="Center"/>
-                                                    <TextBlock Grid.Column="0" Grid.Row="2" Margin="4,14,4,4" Text="B" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="0" Grid.Row="0" Margin="4,14,4,4" Text="A" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="0" Grid.Row="1" Margin="4,14,4,4" Text="R" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="0" Grid.Row="2" Margin="4,14,4,4" Text="G" VerticalAlignment="Center"/>
+                                                    <TextBlock Grid.Column="0" Grid.Row="3" Margin="4,14,4,4" Text="B" VerticalAlignment="Center"/>
 
-                                                    <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                                    <Slider Style="{StaticResource RGBSlider}" x:Name="_alphaSlider" Grid.Column="1" Grid.Row="0" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                                        <Slider.Background>
+                                                            <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="Transparent"/>
+                                                                    <GradientStop Offset="1" Color="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OpaqueColorConverter}}"/>
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Slider.Background>
+                                                    </Slider>
+                                                    <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                                         <Slider.Background>
                                                             <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                                                 <LinearGradientBrush.GradientStops>
@@ -363,7 +375,7 @@
                                                             </LinearGradientBrush>
                                                         </Slider.Background>
                                                     </Slider>
-                                                    <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="1" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                                    <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="2" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                                         <Slider.Background>
                                                             <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                                                 <LinearGradientBrush.GradientStops>
@@ -373,7 +385,7 @@
                                                             </LinearGradientBrush>
                                                         </Slider.Background>
                                                     </Slider>
-                                                    <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="2" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                                    <Slider Style="{StaticResource RGBSlider}" Grid.Column="1" Grid.Row="3" Margin="4" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}}">
                                                         <Slider.Background>
                                                             <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
                                                                 <LinearGradientBrush.GradientStops>
@@ -383,10 +395,11 @@
                                                             </LinearGradientBrush>
                                                         </Slider.Background>
                                                     </Slider>
-
-                                                    <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
-                                                    <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
-                                                    <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                                    
+                                                    <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                                    <picker:UpDown Grid.Column="2" Grid.Row="1" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                                    <picker:UpDown Grid.Column="2" Grid.Row="2" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+                                                    <picker:UpDown Grid.Column="2" Grid.Row="3" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
                                                 </Grid>
                                             </TabItem>
                                             <TabItem Header="HSB">
@@ -487,29 +500,6 @@
                                         </TabControl>
                                     </GroupBox>
 
-                                    <StackPanel x:Name="_panelAlpha" Grid.Column="0" Grid.Row="3" Margin="0,0,0,5">
-                                        <CheckBox x:Name="_useAlpha" Margin="0,4,0,0" Content="{Binding Path=(picker:ColorPanel.TitleUseAlpha), RelativeSource={RelativeSource Mode=TemplatedParent}}" IsChecked="{Binding Path=(picker:ColorPanel.UseAlphaChannel), RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="auto"/>
-                                                <ColumnDefinition/>
-                                                <ColumnDefinition Width="auto"/>
-                                            </Grid.ColumnDefinitions>
-                                            <TextBlock Grid.Column="0" Margin="4,14,4,0" Text="A" IsEnabled="{Binding IsChecked, ElementName=_useAlpha}" VerticalAlignment="Center"/>
-                                            <Slider Style="{StaticResource RGBSlider}" x:Name="_alphaSlider" Grid.Column="1" Margin="4,4,4,0" Minimum="0" Maximum="255" LargeChange="10" SmallChange="1" TickFrequency="1" VerticalAlignment="Center" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsEnabled="{Binding IsChecked, ElementName=_useAlpha}">
-                                                <Slider.Background>
-                                                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
-                                                        <LinearGradientBrush.GradientStops>
-                                                            <GradientStop Offset="0" Color="Transparent"/>
-                                                            <GradientStop Offset="1" Color="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource OpaqueColorConverter}}"/>
-                                                        </LinearGradientBrush.GradientStops>
-                                                    </LinearGradientBrush>
-                                                </Slider.Background>
-                                            </Slider>
-                                            <picker:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,0" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
-                                        </Grid>
-                                    </StackPanel>
-
                                     <GroupBox x:Name="_groupShades" Grid.Column="2" Grid.Row="0" Grid.RowSpan="4" Header="{Binding Path=(picker:ColorPanel.TitleShadesAndTints), RelativeSource={RelativeSource Mode=TemplatedParent}}" Margin="10,0,0,4">
                                         <Grid>
                                             <Grid.ColumnDefinitions>
@@ -592,7 +582,6 @@
                             <Setter Property="Visibility" TargetName="_tabBasic" Value="Collapsed"/>
                             <Setter Property="Visibility" TargetName="_tabStandard" Value="Collapsed"/>
                             <Setter Property="Visibility" TargetName="_groupModes" Value="Collapsed"/>
-                            <Setter Property="Visibility" TargetName="_panelAlpha" Value="Collapsed"/>
                             <Setter Property="Visibility" TargetName="_groupShades" Value="Collapsed"/>
                             <Setter Property="Height" TargetName="_borderCanvas" Value="84"/>
                             <Setter Property="Height" Value="202"/>
@@ -747,9 +736,7 @@
                                                    TitleTabBasic="{Binding Path=(picker:ColorPanel.TitleTabBasic), RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                    TitleTabCustom="{Binding Path=(picker:ColorPanel.TitleTabCustom), RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                    TitleTabStandard="{Binding Path=(picker:ColorPanel.TitleTabStandard), RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                   TitleUseAlpha="{Binding Path=(picker:ColorPanel.TitleUseAlpha), RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                    SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"
-                                                   UseAlphaChannel="{Binding Path=(picker:ColorPanel.UseAlphaChannel), RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                    ColorStringFormat="{Binding Path=(picker:ColorPanel.ColorStringFormat), RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                    PanelView="{Binding Path=(picker:ColorPanel.PanelView), RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                    ShowCommandsPanel="{Binding Path=(picker:ColorPanel.ShowCommandsPanel), RelativeSource={RelativeSource Mode=TemplatedParent}}"/>

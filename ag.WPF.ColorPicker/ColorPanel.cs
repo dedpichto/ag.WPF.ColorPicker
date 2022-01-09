@@ -194,10 +194,6 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         public static readonly DependencyProperty ShowCommandsPanelProperty = DependencyProperty.RegisterAttached("ShowCommandsPanel", typeof(bool), typeof(ColorPanel), new FrameworkPropertyMetadata(true));
         /// <summary>
-        /// The identifier of the <see cref="UseAlphaChannelProperty"/>.
-        /// </summary>
-        public static readonly DependencyProperty UseAlphaChannelProperty = DependencyProperty.RegisterAttached("UseAlphaChannel", typeof(bool), typeof(ColorPanel), new FrameworkPropertyMetadata(true, OnUseAlphaChannelPropertyChanged));
-        /// <summary>
         /// The identifier of the <see cref="ColorStringFormatProperty"/>.
         /// </summary>
         public static readonly DependencyProperty ColorStringFormatProperty = DependencyProperty.RegisterAttached("ColorStringFormat", typeof(ColorStringFormat), typeof(ColorPanel), new FrameworkPropertyMetadata(ColorStringFormat.HEX, OnColorStringFormatChanged));
@@ -221,10 +217,6 @@ namespace ag.WPF.ColorPicker
         /// The identifier of the <see cref="TitleColorModesProperty"/>.
         /// </summary>
         public static readonly DependencyProperty TitleColorModesProperty = DependencyProperty.RegisterAttached("TitleColorModes", typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Color modes"));
-        /// <summary>
-        /// The identifier of the <see cref="TitleUseAlphaProperty"/>.
-        /// </summary>
-        public static readonly DependencyProperty TitleUseAlphaProperty = DependencyProperty.RegisterAttached("TitleUseAlpha", typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Use alpha chanell"));
         /// <summary>
         /// The identifier of the <see cref="TitleApplyProperty"/>.
         /// </summary>
@@ -286,78 +278,6 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Dependency properties handlers
-        ///// <summary>
-        ///// Gets or sets the title of shades and tints group.
-        ///// </summary>
-        //public string TitleShadesAndTints
-        //{
-        //    get => (string)GetValue(TitleShadesAndTintsProperty);
-        //    set { SetValue(TitleShadesAndTintsProperty, value); }
-        //}
-
-        ///// <summary>
-        ///// Gets or sets the title of Cancel button.
-        ///// </summary>
-        //public string TitleCancel
-        //{
-        //    get => (string)GetValue(TitleCancelProperty);
-        //    set => SetValue(TitleCancelProperty, value);
-        //}
-
-        ///// <summary>
-        ///// Gets or sets the title of Use lpha channel check box.
-        ///// </summary>
-        //public string TitleUseAlpha
-        //{
-        //    get { return (string)GetValue(TitleUseAlphaProperty); }
-        //    set { SetValue(TitleUseAlphaProperty, value); }
-        //}
-
-        ///// <summary>
-        ///// Gets or sets the title of color modes group.
-        ///// </summary>
-        //public string TitleColorModes
-        //{
-        //    get { return (string)GetValue(TitleColorModesProperty); }
-        //    set { SetValue(TitleColorModesProperty, value); }
-        //}
-
-        ///// <summary>
-        ///// Gets or sets the title of Format combo box.
-        ///// </summary>
-        //public string TitleFormat
-        //{
-        //    get => (string)GetValue(TitleFormatProperty);
-        //    set => SetValue(TitleFormatProperty, value);
-        //}
-
-        ///// <summary>
-        ///// Gets or sets the title of Standard colors tab.
-        ///// </summary>
-        //public string TitleTabStandard
-        //{
-        //    get => (string)GetValue(TitleTabStandardProperty);
-        //    set => SetValue(TitleTabStandardProperty, value);
-        //}
-
-        ///// <summary>
-        ///// Gets or sets the title of Basic colors tab.
-        ///// </summary>
-        //public string TitleTabBasic
-        //{
-        //    get { return (string)GetValue(TitleTabBasicProperty); }
-        //    set { SetValue(TitleTabBasicProperty, value); }
-        //}
-
-        ///// <summary>
-        ///// Gets or sets the title of Custom colors tab.
-        ///// </summary>
-        //public string TitleTabCustom
-        //{
-        //    get { return (string)GetValue(TitleTabCustomProperty); }
-        //    set { SetValue(TitleTabCustomProperty, value); }
-        //}
-
         /// <summary>
         /// Gets or sets vertical spectrum brush.
         /// </summary>
@@ -530,19 +450,6 @@ namespace ag.WPF.ColorPicker
         public static void SetPanelView(DependencyObject dependencyObject, PanelView value)=>dependencyObject.SetValue(PanelViewProperty, value);
 
         /// <summary>
-        /// Gets the value of the <see cref="UseAlphaChannelProperty"/>.
-        /// </summary>
-        /// <param name="dependencyObject">DependencyObject.</param>
-        /// <returns>Boolean.</returns>
-        public static bool GetUseAlphaChannel(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(UseAlphaChannelProperty);
-        /// <summary>
-        /// Sets the value of the <see cref="UseAlphaChannelProperty"/>.
-        /// </summary>
-        /// <param name="dependencyObject">DependencyObject.</param>
-        /// <param name="value">Boolean.</param>
-        public static void SetUseAlphaChannel(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(UseAlphaChannelProperty, value);
-
-        /// <summary>
         /// Gets the value of the <see cref="TitleShadesAndTintsProperty"/>.
         /// </summary>
         /// <param name="dependencyObject">DependencyObject.</param>
@@ -567,19 +474,6 @@ namespace ag.WPF.ColorPicker
         /// <param name="dependencyObject">DependencyObject.</param>
         /// <param name="value">String.</param>
         public static void SetTitleCancel(DependencyObject dependencyObject, string value) => dependencyObject.SetValue(TitleCancelProperty, value);
-
-        /// <summary>
-        /// Gets the value of the <see cref="TitleUseAlphaProperty"/>.
-        /// </summary>
-        /// <param name="dependencyObject">DependencyObject.</param>
-        /// <returns>String.</returns>
-        public static string GetTitleUseAlpha(DependencyObject dependencyObject) => (string)dependencyObject.GetValue(TitleUseAlphaProperty);
-        /// <summary>
-        /// Sets the value of the <see cref="TitleUseAlphaProperty"/>.
-        /// </summary>
-        /// <param name="dependencyObject">DependencyObject.</param>
-        /// <param name="value">String.</param>
-        public static void SetTitleUseAlpha(DependencyObject dependencyObject, string value) => dependencyObject.SetValue(TitleUseAlphaProperty, value);
 
         /// <summary>
         /// Gets the value of the <see cref="TitleApplyProperty"/>.
@@ -802,21 +696,6 @@ namespace ag.WPF.ColorPicker
             SelectedColor = Color.FromArgb(A, color.R, color.G, color.B);
             _brightnessHsbUpdated = false;
             _updateHsb = true;
-        }
-
-        private static void OnUseAlphaChannelPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is not ColorPanel colorPanel)
-                return;
-            colorPanel.OnUseAlphaChannelChanged();
-        }
-
-        /// <summary>
-        /// Occurs when the <see cref="UseAlphaChannelProperty"/> has been changed in some way.
-        /// </summary>
-        protected virtual void OnUseAlphaChannelChanged()
-        {
-            UpdateSelectedColor();
         }
 
         private static void OnSelectedColorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -1423,7 +1302,7 @@ namespace ag.WPF.ColorPicker
 
         private static bool IsNonColor(Color color) => (color.R == color.G && color.G == color.B);
 
-        private void UpdateSelectedColor() => SelectedColor = Color.FromArgb((bool)GetValue(UseAlphaChannelProperty) ? A : (byte)255, R, G, B);
+        private void UpdateSelectedColor() => SelectedColor = Color.FromArgb(A, R, G, B);
         #endregion
 
         #region Internal procedures

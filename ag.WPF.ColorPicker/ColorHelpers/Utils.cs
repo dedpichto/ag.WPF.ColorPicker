@@ -43,8 +43,6 @@ namespace ag.WPF.ColorPicker.ColorHelpers
             return str;
         }
 
-        public static string FormatColorString(string stringToFormat, bool isUseAlphaChannel) => !isUseAlphaChannel && stringToFormat.Length == 9 ? stringToFormat.Remove(1, 2) : stringToFormat;
-
         private static Dictionary<string, (Color, HsbColor)> GetKnownColors() => ((IEnumerable<PropertyInfo>)typeof(Colors).GetProperties(BindingFlags.Static | BindingFlags.Public)).ToDictionary(p => p.Name, p => ((Color)p.GetValue(null, null), ((Color)p.GetValue(null, null)).ToHsbColor()));
 
         public static double ConvertHsbToDouble(Color color)
