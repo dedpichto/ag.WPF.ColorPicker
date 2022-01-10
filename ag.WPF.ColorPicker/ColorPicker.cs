@@ -52,7 +52,7 @@ namespace ag.WPF.ColorPicker
 
         #region Public event handlers
         /// <summary>
-        /// Handles the <see cref="SelectedColorChanged"/> routed event.
+        /// Occurrs when <see cref="SelectedColor"/> property is changed.
         /// </summary>
         public event RoutedPropertyChangedEventHandler<Color> SelectedColorChanged
         {
