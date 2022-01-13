@@ -5,15 +5,17 @@ one|two
 ---|---
 first|second
 
-A custom WPF controls library allowing user to choose a color. Two different packages are available:
+A custom WPF controls library allowing user to choose a color.
 
-1. .NET Framework (version >= 4.7.2)
-2. .NET (version >= 6).
+A library supplies two types of control: 
+| ColorPanel - always fully open | ColorPicker, where panel is opening as drop-down part |
+|------|------|
+|![ColorPanel](https://am3pap005files.storage.live.com/y4mPdl1eiaLbfsGstYHwuJem9kHxw5eR8x-s_SjjoALPG_bVMH3TUwKZ9kDvumicFXWY6BMdi-cTTO7bezEt5YrJ94Lr0liZ7mg7FNy904QFCfB4W8IE0F1g3irdHdk-3wwb5ty7cQAV2iR9nFW9fAZq9KBXO8zesYyRhTwLiwH1CYuSTWTLx-pv63u1yNGMFsu?width=414&height=410&cropmode=none "ColorPanel")|![ColorPicker](https://am3pap005files.storage.live.com/y4m_hu2fVsNBwqh71j_erKIrD_sM79HexWXFkpdkQqmIyFtfrZnUXxx8DaviCgrWNby1o4tbHuHqP6MZBVm8Inn2c_aDPfmln5KMrhzh-G2HX6CoOPzTfKxMsetOQpuTF5hikL1dEpRpuxns44gSW4TlvfJwCk-I8fUbJPb9H2JSKujYGzUlWlHqbdQR3QQFsza?width=375&height=422&cropmode=none "ColorPicker")|
 
-A library supplies two types of control: ColorPanel - always fully open, and ColorPicker, where panel is opening as drop-down part.
 
-| ![ColorPanel](https://am3pap005files.storage.live.com/y4mPdl1eiaLbfsGstYHwuJem9kHxw5eR8x-s_SjjoALPG_bVMH3TUwKZ9kDvumicFXWY6BMdi-cTTO7bezEt5YrJ94Lr0liZ7mg7FNy904QFCfB4W8IE0F1g3irdHdk-3wwb5ty7cQAV2iR9nFW9fAZq9KBXO8zesYyRhTwLiwH1CYuSTWTLx-pv63u1yNGMFsu?width=414&height=410&cropmode=none "ColorPanel") | ![ColorPicker](https://am3pap005files.storage.live.com/y4m_hu2fVsNBwqh71j_erKIrD_sM79HexWXFkpdkQqmIyFtfrZnUXxx8DaviCgrWNby1o4tbHuHqP6MZBVm8Inn2c_aDPfmln5KMrhzh-G2HX6CoOPzTfKxMsetOQpuTF5hikL1dEpRpuxns44gSW4TlvfJwCk-I8fUbJPb9H2JSKujYGzUlWlHqbdQR3QQFsza?width=375&height=422&cropmode=none "ColorPicker") |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
+
+
+
 
 ## Usage
 
@@ -143,7 +145,7 @@ public event RoutedPropertyChangedEventHandler<Color> ColorApplied
 ```
 
 Occurrs when user click on *Apply* button.</br>
-*OldValue* field of *RoutedPropertyChangedEventArgs* contains an initial color.</br>*NewValue* of RoutedPropertyChangedEventArgs contains a new color.
+*OldValue* field of *RoutedPropertyChangedEventArgs* contains an initial color.</br>*NewValue* of *RoutedPropertyChangedEventArgs* contains a new color.
 
 ```csharp
 public event RoutedEventHandler ColorCanceled
@@ -173,4 +175,5 @@ Gets selected color's string representation.
 public event RoutedPropertyChangedEventHandler<Color> SelectedColorChanged
 ```
 
-Occurrs when SelectedColor property is changed.
+Occurrs when SelectedColor property is changed.</br>
+*OldValue* field of *RoutedPropertyChangedEventArgs* contains an initial color.</br>*NewValue* of *RoutedPropertyChangedEventArgs* contains a new color.
