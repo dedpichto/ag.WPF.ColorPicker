@@ -17,11 +17,6 @@
     <Compile Include="..\ag.WPF.ColorPicker\PickerPanel.xaml.cs" Link="PickerPanel.xaml.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\StandardColorItem.cs" Link="StandardColorItem.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\UnsafeNativeMethods.cs" Link="UnsafeNativeMethods.cs" />
-    <Compile Include="..\ag.WPF.ColorPicker\UpDown.cs" Link="UpDown.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Themes\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,14 +24,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="ag.WPF.UpDown.NET" Version="1.0.0" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <Page Include="..\ag.WPF.ColorPicker\PickerPanel.xaml" Link="PickerPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="..\ag.WPF.ColorPicker\Themes\Generic.xaml" Link="Themes\Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
