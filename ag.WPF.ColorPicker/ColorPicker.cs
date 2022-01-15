@@ -9,9 +9,9 @@ using System.Windows.Media;
 namespace ag.WPF.ColorPicker
 {
     /// <summary>
-    /// Represents custom control that allows users to pick color
+    /// Custom WPF control that allows a user to pick a color from a predefind color palettes and/or screen.
     /// </summary>
-    
+
     #region Named parts
     [TemplatePart(Name = "PART_Button", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Popup", Type = typeof(Popup))]

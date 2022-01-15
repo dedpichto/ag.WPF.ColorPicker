@@ -58,7 +58,7 @@ namespace ag.WPF.ColorPicker
     #endregion
 
     /// <summary>
-    /// Represents custom control that allows user to choose color.
+    /// Custom WPF control that allows a user to pick a color from a predefind color palettes.
     /// </summary>
     #region Named parts
     [TemplatePart(Name = "PART_ColorShadingCanvas", Type = typeof(Canvas))]
