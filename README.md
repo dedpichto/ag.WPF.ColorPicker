@@ -1,7 +1,7 @@
 
 # ag.WPF.ColorPicker
 
-ag.WPF.ColorPicker | ag.WPF.ColorPicker.NET
+.NET Framework (4.7.2) | .NET (6)
 --- | ---
 first | second
 
@@ -11,7 +11,7 @@ Custom WPF controls that allows a user to pick a color from a predefind color pa
 
 Use NuGet package manager.
 
-ag.WPF.ColorPicker | ag.WPF.ColorPicker.NET
+.NET Framework (4.7.2) | .NET (6)
 --- | ---
 first | second
 
