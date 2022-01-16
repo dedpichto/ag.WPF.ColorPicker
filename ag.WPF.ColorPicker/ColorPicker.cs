@@ -36,7 +36,7 @@ namespace ag.WPF.ColorPicker
         /// <summary>
         /// The identifier of the <see cref="SelectedColor"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPicker), new FrameworkPropertyMetadata(Colors.Blue));
+        public static readonly DependencyProperty SelectedColorProperty = DependencyProperty.Register(nameof(SelectedColor), typeof(Color), typeof(ColorPicker), new FrameworkPropertyMetadata(Colors.Red));
         /// <summary>
         /// The identifier of the <see cref="ColorString"/> dependency property.
         /// </summary>
