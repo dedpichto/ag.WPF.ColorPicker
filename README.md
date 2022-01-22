@@ -5,7 +5,7 @@
 --- | ---
 first | second
 
-Custom WPF controls that allows a user to pick a color from a predefind color palettes and/or screen.
+Custom WPF controls that allows a user to pick a color from a predefind color palettes and screen.
 
 ## Installation
 
@@ -42,9 +42,9 @@ Simple|1|Simple minimalistic view
 
 ## ColorPicker
 
-![ColorPicker](https://am3pap005files.storage.live.com/y4m_hu2fVsNBwqh71j_erKIrD_sM79HexWXFkpdkQqmIyFtfrZnUXxx8DaviCgrWNby1o4tbHuHqP6MZBVm8Inn2c_aDPfmln5KMrhzh-G2HX6CoOPzTfKxMsetOQpuTF5hikL1dEpRpuxns44gSW4TlvfJwCk-I8fUbJPb9H2JSKujYGzUlWlHqbdQR3QQFsza?width=375&height=422&cropmode=none "ColorPicker")</br>
+![ColorPicker](https://am3pap005files.storage.live.com/y4maighgBk-dHO_mZbCOzeE3AF9Uh_S2r2JK8AK8UqWdfSotBX-pAKy2lCcOzPSt5hjgEEHr3UjrxDAEKuqGErbJ_GWbwLVIYPdKtgs9GAyFDQDpzn6AgypYPrR25wTsLOYBjzXckIE6LESWJOXvQpUAOOHY8huXYgHsmRkh2TaaJNrgiIa9vvK6bsYu9hX4L1g?width=501&height=563&cropmode=none "ColorPicker")</br>
 Simple ColorPicker</br>
-![Simple](https://am3pap005files.storage.live.com/y4m8Kpg_wp_PECb1y94lgoCohPDltyqBbEyuS3O7I1-Sp10pDmQOe0lK6q2U9jlEmYvaPws70aqq2kmc-Ju2JiMfryO5jmTCSIpSVSwQHk4W3pHjAhBKbsSJYyDI8KjEQHgt_gnzHuPhA8M8RX8642N3HF7FOH_5y7MCQV77FZUf2-JUBUbT4Blna5BxbBx_diS?width=376&height=218&cropmode=none)
+![Simple](https://am3pap005files.storage.live.com/y4mIY3jatPSuW16w-gIRURIEGf1iE8yQYO2gzoftZROAcgg0363n1-t7HwLo34FMNef6jZzqZb7v64Aj8lrKnANd92NSaFghiGAQeLhIPx3F8tz19TLmQHAU9hmQccDD3QUbg3gnT2pUeocL3pYv2T3_hAxYe0CnUb5NFhWfLI-jeNeKw_8yT-HNK0nKSYgrRhk?width=501&height=291&cropmode=none)
 ### Properties
 
 Property | Type | Description | Default value
@@ -60,7 +60,7 @@ SelectedColorChanged | Occurrs when SelectedColor property is changed | *OldValu
 
 ## ColorPanel
 
-![ColorPanel](https://am3pap005files.storage.live.com/y4mPdl1eiaLbfsGstYHwuJem9kHxw5eR8x-s_SjjoALPG_bVMH3TUwKZ9kDvumicFXWY6BMdi-cTTO7bezEt5YrJ94Lr0liZ7mg7FNy904QFCfB4W8IE0F1g3irdHdk-3wwb5ty7cQAV2iR9nFW9fAZq9KBXO8zesYyRhTwLiwH1CYuSTWTLx-pv63u1yNGMFsu?width=414&height=410&cropmode=none "ColorPanel")
+![ColorPanel](https://am3pap005files.storage.live.com/y4mI2M-S3zPUj1M0ZaUuZjv5UlyAePbJRPc0FuqjaiYGUxdBKvPgM650JglQfo5eAH8463Mvx16nU79FtBHecZte8bLGlhzIMGjJVAfxGq7hFq0fzbL0Xvw_4qpEPUAL6IjryQoHOPFg2eNx0cyrVkCYPA2tMcaQZnbYdp_oiL3_YjqQozQuSITVoJYSyo5CXkY?width=545&height=544&cropmode=none "ColorPanel")
 
 ### Properties
 
