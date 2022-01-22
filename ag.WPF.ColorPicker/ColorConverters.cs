@@ -238,7 +238,14 @@ namespace ag.WPF.ColorPicker
         /// <returns>Double.</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return Math.Round(System.Convert.ToDouble(value), MidpointRounding.AwayFromZero);
+            double result;
+            if (System.Convert.ToDouble(value) > byte.MaxValue)
+                result = byte.MaxValue;
+            else if (System.Convert.ToDouble(value) < 0)
+                result = 0;
+            else
+                result = System.Convert.ToDouble(value);
+            return Math.Round(result, MidpointRounding.AwayFromZero);
         }
     }
 

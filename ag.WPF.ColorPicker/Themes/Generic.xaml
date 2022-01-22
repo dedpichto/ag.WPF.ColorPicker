@@ -392,11 +392,11 @@
                                                             </LinearGradientBrush>
                                                         </Slider.Background>
                                                     </Slider>
-                                                    
-                                                    <upd:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
-                                                    <upd:UpDown Grid.Column="2" Grid.Row="1" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
-                                                    <upd:UpDown Grid.Column="2" Grid.Row="2" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
-                                                    <upd:UpDown Grid.Column="2" Grid.Row="3" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay}"/>
+
+                                                    <upd:UpDown Grid.Column="2" Grid.Row="0" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding A, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
+                                                    <upd:UpDown Grid.Column="2" Grid.Row="1" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding R, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
+                                                    <upd:UpDown Grid.Column="2" Grid.Row="2" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding G, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
+                                                    <upd:UpDown Grid.Column="2" Grid.Row="3" Margin="4,14,4,4" Width="40" MinValue="0" MaxValue="255" Step="1" IsReadOnly="False" Value="{Binding B, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=TwoWay, Converter={StaticResource UpDownValueConverter}}"/>
                                                 </Grid>
                                             </TabItem>
                                             <TabItem Header="HSB">
@@ -611,6 +611,16 @@
         </Setter>
     </Style>
 
+    <ControlTemplate x:Key="PickerToggleButton" TargetType="Button">
+        <Grid>
+            <Grid>
+                <Border Background="{Binding Background, RelativeSource={RelativeSource Mode=TemplatedParent}}" 
+                        Margin="1" 
+                        BorderThickness="0" />
+            </Grid>
+        </Grid>
+    </ControlTemplate>
+
     <Style TargetType="{x:Type picker:ColorPicker}">
         <Setter Property="Height" Value="24"/>
         <Setter Property="KeyboardNavigation.TabNavigation" Value="Once"/>
@@ -618,7 +628,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type picker:ColorPicker}">
-                    <Border x:Name="border" Background="{StaticResource PickerBackgroundBrush}"
+                    <Border x:Name="_border" Background="{StaticResource PickerBackgroundBrush}"
                             BorderBrush="{StaticResource PickerBorderdBrush}"
                             BorderThickness="1">
                         <Grid>
@@ -630,14 +640,13 @@
                                     Grid.Column="0" 
                                     BorderThickness="1" 
                                     Background="{StaticResource TransparentBackgroundBrush}"/>
-                            <Border x:Name="PART_ColorBorder" Margin="1"
-                                    BorderBrush="{StaticResource PickerBorderdBrush}"
-                                    BorderThickness="1"
-                                    Grid.Column="0">
-                                <Border.Background>
+                            <Button x:Name="PART_ColorContent" 
+                                    Template="{StaticResource PickerToggleButton}"
+                                    Focusable="false">
+                                <Button.Background>
                                     <SolidColorBrush Color="{Binding Path=SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                </Border.Background>
-                            </Border>
+                                </Button.Background>
+                            </Button>
                             <Button x:Name="PART_Button"
                                     Margin="1"
                                     Grid.Column="1"
@@ -652,8 +661,8 @@
                             <Popup x:Name="PART_Popup" 
                                        AllowsTransparency="True" 
                                        Placement="Bottom"
-                                       PlacementTarget="{Binding ElementName=border}" 
-                                       StaysOpen="True"
+                                       PlacementTarget="{Binding ElementName=_border}" 
+                                       StaysOpen="False"
                                        HorizontalOffset="0"
                                        PopupAnimation="Scroll">
                                 <picker:ColorPanel x:Name="PART_ColorPanel" 
@@ -678,9 +687,7 @@
                             <Setter Property="Height" TargetName="PART_ColorPanel" Value="208"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="PART_ColorBorder" Property="Background" Value="{StaticResource DisabledBrush}"/>
-                            <Setter TargetName="_dropFillPath" Property="Fill" Value="{StaticResource DisabledBrush}"/>
-                            <Setter TargetName="_dropStrokePath" Property="Stroke" Value="{StaticResource DisabledBrush}"/>
+                            <Setter TargetName="PART_ColorContent" Property="Background" Value="{StaticResource DisabledBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

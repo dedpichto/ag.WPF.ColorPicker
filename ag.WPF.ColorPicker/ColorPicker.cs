@@ -14,23 +14,23 @@ namespace ag.WPF.ColorPicker
 
     #region Named parts
     [TemplatePart(Name = "PART_Button", Type = typeof(Button))]
+    [TemplatePart(Name = "PART_ColorContent", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Popup", Type = typeof(Popup))]
     [TemplatePart(Name = "PART_ColorPanel", Type = typeof(ColorPanel))]
-    [TemplatePart(Name = "PART_ColorBorder", Type = typeof(Border))]
     #endregion
 
     public class ColorPicker : Control
     {
 #nullable disable
         private const string PART_Button = "PART_Button";
+        private const string PART_ColorContent = "PART_ColorContent";
         private const string PART_Popup = "PART_Popup";
         private const string PART_ColorPanel = "PART_ColorPanel";
-        private const string PART_ColorBorder = "PART_ColorBorder";
 
-        private Button _button;
+        private Button _button, _colorContentButton;
         private Popup _popup;
         private ColorPanel _colorPanel;
-        private Border _border;
+        private bool _allowPopup = true;
 
         #region Dependecy properties
         /// <summary>
@@ -109,14 +109,28 @@ namespace ag.WPF.ColorPicker
                 _button.PreviewKeyDown += Button_PreviewKeyDown;
             }
 
+            if (_colorContentButton != null)
+            {
+                _colorContentButton.Click -= ColorContentButton_Click;
+                _colorContentButton.PreviewKeyDown -= ColorContentButton_PreviewKeyDown;
+            }
+            _colorContentButton = GetTemplateChild(PART_ColorContent) as Button;
+            if (_colorContentButton != null)
+            {
+                _colorContentButton.Click += ColorContentButton_Click;
+                _colorContentButton.PreviewKeyDown += ColorContentButton_PreviewKeyDown;
+            }
+
             if (_popup != null)
             {
                 _popup.Opened -= Popup_Opened;
+                _popup.Closed += Popup_Closed;
             }
             _popup = GetTemplateChild(PART_Popup) as Popup;
-            if( _popup != null)
+            if (_popup != null)
             {
                 _popup.Opened += Popup_Opened;
+                _popup.Closed += Popup_Closed;
             }
 
             if (_colorPanel != null)
@@ -124,7 +138,6 @@ namespace ag.WPF.ColorPicker
                 _colorPanel.ColorApplied -= ColorPanel_ColorApplied;
                 _colorPanel.ColorCanceled -= ColorPanel_ColorCanceled;
                 _colorPanel.PreviewKeyDown -= ColorPanel_PreviewKeyDown;
-                
             }
             _colorPanel = GetTemplateChild(PART_ColorPanel) as ColorPanel;
             if (_colorPanel != null)
@@ -132,41 +145,27 @@ namespace ag.WPF.ColorPicker
                 _colorPanel.ColorApplied += ColorPanel_ColorApplied;
                 _colorPanel.ColorCanceled += ColorPanel_ColorCanceled;
                 _colorPanel.PreviewKeyDown += ColorPanel_PreviewKeyDown;
-                SetBinding(ColorStringProperty,new Binding("ColorString") { Source = _colorPanel });
-            }
-
-            if (_border != null)
-            {
-                _border.MouseLeftButtonDown -= Border_MouseLeftButtonDown;
-            }
-            _border = GetTemplateChild(PART_ColorBorder) as Border;
-            if (_border != null)
-            {
-                _border.MouseLeftButtonDown += Border_MouseLeftButtonDown;
+                SetBinding(ColorStringProperty, new Binding("ColorString") { Source = _colorPanel });
             }
         }
+
+
         #endregion
 
         #region Private event handlers
+        private void Popup_Closed(object sender, EventArgs e)
+        {
+            if (Mouse.Captured is Button button && (button.Name == PART_Button || button.Name == PART_ColorContent))
+            {
+                _allowPopup = false;
+            }
+        }
+
         private void Popup_Opened(object sender, EventArgs e)
         {
             if (_colorPanel != null)
             {
                 _colorPanel.Focus();
-            }
-        }
-
-        private void Border_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            OpenPopup();
-        }
-
-        private void Button_PreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-            {
-                e.Handled = true;
-                _popup.IsOpen = false;
             }
         }
 
@@ -195,17 +194,42 @@ namespace ag.WPF.ColorPicker
             }
         }
 
+        private void Button_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                e.Handled = true;
+                _popup.IsOpen = false;
+            }
+        }
+
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             OpenPopup();
         }
+
+        private void ColorContentButton_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                e.Handled = true;
+                _popup.IsOpen = false;
+            }
+        }
+
+        private void ColorContentButton_Click(object sender, RoutedEventArgs e) => OpenPopup();
         #endregion
 
         #region Private procedures
         private void OpenPopup()
         {
-            if (_popup.IsOpen)
+            if (!_allowPopup)
+            {
+                _allowPopup = true;
                 return;
+            }
+            //if (_popup.IsOpen)
+            //    return;
             _colorPanel.SetInitialColors(SelectedColor);
             _popup.IsOpen = true;
         }
