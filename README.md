@@ -44,7 +44,10 @@ Simple|1|Simple minimalistic view
 
 ![ColorPicker](https://am3pap005files.storage.live.com/y4maighgBk-dHO_mZbCOzeE3AF9Uh_S2r2JK8AK8UqWdfSotBX-pAKy2lCcOzPSt5hjgEEHr3UjrxDAEKuqGErbJ_GWbwLVIYPdKtgs9GAyFDQDpzn6AgypYPrR25wTsLOYBjzXckIE6LESWJOXvQpUAOOHY8huXYgHsmRkh2TaaJNrgiIa9vvK6bsYu9hX4L1g?width=501&height=563&cropmode=none "ColorPicker")</br>
 Simple ColorPicker</br>
-![Simple](https://am3pap005files.storage.live.com/y4mIY3jatPSuW16w-gIRURIEGf1iE8yQYO2gzoftZROAcgg0363n1-t7HwLo34FMNef6jZzqZb7v64Aj8lrKnANd92NSaFghiGAQeLhIPx3F8tz19TLmQHAU9hmQccDD3QUbg3gnT2pUeocL3pYv2T3_hAxYe0CnUb5NFhWfLI-jeNeKw_8yT-HNK0nKSYgrRhk?width=501&height=291&cropmode=none)
+![Simple](https://am3pap005files.storage.live.com/y4mIY3jatPSuW16w-gIRURIEGf1iE8yQYO2gzoftZROAcgg0363n1-t7HwLo34FMNef6jZzqZb7v64Aj8lrKnANd92NSaFghiGAQeLhIPx3F8tz19TLmQHAU9hmQccDD3QUbg3gnT2pUeocL3pYv2T3_hAxYe0CnUb5NFhWfLI-jeNeKw_8yT-HNK0nKSYgrRhk?width=501&height=291&cropmode=none)</br>
+Styled ColorPicker</br>
+![Styled](https://am3pap005files.storage.live.com/y4mroTj9anmehNNgT1WeuYbcJvrSs-D6I4FMuKCwJVfRb6spyNbrayJzvCxFLzhK1wOz2gDFFXPKVAIm_OXSm178tg3t9qPRBvdEvGK-zfBz24JfJ7M67QBt1k2n8Bj_58OI_WXb7DNTPCNVCiuwKARAWQ-D6il32PCPv77WVjLBC7rnVI1PE2SrpCjQtmRWOmn?width=506&height=611&cropmode=none)
+
 ### Properties
 
 Property | Type | Description | Default value
