@@ -85,13 +85,10 @@ TitleFormat | string | Gets or sets a value that indicates the title of *Format*
 TitleTabStandard | string | Gets or sets a value that indicates the title of *Standard* tab | Standard
 TitleTabBasic | string | Gets or sets a value that indicates the title of *Basic* tab | Basic
 TitleTabCustom | string | Gets or sets a value that indicates the title of *Custom* tab | Custom
-ShowCommandsPanel | bool | Gets or sets a value that indicates whether *Apply* and *Cancel* buttons are shown | True
 
 
 ### Events
 
 Event | Description | Remarks
 --- | --- | ---
-SelectedColorChanged | Occurrs when SelectedColor property is changed |  Raises only if *ShowCommandsPanel* property is set to False. *OldValue* field of *RoutedPropertyChangedEventArgs* contains an initial color. *NewValue* of RoutedPropertyChangedEventArgs contains a new color.
-ColorApplied | Occurrs when user click on *Apply* button | *OldValue* field of *RoutedPropertyChangedEventArgs* contains an initial color. *NewValue* of *RoutedPropertyChangedEventArgs* contains a new color.
-ColorCanceled | Occurrs when user click on *Cancel* button
+SelectedColorChanged | Occurrs when SelectedColor property is changed |  *OldValue* field of *RoutedPropertyChangedEventArgs* contains an initial color. *NewValue* of RoutedPropertyChangedEventArgs contains a new color.
