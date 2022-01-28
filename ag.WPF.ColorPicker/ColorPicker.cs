@@ -17,6 +17,8 @@ namespace ag.WPF.ColorPicker
     [TemplatePart(Name = "PART_ColorContent", Type = typeof(Button))]
     [TemplatePart(Name = "PART_Popup", Type = typeof(Popup))]
     [TemplatePart(Name = "PART_ColorPanel", Type = typeof(ColorPanel))]
+    [TemplatePart(Name = "PART_ApplyButton", Type = typeof(Button))]
+    [TemplatePart(Name = "PART_CancelButton", Type = typeof(Border))]
     #endregion
 
     public class ColorPicker : Control
@@ -26,10 +28,15 @@ namespace ag.WPF.ColorPicker
         private const string PART_ColorContent = "PART_ColorContent";
         private const string PART_Popup = "PART_Popup";
         private const string PART_ColorPanel = "PART_ColorPanel";
+        private const string PART_ApplyButton = "PART_ApplyButton";
+        private const string PART_CancelButton = "PART_CancelButton";
 
         private Button _button, _colorContentButton;
         private Popup _popup;
         private ColorPanel _colorPanel;
+        private Button _applyButton;
+        private Button _cancelButton;
+
         private bool _allowPopup = true;
 
         #region Dependecy properties
@@ -135,17 +142,33 @@ namespace ag.WPF.ColorPicker
 
             if (_colorPanel != null)
             {
-                _colorPanel.ColorApplied -= ColorPanel_ColorApplied;
-                _colorPanel.ColorCanceled -= ColorPanel_ColorCanceled;
                 _colorPanel.PreviewKeyDown -= ColorPanel_PreviewKeyDown;
             }
             _colorPanel = GetTemplateChild(PART_ColorPanel) as ColorPanel;
             if (_colorPanel != null)
             {
-                _colorPanel.ColorApplied += ColorPanel_ColorApplied;
-                _colorPanel.ColorCanceled += ColorPanel_ColorCanceled;
                 _colorPanel.PreviewKeyDown += ColorPanel_PreviewKeyDown;
                 SetBinding(ColorStringProperty, new Binding("ColorString") { Source = _colorPanel });
+            }
+
+            if (_applyButton != null)
+            {
+                _applyButton.Click -= ApplyButton_Click;
+            }
+            _applyButton = GetTemplateChild(PART_ApplyButton) as Button;
+            if (_applyButton != null)
+            {
+                _applyButton.Click += ApplyButton_Click;
+            }
+
+            if (_cancelButton != null)
+            {
+                _cancelButton.Click -= CancelButton_Click;
+            }
+            _cancelButton = GetTemplateChild(PART_CancelButton) as Button;
+            if (_cancelButton != null)
+            {
+                _cancelButton.Click += CancelButton_Click;
             }
         }
 
@@ -153,6 +176,22 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Private event handlers
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            _popup.IsOpen = false;
+        }
+
+        private void ApplyButton_Click(object sender, RoutedEventArgs e)
+        {
+            SelectedColor= _colorPanel.SelectedColor;
+            var changedEventArgs = new RoutedPropertyChangedEventArgs<Color>(_colorPanel.InitialColor, SelectedColor)
+            {
+                RoutedEvent = SelectedColorChangedEvent
+            };
+            RaiseEvent(changedEventArgs);
+            _popup.IsOpen = false;
+        }
+
         private void Popup_Closed(object sender, EventArgs e)
         {
             if (Mouse.Captured is Button button && (button.Name == PART_Button || button.Name == PART_ColorContent))
@@ -167,22 +206,6 @@ namespace ag.WPF.ColorPicker
             {
                 _colorPanel.Focus();
             }
-        }
-
-        private void ColorPanel_ColorCanceled(object sender, RoutedEventArgs e)
-        {
-            _popup.IsOpen = false;
-        }
-
-        private void ColorPanel_ColorApplied(object sender, RoutedPropertyChangedEventArgs<Color> e)
-        {
-            SelectedColor = e.NewValue;
-            var changedEventArgs = new RoutedPropertyChangedEventArgs<Color>(e.OldValue, e.NewValue)
-            {
-                RoutedEvent = SelectedColorChangedEvent
-            };
-            RaiseEvent(changedEventArgs);
-            _popup.IsOpen = false;
         }
 
         private void ColorPanel_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -228,9 +251,7 @@ namespace ag.WPF.ColorPicker
                 _allowPopup = true;
                 return;
             }
-            //if (_popup.IsOpen)
-            //    return;
-            _colorPanel.SetInitialColors(SelectedColor);
+            _colorPanel.InitialColor = SelectedColor;
             _popup.IsOpen = true;
         }
         #endregion

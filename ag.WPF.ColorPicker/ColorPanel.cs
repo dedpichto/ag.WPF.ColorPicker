@@ -73,8 +73,6 @@ namespace ag.WPF.ColorPicker
     [TemplatePart(Name = "PART_TabMain", Type = typeof(TabControl))]
     [TemplatePart(Name = "PART_ListStandard", Type = typeof(ListBox))]
     [TemplatePart(Name = "PART_DropPickerBorder", Type = typeof(Border))]
-    [TemplatePart(Name = "PART_ApplyButton", Type = typeof(Button))]
-    [TemplatePart(Name = "PART_CancelButton", Type = typeof(Border))]
     #endregion
 
     public class ColorPanel : Control
@@ -93,8 +91,6 @@ namespace ag.WPF.ColorPicker
         private const string PART_TabMain = "PART_TabMain";
         private const string PART_ListStandard = "PART_ListStandard";
         private const string PART_DropPickerBorder = "PART_DropPickerBorder";
-        private const string PART_ApplyButton = "PART_ApplyButton";
-        private const string PART_CancelButton = "PART_CancelButton";
 
         private const int SHADES_COUNT = 12;
 
@@ -111,8 +107,7 @@ namespace ag.WPF.ColorPicker
         private TabControl _tabMain;
         private ListBox _listStandard;
         private Border _dropPickerBorder;
-        private Button _applyButton;
-        private Button _cancelButton;
+
         private Point? _currentColorPosition;
         private Color _initialColor;
         private bool _surpressPropertyChanged;
@@ -194,10 +189,6 @@ namespace ag.WPF.ColorPicker
 
         #region Attached properties
         /// <summary>
-        /// The identifier of the <see cref="ShowCommandsPanelProperty"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty ShowCommandsPanelProperty = DependencyProperty.RegisterAttached("ShowCommandsPanel", typeof(bool), typeof(ColorPanel), new FrameworkPropertyMetadata(true));
-        /// <summary>
         /// The identifier of the <see cref="TitleTabCustomProperty"/>.
         /// </summary>
         public static readonly DependencyProperty TitleTabCustomProperty = DependencyProperty.RegisterAttached("TitleTabCustom", typeof(string), typeof(ColorPanel), new FrameworkPropertyMetadata("Custom"));
@@ -240,14 +231,6 @@ namespace ag.WPF.ColorPicker
         /// The identifier of the <see cref="SelectedColorChanged"/> routed event.
         /// </summary>
         public static readonly RoutedEvent SelectedColorChangedEvent = EventManager.RegisterRoutedEvent("SelectedColorChanged", RoutingStrategy.Bubble, typeof(RoutedPropertyChangedEventHandler<Color>), typeof(ColorPanel));
-        /// <summary>
-        /// The identifier of the <see cref="ColorApplied"/> routed event.
-        /// </summary>
-        public static readonly RoutedEvent ColorAppliedEvent = EventManager.RegisterRoutedEvent("ColorApplied", RoutingStrategy.Direct, typeof(RoutedPropertyChangedEventHandler<Color>), typeof(ColorPanel));
-        /// <summary>
-        /// The identifier of the <see cref="ColorCanceled"/> routed event.
-        /// </summary>
-        public static readonly RoutedEvent ColorCanceledEvent = EventManager.RegisterRoutedEvent("ColorCanceled", RoutingStrategy.Direct, typeof(RoutedEventHandler), typeof(ColorPanel));
         #endregion
 
         #region Public event handlers
@@ -258,22 +241,6 @@ namespace ag.WPF.ColorPicker
         {
             add => AddHandler(SelectedColorChangedEvent, (Delegate)value, false);
             remove => RemoveHandler(SelectedColorChangedEvent, (Delegate)value);
-        }
-        /// <summary>
-        /// Occurrs when user click on Apply button.
-        /// </summary>
-        public event RoutedPropertyChangedEventHandler<Color> ColorApplied
-        {
-            add => AddHandler(ColorAppliedEvent, (Delegate)value, false);
-            remove => RemoveHandler(ColorAppliedEvent, (Delegate)value);
-        }
-        /// <summary>
-        /// Occurrs when user click on Cancel button.
-        /// </summary>
-        public event RoutedEventHandler ColorCanceled
-        {
-            add => AddHandler(ColorCanceledEvent, (Delegate)value, false);
-            remove => RemoveHandler(ColorCanceledEvent, (Delegate)value);
         }
         #endregion
 
@@ -433,13 +400,13 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         /// <param name="dependencyObject">DependencyObject.</param>
         /// <returns>One of <see cref="PanelView"/> enum constants.</returns>
-        public static PanelView GetPanelView(DependencyObject dependencyObject)=>(PanelView)dependencyObject.GetValue(PanelViewProperty);
+        public static PanelView GetPanelView(DependencyObject dependencyObject) => (PanelView)dependencyObject.GetValue(PanelViewProperty);
         /// <summary>
         /// Sets the value of the <see cref="PanelViewProperty"/>.
         /// </summary>
         /// <param name="dependencyObject">DependencyObject.</param>
         /// <param name="value">One of <see cref="PanelView"/> enum constants.</param>
-        public static void SetPanelView(DependencyObject dependencyObject, PanelView value)=>dependencyObject.SetValue(PanelViewProperty, value);
+        public static void SetPanelView(DependencyObject dependencyObject, PanelView value) => dependencyObject.SetValue(PanelViewProperty, value);
 
         /// <summary>
         /// Gets the value of the <see cref="TitleShadesAndTintsProperty"/>.
@@ -544,19 +511,6 @@ namespace ag.WPF.ColorPicker
         /// <param name="dependencyObject">DependencyObject.</param>
         /// <param name="value">String.</param>
         public static void SetTitleTabCustom(DependencyObject dependencyObject, string value) => dependencyObject.SetValue(TitleTabCustomProperty, value);
-
-        /// <summary>
-        /// Gets the value of the <see cref="ShowCommandsPanelProperty"/>.
-        /// </summary>
-        /// <param name="dependencyObject">DependencyObject.</param>
-        /// <returns>Boolean.</returns>
-        public static bool GetShowCommandsPanel(DependencyObject dependencyObject) => (bool)dependencyObject.GetValue(ShowCommandsPanelProperty);
-        /// <summary>
-        /// Sets the value of the <see cref="ShowCommandsPanelProperty"/>.
-        /// </summary>
-        /// <param name="dependencyObject">DependencyObject.</param>
-        /// <param name="value">Boolean.</param>
-        public static void SetShowCommandsPanel(DependencyObject dependencyObject, bool value) => dependencyObject.SetValue(ShowCommandsPanelProperty, value);
 
         #endregion
 
@@ -707,14 +661,11 @@ namespace ag.WPF.ColorPicker
 
             SelectStandardColor(newValue);
 
-            if (!(bool)GetValue(ShowCommandsPanelProperty))
+            var changedEventArgs = new RoutedPropertyChangedEventArgs<Color>(oldValue, newValue)
             {
-                var changedEventArgs = new RoutedPropertyChangedEventArgs<Color>(oldValue, newValue)
-                {
-                    RoutedEvent = SelectedColorChangedEvent
-                };
-                RaiseEvent(changedEventArgs);
-            }
+                RoutedEvent = SelectedColorChangedEvent
+            };
+            RaiseEvent(changedEventArgs);
         }
 
         private static void OnRGBChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -760,10 +711,7 @@ namespace ag.WPF.ColorPicker
         /// <summary>
         /// Occurs when the <see cref="ColorStringFormat"/> property has been changed in some way.
         /// </summary>
-        protected virtual void OnColorStringFormatChanged(ColorStringFormat oldValue, ColorStringFormat newValue)
-        {
-            ColorString = GetColorString();
-        }
+        protected virtual void OnColorStringFormatChanged(ColorStringFormat oldValue, ColorStringFormat newValue) => ColorString = GetColorString();
         #endregion
 
         #region ctor
@@ -810,26 +758,6 @@ namespace ag.WPF.ColorPicker
                 _initialColorPath.Fill = new SolidColorBrush(SelectedColor);
                 _initialColorPath.Stroke = new SolidColorBrush(SelectedColor);
                 _initialColor = SelectedColor;
-            }
-
-            if (_applyButton != null)
-            {
-                _applyButton.Click -= ApplyButton_Click;
-            }
-            _applyButton = GetTemplateChild(PART_ApplyButton) as Button;
-            if (_applyButton != null)
-            {
-                _applyButton.Click += ApplyButton_Click;
-            }
-
-            if (_cancelButton != null)
-            {
-                _cancelButton.Click -= CancelButton_Click;
-            }
-            _cancelButton = GetTemplateChild(PART_CancelButton) as Button;
-            if (_cancelButton != null)
-            {
-                _cancelButton.Click += CancelButton_Click;
             }
 
             _colorShadeSelector = GetTemplateChild(PART_ColorShadeSelector) as Canvas;
@@ -918,21 +846,29 @@ namespace ag.WPF.ColorPicker
         public List<ColorStringFormat> ColorStringFormats { get; } = new List<ColorStringFormat>(Enum.GetValues(typeof(ColorStringFormat)).Cast<ColorStringFormat>());
         #endregion
 
+        #region Internal properties
+
+        /// <summary>
+        /// Gets or sets initial color.
+        /// </summary>
+        public Color InitialColor
+        {
+            get => _initialColor;
+            set
+            {
+                _initialColor = value;
+                if (_initialColorPath != null)
+                {
+                    _initialColorPath.Fill = new SolidColorBrush(value);
+                    _initialColorPath.Stroke = new SolidColorBrush(value);
+                }
+                SelectedColor = value;
+            }
+        }
+        #endregion
+
         #region Private event handlers
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            RaiseColorCanceledEvent();
-        }
-
-        private void ApplyButton_Click(object sender, RoutedEventArgs e)
-        {
-            RaiseColorAppliedEvent();
-        }
-
-        private void CopyTextBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            Clipboard.SetText(GetColorString());
-        }
+        private void CopyTextBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => Clipboard.SetText(GetColorString());
 
         private void DropPickerBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -1065,21 +1001,6 @@ namespace ag.WPF.ColorPicker
             ColorStringFormat.HSL => $"{HueHsl:f0}, {SaturationHsl:f2}, {LuminanceHsl:f2}",
             _ => $"#{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}"
         };
-
-        private void RaiseColorAppliedEvent()
-        {
-            var appliedEventArgs = new RoutedPropertyChangedEventArgs<Color>(_initialColor, SelectedColor)
-            {
-                RoutedEvent = ColorAppliedEvent
-            };
-            RaiseEvent(appliedEventArgs);
-        }
-
-        private void RaiseColorCanceledEvent()
-        {
-            var canceledEventArgs = new RoutedEventArgs { RoutedEvent = ColorCanceledEvent };
-            RaiseEvent(canceledEventArgs);
-        }
 
         private void SelectBasicColor(Color color)
         {
@@ -1284,18 +1205,6 @@ namespace ag.WPF.ColorPicker
         private void UpdateSelectedColor() => SelectedColor = Color.FromArgb(A, R, G, B);
         #endregion
 
-        #region Internal procedures
-        internal void SetInitialColors(Color initialColor)
-        {
-            _initialColor = initialColor;
-            if (_initialColorPath != null)
-            {
-                _initialColorPath.Fill = new SolidColorBrush(initialColor);
-                _initialColorPath.Stroke = new SolidColorBrush(initialColor);
-            }
-            SelectedColor = initialColor;
-        }
-        #endregion
 #nullable restore
     }
 }
