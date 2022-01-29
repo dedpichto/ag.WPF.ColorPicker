@@ -1,9 +1,7 @@
 
 # ag.WPF.ColorPicker
 
-.NET Framework (4.7.2) | .NET (6)
---- | ---
-first | second
+first
 
 Custom WPF controls that allows a user to pick a color from a predefind color palettes and screen.
 
@@ -11,9 +9,7 @@ Custom WPF controls that allows a user to pick a color from a predefind color pa
 
 Use NuGet package manager.
 
-.NET Framework (4.7.2) | .NET (6)
---- | ---
-first | second
+first
 
 ## Usage
 
@@ -89,7 +85,6 @@ TitleFormat | string | Gets or sets a value that indicates the title of *Format*
 TitleTabStandard | string | Gets or sets a value that indicates the title of *Standard* tab | Standard
 TitleTabBasic | string | Gets or sets a value that indicates the title of *Basic* tab | Basic
 TitleTabCustom | string | Gets or sets a value that indicates the title of *Custom* tab | Custom
-
 
 ### Events
 
