@@ -176,10 +176,7 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Private event handlers
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            _popup.IsOpen = false;
-        }
+        private void CancelButton_Click(object sender, RoutedEventArgs e) => _popup.IsOpen = false;
 
         private void ApplyButton_Click(object sender, RoutedEventArgs e)
         {
@@ -226,10 +223,7 @@ namespace ag.WPF.ColorPicker
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            OpenPopup();
-        }
+        private void Button_Click(object sender, RoutedEventArgs e) => OpenPopup();
 
         private void ColorContentButton_PreviewKeyDown(object sender, KeyEventArgs e)
         {

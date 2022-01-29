@@ -4,18 +4,19 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0840EB07-9BCC-436A-BE72-B1BC69DF7808}</ProjectGuid>
-    <OutputType>library</OutputType>
-    <RootNamespace>ag.WPF.ColorPicker</RootNamespace>
-    <AssemblyName>ag.WPF.ColorPicker</AssemblyName>
+    <ProjectGuid>{25C1587B-660A-466A-887A-D6AC380F18F8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ExampleNetwork</RootNamespace>
+    <AssemblyName>ExampleNetwork</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
-    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,9 +24,9 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\ag.WPF.ColorPicker.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -36,7 +37,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -51,26 +51,20 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ColorPicker.cs" />
-    <Compile Include="PickerPanel.xaml.cs">
-      <DependentUpon>PickerPanel.xaml</DependentUpon>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Include="StandardColorItem.cs" />
-    <Compile Include="UnsafeNativeMethods.cs" />
-    <Page Include="PickerPanel.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Compile Include="ColorConverters.cs" />
-    <Compile Include="ColorHelpers\HSBColor.cs" />
-    <Compile Include="ColorHelpers\HSLColor.cs" />
-    <Compile Include="ColorHelpers\Utils.cs" />
-    <Compile Include="ColorPanel.cs" />
-    <Compile Include="ColorSlider.cs">
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -98,7 +92,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="dropper.cur" />
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ag.WPF.ColorPicker\ag.WPF.ColorPicker.csproj">
+      <Project>{0840eb07-9bcc-436a-be72-b1bc69df7808}</Project>
+      <Name>ag.WPF.ColorPicker</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="ag.WPF.UpDown">

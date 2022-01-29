@@ -4,6 +4,15 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <RepositoryUrl>https://github.com/dedpichto/ag.WPF.ColorPicker</RepositoryUrl>
+    <Copyright>© Andrey Gruber 2022</Copyright>
+    <Description>Custom WPF control that allows a user to pick a color from a predefind color palettes and/or screen.</Description>
+    <Authors>Andrey Gruber</Authors>
+    <PackageTags>WPF ColorPicker .NET Custom</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/dedpichto/ag.WPF.ColorPicker</PackageProjectUrl>
+    <AssemblyName>ag.WPF.ColorPicker</AssemblyName>
+    <RootNamespace>ag.WPF.ColorPicker</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,7 +33,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ag.WPF.UpDown.NET" Version="1.0.0" />
+    <PackageReference Include="ag.WPF.UpDown" Version="1.0.1" />
     <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
   </ItemGroup>
 

@@ -1,0 +1,18 @@
+﻿<Window x:Class="ExampleNetwork.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:clp="clr-namespace:ag.WPF.ColorPicker;assembly=ag.WPF.ColorPicker"
+        xmlns:local="clr-namespace:ExampleNetwork"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <clp:ColorPicker x:Name="_picker" Width="175" VerticalAlignment="Top" Grid.Column="0" Margin="20" SelectedColorChanged="_picker_SelectedColorChanged"/>
+        <clp:ColorPanel Margin="4" x:Name="_panel" Grid.Column="1"/>
+    </Grid>
+</Window>

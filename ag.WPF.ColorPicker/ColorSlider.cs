@@ -73,10 +73,7 @@ namespace ag.WPF.ColorPicker
         /// <summary>
         /// Occurs when the <see cref="A"/> property has been changed in some way.
         /// </summary>
-        protected virtual void OnAChanged(byte oldValue, byte newValue)
-        {
-            SelectedColor = Color.FromArgb(A, SelectedColor.R, SelectedColor.G, SelectedColor.B);
-        }
+        protected virtual void OnAChanged(byte oldValue, byte newValue) => SelectedColor = Color.FromArgb(A, SelectedColor.R, SelectedColor.G, SelectedColor.B);
         #endregion
     }
 }
