@@ -41,6 +41,13 @@
     <Page Include="..\ag.WPF.ColorPicker\PickerPanel.xaml" Link="PickerPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="..\ag.WPF.ColorPicker\Themes\Generic.xaml" Link="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Themes\" />
   </ItemGroup>
 
 </Project>
