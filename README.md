@@ -42,9 +42,13 @@ Simple|1|Simple minimalistic view
 
 ## ColorPicker
 
-![ColorPicker](https://am3pap005files.storage.live.com/y4maighgBk-dHO_mZbCOzeE3AF9Uh_S2r2JK8AK8UqWdfSotBX-pAKy2lCcOzPSt5hjgEEHr3UjrxDAEKuqGErbJ_GWbwLVIYPdKtgs9GAyFDQDpzn6AgypYPrR25wTsLOYBjzXckIE6LESWJOXvQpUAOOHY8huXYgHsmRkh2TaaJNrgiIa9vvK6bsYu9hX4L1g?width=501&height=563&cropmode=none "ColorPicker")</br>
+![ColorPicker](https://am3pap005files.storage.live.com/y4mf2W_o2lI8j-Zx_nIXBGRYCzXsAp2Bj9escVmQyCFQOAKcDImrHR0in63IXhZaMeuQnDBdBFt5d3r5zJHpxSjAlNAhRmKcFCSTJWfPljYGZni80fud7F62V7PfRYLnm92CaZsSpsNEpqopXGwTId2DkpFfd7yFPn1hs5ACo-iCCZfnOwtKeTXUh_t07aIIhLF?width=220&height=32&cropmode=none "ColorPicker")</br>
+
+![ColorPicker](https://am3pap005files.storage.live.com/y4m0Tb-wnFOxqyQ2oENXhcpyB9t2NHbypbhiLDalMePEEIJ-B4lIhkJFwnby_IvMspeG-tOxr9nAdYL2rWof5jVCXIjgxsqSZac44NMMV8lSDYPUfLtiEuFRRZVRL9FAO4tYOi1690XCc3cI0xiiJscNDn6eqNla7OeliXrP1pBQzNVDGTjVmqAiKSvgU1W0LVM?width=503&height=606&cropmode=none "ColorPicker")</br>
+
 Simple ColorPicker</br>
-![Simple](https://am3pap005files.storage.live.com/y4mIY3jatPSuW16w-gIRURIEGf1iE8yQYO2gzoftZROAcgg0363n1-t7HwLo34FMNef6jZzqZb7v64Aj8lrKnANd92NSaFghiGAQeLhIPx3F8tz19TLmQHAU9hmQccDD3QUbg3gnT2pUeocL3pYv2T3_hAxYe0CnUb5NFhWfLI-jeNeKw_8yT-HNK0nKSYgrRhk?width=501&height=291&cropmode=none)</br>
+![Simple](https://am3pap005files.storage.live.com/y4m_XgfKX4jiWxAc8FAypyq5RGSJRzZDwavGH1NrgahSuo-hyI1caDxna60MhUGCYpV6Ja88BcKzGk9uTsMI2ArQbfsyHncvK5cavCbhtEl-ujYafGUbVQeVtogc12jRb5ejgqkAqqKxesNc1h4FE3ToKn-dZLtDpy2S-pbdjJGSFrP-0WBKpjNXQY3-I8LgdCl?width=503&height=334&cropmode=none)</br>
+
 Styled ColorPicker</br>
 ![Styled](https://am3pap005files.storage.live.com/y4mroTj9anmehNNgT1WeuYbcJvrSs-D6I4FMuKCwJVfRb6spyNbrayJzvCxFLzhK1wOz2gDFFXPKVAIm_OXSm178tg3t9qPRBvdEvGK-zfBz24JfJ7M67QBt1k2n8Bj_58OI_WXb7DNTPCNVCiuwKARAWQ-D6il32PCPv77WVjLBC7rnVI1PE2SrpCjQtmRWOmn?width=506&height=611&cropmode=none)
 
@@ -63,7 +67,7 @@ SelectedColorChanged | Occurrs when SelectedColor property is changed | *OldValu
 
 ## ColorPanel
 
-![ColorPanel](https://am3pap005files.storage.live.com/y4mI2M-S3zPUj1M0ZaUuZjv5UlyAePbJRPc0FuqjaiYGUxdBKvPgM650JglQfo5eAH8463Mvx16nU79FtBHecZte8bLGlhzIMGjJVAfxGq7hFq0fzbL0Xvw_4qpEPUAL6IjryQoHOPFg2eNx0cyrVkCYPA2tMcaQZnbYdp_oiL3_YjqQozQuSITVoJYSyo5CXkY?width=545&height=544&cropmode=none "ColorPanel")
+![ColorPanel](https://am3pap005files.storage.live.com/y4mL4QjQXZZsx60HQEnqI1zEgi9kgme0g-wsvcwbKPiARc5RPa94S7SJfbi4ThKEttRIKeVOnvtTi8mtbIrikTW34OGXo9olfBJIrpGBsGdGARB5TX6oiGW3gafzf0ndTmT6sIjTVne1LIuxbCBiF0td0FOoRSnqChKVA6Kw0ORNZxF0GjhdqCYMDAkYMmaNQlA?width=546&height=545&cropmode=none "ColorPanel")
 
 ### Properties
 
