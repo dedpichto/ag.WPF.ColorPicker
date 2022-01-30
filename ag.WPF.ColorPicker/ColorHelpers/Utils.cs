@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 
@@ -27,29 +25,9 @@ namespace ag.WPF.ColorPicker.ColorHelpers
             typeof(decimal)
         };
 
-        public static bool In<T>(this T obj, params T[] values)
-        {
-            if (obj == null) return false;
-            return values.Contains(obj);
-        }
-
         public static readonly Dictionary<string, (Color, HsbColor)> KnownColors = GetKnownColors();
 
-        public static string GetColorName(this Color color)
-        {
-            string str = Utils.KnownColors.Where(kvp => kvp.Value.Equals(color)).Select(kvp => kvp.Key).FirstOrDefault();
-            if (string.IsNullOrEmpty(str))
-                str = color.ToString();
-            return str;
-        }
-
         private static Dictionary<string, (Color, HsbColor)> GetKnownColors() => ((IEnumerable<PropertyInfo>)typeof(Colors).GetProperties(BindingFlags.Static | BindingFlags.Public)).ToDictionary(p => p.Name, p => ((Color)p.GetValue(null, null), ((Color)p.GetValue(null, null)).ToHsbColor()));
-
-        public static double ConvertHsbToDouble(Color color)
-        {
-            var hsv = color.ToHsbColor();
-            return 360.0 - hsv.Hue;
-        }
 
         public static List<Color> GenerateHsvPalette()
         {

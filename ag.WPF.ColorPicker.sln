@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestNET", "TestNET\TestNET.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestFramework", "TestFramework\TestFramework.csproj", "{6C6B2361-3EFC-424C-A60A-F08798A49FFB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleNetwork", "ExampleNetwork\ExampleNetwork.csproj", "{25C1587B-660A-466A-887A-D6AC380F18F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "ExampleNetwork\Example.csproj", "{25C1587B-660A-466A-887A-D6AC380F18F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

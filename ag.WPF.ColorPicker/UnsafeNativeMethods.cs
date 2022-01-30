@@ -9,9 +9,6 @@ namespace ag.WPF.ColorPicker
         [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern bool SetCursorPos(int x, int y);
 
-        internal static void SetCursorPosition(int x, int y)
-        {
-            _ = SetCursorPos(x, y);
-        }
+        internal static void SetCursorPosition(int x, int y) => _ = SetCursorPos(x, y);
     }
 }

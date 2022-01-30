@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ExampleNetwork
+namespace Example
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -25,9 +25,6 @@ namespace ExampleNetwork
             InitializeComponent();
         }
 
-        private void _picker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color> e)
-        {
-            Background = new SolidColorBrush(e.NewValue);
-        }
+        private void _picker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color> e) => Background = new SolidColorBrush(e.NewValue);
     }
 }

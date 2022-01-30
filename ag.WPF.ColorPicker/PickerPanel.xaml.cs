@@ -102,10 +102,7 @@ namespace ag.WPF.ColorPicker
         /// Raises the PropertyChanged event when the property value has changed
         /// </summary>
         /// <param name="propertyName">Property name</param>
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         #endregion
 
         #region Overrides
@@ -202,10 +199,7 @@ namespace ag.WPF.ColorPicker
             DialogResult = true;
         }
 
-        private void Window_Unloaded(object sender, RoutedEventArgs e)
-        {
-            _cursor?.Dispose();
-        }
+        private void Window_Unloaded(object sender, RoutedEventArgs e) => _cursor?.Dispose();
         #endregion
 
         #region Private procedures

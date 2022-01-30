@@ -655,7 +655,7 @@ namespace ag.WPF.ColorPicker
             }
 
             ColorString = GetColorString();
-            UpdateColorShadeSelectorPosition();
+            UpdateColorSelectorPosition();
 
             SelectBasicColor(newValue);
 
@@ -831,7 +831,7 @@ namespace ag.WPF.ColorPicker
             UpdateHSLValues(SelectedColor);
             UpdateHSBValues(SelectedColor);
             ColorString = GetColorString();
-            UpdateColorShadeSelectorPosition();
+            UpdateColorSelectorPosition();
 
             CreateShadesAndTints();
 
@@ -926,7 +926,7 @@ namespace ag.WPF.ColorPicker
         {
             if (!_currentColorPosition.HasValue)
                 return;
-            UpdateColorShadeSelectorPositionAndCalculateColor(new Point()
+            UpdateColorSelectorPositionAndCalculateColor(new Point()
             {
                 X = _currentColorPosition.Value.X * e.NewSize.Width,
                 Y = _currentColorPosition.Value.Y * e.NewSize.Height
@@ -938,7 +938,7 @@ namespace ag.WPF.ColorPicker
             if (_colorShadingCanvas == null || e.LeftButton != MouseButtonState.Pressed || !_fromMouseMove)
                 return;
 
-            UpdateColorShadeSelectorPositionAndCalculateColor(e.GetPosition(_colorShadingCanvas), true);
+            UpdateColorSelectorPositionAndCalculateColor(e.GetPosition(_colorShadingCanvas), true);
 
             Mouse.Synchronize();
         }
@@ -958,7 +958,7 @@ namespace ag.WPF.ColorPicker
             if (_colorShadingCanvas == null)
                 return;
             _fromMouseMove = true;
-            UpdateColorShadeSelectorPositionAndCalculateColor(e.GetPosition(_colorShadingCanvas), true);
+            UpdateColorSelectorPositionAndCalculateColor(e.GetPosition(_colorShadingCanvas), true);
             _colorShadingCanvas.CaptureMouse();
             e.Handled = true;
         }
@@ -1095,7 +1095,7 @@ namespace ag.WPF.ColorPicker
             }
         }
 
-        private void UpdateColorShadeSelectorPositionAndCalculateColor(Point p, bool calculateColor)
+        private void UpdateColorSelectorPositionAndCalculateColor(Point p, bool calculateColor)
         {
             if (_colorShadingCanvas == null || _colorShadeSelector == null)
                 return;
@@ -1117,7 +1117,7 @@ namespace ag.WPF.ColorPicker
             CalculateColor(p);
         }
 
-        private void UpdateColorShadeSelectorPosition()
+        private void UpdateColorSelectorPosition()
         {
             if (_spectrumSlider == null || _colorShadingCanvas == null)
                 return;
