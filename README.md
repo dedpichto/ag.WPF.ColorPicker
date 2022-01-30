@@ -1,7 +1,7 @@
 
 # ag.WPF.ColorPicker
 
-first
+![Nuget](https://img.shields.io/nuget/v/ag.WPF.ColorPicker)
 
 Custom WPF controls that allows a user to pick a color from a predefind color palettes and screen.
 
@@ -9,7 +9,7 @@ Custom WPF controls that allows a user to pick a color from a predefind color pa
 
 Use NuGet package manager.
 
-first
+[ag.WPF.UpDown](https://www.nuget.org/packages/ag.WPF.ColorPicker/)
 
 ## Usage
 
