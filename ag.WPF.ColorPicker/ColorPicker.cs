@@ -37,8 +37,6 @@ namespace ag.WPF.ColorPicker
         private Button _applyButton;
         private Button _cancelButton;
 
-        private bool _allowPopup = true;
-
         #region Dependecy properties
         /// <summary>
         /// The identifier of the <see cref="SelectedColor"/> dependency property.
@@ -131,13 +129,11 @@ namespace ag.WPF.ColorPicker
             if (_popup != null)
             {
                 _popup.Opened -= Popup_Opened;
-                _popup.Closed += Popup_Closed;
             }
             _popup = GetTemplateChild(PART_Popup) as Popup;
             if (_popup != null)
             {
                 _popup.Opened += Popup_Opened;
-                _popup.Closed += Popup_Closed;
             }
 
             if (_colorPanel != null)
@@ -189,14 +185,6 @@ namespace ag.WPF.ColorPicker
             _popup.IsOpen = false;
         }
 
-        private void Popup_Closed(object sender, EventArgs e)
-        {
-            if (Mouse.Captured is Button button && (button.Name == PART_Button || button.Name == PART_ColorContent))
-            {
-                _allowPopup = false;
-            }
-        }
-
         private void Popup_Opened(object sender, EventArgs e)
         {
             if (_colorPanel != null)
@@ -240,9 +228,8 @@ namespace ag.WPF.ColorPicker
         #region Private procedures
         private void OpenPopup()
         {
-            if (!_allowPopup)
+            if (_popup.IsOpen)
             {
-                _allowPopup = true;
                 return;
             }
             _colorPanel.InitialColor = SelectedColor;
