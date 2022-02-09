@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -105,18 +106,6 @@ namespace ag.WPF.ColorPicker
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         #endregion
 
-        #region Overrides
-        /// <summary>
-        /// Occurrs when window's content is rendered.
-        /// </summary>
-        /// <param name="e"></param>
-        protected override void OnContentRendered(EventArgs e)
-        {
-            base.OnContentRendered(e);
-            Topmost = false;
-        }
-        #endregion
-
         #region Private event handlers
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -128,68 +117,89 @@ namespace ag.WPF.ColorPicker
                 _cursor = new Cursor(stream.Stream);
                 if (_cursor != null)
                     _canvas.Cursor = _cursor;
+
+                _image.Source = GetBitmap();
+                var screenPoint = PointToScreen(Mouse.GetPosition(this));
+                PreviewSource = GetBitmap((int)screenPoint.X, (int)screenPoint.Y);
             }
-            catch { }
-            _image.Source = GetBitmap();
-            var screenPoint = PointToScreen(Mouse.GetPosition(this));
-            PreviewSource = GetBitmap((int)screenPoint.X, (int)screenPoint.Y);
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                DialogResult = false;
+            }
         }
 
         private void Window_MouseMove(object sender, MouseEventArgs e)
         {
-            e.Handled = true;
-            var pt = e.GetPosition(this);
-            if (pt.X < 120 + 2 && pt.Y < 120 + 2)
-                PreviewTop = SystemParameters.VirtualScreenHeight - 120;
-            else
-                PreviewTop = 0;
-            var screenPoint = PointToScreen(pt);
-            PreviewSource = GetBitmap((int)screenPoint.X, (int)screenPoint.Y);
+            try
+            {
+                e.Handled = true;
+                var pt = e.GetPosition(this);
+                if (pt.X < 120 + 2 && pt.Y < 120 + 2)
+                    PreviewTop = SystemParameters.VirtualScreenHeight - 120;
+                else
+                    PreviewTop = 0;
+                var screenPoint = PointToScreen(pt);
+                PreviewSource = GetBitmap((int)screenPoint.X, (int)screenPoint.Y);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+                DialogResult = false;
+            }
         }
 
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Escape)
+            try
             {
-                e.Handled = true;
+                if (e.Key == Key.Escape)
+                {
+                    e.Handled = true;
+                    DialogResult = false;
+                }
+                else if (e.Key == Key.Up)
+                {
+                    e.Handled = true;
+                    var pt = Mouse.GetPosition(this);
+                    var screenPoint = PointToScreen(pt);
+                    screenPoint.Y--;
+                    UnsafeNativeMethods.SetCursorPosition((int)screenPoint.X, (int)screenPoint.Y);
+                }
+                else if (e.Key == Key.Down)
+                {
+                    e.Handled = true;
+                    var pt = Mouse.GetPosition(this);
+                    var screenPoint = PointToScreen(pt);
+                    screenPoint.Y++;
+                    UnsafeNativeMethods.SetCursorPosition((int)screenPoint.X, (int)screenPoint.Y);
+                }
+                else if (e.Key == Key.Left)
+                {
+                    e.Handled = true;
+                    var pt = Mouse.GetPosition(this);
+                    var screenPoint = PointToScreen(pt);
+                    screenPoint.X--;
+                    UnsafeNativeMethods.SetCursorPosition((int)screenPoint.X, (int)screenPoint.Y);
+                }
+                else if (e.Key == Key.Right)
+                {
+                    e.Handled = true;
+                    var pt = Mouse.GetPosition(this);
+                    var screenPoint = PointToScreen(pt);
+                    screenPoint.X++;
+                    UnsafeNativeMethods.SetCursorPosition((int)screenPoint.X, (int)screenPoint.Y);
+                }
+                else if (e.Key == Key.Enter)
+                {
+                    e.Handled = true;
+                    DialogResult = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
                 DialogResult = false;
-            }
-            else if (e.Key == Key.Up)
-            {
-                e.Handled = true;
-                var pt = Mouse.GetPosition(this);
-                var screenPoint = PointToScreen(pt);
-                screenPoint.Y--;
-                UnsafeNativeMethods.SetCursorPosition((int)screenPoint.X, (int)screenPoint.Y);
-            }
-            else if (e.Key == Key.Down)
-            {
-                e.Handled = true;
-                var pt = Mouse.GetPosition(this);
-                var screenPoint = PointToScreen(pt);
-                screenPoint.Y++;
-                UnsafeNativeMethods.SetCursorPosition((int)screenPoint.X, (int)screenPoint.Y);
-            }
-            else if (e.Key == Key.Left)
-            {
-                e.Handled = true;
-                var pt = Mouse.GetPosition(this);
-                var screenPoint = PointToScreen(pt);
-                screenPoint.X--;
-                UnsafeNativeMethods.SetCursorPosition((int)screenPoint.X, (int)screenPoint.Y);
-            }
-            else if (e.Key == Key.Right)
-            {
-                e.Handled = true;
-                var pt = Mouse.GetPosition(this);
-                var screenPoint = PointToScreen(pt);
-                screenPoint.X++;
-                UnsafeNativeMethods.SetCursorPosition((int)screenPoint.X, (int)screenPoint.Y);
-            }
-            else if (e.Key == Key.Enter)
-            {
-                e.Handled = true;
-                DialogResult = true;
             }
         }
 
