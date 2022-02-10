@@ -22,7 +22,13 @@ xmlns:picker="clr-namespace:ag.WPF.ColorPicker;assembly=ag.WPF.ColorPicker"
 Add ColorPicker
 
 ```csharp
-<picker:ColorPicker x:Name="_picker"/>
+<picker:ColorPicker x:Name="_picker" Width="175" VerticalAlignment="Top" Grid.Column="0" Margin="20" SelectedColorChanged="_picker_SelectedColorChanged"/>
+```
+
+Elsewhere in code behind
+
+```csharp
+private void _picker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color> e) => Background = new SolidColorBrush(e.NewValue);
 ```
 
 ## Enumerations
