@@ -161,6 +161,8 @@ namespace ag.WPF.ColorPicker.ColorHelpers
             var drawingBrush = new DrawingBrush { TileMode = TileMode.Tile, Viewport = new Rect(0, 0, 10, 10), ViewportUnits = BrushMappingMode.Absolute, Drawing = drawingGroup };
             return drawingBrush;
         }
+
+        public static bool In<T>(this T value, params T[] values) => values.Contains(value);
 #nullable restore
     }
 }

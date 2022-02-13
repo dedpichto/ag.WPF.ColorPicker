@@ -64,7 +64,7 @@ namespace ag.WPF.ColorPicker
     [TemplatePart(Name = "PART_ColorShadingCanvas", Type = typeof(Canvas))]
     [TemplatePart(Name = "PART_ColorShadeSelector", Type = typeof(Canvas))]
     [TemplatePart(Name = "PART_SpectrumSlider", Type = typeof(ColorSlider))]
-    //[TemplatePart(Name = "PART_ColorStringTextBox", Type = typeof(TextBox))]
+    [TemplatePart(Name = "PART_ColorStringTextBox", Type = typeof(TextBox))]
     [TemplatePart(Name = "PART_InitialColorPath", Type = typeof(Path))]
     [TemplatePart(Name = "PART_CopyTextBorder", Type = typeof(Border))]
     [TemplatePart(Name = "PART_ShadesPanel", Type = typeof(UniformGrid))]
@@ -82,7 +82,7 @@ namespace ag.WPF.ColorPicker
         private const string PART_ColorShadingCanvas = "PART_ColorShadingCanvas";
         private const string PART_ColorShadeSelector = "PART_ColorShadeSelector";
         private const string PART_SpectrumSlider = "PART_SpectrumSlider";
-        //private const string PART_ColorStringTextBox = "PART_ColorStringTextBox";
+        private const string PART_ColorStringTextBox = "PART_ColorStringTextBox";
         private const string PART_InitialColorPath = "PART_InitialColorPath";
         private const string PART_CopyTextBorder = "PART_CopyTextBorder";
         private const string PART_ShadesPanel = "PART_ShadesPanel";
@@ -98,7 +98,7 @@ namespace ag.WPF.ColorPicker
         private Canvas _colorShadingCanvas;
         private Canvas _colorShadeSelector;
         private ColorSlider _spectrumSlider;
-        //private TextBox _colorStringTextBox;
+        private TextBox _colorStringTextBox;
         private Path _initialColorPath;
         private Border _copyTextBorder;
         private UniformGrid _shadesPanel;
@@ -121,6 +121,7 @@ namespace ag.WPF.ColorPicker
         private bool _saturationHslUpdated;
         private bool _luminanceHslUpdated;
         private bool _alphaUpdated;
+        private bool _colorTextBoxIsEditing;
 
         private readonly List<StandardColorItem> _standardColorItems = new();
 
@@ -655,6 +656,12 @@ namespace ag.WPF.ColorPicker
             }
 
             ColorString = GetColorString();
+
+            if (!_colorTextBoxIsEditing)
+            {
+                _colorStringTextBox.Text = ColorString;
+            }
+
             UpdateColorSelectorPosition();
 
             SelectBasicColor(newValue);
@@ -711,7 +718,11 @@ namespace ag.WPF.ColorPicker
         /// <summary>
         /// Occurs when the <see cref="ColorStringFormat"/> property has been changed in some way.
         /// </summary>
-        protected virtual void OnColorStringFormatChanged(ColorStringFormat oldValue, ColorStringFormat newValue) => ColorString = GetColorString();
+        protected virtual void OnColorStringFormatChanged(ColorStringFormat oldValue, ColorStringFormat newValue)
+        {
+            ColorString = GetColorString();
+            _colorStringTextBox.Text = ColorString;
+        }
         #endregion
 
         #region ctor
@@ -774,7 +785,19 @@ namespace ag.WPF.ColorPicker
                 _spectrumSlider.ValueChanged += SpectrumSlider_ValueChanged;
             }
 
-            //_colorStringTextBox = GetTemplateChild(PART_ColorStringTextBox) as TextBox;
+            if (_colorStringTextBox != null)
+            {
+                _colorStringTextBox.TextChanged -= ColorStringTextBox_TextChanged;
+                _colorStringTextBox.PreviewKeyDown -= ColorStringTextBox_PreviewKeyDown;
+                _colorStringTextBox.LostFocus += ColorStringTextBox_LostFocus;
+            }
+            _colorStringTextBox = GetTemplateChild(PART_ColorStringTextBox) as TextBox;
+            if (_colorStringTextBox != null)
+            {
+                _colorStringTextBox.TextChanged += ColorStringTextBox_TextChanged;
+                _colorStringTextBox.PreviewKeyDown += ColorStringTextBox_PreviewKeyDown;
+                _colorStringTextBox.LostFocus += ColorStringTextBox_LostFocus;
+            }
 
             _tabMain = GetTemplateChild(PART_TabMain) as TabControl;
             _shadesPanel = GetTemplateChild(PART_ShadesPanel) as UniformGrid;
@@ -835,6 +858,8 @@ namespace ag.WPF.ColorPicker
 
             CreateShadesAndTints();
 
+            if (_colorStringTextBox != null)
+                _colorStringTextBox.Text = ColorString;
         }
         #endregion
 
@@ -868,17 +893,240 @@ namespace ag.WPF.ColorPicker
         #endregion
 
         #region Private event handlers
-        private void CopyTextBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => Clipboard.SetText(GetColorString());
+        private void ColorStringTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (_colorStringTextBox.Text != ColorString)
+                _colorStringTextBox.Text = ColorString;
+        }
+
+        private void ColorStringTextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            _colorTextBoxIsEditing = true;
+            if (e.Key.In(Key.Back, Key.Delete, Key.Tab, Key.Left, Key.Right, Key.Home, Key.End))
+            {
+                return;
+            }
+            switch (ColorStringFormat)
+            {
+                case ColorStringFormat.HEX:
+                    if (!(e.Key >= Key.D0 && e.Key <= Key.D9)
+                        && !(e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+                        && !(e.Key >= Key.A && e.Key <= Key.F))
+                    {
+                        e.Handled = true;
+                        return;
+                    }
+                    break;
+                case ColorStringFormat.ARGB:
+                case ColorStringFormat.RGB:
+                    {
+                        if (!(e.Key >= Key.D0 && e.Key <= Key.D9)
+                            && !(e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+                            && e.Key != Key.OemComma)
+                        {
+                            e.Handled = true;
+                            return;
+                        }
+                        var selectionLength = _colorStringTextBox.SelectionLength;
+                        var selectionStart = _colorStringTextBox.SelectionStart;
+                        var alteredText = _colorStringTextBox.Text;
+                        if (selectionLength == 0)
+                        {
+                            alteredText = alteredText.Insert(selectionStart, KeyToChar(e.Key));
+                        }
+                        else
+                        {
+                            alteredText = alteredText.Substring(0, selectionStart) + KeyToChar(e.Key) + alteredText.Substring(selectionStart + selectionLength);
+                        }
+                        var arr = alteredText.Split(',');
+                        if (ColorStringFormat == ColorStringFormat.ARGB && arr.Length > 4)
+                        {
+                            e.Handled = true;
+                            return;
+                        }
+                        else if (ColorStringFormat == ColorStringFormat.RGB && arr.Length > 3)
+                        {
+                            e.Handled = true;
+                            return;
+                        }
+                        if (arr.Any(s => !string.IsNullOrEmpty(s) && Convert.ToInt32(s) > 255))
+                        {
+                            e.Handled = true;
+                            return;
+                        }
+                        break;
+                    }
+                case ColorStringFormat.HSB:
+                case ColorStringFormat.HSL:
+                    {
+                        if (!(e.Key >= Key.D0 && e.Key <= Key.D9)
+                            && !(e.Key >= Key.NumPad0 && e.Key <= Key.NumPad9)
+                            && !e.Key.In(Key.OemPeriod, Key.Decimal, Key.OemComma))
+                        {
+                            e.Handled = true;
+                            return;
+                        }
+                        var selectionLength = _colorStringTextBox.SelectionLength;
+                        var selectionStart = _colorStringTextBox.SelectionStart;
+                        var alteredText = _colorStringTextBox.Text;
+                        if (selectionLength == 0)
+                        {
+                            alteredText = alteredText.Insert(selectionStart, KeyToChar(e.Key));
+                        }
+                        else
+                        {
+                            alteredText = alteredText.Substring(0, selectionStart) + KeyToChar(e.Key) + alteredText.Substring(selectionStart + selectionLength);
+                        }
+                        var arr = alteredText.Split(',');
+                        if (arr.Length > 3)
+                        {
+                            e.Handled = true;
+                            return;
+                        }
+                        if (!string.IsNullOrEmpty(arr[0]))
+                        {
+                            if (arr[0].Contains("."))
+                            {
+                                e.Handled = true;
+                                return;
+                            }
+                            if (Convert.ToInt32(arr[0]) > 360)
+                            {
+                                e.Handled = true;
+                                return;
+                            }
+                        }
+                        foreach (var item in arr.Skip(1))
+                        {
+                            var split = item.Split('.');
+                            if (split.Length > 2)
+                            {
+                                e.Handled = true;
+                                return;
+                            }
+                            if (split.Length == 2 && split[1].Length > 2)
+                            {
+                                e.Handled = true;
+                                return;
+                            }
+                            if (!string.IsNullOrEmpty(item) && item != "." && Convert.ToDouble(item) > 1.0)
+                            {
+                                e.Handled = true;
+                                return;
+                            }
+                        }
+                        break;
+                    }
+            }
+        }
+
+        private void ColorStringTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (_colorStringTextBox.Text == ColorString)
+                return;
+            switch (ColorStringFormat)
+            {
+                case ColorStringFormat.HEX:
+                    {
+                        var temp = _colorStringTextBox.Text.PadRight(8, '0');
+                        var arr = new string[4];
+                        for (int i = 0, j = 0; i <= 6; i += 2, j++)
+                        {
+                            arr[j] = temp.Substring(i, 2);
+                        }
+                        A = byte.Parse(arr[0], System.Globalization.NumberStyles.HexNumber);
+                        R = byte.Parse(arr[1], System.Globalization.NumberStyles.HexNumber);
+                        G = byte.Parse(arr[2], System.Globalization.NumberStyles.HexNumber);
+                        B = byte.Parse(arr[3], System.Globalization.NumberStyles.HexNumber);
+
+                        break;
+                    }
+                case ColorStringFormat.ARGB:
+                    {
+                        var bytes = new byte[4];
+                        var arr = _colorStringTextBox.Text.Split(',');
+                        for (var i = 0; i < arr.Length; i++)
+                        {
+                            if (string.IsNullOrEmpty(arr[i]))
+                                continue;
+                            bytes[i] = byte.Parse(arr[i]);
+                        }
+                        A = bytes[0];
+                        R = bytes[1];
+                        G = bytes[2];
+                        B = bytes[3];
+
+                        break;
+                    }
+                case ColorStringFormat.RGB:
+                    {
+                        var bytes = new byte[3];
+                        var arr = _colorStringTextBox.Text.Split(',');
+                        for (var i = 0; i < arr.Length; i++)
+                        {
+                            if (string.IsNullOrEmpty(arr[i]))
+                                continue;
+                            bytes[i] = byte.Parse(arr[i]);
+                        }
+                        R = bytes[0];
+                        G = bytes[1];
+                        B = bytes[2];
+
+                        break;
+                    }
+                case ColorStringFormat.HSB:
+                    {
+                        var values = new double[2];
+                        var arr = _colorStringTextBox.Text.Split(',');
+                        HueHsb = string.IsNullOrEmpty(arr[0]) ? 0.0 : Convert.ToDouble(arr[0]);
+                        for (var i = 1; i < arr.Length; i++)
+                        {
+                            if (string.IsNullOrEmpty(arr[i]) || arr[i] == ".")
+                                continue;
+                            values[i - 1] = Convert.ToDouble(arr[i]);
+                        }
+                        SaturationHsb = values[0];
+                        BrightnessHsb = values[1];
+
+                        break;
+                    }
+                case ColorStringFormat.HSL:
+                    {
+                        var values = new double[2];
+                        var arr = _colorStringTextBox.Text.Split(',');
+                        HueHsl = string.IsNullOrEmpty(arr[0]) ? 0.0 : Convert.ToDouble(arr[0]);
+                        for (var i = 1; i < arr.Length; i++)
+                        {
+                            if (string.IsNullOrEmpty(arr[i]) || arr[i] == ".")
+                                continue;
+                            values[i - 1] = Convert.ToDouble(arr[i]);
+                        }
+                        SaturationHsl = values[0];
+                        LuminanceHsl = values[1];
+
+                        break;
+                    }
+            }
+            _colorTextBoxIsEditing = false;
+        }
+
+        private void CopyTextBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_colorStringTextBox.Text != ColorString)
+                _colorStringTextBox.Text = ColorString;
+            Clipboard.SetText(GetColorString());
+        }
 
         private void DropPickerBorder_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            if (_colorStringTextBox.Text != ColorString)
+                _colorStringTextBox.Text = ColorString;
             var pickerPanel = new PickerPanel { Left = 0, Top = 0 };
             var result = pickerPanel.ShowDialog();
             if (result != null && result.Value)
             {
                 SelectedColor = pickerPanel.SelectedColor;
             }
-            //_colorStringTextBox.Focus();
         }
 
         private void ListStandard_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -994,12 +1242,12 @@ namespace ag.WPF.ColorPicker
 
         private string GetColorString() => ColorStringFormat switch
         {
-            ColorStringFormat.HEX => $"#{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}",
-            ColorStringFormat.ARGB => $"{SelectedColor.A}, {SelectedColor.R}, {SelectedColor.G}, {SelectedColor.B}",
-            ColorStringFormat.RGB => $"{SelectedColor.R}, {SelectedColor.G}, {SelectedColor.B}",
-            ColorStringFormat.HSB => $"{HueHsb:f0}, {SaturationHsb:f2}, {BrightnessHsb:f2}",
-            ColorStringFormat.HSL => $"{HueHsl:f0}, {SaturationHsl:f2}, {LuminanceHsl:f2}",
-            _ => $"#{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}"
+            ColorStringFormat.HEX => $"{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}",
+            ColorStringFormat.ARGB => $"{SelectedColor.A},{SelectedColor.R},{SelectedColor.G},{SelectedColor.B}",
+            ColorStringFormat.RGB => $"{SelectedColor.R},{SelectedColor.G},{SelectedColor.B}",
+            ColorStringFormat.HSB => $"{HueHsb:f0},{SaturationHsb:f2},{BrightnessHsb:f2}",
+            ColorStringFormat.HSL => $"{HueHsl:f0},{SaturationHsl:f2},{LuminanceHsl:f2}",
+            _ => $"{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}"
         };
 
         private void SelectBasicColor(Color color)
@@ -1203,6 +1451,32 @@ namespace ag.WPF.ColorPicker
         private static bool IsNonColor(Color color) => (color.R == color.G && color.G == color.B);
 
         private void UpdateSelectedColor() => SelectedColor = Color.FromArgb(A, R, G, B);
+
+        private string KeyToChar(Key key)
+        {
+            return key switch
+            {
+                Key.A => "a",
+                Key.B => "b",
+                Key.C => "c",
+                Key.D => "d",
+                Key.E => "e",
+                Key.F => "f",
+                Key.D0 or Key.NumPad0 => "0",
+                Key.D1 or Key.NumPad1 => "1",
+                Key.D2 or Key.NumPad2 => "2",
+                Key.D3 or Key.NumPad3 => "3",
+                Key.D4 or Key.NumPad4 => "4",
+                Key.D5 or Key.NumPad5 => "5",
+                Key.D6 or Key.NumPad6 => "6",
+                Key.D7 or Key.NumPad7 => "7",
+                Key.D8 or Key.NumPad8 => "8",
+                Key.D9 or Key.NumPad9 => "9",
+                Key.OemComma => ",",
+                Key.OemPeriod or Key.Decimal => ".",
+                _ => "0"
+            };
+        }
         #endregion
 
 #nullable restore

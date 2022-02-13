@@ -250,6 +250,43 @@ namespace ag.WPF.ColorPicker
     }
 
     /// <summary>
+    /// Rounds value from/for UpDown.
+    /// </summary>
+    public class UpDownBLValueConverter : IValueConverter
+    {
+        /// <summary>
+        /// Rounds value from UpDown.
+        /// </summary>
+        /// <param name="value">Decimal value.</param>
+        /// <param name="targetType">Not used.</param>
+        /// <param name="parameter">Not used.</param>
+        /// <param name="culture">Not used.</param>
+        /// <returns>Double.</returns>
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return Math.Round(System.Convert.ToDouble(value), MidpointRounding.AwayFromZero);
+        }
+
+        /// <summary>
+        /// Rounds value for UpDown.
+        /// </summary>
+        /// <param name="value">Not used.</param>
+        /// <param name="targetType">Not used.</param>
+        /// <param name="parameter">Not used.</param>
+        /// <param name="culture">Not used.</param>
+        /// <returns>Double.</returns>
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            double result;
+            if (System.Convert.ToDouble(value) < 0)
+                result = 0;
+            else
+                result = System.Convert.ToDouble(value);
+            return Math.Round(result, MidpointRounding.AwayFromZero);
+        }
+    }
+
+    /// <summary>
     /// Makes color brighter/darker.
     /// </summary>
     public class ColorToBighterOrDarkerConverter : IValueConverter
