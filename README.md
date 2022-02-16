@@ -9,7 +9,7 @@ Custom WPF controls that allows a user to pick a color from a predefind color pa
 
 Use NuGet package manager.
 
-[ag.WPF.UpDown](https://www.nuget.org/packages/ag.WPF.ColorPicker/)
+[ag.WPF.ColorPicker](https://www.nuget.org/packages/ag.WPF.ColorPicker/)
 
 ## Usage
 
