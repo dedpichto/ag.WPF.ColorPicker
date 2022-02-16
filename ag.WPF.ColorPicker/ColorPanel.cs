@@ -73,6 +73,7 @@ namespace ag.WPF.ColorPicker
     [TemplatePart(Name = "PART_TabMain", Type = typeof(TabControl))]
     [TemplatePart(Name = "PART_ListStandard", Type = typeof(ListBox))]
     [TemplatePart(Name = "PART_DropPickerBorder", Type = typeof(Border))]
+    [TemplatePart(Name = "PART_TabModes", Type = typeof(TabControl))]
     #endregion
 
     public class ColorPanel : Control
@@ -91,6 +92,7 @@ namespace ag.WPF.ColorPicker
         private const string PART_TabMain = "PART_TabMain";
         private const string PART_ListStandard = "PART_ListStandard";
         private const string PART_DropPickerBorder = "PART_DropPickerBorder";
+        private const string PART_TabModes = "PART_TabModes";
 
         private const int SHADES_COUNT = 12;
 
@@ -105,16 +107,15 @@ namespace ag.WPF.ColorPicker
         private UniformGrid _tintsPanel;
         private UniformGrid _basicPanel;
         private TabControl _tabMain;
+        private TabControl _tabModes;
         private ListBox _listStandard;
         private Border _dropPickerBorder;
 
         private Point? _currentColorPosition;
         private Color _initialColor;
         private bool _surpressPropertyChanged;
-        private bool _updateSpectrumSliderValue = true;
         private bool _updateHsl = true;
         private bool _updateHsb = true;
-        private bool _firstTimeLodaded = true;
         private bool _fromMouseMove = false;
         private bool _saturationHsbUpdated;
         private bool _brightnessHsbUpdated;
@@ -148,10 +149,6 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         public static readonly DependencyProperty BProperty = DependencyProperty.Register(nameof(B), typeof(byte), typeof(ColorPanel), new FrameworkPropertyMetadata((byte)0, OnRGBChanged));
         /// <summary>
-        /// The identifier of the <see cref="HueHsl"/> dependency property.
-        /// </summary>
-        public static readonly DependencyProperty HueHslProperty = DependencyProperty.Register(nameof(HueHsl), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnHueHslChanged));
-        /// <summary>
         /// The identifier of the <see cref="SaturationHsl"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty SaturationHslProperty = DependencyProperty.Register(nameof(SaturationHsl), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnSaturationHslChanged));
@@ -160,9 +157,9 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         public static readonly DependencyProperty LuminanceHslProperty = DependencyProperty.Register(nameof(LuminanceHsl), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnLuminanceHslChanged));
         /// <summary>
-        /// The identifier of the <see cref="HueHsb"/> dependency property.
+        /// The identifier of the <see cref="Hue"/> dependency property.
         /// </summary>
-        public static readonly DependencyProperty HueHsbProperty = DependencyProperty.Register(nameof(HueHsb), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnHueHsbChanged));
+        public static readonly DependencyProperty HueProperty = DependencyProperty.Register(nameof(Hue), typeof(double), typeof(ColorPanel), new FrameworkPropertyMetadata(0.0, OnHueChanged));
         /// <summary>
         /// The identifier of the <see cref="SaturationHsb"/> dependency property.
         /// </summary>
@@ -278,16 +275,6 @@ namespace ag.WPF.ColorPicker
         }
 
         /// <summary>
-        ///  Gets or sets hue of HSL color.
-        /// </summary>
-        [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        public double HueHsl
-        {
-            get => (double)GetValue(HueHslProperty);
-            set => SetValue(HueHslProperty, value);
-        }
-
-        /// <summary>
         ///  Gets or sets saturation of HSL color.
         /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
@@ -311,10 +298,10 @@ namespace ag.WPF.ColorPicker
         ///  Gets or sets hue of HSB color.
         /// </summary>
         [Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
-        public double HueHsb
+        public double Hue
         {
-            get => (double)GetValue(HueHsbProperty);
-            set => SetValue(HueHsbProperty, value);
+            get => (double)GetValue(HueProperty);
+            set => SetValue(HueProperty, value);
         }
 
         /// <summary>
@@ -515,13 +502,7 @@ namespace ag.WPF.ColorPicker
         public static void SetTitleTabCustom(DependencyObject dependencyObject, string value) => dependencyObject.SetValue(TitleTabCustomProperty, value);
 
         #endregion
-
         #region OnXXXChanged procedures
-        private static void OnHueHslChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is not ColorPanel colorPanel) return;
-            colorPanel.OnHueHslChanged((double)e.OldValue, (double)e.NewValue);
-        }
 
         private static void OnSaturationHslChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -536,20 +517,6 @@ namespace ag.WPF.ColorPicker
         }
 
         /// <summary>
-        /// Occurs when the <see cref="HueHsl"/> property has been changed in some way.
-        /// </summary>
-        protected virtual void OnHueHslChanged(double oldValue, double newValue)
-        {
-            if (_isSelectedColorUpdating)
-                return;
-            _updateHsl = false;
-            var hsl = new HslColor(HueHsl, SaturationHsl, LuminanceHsl);
-            var color = hsl.ToRgbColor();
-            SelectedColor = Color.FromArgb(A, color.R, color.G, color.B);
-            _updateHsl = true;
-        }
-
-        /// <summary>
         /// Occurs when the <see cref="SaturationHsl"/> property has been changed in some way.
         /// </summary>
         protected virtual void OnSaturationHslChanged(double oldValue, double newValue)
@@ -558,7 +525,7 @@ namespace ag.WPF.ColorPicker
                 return;
             _updateHsl = false;
             _saturationHslUpdated = true;
-            var hsl = new HslColor(HueHsl, SaturationHsl, LuminanceHsl);
+            var hsl = new HslColor(Hue, SaturationHsl, LuminanceHsl);
             var color = hsl.ToRgbColor();
             SelectedColor = Color.FromArgb(A, color.R, color.G, color.B);
             _saturationHslUpdated = false;
@@ -574,14 +541,14 @@ namespace ag.WPF.ColorPicker
                 return;
             _updateHsl = false;
             _luminanceHslUpdated = true;
-            var hsl = new HslColor(HueHsl, SaturationHsl, LuminanceHsl);
+            var hsl = new HslColor(Hue, SaturationHsl, LuminanceHsl);
             var color = hsl.ToRgbColor();
             SelectedColor = Color.FromArgb(A, color.R, color.G, color.B);
             _luminanceHslUpdated = false;
             _updateHsl = true;
         }
 
-        private static void OnHueHsbChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnHueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is not ColorPanel colorPanel) return;
             colorPanel.OnHueHsbChanged((double)e.OldValue, (double)e.NewValue);
@@ -600,14 +567,14 @@ namespace ag.WPF.ColorPicker
         }
 
         /// <summary>
-        /// Occurs when the <see cref="HueHsb"/> property has been changed in some way.
+        /// Occurs when the <see cref="Hue"/> property has been changed in some way.
         /// </summary>
         protected virtual void OnHueHsbChanged(double oldValue, double newValue)
         {
             if (_isSelectedColorUpdating)
                 return;
             _updateHsb = false;
-            var hsb = new HsbColor(HueHsb, SaturationHsb, BrightnessHsb);
+            var hsb = new HsbColor(Hue, SaturationHsb, BrightnessHsb);
             var color = hsb.ToRgbColor();
             SelectedColor = Color.FromArgb(A, color.R, color.G, color.B);
             _updateHsb = true;
@@ -622,7 +589,7 @@ namespace ag.WPF.ColorPicker
                 return;
             _updateHsb = false;
             _saturationHsbUpdated = true;
-            var hsb = new HsbColor(HueHsb, SaturationHsb, BrightnessHsb);
+            var hsb = new HsbColor(Hue, SaturationHsb, BrightnessHsb);
             var color = hsb.ToRgbColor();
             SelectedColor = Color.FromArgb(A, color.R, color.G, color.B);
             _saturationHsbUpdated = false;
@@ -638,7 +605,7 @@ namespace ag.WPF.ColorPicker
                 return;
             _updateHsb = false;
             _brightnessHsbUpdated = true;
-            var hsb = new HsbColor(HueHsb, SaturationHsb, BrightnessHsb);
+            var hsb = new HsbColor(Hue, SaturationHsb, BrightnessHsb);
             var color = hsb.ToRgbColor();
             SelectedColor = Color.FromArgb(A, color.R, color.G, color.B);
             _brightnessHsbUpdated = false;
@@ -738,6 +705,20 @@ namespace ag.WPF.ColorPicker
         {
             ColorString = GetColorString();
             _colorStringTextBox.Text = ColorString;
+            switch (newValue)
+            {
+                case ColorStringFormat.HEX:
+                case ColorStringFormat.RGB:
+                case ColorStringFormat.ARGB:
+                    _tabModes.SelectedIndex = 0;
+                    break;
+                case ColorStringFormat.HSB:
+                    _tabModes.SelectedIndex = 1;
+                    break;
+                case ColorStringFormat.HSL:
+                    _tabModes.SelectedIndex = 2;
+                    break;
+            }
         }
         #endregion
 
@@ -818,6 +799,7 @@ namespace ag.WPF.ColorPicker
             _tabMain = GetTemplateChild(PART_TabMain) as TabControl;
             _shadesPanel = GetTemplateChild(PART_ShadesPanel) as UniformGrid;
             _tintsPanel = GetTemplateChild(PART_TintsPanel) as UniformGrid;
+            _tabModes = GetTemplateChild(PART_TabModes) as TabControl;
 
             if (_basicPanel != null)
             {
@@ -1264,8 +1246,8 @@ namespace ag.WPF.ColorPicker
             ColorStringFormat.HEX => $"{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}",
             ColorStringFormat.ARGB => $"{SelectedColor.A},{SelectedColor.R},{SelectedColor.G},{SelectedColor.B}",
             ColorStringFormat.RGB => $"{SelectedColor.R},{SelectedColor.G},{SelectedColor.B}",
-            ColorStringFormat.HSB => $"{HueHsb:f0},{SaturationHsb:f2},{BrightnessHsb:f2}",
-            ColorStringFormat.HSL => $"{HueHsl:f0},{SaturationHsl:f2},{LuminanceHsl:f2}",
+            ColorStringFormat.HSB => $"{Hue:f0},{SaturationHsb:f2},{BrightnessHsb:f2}",
+            ColorStringFormat.HSL => $"{Hue:f0},{SaturationHsl:f2},{LuminanceHsl:f2}",
             _ => $"{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}"
         };
 
@@ -1390,27 +1372,27 @@ namespace ag.WPF.ColorPicker
                 return;
             _currentColorPosition = new Point?();
 
-            if (_updateSpectrumSliderValue || _fromMouseMove)
-            {
-                //_spectrumSlider.Value = 360.0 - hsb.Hue;
-                if (_firstTimeLodaded)
-                {
-                    _firstTimeLodaded = false;
-                    if (_spectrumSlider.Value != HueHsb)
-                    {
-                        _spectrumSlider.Value = HueHsb;
-                    }
-                    else
-                    {
-                        _spectrumSlider.Value = _spectrumSlider.Value < 360.0 ? _spectrumSlider.Value + 1.0 : _spectrumSlider.Value - 1.0;
-                        _spectrumSlider.Value = HueHsb;
-                    }
-                }
-                else
-                {
-                    _spectrumSlider.Value = HueHsb;
-                }
-            }
+            //if (_updateSpectrumSliderValue || _fromMouseMove)
+            //{
+            //    //_spectrumSlider.Value = 360.0 - hsb.Hue;
+            //    if (_firstTimeLodaded)
+            //    {
+            //        _firstTimeLodaded = false;
+            //        if (_spectrumSlider.Value != HueHsb)
+            //        {
+            //            _spectrumSlider.Value = HueHsb;
+            //        }
+            //        else
+            //        {
+            //            _spectrumSlider.Value = _spectrumSlider.Value < 360.0 ? _spectrumSlider.Value + 1.0 : _spectrumSlider.Value - 1.0;
+            //            _spectrumSlider.Value = HueHsb;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        _spectrumSlider.Value = HueHsb;
+            //    }
+            //}
 
             var point = new Point(SaturationHsb, 1.0 - BrightnessHsb);
             _currentColorPosition = new Point?(point);
@@ -1429,14 +1411,12 @@ namespace ag.WPF.ColorPicker
             };
             var rgb = hsb.ToRgbColor();
             rgb.A = A;
-            _updateSpectrumSliderValue = false;
             SelectedColor = Color.FromArgb(rgb.A, rgb.R, rgb.G, rgb.B);
             // change hue in case of white, black or gray
             if (IsNonColor(SelectedColor))
             {
-                HueHsb = hsb.Hue;
+                Hue = hsb.Hue;
             }
-            _updateSpectrumSliderValue = true;
         }
 
         private void UpdateRGBValues(Color color)
@@ -1453,7 +1433,7 @@ namespace ag.WPF.ColorPicker
         {
             var hsl = color.ToHslColor();
             if (!_fromMouseMove && !_saturationHslUpdated && !_saturationHsbUpdated && !_brightnessHsbUpdated && !_luminanceHslUpdated && !_alphaUpdated && !IsNonColor(color))
-                HueHsl = hsl.Hue;
+                Hue = hsl.Hue;
             SaturationHsl = hsl.Saturation;
             LuminanceHsl = hsl.Luminance;
         }
@@ -1462,7 +1442,7 @@ namespace ag.WPF.ColorPicker
         {
             var hsb = color.ToHsbColor();
             if (!_fromMouseMove && !_saturationHslUpdated && !_saturationHsbUpdated && !_brightnessHsbUpdated && !_luminanceHslUpdated && !_alphaUpdated && !IsNonColor(color))
-                HueHsb = hsb.Hue;
+                Hue = hsb.Hue;
             SaturationHsb = hsb.Saturation;
             BrightnessHsb = hsb.Brightness;
         }
