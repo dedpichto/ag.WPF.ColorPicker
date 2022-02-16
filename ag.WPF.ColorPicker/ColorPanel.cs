@@ -122,6 +122,7 @@ namespace ag.WPF.ColorPicker
         private bool _luminanceHslUpdated;
         private bool _alphaUpdated;
         private bool _colorTextBoxIsEditing;
+        private bool _isSelectedColorUpdating;
 
         private readonly List<StandardColorItem> _standardColorItems = new();
 
@@ -539,6 +540,8 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         protected virtual void OnHueHslChanged(double oldValue, double newValue)
         {
+            if (_isSelectedColorUpdating)
+                return;
             _updateHsl = false;
             var hsl = new HslColor(HueHsl, SaturationHsl, LuminanceHsl);
             var color = hsl.ToRgbColor();
@@ -551,6 +554,8 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         protected virtual void OnSaturationHslChanged(double oldValue, double newValue)
         {
+            if (_isSelectedColorUpdating)
+                return;
             _updateHsl = false;
             _saturationHslUpdated = true;
             var hsl = new HslColor(HueHsl, SaturationHsl, LuminanceHsl);
@@ -565,6 +570,8 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         protected virtual void OnLuminanceHslChanged(double oldValue, double newValue)
         {
+            if (_isSelectedColorUpdating)
+                return;
             _updateHsl = false;
             _luminanceHslUpdated = true;
             var hsl = new HslColor(HueHsl, SaturationHsl, LuminanceHsl);
@@ -597,6 +604,8 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         protected virtual void OnHueHsbChanged(double oldValue, double newValue)
         {
+            if (_isSelectedColorUpdating)
+                return;
             _updateHsb = false;
             var hsb = new HsbColor(HueHsb, SaturationHsb, BrightnessHsb);
             var color = hsb.ToRgbColor();
@@ -609,6 +618,8 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         protected virtual void OnSaturationHsbChanged(double oldValue, double newValue)
         {
+            if (_isSelectedColorUpdating)
+                return;
             _updateHsb = false;
             _saturationHsbUpdated = true;
             var hsb = new HsbColor(HueHsb, SaturationHsb, BrightnessHsb);
@@ -623,6 +634,8 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         protected virtual void OnBrightnessHsbChanged(double oldValue, double newValue)
         {
+            if (_isSelectedColorUpdating)
+                return;
             _updateHsb = false;
             _brightnessHsbUpdated = true;
             var hsb = new HsbColor(HueHsb, SaturationHsb, BrightnessHsb);
@@ -643,6 +656,7 @@ namespace ag.WPF.ColorPicker
         /// </summary>
         protected virtual void OnSelectedColorChanged(Color oldValue, Color newValue)
         {
+            _isSelectedColorUpdating = true;
             UpdateRGBValues(newValue);
 
             if (_updateHsl)
@@ -667,6 +681,8 @@ namespace ag.WPF.ColorPicker
             SelectBasicColor(newValue);
 
             SelectStandardColor(newValue);
+
+            _isSelectedColorUpdating = false;
 
             var changedEventArgs = new RoutedPropertyChangedEventArgs<Color>(oldValue, newValue)
             {
@@ -1023,7 +1039,11 @@ namespace ag.WPF.ColorPicker
         private void ColorStringTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (_colorStringTextBox.Text == ColorString)
+            {
+                _colorTextBoxIsEditing = false;
                 return;
+            }
+
             switch (ColorStringFormat)
             {
                 case ColorStringFormat.HEX:
@@ -1034,10 +1054,10 @@ namespace ag.WPF.ColorPicker
                         {
                             arr[j] = temp.Substring(i, 2);
                         }
-                        A = byte.Parse(arr[0], System.Globalization.NumberStyles.HexNumber);
-                        R = byte.Parse(arr[1], System.Globalization.NumberStyles.HexNumber);
-                        G = byte.Parse(arr[2], System.Globalization.NumberStyles.HexNumber);
-                        B = byte.Parse(arr[3], System.Globalization.NumberStyles.HexNumber);
+                        SelectedColor = Color.FromArgb(byte.Parse(arr[0], System.Globalization.NumberStyles.HexNumber),
+                            byte.Parse(arr[1], System.Globalization.NumberStyles.HexNumber),
+                            byte.Parse(arr[2], System.Globalization.NumberStyles.HexNumber),
+                            byte.Parse(arr[3], System.Globalization.NumberStyles.HexNumber));
 
                         break;
                     }
@@ -1051,10 +1071,7 @@ namespace ag.WPF.ColorPicker
                                 continue;
                             bytes[i] = byte.Parse(arr[i]);
                         }
-                        A = bytes[0];
-                        R = bytes[1];
-                        G = bytes[2];
-                        B = bytes[3];
+                        SelectedColor = Color.FromArgb(bytes[0], bytes[1], bytes[2], bytes[3]);
 
                         break;
                     }
@@ -1068,9 +1085,7 @@ namespace ag.WPF.ColorPicker
                                 continue;
                             bytes[i] = byte.Parse(arr[i]);
                         }
-                        R = bytes[0];
-                        G = bytes[1];
-                        B = bytes[2];
+                        SelectedColor = Color.FromArgb(A, bytes[0], bytes[1], bytes[2]);
 
                         break;
                     }
@@ -1078,15 +1093,17 @@ namespace ag.WPF.ColorPicker
                     {
                         var values = new double[2];
                         var arr = _colorStringTextBox.Text.Split(',');
-                        HueHsb = string.IsNullOrEmpty(arr[0]) ? 0.0 : Convert.ToDouble(arr[0]);
+                        var hueHsb = string.IsNullOrEmpty(arr[0]) ? 0.0 : Convert.ToDouble(arr[0]);
                         for (var i = 1; i < arr.Length; i++)
                         {
                             if (string.IsNullOrEmpty(arr[i]) || arr[i] == ".")
                                 continue;
                             values[i - 1] = Convert.ToDouble(arr[i]);
                         }
-                        SaturationHsb = values[0];
-                        BrightnessHsb = values[1];
+                        var saturationHsb = values[0];
+                        var brightnessHsb = values[1];
+                        var hsb = new HsbColor(hueHsb, saturationHsb, brightnessHsb);
+                        SelectedColor = hsb.ToRgbColor();
 
                         break;
                     }
@@ -1094,15 +1111,17 @@ namespace ag.WPF.ColorPicker
                     {
                         var values = new double[2];
                         var arr = _colorStringTextBox.Text.Split(',');
-                        HueHsl = string.IsNullOrEmpty(arr[0]) ? 0.0 : Convert.ToDouble(arr[0]);
+                        var hueHsl = string.IsNullOrEmpty(arr[0]) ? 0.0 : Convert.ToDouble(arr[0]);
                         for (var i = 1; i < arr.Length; i++)
                         {
                             if (string.IsNullOrEmpty(arr[i]) || arr[i] == ".")
                                 continue;
                             values[i - 1] = Convert.ToDouble(arr[i]);
                         }
-                        SaturationHsl = values[0];
-                        LuminanceHsl = values[1];
+                        var saturationHsl = values[0];
+                        var luminanceHsl = values[1];
+                        var hsl = new HslColor(hueHsl, saturationHsl, luminanceHsl);
+                        SelectedColor = hsl.ToRgbColor();
 
                         break;
                     }
@@ -1433,7 +1452,7 @@ namespace ag.WPF.ColorPicker
         private void UpdateHSLValues(Color color)
         {
             var hsl = color.ToHslColor();
-            if (!_fromMouseMove && !_saturationHslUpdated && !_saturationHsbUpdated && !_brightnessHsbUpdated && !_luminanceHslUpdated && !IsNonColor(color))
+            if (!_fromMouseMove && !_saturationHslUpdated && !_saturationHsbUpdated && !_brightnessHsbUpdated && !_luminanceHslUpdated && !_alphaUpdated && !IsNonColor(color))
                 HueHsl = hsl.Hue;
             SaturationHsl = hsl.Saturation;
             LuminanceHsl = hsl.Luminance;
@@ -1450,7 +1469,11 @@ namespace ag.WPF.ColorPicker
 
         private static bool IsNonColor(Color color) => (color.R == color.G && color.G == color.B);
 
-        private void UpdateSelectedColor() => SelectedColor = Color.FromArgb(A, R, G, B);
+        private void UpdateSelectedColor()
+        {
+            if (!_isSelectedColorUpdating)
+                SelectedColor = Color.FromArgb(A, R, G, B);
+        }
 
         private string KeyToChar(Key key)
         {
