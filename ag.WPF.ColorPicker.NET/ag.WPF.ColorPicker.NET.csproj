@@ -14,7 +14,7 @@
     <PackageProjectUrl>https://github.com/dedpichto/ag.WPF.ColorPicker</PackageProjectUrl>
     <AssemblyName>ag.WPF.ColorPicker</AssemblyName>
     <RootNamespace>ag.WPF.ColorPicker</RootNamespace>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <DebugType>none</DebugType>
   </PropertyGroup>
 
@@ -25,7 +25,6 @@
     <Compile Include="..\ag.WPF.ColorPicker\ColorHelpers\Utils.cs" Link="ColorHelpers\Utils.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\ColorPanel.cs" Link="ColorPanel.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\ColorPicker.cs" Link="ColorPicker.cs" />
-    <Compile Include="..\ag.WPF.ColorPicker\ColorSlider.cs" Link="ColorSlider.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\PickerPanel.xaml.cs" Link="PickerPanel.xaml.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\StandardColorItem.cs" Link="StandardColorItem.cs" />
     <Compile Include="..\ag.WPF.ColorPicker\UnsafeNativeMethods.cs" Link="UnsafeNativeMethods.cs" />

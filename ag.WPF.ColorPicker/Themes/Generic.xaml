@@ -183,7 +183,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type picker:ColorSlider}">
+    <Style x:Key="HueSlider" TargetType="{x:Type Slider}">
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="SmallChange" Value="1"/>
         <Setter Property="LargeChange" Value="10"/>
@@ -199,7 +199,7 @@
         <Setter Property="Value" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type picker:ColorSlider}">
+                <ControlTemplate TargetType="{x:Type Slider}">
                     <Border x:Name="border" Background="Transparent" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -286,7 +286,7 @@
                                             </Canvas>
                                         </Canvas>
                                     </Border>
-                                    <picker:ColorSlider x:Name="PART_SpectrumSlider" Background="{Binding VerticalSpectrumBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="{Binding Hue, RelativeSource={RelativeSource Mode=TemplatedParent}}" VerticalAlignment="Stretch" Grid.Column="1" Grid.RowSpan="5" Margin="8,0,0,0" />
+                                    <Slider x:Name="PART_SpectrumSlider" Style="{StaticResource HueSlider}" Background="{Binding VerticalSpectrumBrush, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="{Binding Hue, RelativeSource={RelativeSource Mode=TemplatedParent}}" VerticalAlignment="Stretch" Grid.Column="1" Grid.RowSpan="5" Margin="8,0,0,0" />
 
                                     <Grid Grid.Column="0" Grid.Row="1">
                                         <Grid.ColumnDefinitions>
@@ -327,7 +327,7 @@
                                             </Grid>
                                             <!--<TextBlock VerticalAlignment="Center" Text="{Binding ColorString, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>-->
                                             <TextBox x:Name="PART_ColorStringTextBox" Margin="4,2,4,4" CharacterCasing="Upper" MaxLength="8"/>
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding ColorString, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                            <!--<TextBlock VerticalAlignment="Center" Text="{Binding ColorString, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>-->
                                         </StackPanel>
                                         <Border x:Name="PART_CopyTextBorder" Background="Transparent" Grid.Column="3" Width="24" Height="24" VerticalAlignment="Center" Cursor="Hand" Margin="4">
                                             <Path x:Name="_copyStrokePath" Stroke="{StaticResource IconBrushFg}" Fill="{StaticResource IconBrushBg}" StrokeThickness="1" Data="{StaticResource CopyGeometry}"/>
@@ -668,12 +668,13 @@
                                    StaysOpen="True"
                                    HorizontalOffset="0"
                                    PopupAnimation="Scroll">
-                                <Grid Background="{StaticResource ColorPanelBackgroundBrush}">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition Height="auto"/>
-                                    </Grid.RowDefinitions>
-                                    <picker:ColorPanel x:Name="PART_ColorPanel" 
+                                <Border BorderBrush="{StaticResource PickerBorderdBrush}" BorderThickness="1">
+                                    <Grid Background="{StaticResource ColorPanelBackgroundBrush}">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition Height="auto"/>
+                                        </Grid.RowDefinitions>
+                                        <picker:ColorPanel x:Name="PART_ColorPanel" 
                                                        Grid.Row="0"
                                                        Width="400" 
                                                        Height="426" 
@@ -687,15 +688,16 @@
                                                        TitleTabStandard="{Binding Path=(picker:ColorPanel.TitleTabStandard), RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                        SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"
                                                        PanelView="{Binding Path=(picker:ColorPanel.PanelView), RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
-                                    <Grid x:Name="_commandsGrid" Grid.Row="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition/>
-                                            <ColumnDefinition Width="auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Button x:Name="PART_ApplyButton" IsDefault="True" Content="{Binding Path=(picker:ColorPanel.TitleApply), RelativeSource={RelativeSource Mode=TemplatedParent}}" HorizontalAlignment="Right" Margin="4" Padding="2" MinHeight="25" MinWidth="64"/>
-                                        <Button x:Name="PART_CancelButton" IsCancel="True" Grid.Column="1" Content="{Binding Path=(picker:ColorPanel.TitleCancel), RelativeSource={RelativeSource Mode=TemplatedParent}}" Margin="4" Padding="2" MinHeight="25" MinWidth="64"/>
+                                        <Grid x:Name="_commandsGrid" Grid.Row="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="auto"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Button x:Name="PART_ApplyButton" IsDefault="True" Content="{Binding Path=(picker:ColorPanel.TitleApply), RelativeSource={RelativeSource Mode=TemplatedParent}}" HorizontalAlignment="Right" Margin="4" Padding="2" MinHeight="25" MinWidth="64"/>
+                                            <Button x:Name="PART_CancelButton" IsCancel="True" Grid.Column="1" Content="{Binding Path=(picker:ColorPanel.TitleCancel), RelativeSource={RelativeSource Mode=TemplatedParent}}" Margin="4" Padding="2" MinHeight="25" MinWidth="64"/>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
+                                </Border>
                             </Popup>
                         </Grid>
                     </Border>

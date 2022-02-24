@@ -63,7 +63,7 @@ namespace ag.WPF.ColorPicker
     #region Named parts
     [TemplatePart(Name = "PART_ColorShadingCanvas", Type = typeof(Canvas))]
     [TemplatePart(Name = "PART_ColorShadeSelector", Type = typeof(Canvas))]
-    [TemplatePart(Name = "PART_SpectrumSlider", Type = typeof(ColorSlider))]
+    [TemplatePart(Name = "PART_SpectrumSlider", Type = typeof(Slider))]
     [TemplatePart(Name = "PART_ColorStringTextBox", Type = typeof(TextBox))]
     [TemplatePart(Name = "PART_InitialColorPath", Type = typeof(Path))]
     [TemplatePart(Name = "PART_CopyTextBorder", Type = typeof(Border))]
@@ -99,7 +99,7 @@ namespace ag.WPF.ColorPicker
         private readonly TranslateTransform _colorShadeSelectorTransform = new();
         private Canvas _colorShadingCanvas;
         private Canvas _colorShadeSelector;
-        private ColorSlider _spectrumSlider;
+        private Slider _spectrumSlider;
         private TextBox _colorStringTextBox;
         private Path _initialColorPath;
         private Border _copyTextBorder;
@@ -638,7 +638,7 @@ namespace ag.WPF.ColorPicker
 
             ColorString = GetColorString();
 
-            if (!_colorTextBoxIsEditing)
+            if (!_colorTextBoxIsEditing && _colorStringTextBox != null)
             {
                 _colorStringTextBox.Text = ColorString;
             }
@@ -776,7 +776,7 @@ namespace ag.WPF.ColorPicker
             {
                 _spectrumSlider.ValueChanged -= SpectrumSlider_ValueChanged;
             }
-            _spectrumSlider = GetTemplateChild(PART_SpectrumSlider) as ColorSlider;
+            _spectrumSlider = GetTemplateChild(PART_SpectrumSlider) as Slider;
             if (_spectrumSlider != null)
             {
                 _spectrumSlider.ValueChanged += SpectrumSlider_ValueChanged;
