@@ -786,7 +786,7 @@ namespace ag.WPF.ColorPicker
             {
                 _colorStringTextBox.TextChanged -= ColorStringTextBox_TextChanged;
                 _colorStringTextBox.PreviewKeyDown -= ColorStringTextBox_PreviewKeyDown;
-                _colorStringTextBox.LostFocus += ColorStringTextBox_LostFocus;
+                _colorStringTextBox.LostFocus -= ColorStringTextBox_LostFocus;
             }
             _colorStringTextBox = GetTemplateChild(PART_ColorStringTextBox) as TextBox;
             if (_colorStringTextBox != null)

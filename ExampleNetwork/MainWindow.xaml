@@ -12,7 +12,7 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <clp:ColorPicker x:Name="_picker" Width="175" VerticalAlignment="Top" Grid.Column="0" Margin="20" SelectedColorChanged="_picker_SelectedColorChanged"/>
+        <clp:ColorPicker x:Name="_picker" ButtonVisible="False" Width="175" VerticalAlignment="Top" Grid.Column="0" Margin="20" SelectedColorChanged="_picker_SelectedColorChanged"/>
         <clp:ColorPanel Margin="4" x:Name="_panel" Grid.Column="1"/>
     </Grid>
 </Window>
