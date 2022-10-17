@@ -60,6 +60,7 @@ Property | Type | Description | Default value
 --- | --- | --- | ---
 SelectedColor | Color | Gets or sets selected color | Red
 ColorString | string | Gets selected color's string representation |
+ButtonVisible | bool | Gets or sets the visibility of the Button |
 
 ### Events
 
