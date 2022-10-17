@@ -46,6 +46,10 @@ namespace ag.WPF.ColorPicker
         /// The identifier of the <see cref="ColorString"/> dependency property.
         /// </summary>
         public static readonly DependencyProperty ColorStringProperty = DependencyProperty.Register(nameof(ColorString), typeof(string), typeof(ColorPicker), new FrameworkPropertyMetadata(""));
+        /// <summary>
+        /// The identifier of the <see cref="ButtonVisible"/> dependency property.
+        /// </summary>
+        public static readonly DependencyProperty ButtonVisibleProperty = DependencyProperty.Register(nameof(ButtonVisible), typeof(bool), typeof(ColorPicker), new FrameworkPropertyMetadata(true));
         #endregion
 
         /// <summary>
@@ -83,6 +87,15 @@ namespace ag.WPF.ColorPicker
         {
             get { return (string)GetValue(ColorStringProperty); }
             private set { SetValue(ColorStringProperty, value); }
+        }
+
+        /// <summary>
+        /// Gets or sets the visibility of the Button.
+        /// </summary>
+        public bool ButtonVisible
+        {
+            get { return (bool)GetValue(ButtonVisibleProperty); }
+            set { SetValue(ButtonVisibleProperty, value); }
         }
 
         #endregion

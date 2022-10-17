@@ -653,6 +653,7 @@
                             <Button x:Name="PART_Button"
                                     Margin="1"
                                     Grid.Column="1"
+                                    Visibility="{Binding Path=ButtonVisible, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"
                                     Padding="2">
                                 <Viewbox Stretch="Fill">
                                     <Grid>
