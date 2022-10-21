@@ -26,5 +26,11 @@ namespace Example
         }
 
         private void _picker_SelectedColorChanged(object sender, RoutedPropertyChangedEventArgs<Color> e) => Background = new SolidColorBrush(e.NewValue);
+
+        private void DialogWindowButton_Click(object sender, RoutedEventArgs e)
+        {
+            DialogWindow dialogWindow = new DialogWindow();
+            dialogWindow.ShowDialog();
+        }
     }
 }
