@@ -117,7 +117,7 @@ namespace ag.WPF.ColorPicker
 
             if (_button != null)
             {
-                _button.Click += Button_Click;
+                _button.Click -= Button_Click;
                 _button.PreviewKeyDown -= Button_PreviewKeyDown;
             }
             _button = GetTemplateChild(PART_Button) as Button;

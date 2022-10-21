@@ -15,8 +15,8 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-        <clp:ColorPicker x:Name="_picker" Width="175" VerticalAlignment="Top" Grid.Column="0" Margin="20" SelectedColorChanged="_picker_SelectedColorChanged"/>
+        </Grid.ColumnDefinitions
+        <clp:ColorPicker x:Name="_picker" ButtonVisible="True" Width="175" VerticalAlignment="Top" Grid.Column="0" Margin="20" SelectedColorChanged="_picker_SelectedColorChanged"/>
         <clp:ColorPanel Margin="4" x:Name="_panel" Grid.Column="1" Grid.RowSpan="2"/>
         <Button Grid.Row="1" Click="DialogWindowButton_Click" Content="Show Dialog" />
     </Grid>
