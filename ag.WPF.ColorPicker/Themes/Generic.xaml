@@ -695,7 +695,7 @@
                                                 <ColumnDefinition Width="auto"/>
                                             </Grid.ColumnDefinitions>
                                             <Button x:Name="PART_ApplyButton" IsDefault="True" Content="{Binding Path=(picker:ColorPanel.TitleApply), RelativeSource={RelativeSource Mode=TemplatedParent}}" HorizontalAlignment="Right" Margin="4" Padding="2" MinHeight="25" MinWidth="64"/>
-                                            <Button x:Name="PART_CancelButton" IsCancel="True" Grid.Column="1" Content="{Binding Path=(picker:ColorPanel.TitleCancel), RelativeSource={RelativeSource Mode=TemplatedParent}}" Margin="4" Padding="2" MinHeight="25" MinWidth="64"/>
+                                            <Button x:Name="PART_CancelButton" Grid.Column="1" Content="{Binding Path=(picker:ColorPanel.TitleCancel), RelativeSource={RelativeSource Mode=TemplatedParent}}" Margin="4" Padding="2" MinHeight="25" MinWidth="64"/>
                                         </Grid>
                                     </Grid>
                                 </Border>

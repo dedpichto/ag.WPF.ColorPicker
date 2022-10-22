@@ -8,11 +8,15 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <clp:ColorPicker x:Name="_picker" ButtonVisible="False" Width="175" VerticalAlignment="Top" Grid.Column="0" Margin="20" SelectedColorChanged="_picker_SelectedColorChanged"/>
-        <clp:ColorPanel Margin="4" x:Name="_panel" Grid.Column="1"/>
+        <clp:ColorPicker x:Name="_picker" ButtonVisible="True" Width="175" VerticalAlignment="Top" Grid.Column="0" Margin="20" SelectedColorChanged="_picker_SelectedColorChanged"/>
+        <clp:ColorPanel Margin="4" x:Name="_panel" Grid.Column="1" Grid.RowSpan="2"/>
     </Grid>
 </Window>
